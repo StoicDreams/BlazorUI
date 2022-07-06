@@ -16,7 +16,7 @@ namespace StoicDreams.BlazorUI
 		public ExampleJsInterop(IJSRuntime jsRuntime)
 		{
 			moduleTask = new(() => jsRuntime.InvokeAsync<IJSObjectReference>(
-				"import", "./_content/StoicDreams.BlazorUI/exampleJsInterop.js").AsTask());
+				"import", "./stoicdreams-ui-interop.js").AsTask());
 		}
 
 		public async ValueTask<string> Prompt(string message)

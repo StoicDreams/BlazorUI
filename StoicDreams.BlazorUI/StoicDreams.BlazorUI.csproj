@@ -12,7 +12,7 @@
 		<Description>
 			A base framework library with helper methods for organizing and simplifying unit and integration tests.
 		</Description>
-		<Version>1.0.3</Version>
+		<Version>1.0.7</Version>
 		<Copyright>2022 Stoic Dreams</Copyright>
 		<PackageProjectUrl>https://www.stoicdreams.com</PackageProjectUrl>
 		<PackageLicenseExpression></PackageLicenseExpression>
@@ -33,6 +33,7 @@
 		<RepositoryUrl>https://github.com/StoicDreams/BlazorUI</RepositoryUrl>
 		<RepositoryType>git</RepositoryType>
 		<PackageTags>Stoic Dreams;Blazor UI;Blazor Components</PackageTags>
+		<StaticWebAssetBasePath>/</StaticWebAssetBasePath>
 	</PropertyGroup>
 
 
@@ -45,6 +46,7 @@
 	</ItemGroup>
 
 	<ItemGroup>
+		<Folder Include="Data\" />
 		<Folder Include="PowerShell\" />
 	</ItemGroup>
 

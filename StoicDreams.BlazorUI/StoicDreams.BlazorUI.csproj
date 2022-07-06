@@ -1,18 +1,66 @@
 <Project Sdk="Microsoft.NET.Sdk.Razor">
 
-  <PropertyGroup>
-    <TargetFramework>net6.0</TargetFramework>
-    <Nullable>enable</Nullable>
-    <ImplicitUsings>enable</ImplicitUsings>
-  </PropertyGroup>
+	<PropertyGroup>
+		<TargetFramework>net6.0</TargetFramework>
+		<Nullable>enable</Nullable>
+		<ImplicitUsings>enable</ImplicitUsings>
+
+		<GeneratePackageOnBuild>true</GeneratePackageOnBuild>
+		<Authors>Erik Gassler</Authors>
+		<Company>Stoic Dreams</Company>
+		<Product>Stoic Dreams Test Framework</Product>
+		<Description>
+			A base framework library with helper methods for organizing and simplifying unit and integration tests.
+		</Description>
+		<Version>1.0.3</Version>
+		<Copyright>2022 Stoic Dreams</Copyright>
+		<PackageProjectUrl>https://www.stoicdreams.com</PackageProjectUrl>
+		<PackageLicenseExpression></PackageLicenseExpression>
+		<PackageLicenseFile>LICENSE.txt</PackageLicenseFile>
+		<PackageIcon>ms-icon-310x310.png</PackageIcon>
+		<OutputPath>bin</OutputPath>
+		<OutputType>Library</OutputType>
+		<PackageReleaseNotes>Development Release</PackageReleaseNotes>
+		<PackageOutputPath>..\..\NugetPackages</PackageOutputPath>
+		<PackOnBuild>true</PackOnBuild>
+		<Platform>AnyCPU</Platform>
+		<PublishReadyToRun>True</PublishReadyToRun>
+		<IncludeSourceFilesProjectOutputGroup>True</IncludeSourceFilesProjectOutputGroup>
+		<PackageType>Dependency</PackageType>
+		<RootNamespace>StoicDreams.BlazorUI</RootNamespace>
+		<ApplicationIcon>favicon.ico</ApplicationIcon>
+		<PackageReadmeFile>README.md</PackageReadmeFile>
+		<RepositoryUrl>https://github.com/StoicDreams/BlazorUI</RepositoryUrl>
+		<RepositoryType>git</RepositoryType>
+		<PackageTags>Stoic Dreams;Blazor UI;Blazor Components</PackageTags>
+	</PropertyGroup>
 
 
-  <ItemGroup>
-    <SupportedPlatform Include="browser" />
-  </ItemGroup>
+	<ItemGroup>
+		<SupportedPlatform Include="browser" />
+	</ItemGroup>
 
-  <ItemGroup>
-    <PackageReference Include="Microsoft.AspNetCore.Components.Web" Version="6.0.6" />
-  </ItemGroup>
+	<ItemGroup>
+		<PackageReference Include="Microsoft.AspNetCore.Components.Web" Version="6.0.6" />
+	</ItemGroup>
+
+	<ItemGroup>
+		<Folder Include="PowerShell\" />
+	</ItemGroup>
+
+	<ItemGroup>
+		<None Include=".\ms-icon-310x310.png">
+			<Pack>True</Pack>
+			<PackagePath></PackagePath>
+		</None>
+		<None Include="..\Docs\LICENSE.txt">
+			<Pack>True</Pack>
+			<PackagePath></PackagePath>
+		</None>
+		<None Include="..\Docs\README.md">
+			<Pack>True</Pack>
+			<PackagePath>\</PackagePath>
+		</None>
+	</ItemGroup>
 
 </Project>

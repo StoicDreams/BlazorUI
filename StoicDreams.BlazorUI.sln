@@ -3,7 +3,17 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 17
 VisualStudioVersion = 17.2.32616.157
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "StoicDreams.BlazorUI", "StoicDreams.BlazorUI\StoicDreams.BlazorUI.csproj", "{654C7DA5-F840-495C-911B-6BE74EC28595}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "StoicDreams.BlazorUI", "StoicDreams.BlazorUI\StoicDreams.BlazorUI.csproj", "{654C7DA5-F840-495C-911B-6BE74EC28595}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "StoicDreams.BlazorUI.BuildTests", "StoicDreams.BlazorUI.BuildTests\StoicDreams.BlazorUI.BuildTests.csproj", "{6B0CD324-5191-4B99-8DB5-E77F087C2880}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Docs", "Docs", "{8A84E997-9423-4EDD-867A-692633E4F6D5}"
+	ProjectSection(SolutionItems) = preProject
+		Docs\LICENSE = Docs\LICENSE
+		Docs\README.md = Docs\README.md
+	EndProjectSection
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "StoicDreams.SampleWebsite", "StoicDreams.SampleWebsite\StoicDreams.SampleWebsite.csproj", "{4706B7AA-8C4D-40EA-9788-4C104539ACC0}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -15,6 +25,14 @@ Global
 		{654C7DA5-F840-495C-911B-6BE74EC28595}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{654C7DA5-F840-495C-911B-6BE74EC28595}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{654C7DA5-F840-495C-911B-6BE74EC28595}.Release|Any CPU.Build.0 = Release|Any CPU
+		{6B0CD324-5191-4B99-8DB5-E77F087C2880}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{6B0CD324-5191-4B99-8DB5-E77F087C2880}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{6B0CD324-5191-4B99-8DB5-E77F087C2880}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{6B0CD324-5191-4B99-8DB5-E77F087C2880}.Release|Any CPU.Build.0 = Release|Any CPU
+		{4706B7AA-8C4D-40EA-9788-4C104539ACC0}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{4706B7AA-8C4D-40EA-9788-4C104539ACC0}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{4706B7AA-8C4D-40EA-9788-4C104539ACC0}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{4706B7AA-8C4D-40EA-9788-4C104539ACC0}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

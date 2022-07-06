@@ -1,0 +1,22 @@
+{
+	"commands": {
+		"PreBuildPS1": {
+			"fileName": "PowerShell.exe",
+			"workingDirectory": ".",
+			"arguments": ".\\PowerShell\\PreBuild.ps1"
+		},
+		"PostBuildPS1": {
+			"fileName": "PowerShell.exe",
+			"workingDirectory": ".",
+			"arguments": ".\\PowerShell\\PostBuild.ps1"
+		}
+	},
+	"-vs-binding": {
+		"BeforeBuild": [
+			"PreBuildPS1"
+		],
+		"AfterBuild": [
+			"PostBuildPS1"
+		]
+	}
+}

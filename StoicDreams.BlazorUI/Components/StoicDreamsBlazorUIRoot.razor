@@ -1,4 +1,7 @@
-﻿@inject IAppOptions AppOptions
+﻿@implements IDisposable
+
+@inject IAppOptions AppOptions
+@inject IAppState AppState
 @inject IJSRuntime JSRuntime
 @inject IJsInterop JSInterop
 @inject NavigationManager NavManager
@@ -22,8 +25,20 @@
 		{
 			throw new NullReferenceException($"{this.GetType().FullName} is required to have child content.");
 		}
+		AppState.SubscribeToDataChanges(ComponentId, HandleDataChanges);
 		await RunSetupFromOptions();
 		await base.OnInitializedAsync();
+	}
+
+	public void Dispose()
+	{
+		AppState.UnsubscribeToDataChanges(ComponentId);
+	}
+
+	private void HandleDataChanges(IDictionary<string, bool> keys)
+	{
+		if (!keys.ContainsKey("PageTitle")) { return; }
+		StateHasChanged();
 	}
 
 	private async ValueTask RunSetupFromOptions()
@@ -45,4 +60,6 @@
 			await JSInterop.AddElementToBody(detail.TagName, detail.Attributes);
 		}
 	}
+
+	private Guid ComponentId { get; } = Guid.NewGuid();
 }

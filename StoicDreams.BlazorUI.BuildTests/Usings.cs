@@ -5,3 +5,4 @@ global using Bunit.RazorTesting;
 global using Bunit.Asserting;
 global using Bunit.Rendering;
 global using Bunit.TestDoubles;
+global using FluentAssertions;

@@ -7,6 +7,7 @@ public static partial class Extensions
 		IAppOptions appOptions = new AppOptions();
 		setupHandler?.Invoke(appOptions);
 		services.AddSingleton<IAppOptions>(appOptions);
+		services.AddSingleton<IAppState, AppState>();
 		services.AddTransient<IJsInterop, JsInterop>();
 		return services;
 	}

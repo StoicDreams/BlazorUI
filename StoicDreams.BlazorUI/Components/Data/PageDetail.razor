@@ -1,0 +1,16 @@
+﻿@inject IAppState AppState
+
+@code {
+	[Parameter]
+	public string Title { get; set; } = string.Empty;
+
+	protected override async Task OnInitializedAsync()
+	{
+		await AppState.ApplyChanges(() =>
+		{
+			AppState.SetData("PageTitle", Title);
+			return ValueTask.CompletedTask;
+		});
+		await base.OnInitializedAsync();
+	}
+}

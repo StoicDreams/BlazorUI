@@ -1,6 +1,6 @@
 namespace StoicDreams.BlazorUI;
 
-public class UnitTest1
+public class StringExtensionsTests
 {
 	[Fact]
 	public void Test1()

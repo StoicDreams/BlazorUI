@@ -1,10 +1,48 @@
 ﻿@inject IAppOptions AppOptions
+@inject IJSRuntime JSRuntime
+@inject IJsInterop JSInterop
+@inject NavigationManager NavManager
+
+<PageTitle>@AppTitle</PageTitle>
+
+@ChildContent
 
 @code {
+	[Parameter]
+	public RenderFragment? ChildContent { get; set; }
+
+	private string AppTitle => AppOptions.TitleFormat
+			.Replace("{AppName}", AppOptions.AppName)
+			.Replace("{PageTitle}", "Page Title")
+			;
 
 	protected override async Task OnInitializedAsync()
 	{
+		if (ChildContent == null)
+		{
+			throw new NullReferenceException($"{this.GetType().FullName} is required to have child content.");
+		}
+		await RunSetupFromOptions();
 		await base.OnInitializedAsync();
 	}
 
+	private async ValueTask RunSetupFromOptions()
+	{
+		foreach (string file in AppOptions.CssFiles)
+		{
+			await JSInterop.AddCSSFile(file);
+		}
+		foreach (string file in AppOptions.JavascriptFiles)
+		{
+			await JSInterop.AddJSFile(file);
+		}
+		foreach (ElementDetail detail in AppOptions.HeadElements)
+		{
+			await JSInterop.AddElementToHead(detail.TagName, detail.Attributes);
+		}
+		foreach (ElementDetail detail in AppOptions.BodyElements)
+		{
+			await JSInterop.AddElementToBody(detail.TagName, detail.Attributes);
+		}
+	}
 }

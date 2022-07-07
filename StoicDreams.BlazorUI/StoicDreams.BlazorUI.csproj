@@ -8,11 +8,11 @@
 		<GeneratePackageOnBuild>true</GeneratePackageOnBuild>
 		<Authors>Erik Gassler</Authors>
 		<Company>Stoic Dreams</Company>
-		<Product>Stoic Dreams Test Framework</Product>
+		<Product>Stoic Dreams Blazor UI Framework</Product>
 		<Description>
-			A base framework library with helper methods for organizing and simplifying unit and integration tests.
+			UI Framework and component library for Blazor based Websites and Maui projects.
 		</Description>
-		<Version>1.0.7</Version>
+		<Version>1.0.11</Version>
 		<Copyright>2022 Stoic Dreams</Copyright>
 		<PackageProjectUrl>https://www.stoicdreams.com</PackageProjectUrl>
 		<PackageLicenseExpression></PackageLicenseExpression>
@@ -46,7 +46,11 @@
 	</ItemGroup>
 
 	<ItemGroup>
-		<Folder Include="Data\" />
+		<Folder Include="Components\Forms\" />
+		<Folder Include="Components\Graph\" />
+		<Folder Include="Components\Layouts\" />
+		<Folder Include="Components\Dialogs\" />
+		<Folder Include="Interfaces\DataTypes\" />
 		<Folder Include="PowerShell\" />
 	</ItemGroup>
 

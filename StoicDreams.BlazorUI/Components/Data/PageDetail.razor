@@ -8,7 +8,7 @@
 	{
 		await AppState.ApplyChanges(() =>
 		{
-			AppState.SetData("PageTitle", Title);
+			AppState.SetData(AppStateDataTags.PageTitle, Title);
 			return ValueTask.CompletedTask;
 		});
 		await base.OnInitializedAsync();

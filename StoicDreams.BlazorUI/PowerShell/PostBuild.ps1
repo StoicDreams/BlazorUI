@@ -37,7 +37,7 @@ function UpdateProjectVersion {
 	}
 	$newContent = $content -replace $rgxTargetXML, $newXML
 	$newContent | Set-Content -Path $projectPath
-	Write-Host "Updated   - $projectPath" -ForegroundColor Green
+	Write-Host "Updated - $projectPath" -ForegroundColor Green
 }
 
 if($version -ne $null) {

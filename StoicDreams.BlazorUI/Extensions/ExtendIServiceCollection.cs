@@ -1,6 +1,6 @@
-﻿namespace StoicDreams.BlazorUI;
+﻿namespace StoicDreams.BlazorUI.Extensions;
 
-public static partial class Extensions
+public static partial class ExtendIServiceCollection
 {
 	public static IServiceCollection AddStoicDreamsBlazorUI(this IServiceCollection services, Action<IAppOptions>? setupHandler = null)
 	{

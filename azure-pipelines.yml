@@ -6,42 +6,46 @@
 trigger:
 - master
 
-pool:
-  vmImage: 'windows-latest'
-
-steps:
-  - task: NuGetToolInstaller@1
-    inputs:
-      versionSpec: '6.x'
-      checkLatest: true
-  - task: UseDotNet@2
-    displayName: 'Load the SDK'
-    inputs:
-      packageType: 'sdk'
-      version: '6.x'
-      includePreviewVersions: false
-  - task: DotNetCoreCLI@2
-    displayName: 'Restore nuget packages'
-    inputs:
-      command: 'restore'
-      projects: '**/*.sln'
-      includeNuGetOrg: true
-  - task: DotNetCoreCLI@2
-    displayName: 'Build and pack the project'
-    inputs:
-      command: 'build'
-      projects: '**/StoicDreams.BlazorUI.csproj'
-  - task: DotNetCoreCLI@2
-    displayName: 'Run the Unit Tests'
-    inputs:
-      command: 'test'
-  - task: Bash@3
-    displayName: 'Push package to nuget store'
-    inputs:
-      targetType: inline
-      script: dotnet nuget push --api-key $(NugetApiKey) --skip-duplicate --source $(NugetSource) '$(Agent.BuildDirectory)\NugetPackages\StoicDreams.BlazorUI.*.nupkg' > nugetpush.txt; echo $(cat nugetpush.txt)
-  - task: Bash@3
-    displayName: 'Echo version number.'
-    inputs:
-      targetType: inline
-      script: pushResult=$(cat nugetpush.txt); re=".*StoicDreams\.BlazorUI\.([0-9\.]+)\.nupkg.*";if [[ $pushResult =~ $re ]]; then echo ${BASH_REMATCH[1]}; fi
+stages:
+- stage: Alpha
+  - job: BlazorUI
+    displayName: 'Build and Publish Blazor UI'
+    pool:
+      vmImage: 'windows-latest'
+    steps:
+      - task: NuGetToolInstaller@1
+        inputs:
+          versionSpec: '6.x'
+          checkLatest: true
+      - task: UseDotNet@2
+        displayName: 'Load the SDK'
+        inputs:
+          packageType: 'sdk'
+          version: '6.x'
+          includePreviewVersions: false
+      - task: DotNetCoreCLI@2
+        displayName: 'Restore nuget packages'
+        inputs:
+          command: 'restore'
+          projects: '**/*.sln'
+          includeNuGetOrg: true
+      - task: DotNetCoreCLI@2
+        displayName: 'Build and pack the project'
+        inputs:
+          command: 'build'
+          projects: '**/StoicDreams.BlazorUI.csproj'
+      - task: VisualStudioTestPlatformInstaller@1
+      - task: VSTest@2
+        displayName: 'Run the Unit Tests'
+        inputs:
+          codeCoverageEnabled: True
+      - task: Bash@3
+        displayName: 'Push package to nuget store'
+        inputs:
+          targetType: inline
+          script: dotnet nuget push --api-key $(NugetApiKey) --skip-duplicate --source $(NugetSource) '$(Agent.BuildDirectory)\NugetPackages\StoicDreams.BlazorUI.*.nupkg' > nugetpush.txt; echo $(cat nugetpush.txt)
+      - task: Bash@3
+        displayName: 'Echo version number.'
+        inputs:
+          targetType: inline
+          script: pushResult=$(cat nugetpush.txt); re=".*StoicDreams\.BlazorUI\.([0-9\.]+)\.nupkg.*";if [[ $pushResult =~ $re ]]; then echo ${BASH_REMATCH[1]}; fi

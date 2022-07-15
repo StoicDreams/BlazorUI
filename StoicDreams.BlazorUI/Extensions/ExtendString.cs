@@ -1,6 +1,6 @@
-﻿namespace StoicDreams.BlazorUI;
+﻿namespace StoicDreams.BlazorUI.Extensions;
 
-public static partial class Extensions
+public static class ExtendString
 {
 	public static string PathToClassName(this string path)
 	{

@@ -4,6 +4,7 @@ public class AppState : IAppState
 {
 	public AppState(IJsInterop jsInterop)
 	{
+		Interop = jsInterop;
 		LoadSimpleDataFromStorage();
 	}
 

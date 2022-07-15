@@ -6,3 +6,7 @@ global using Bunit.Asserting;
 global using Bunit.Rendering;
 global using Bunit.TestDoubles;
 global using FluentAssertions;
+global using StoicDreams.BlazorUI.Constants;
+global using StoicDreams.BlazorUI.Data;
+global using StoicDreams.BlazorUI.DataTypes;
+global using StoicDreams.BlazorUI.Extensions;

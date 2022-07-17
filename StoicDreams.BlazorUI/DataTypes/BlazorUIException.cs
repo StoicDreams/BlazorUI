@@ -2,12 +2,14 @@
 
 public class BlazorUIException<TType> : ApplicationException
 {
-	public BlazorUIException(string message, Exception? innerException = null) : base($"BlazorUI.{typeof(TType).FullName} Exception: {message}", innerException) { }
+	public BlazorUIException(string message, Exception? innerException = null) : base($"{typeof(TType).FullName} Exception: {message}", innerException) { }
 }
 
 public static class BlazorUIException
 {
 	public static void Throw<TType>(string message) => throw new BlazorUIException<TType>(message);
 
-	public static void ReThrow<TType>(string message, Exception innerException) => throw new BlazorUIException<TType>(message, innerException);
+	public static void ReThrow<TException>(string message, TException innerException)
+		 where TException : Exception 
+		=> throw new BlazorUIException<TException>($"{message} {innerException.Message}".Trim(), innerException);
 }

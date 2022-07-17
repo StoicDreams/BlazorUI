@@ -9,8 +9,8 @@ public class ExtendStringTests : TestFramework
 	{
 		IActions actions = ArrangeUnitTest(() => input);
 
-		actions.Act(value => ((string)value).PascalToSpaced());
+		actions.Act((string value) => value.PascalToSpaced());
 
-		actions.Assert(result => result.Should().Be(expectedResult));
+		actions.Assert((string? result) => result.IsNotNull().Should().Be(expectedResult));
 	}
 }

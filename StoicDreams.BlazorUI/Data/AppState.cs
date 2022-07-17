@@ -50,9 +50,14 @@ public class AppState : IAppState
 		Changelog[key] = true;
 		foreach (Guid id in ChangeHandlers.Keys)
 		{
-			ChangeHandlers[id].Invoke(Changelog);
+			TriggerHandler(ChangeHandlers[id]);
 		}
 	}
+
+	private void TriggerHandler(Action<IDictionary<string, bool>> handler)
+	{
+		handler.Invoke(Changelog);
+	} 
 
 	public async ValueTask ApplyChanges(Func<ValueTask> changeHandler)
 	{

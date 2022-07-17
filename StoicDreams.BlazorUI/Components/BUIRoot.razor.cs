@@ -1,16 +1,11 @@
-﻿@implements IDisposable
+﻿namespace StoicDreams.BlazorUI.Components;
 
-@inject IAppOptions AppOptions
-@inject IAppState AppState
-@inject IJSRuntime JSRuntime
-@inject IJsInterop JSInterop
-@inject NavigationManager NavManager
-
-<PageTitle>@AppTitle</PageTitle>
-
-@ChildContent
-
-@code {
+/// <summary>
+/// Top level component required to wrap all other StoicDreams.BlazorUI components.
+/// Make sure to configure options for your app with `builder.Services.AddStoicDreamsBlazorUI(options=>{})` in your Program.cs file.
+/// </summary>
+public partial class BUIRoot : ComponentBase
+{
 	[Parameter]
 	public RenderFragment? ChildContent { get; set; }
 
@@ -38,7 +33,7 @@
 	private void HandleDataChanges(IDictionary<string, bool> keys)
 	{
 		if (!keys.ContainsKey("PageTitle")) { return; }
-		StateHasChanged();
+		InvokeAsync(StateHasChanged);
 	}
 
 	private async ValueTask RunSetupFromOptions()

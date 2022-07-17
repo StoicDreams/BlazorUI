@@ -8,4 +8,10 @@ public class AppOptions : IAppOptions
 	public IList<string> JavascriptFiles { get; } = new List<string>();
 	public IList<ElementDetail> HeadElements { get; } = new List<ElementDetail>();
 	public IList<ElementDetail> BodyElements { get; } = new List<ElementDetail>();
+	public void SetLayout<TLayout>()
+		where TLayout : LayoutComponentBase
+	{
+		MainLayout = typeof(TLayout);
+	}
+	public Type MainLayout { get; set; } = typeof(DefaultLayout);
 }

@@ -1,0 +1,21 @@
+﻿@using Microsoft.AspNetCore.Components.Routing
+@inject IAppOptions AppOptions
+@inject IAppState AppState
+@inject IJSRuntime JSRuntime
+@inject IJsInterop JSInterop
+@inject NavigationManager NavManager
+
+<PageTitle>@AppTitle</PageTitle>
+
+<Router AppAssembly="@AppAssembly">
+	<Found Context="routeData">
+		<RouteView RouteData="@routeData" DefaultLayout="@AppLayout" />
+		<FocusOnNavigate RouteData="@routeData" Selector="h1" />
+	</Found>
+	<NotFound>
+		<PageTitle>Not found</PageTitle>
+		<LayoutView Layout="@AppLayout">
+			<p role="alert">Sorry, there's nothing at this address.</p>
+		</LayoutView>
+	</NotFound>
+</Router>

@@ -34,4 +34,6 @@ public interface IAppOptions
 	/// Add details for elements to add to body tag.
 	/// </summary>
 	IList<ElementDetail> BodyElements { get; }
+
+	void SetLayout<TLayout>() where TLayout : LayoutComponentBase;
 }

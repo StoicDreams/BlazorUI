@@ -9,13 +9,12 @@ public static class ExtendTestFrameworkBlazor
 	{
 		services.AddMock<IJsInterop>();
 		services.AddMock<IJSRuntime>();
-		services.AddMock<IAppOptions>(mock =>
-		{
-			mock.Setup(m => m.CssFiles).Returns(new List<string>() { "mockcss" });
-			mock.Setup(m => m.JavascriptFiles).Returns(new List<string>() { "mockjs" });
-			mock.Setup(m => m.HeadElements).Returns(new List<ElementDetail>() { ElementDetail.Create("script") });
-			mock.Setup(m => m.BodyElements).Returns(new List<ElementDetail>() { ElementDetail.Create("script") });
-		});
+		AppOptions options = new();
+		options.CssFiles.Add("mockcss");
+		options.JavascriptFiles.Add("mockjs");
+		options.HeadElements.Add(ElementDetail.Create("script"));
+		options.BodyElements.Add(ElementDetail.Create("script"));
+		services.AddSingleton<IAppOptions>(options);
 		services.AddSingleton<IAppState, AppState>();
 		return services;
 	}

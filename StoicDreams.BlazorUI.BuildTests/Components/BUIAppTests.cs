@@ -1,13 +1,11 @@
-﻿using Microsoft.AspNetCore.Components;
+﻿namespace StoicDreams.BlazorUI.Components;
 
-namespace StoicDreams.BlazorUI.Components;
-
-public class StoicDreamsBlazorUIRootTests : TestFrameworkBlazor
+public class BUIAppTests : TestFrameworkBlazor
 {
 	[Fact]
 	public void Verify_Render()
 	{
-		IRenderActions<BUIRoot> actions = ArrangeRenderTest<BUIRoot>(options =>
+		IRenderActions<BUIApp> actions = ArrangeRenderTest<BUIApp>(options =>
 		{
 			options.Parameters.Add("ChildContent", MockRender("Mock Content"));
 		}, this.StartupTestServices);
@@ -19,7 +17,7 @@ public class StoicDreamsBlazorUIRootTests : TestFrameworkBlazor
 
 		actions.Assert(a =>
 		{
-			a.Render.Markup.Should().Contain("Mock Content");
+			a.Render.Markup.Should().Contain("Sorry, there's nothing at this address");
 		});
 
 		actions.Act(a =>

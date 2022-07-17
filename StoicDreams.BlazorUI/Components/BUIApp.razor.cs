@@ -1,13 +1,15 @@
-﻿namespace StoicDreams.BlazorUI.Components;
+﻿using System.Reflection;
+
+namespace StoicDreams.BlazorUI.Components;
 
 /// <summary>
 /// Top level component required to wrap all other StoicDreams.BlazorUI components.
 /// Make sure to configure options for your app with `builder.Services.AddStoicDreamsBlazorUI(options=>{})` in your Program.cs file.
 /// </summary>
-public partial class BUIRoot : ComponentBase
+public partial class BUIApp : ComponentBase, IDisposable
 {
-	[Parameter]
-	public RenderFragment? ChildContent { get; set; }
+	private Assembly AppAssembly => Assembly.GetEntryAssembly() ?? Assembly.GetCallingAssembly();
+	private Type AppLayout => ((AppOptions)AppOptions).MainLayout;
 
 	private string AppTitle => AppOptions.TitleFormat
 			.Replace("{AppName}", AppOptions.AppName)
@@ -16,11 +18,6 @@ public partial class BUIRoot : ComponentBase
 
 	protected override async Task OnInitializedAsync()
 	{
-		if (ChildContent == null)
-		{
-			throw new NullReferenceException($"{this.GetType().FullName} is required to have child content.");
-		}
-		AppState.SubscribeToDataChanges(ComponentId, HandleDataChanges);
 		await RunSetupFromOptions();
 		await base.OnInitializedAsync();
 	}

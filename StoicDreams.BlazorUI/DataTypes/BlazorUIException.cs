@@ -1,0 +1,13 @@
+﻿namespace StoicDreams.BlazorUI.DataTypes;
+
+public class BlazorUIException<TType> : ApplicationException
+{
+	public BlazorUIException(string message, Exception? innerException = null) : base($"BlazorUI.{typeof(TType).FullName} Exception: {message}", innerException) { }
+}
+
+public static class BlazorUIException
+{
+	public static void Throw<TType>(string message) => throw new BlazorUIException<TType>(message);
+
+	public static void ReThrow<TType>(string message, Exception innerException) => throw new BlazorUIException<TType>(message, innerException);
+}

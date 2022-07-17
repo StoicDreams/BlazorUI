@@ -1,4 +1,6 @@
-﻿namespace StoicDreams.BlazorUI.Extensions;
+﻿using MudBlazor.Services;
+
+namespace StoicDreams.BlazorUI.Extensions;
 
 public static partial class ExtendIServiceCollection
 {
@@ -9,6 +11,7 @@ public static partial class ExtendIServiceCollection
 		services.AddSingleton<IAppOptions>(appOptions);
 		services.AddSingleton<IAppState, AppState>();
 		services.AddTransient<IJsInterop, JsInterop>();
+		services.AddMudServices();
 		return services;
 	}
 }

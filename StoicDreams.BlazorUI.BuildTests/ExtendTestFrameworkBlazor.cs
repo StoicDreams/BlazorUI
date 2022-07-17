@@ -1,5 +1,6 @@
 ﻿using Microsoft.Extensions.DependencyInjection;
 using Microsoft.JSInterop;
+using MudBlazor.Services;
 
 namespace StoicDreams.BlazorUI;
 
@@ -16,6 +17,7 @@ public static class ExtendTestFrameworkBlazor
 		options.BodyElements.Add(ElementDetail.Create("script"));
 		services.AddSingleton<IAppOptions>(options);
 		services.AddSingleton<IAppState, AppState>();
+		services.AddMudServices();
 		return services;
 	}
 }

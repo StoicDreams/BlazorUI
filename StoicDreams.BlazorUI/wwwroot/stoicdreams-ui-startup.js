@@ -8,4 +8,5 @@
 	}
 
 	AddJSFile('_framework/blazor.webassembly.js');
+	AddJSFile('_content/MudBlazor/MudBlazor.min.js');
 })();

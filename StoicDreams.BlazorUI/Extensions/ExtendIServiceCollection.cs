@@ -12,6 +12,7 @@ public static partial class ExtendIServiceCollection
 		services.AddSingleton<IAppState, AppState>();
 		services.AddTransient<IJsInterop, JsInterop>();
 		services.AddMudServices();
+
 		return services;
 	}
 }

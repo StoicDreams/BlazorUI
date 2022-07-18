@@ -2,10 +2,17 @@
 
 public class AppState : IAppState
 {
-	public AppState(IJsInterop jsInterop)
+	public AppState(IJsInterop jsInterop, IAppOptions options)
 	{
 		Interop = jsInterop;
+		ApplyStartupOptionsToState(options);
 		LoadSimpleDataFromStorage();
+	}
+
+	private void ApplyStartupOptionsToState(IAppOptions options)
+	{
+		SetData(AppStateDataTags.AppLeftDrawerVariant.ToString(), options.LeftDrawerVariant);
+		SetData(AppStateDataTags.AppRightDrawerVariant.ToString(), options.RightDrawerVariant);
 	}
 
 	public void SetData<TData>(string name, TData? data)
@@ -62,6 +69,13 @@ public class AppState : IAppState
 	public async ValueTask ApplyChanges(Func<ValueTask> changeHandler)
 	{
 		await changeHandler.Invoke();
+		TriggerChange("ApplyChanges");
+		Changelog.Clear();
+	}
+
+	public void ApplyChanges(Action changeHandler)
+	{
+		changeHandler.Invoke();
 		TriggerChange("ApplyChanges");
 		Changelog.Clear();
 	}

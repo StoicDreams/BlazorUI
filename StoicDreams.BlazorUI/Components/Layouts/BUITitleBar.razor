@@ -1,0 +1,26 @@
+﻿@inject IAppOptions AppOptions
+@inject IAppState AppState
+
+<MudAppBar Elevation="1">
+	<MudIconButton Icon="@Icons.Material.Filled.Menu" Color="Color.Inherit" Edge="Edge.Start" OnClick="@ToggleLeftDrawer" />
+	<MudSpacer />
+	<MudIconButton Icon="@Icons.Material.Filled.Menu" Color="Color.Inherit" Edge="Edge.Start" OnClick="@ToggleRightDrawer" />
+</MudAppBar>
+
+@code {
+	private void ToggleLeftDrawer()
+	{
+		AppState.ApplyChanges(() =>
+		{
+			AppState.SetData(AppStateDataTags.TitleBarLeftDrawerOpen, !AppState.GetData<bool>(AppStateDataTags.TitleBarLeftDrawerOpen));
+		});
+	}
+
+	private void ToggleRightDrawer()
+	{
+		AppState.ApplyChanges(() =>
+		{
+			AppState.SetData(AppStateDataTags.TitleBarRightDrawerOpen, !AppState.GetData<bool>(AppStateDataTags.TitleBarRightDrawerOpen));
+		});
+	}
+}

@@ -1,13 +1,59 @@
 ﻿@inherits LayoutComponentBase
+@implements IDisposable
 
-<div class="page">
-    <main>
-        <div class="top-row px-4">
-            <a href="https://docs.microsoft.com/aspnet/" target="_blank">About</a>
-        </div>
+@inject IAppOptions AppOptions
+@inject IAppState AppState
 
-        <article class="content px-4">
-            @Body
-        </article>
-    </main>
-</div>
+<MudLayout>
+	@if (AppOptions.TitleBarPosition == TitleBarPosition.Top)
+	{
+		<BUITitleBar />
+	}
+	<MudDrawerContainer Class="mud-height-full">
+		<MudDrawer @bind-Open="@LeftDrawerOpen" Anchor="Anchor.Left" Elevation="0" Variant="@LeftDrawerVariant">
+
+		</MudDrawer>
+		<MudDrawer @bind-Open="@RightDrawerOpen" Anchor="Anchor.Right" Elevation="0" Variant="@RightDrawerVariant">
+
+		</MudDrawer>
+		<MudMainContent>
+			@Body
+		</MudMainContent>
+	</MudDrawerContainer>
+	@if (AppOptions.TitleBarPosition == TitleBarPosition.Bottom)
+	{
+		<BUITitleBar />
+	}
+</MudLayout>
+
+@code {
+	private Guid ComponentId { get; } = Guid.NewGuid();
+	private bool LeftDrawerOpen { get => AppState.GetData<bool>(AppStateDataTags.TitleBarLeftDrawerOpen); set => AppState.SetData<bool>(AppStateDataTags.TitleBarLeftDrawerOpen, value); }
+	private bool RightDrawerOpen { get => AppState.GetData<bool>(AppStateDataTags.TitleBarRightDrawerOpen); set => AppState.SetData<bool>(AppStateDataTags.TitleBarRightDrawerOpen, value); }
+	private DrawerVariant LeftDrawerVariant { get => AppState.GetData<DrawerVariant>(AppStateDataTags.AppLeftDrawerVariant); set => AppState.SetData<DrawerVariant>(AppStateDataTags.AppLeftDrawerVariant, value); }
+	private DrawerVariant RightDrawerVariant { get => AppState.GetData<DrawerVariant>(AppStateDataTags.AppRightDrawerVariant); set => AppState.SetData<DrawerVariant>(AppStateDataTags.AppRightDrawerVariant, value); }
+
+	protected override async Task OnInitializedAsync()
+	{
+		AppState.SubscribeToDataChanges(ComponentId, HandleStateChange);
+		await base.OnInitializedAsync();
+	}
+
+	public void Dispose()
+	{
+		AppState.UnsubscribeToDataChanges(ComponentId);
+	}
+
+	private readonly string[] MyStateKeys = new[]
+	{
+		AppStateDataTags.TitleBarLeftDrawerOpen.ToString(),
+		AppStateDataTags.TitleBarRightDrawerOpen.ToString(),
+		AppStateDataTags.AppLeftDrawerVariant.ToString(),
+		AppStateDataTags.AppRightDrawerVariant.ToString()
+	};
+	private void HandleStateChange(IDictionary<string, bool> keys)
+	{
+		if (!keys.Keys.Where(key => MyStateKeys.Contains(key)).Any()) { return; }
+		InvokeAsync(StateHasChanged);
+	}
+}

@@ -1,6 +1,10 @@
 ﻿namespace StoicDreams.BlazorUI.Constants;
 
-internal enum AppStateDataTags
+public enum AppStateDataTags
 {
-	PageTitle
+	PageTitle,
+	TitleBarLeftDrawerOpen,
+	TitleBarRightDrawerOpen,
+	AppLeftDrawerVariant,
+	AppRightDrawerVariant
 }

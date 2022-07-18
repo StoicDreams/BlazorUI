@@ -14,7 +14,7 @@ If you do decide to use it please provide us feedback on our website at [www.sto
 
 Due to its sheer awesomeness we have decided to use MudBlazor as a base for our component library. We will do our best to update this project to keep it up to date with MudBlazor updates. And we'll do our best to make sure our integrations and components do not conflict with expected behavior from MudBlazor components.
 
-Not only is it the best Blazor framework I've see or tried, but it's also free. It has a focus on Material design, and their components, documentation, and templates are much more developer friendly in my opinion than the other design frameworks I've seen and tried.
+Not only is it hands down the best component framework we've see or tried in any language, but it's also free. It has a focus on being rooted in Material design, and their components, documentation, and templates are much more developer friendly in our opinion than most other design frameworks we've seen or tried.
 
 ## Project Goals
 
@@ -42,8 +42,19 @@ builder.Services.AddStoicDreamsBlazorUI(options =>
 	options.HeadElements.Add(ElementDetail.Create("link", ("rel", "apple-touch-icon"), ("sizes", "512x512"), ("href", "icon-512.png")));
 	options.HeadElements.Add(ElementDetail.Create("link", ("rel", "apple-touch-icon"), ("sizes", "192x192"), ("href", "icon-192.png")));
 	options.BodyElements.Add(ElementDetail.Create("script", ("body", "navigator.serviceWorker.register('service-worker.js');"), ("type", "text/javascript")));
-	options.SetLayout<MainLayout>();
 });
+
+And while our DefaultLayout is being designed to provide a ton of flexability through simple config changes, we recognize some developers will want to do layouts that follow their own standards, so we allow a simple mechanism to set your own layout.
+
+```csharp
+builder.Services.AddStoicDreamsBlazorUI(options =>
+{
+	options.AppName = "Stoic Dreams Blazor UI Sample App";
+	options.SetLayout<MainLayout>();
+	...
+});
+
+```
 
 await builder.Build().RunAsync();
 

@@ -13,4 +13,5 @@ public interface IAppState
 	void TriggerChange(string key);
 
 	ValueTask ApplyChanges(Func<ValueTask> changeHandler);
+	void ApplyChanges(Action changeHandler);
 }

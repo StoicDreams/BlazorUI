@@ -16,7 +16,8 @@ builder.Services.AddStoicDreamsBlazorUI(options =>
 	options.HeadElements.Add(ElementDetail.Create("link", ("rel", "apple-touch-icon"), ("sizes", "512x512"), ("href", "icon-512.png")));
 	options.HeadElements.Add(ElementDetail.Create("link", ("rel", "apple-touch-icon"), ("sizes", "192x192"), ("href", "icon-192.png")));
 	options.BodyElements.Add(ElementDetail.Create("script", ("body", "navigator.serviceWorker.register('service-worker.js');"), ("type", "text/javascript")));
-	options.SetLayout<MainLayout>();
+	options.TitleBarPosition = TitleBarPosition.Top;
+	options.LeftDrawerVariant = DrawerVariant.Mini;
 });
 
 await builder.Build().RunAsync();

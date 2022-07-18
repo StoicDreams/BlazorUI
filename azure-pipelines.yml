@@ -75,23 +75,22 @@ stages:
           packageType: 'sdk'
           version: '6.x'
           includePreviewVersions: true
-      - task: DotNetCoreCLI@2
-        displayName: 'Restore Nuget Dependencies'
-        inputs:
-          command: 'restore'
-          projects: '**/*SampleWebsite.csproj'
-          includeNuGetOrg: true
-      - task: DotNetCoreCLI@2
-        displayName: 'Build Solution'
-        inputs:
-          command: 'build'
-          projects: '**/*SampleWebsite.csproj'
+#      - task: DotNetCoreCLI@2
+#        displayName: 'Restore Nuget Dependencies'
+#        inputs:
+#          command: 'restore'
+#          projects: '**/*SampleWebsite.csproj'
+#          includeNuGetOrg: true
+#      - task: DotNetCoreCLI@2
+#        displayName: 'Build Solution'
+#        inputs:
+#          command: 'build'
+#          projects: '**/*SampleWebsite.csproj'
       - task: DotNetCoreCLI@2
         displayName: 'Publish Sample Website'
         inputs:
           command: 'publish'
           projects: '**/*SampleWebsite.csproj'
-          nobuild: true
           zipAfterPublish: false
           workingDirectory: '$(System.DefaultWorkingDirectory)/StoicDreams.SampleWebsite'
       - task: PublishBuildArtifacts@1

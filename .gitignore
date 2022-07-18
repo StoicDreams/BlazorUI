@@ -13,3 +13,4 @@ obj
 # Ignore User files
 *.User
 *.local.*
+*.pubxml

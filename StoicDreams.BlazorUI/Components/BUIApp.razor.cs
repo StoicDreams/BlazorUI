@@ -8,17 +8,19 @@ namespace StoicDreams.BlazorUI.Components;
 /// </summary>
 public partial class BUIApp : ComponentBase, IDisposable
 {
+	private Guid ComponentId { get; } = Guid.NewGuid();
 	private Assembly AppAssembly => Assembly.GetEntryAssembly() ?? Assembly.GetCallingAssembly();
 	private Type AppLayout => ((AppOptions)AppOptions).MainLayout;
 
 	private string AppTitle => AppOptions.TitleFormat
 			.Replace("{AppName}", AppOptions.AppName)
-			.Replace("{PageTitle}", "Page Title")
+			.Replace("{PageTitle}", AppState.GetData<string>(AppStateDataTags.PageTitle) ?? string.Empty)
 			;
 
 	protected override async Task OnInitializedAsync()
 	{
 		await RunSetupFromOptions();
+		AppState.SubscribeToDataChanges(ComponentId, HandleDataChanges);
 		await base.OnInitializedAsync();
 	}
 
@@ -29,7 +31,7 @@ public partial class BUIApp : ComponentBase, IDisposable
 
 	private void HandleDataChanges(IDictionary<string, bool> keys)
 	{
-		if (!keys.ContainsKey("PageTitle")) { return; }
+		if (!keys.ContainsKey(AppStateDataTags.PageTitle.ToString())) { return; }
 		InvokeAsync(StateHasChanged);
 	}
 
@@ -52,6 +54,4 @@ public partial class BUIApp : ComponentBase, IDisposable
 			await JSInterop.AddElementToBody(detail.TagName, detail.Attributes);
 		}
 	}
-
-	private Guid ComponentId { get; } = Guid.NewGuid();
 }

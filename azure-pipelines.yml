@@ -94,29 +94,29 @@ stages:
           packageType: 'sdk'
           version: '6.x'
           includePreviewVersions: true
-#      - task: DotNetCoreCLI@2
-#        displayName: 'Restore Nuget Dependencies'
-#        inputs:
-#          command: 'restore'
-#          projects: '**/*SampleWebsite.csproj'
-#          includeNuGetOrg: true
-#      - task: DotNetCoreCLI@2
-#        displayName: 'Build Solution'
-#        inputs:
-#          command: 'build'
-#          projects: '**/*SampleWebsite.csproj'
+      - task: DotNetCoreCLI@2
+        displayName: 'Restore Nuget Dependencies'
+        inputs:
+          command: 'restore'
+          projects: '**/*SampleWebsite.csproj'
+          includeNuGetOrg: true
+      - task: DotNetCoreCLI@2
+        displayName: 'Build Solution'
+        inputs:
+          command: 'build'
+          arguments: '--configuration $(buildConfiguration)'
+          projects: '**/*SampleWebsite.csproj'
       - task: DotNetCoreCLI@2
         displayName: 'Publish Sample Website'
         inputs:
           command: 'publish'
-          arguments: ''
-          configuration: $(buildConfiguration)
+          arguments: '--configuration $(buildConfiguration) --no-restore --no-build --self-contained true'
           projects: '**/*SampleWebsite.csproj'
           zipAfterPublish: false
-          workingDirectory: '$(System.DefaultWorkingDirectory)/StoicDreams.SampleWebsite'
+          workingDirectory: 'StoicDreams.SampleWebsite'
       - task: PublishBuildArtifacts@1
         displayName: 'Transfer published files to Artifact container'
         inputs:
-          PathtoPublish: '$(System.DefaultWorkingDirectory)/StoicDreams.SampleWebsite'
+          PathtoPublish: 'StoicDreams.SampleWebsite'
           ArtifactName: 'drop'
           publishLocation: 'Container'

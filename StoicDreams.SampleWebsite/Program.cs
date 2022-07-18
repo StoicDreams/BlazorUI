@@ -10,7 +10,6 @@ builder.Services.AddScoped(sp => new HttpClient { BaseAddress = new Uri(builder.
 builder.Services.AddStoicDreamsBlazorUI(options =>
 {
 	options.AppName = "Stoic Dreams Blazor UI Sample App";
-	options.CssFiles.Add("css/bootstrap/bootstrap.min.css");
 	options.CssFiles.Add("css/app.css");
 	options.CssFiles.Add("StoicDreams.SampleWebsite.styles.css");
 	options.HeadElements.Add(ElementDetail.Create("link", ("rel", "manifest")));

@@ -1,6 +1,7 @@
 # Stoic Dreams Blazor UI
 ###### GitHub: [GitHub.com/StoicDreams/BlazorUI](https://github.com/StoicDreams/BlazorUI)
 ###### Nuget: [NuGet.org/StoicDreams/BlazorUI](https://nuget.org/StoicDreams/BlazorUI)
+###### Demo & Docs: [blazorui.stoicdreams.com](https://blazorui.stoicdreams.com)
 
 UI Framework and component library for Blazor based Websites and Maui projects.
 
@@ -9,12 +10,9 @@ UI Framework and component library for Blazor based Websites and Maui projects.
 
 If you do decide to use it please provide us feedback on our website at [www.stoicdreams.com](https://www.stoicdreams.com).
 
-## MudBlazor - [www.MudBlazor.com](https://www.mudblazor.com)
-###### Library Docs - [MudBlazor.com/docs/overview](https://mudblazor.com/docs/overview)
+## Demo & Documentation
 
-Due to its sheer awesomeness we have decided to use MudBlazor as a base for our component library. We will do our best to update this project to keep it up to date with MudBlazor updates. And we'll do our best to make sure our integrations and components do not conflict with expected behavior from MudBlazor components.
-
-Not only is it hands down the best component framework we've see or tried in any language, but it's also free. It has a focus on being rooted in Material design, and their components, documentation, and templates are much more developer friendly in our opinion than most other design frameworks we've seen or tried.
+[blazorui.stoicdreams.com](https://blazorui.stoicdreams.com) - Our live Demo and Documentation website deployed directly from the sample website `StoicDreams.SampleWebsite` which is built from `Blazor UI`.
 
 ## Project Goals
 
@@ -56,13 +54,17 @@ builder.Services.AddStoicDreamsBlazorUI(options =>
 
 ```
 
-await builder.Build().RunAsync();
-
-```
-
 While this project will take some inspiration from and is expected to share some features from design frameworks such as Material and Fluent design systems, it is not in our interest to strictly follow any other frameworks or design patterns. We like a lot of what they do and provide, but we also thing they do some things wrong.
 
 We have developed and are evolving our own design patterns, and those will be reflected in this UI framework.
+
+
+## MudBlazor - [www.MudBlazor.com](https://www.mudblazor.com)
+###### Library Docs - [MudBlazor.com/docs/overview](https://mudblazor.com/docs/overview)
+
+Due to its sheer awesomeness we have decided to use MudBlazor as a base for our component library. We will do our best to update this project to keep it up to date with MudBlazor updates. And we'll do our best to make sure our integrations and components do not conflict with expected behavior from MudBlazor components.
+
+Not only is it hands down the best component framework we've see or tried in any language, but it's also free. It has a focus on being rooted in Material design, and their components, documentation, and templates are much more developer friendly in our opinion than most other design frameworks we've seen or tried.
 
 ## Restrictions
 

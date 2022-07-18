@@ -79,13 +79,13 @@ stages:
         displayName: 'Restore Nuget Dependencies'
         inputs:
           command: 'restore'
-          projects: '**/*.sln'
+          projects: '**/*SampleWebsite.csproj'
           includeNuGetOrg: true
       - task: DotNetCoreCLI@2
         displayName: 'Build Solution'
         inputs:
           command: 'build'
-          projects: '**/*.sln'
+          projects: '**/*SampleWebsite.csproj'
       - task: DotNetCoreCLI@2
         displayName: 'Publish Sample Website'
         inputs:

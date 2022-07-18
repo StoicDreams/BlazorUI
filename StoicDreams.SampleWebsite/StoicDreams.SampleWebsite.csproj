@@ -12,6 +12,7 @@
 		<PackageReference Include="Microsoft.AspNetCore.Components.WebAssembly.DevServer" Version="6.0.7" PrivateAssets="all" />
 	</ItemGroup>
 
+	<!--
 	<Choose>
 		<When Condition="'$(Configuration)' == 'Debug'">
 			<ItemGroup>
@@ -24,6 +25,12 @@
 			</ItemGroup>
 		</Otherwise>
 	</Choose>
+	-->
+
+	<ItemGroup>
+		<PackageReference Include="StoicDreams.BlazorUI" Version="1.0.49" />
+	</ItemGroup>
+
 	<ItemGroup>
 		<ServiceWorker Include="wwwroot\service-worker.js" PublishedContent="wwwroot\service-worker.published.js" />
 	</ItemGroup>

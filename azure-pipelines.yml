@@ -93,6 +93,7 @@ stages:
           projects: '**/*SampleWebsite.csproj'
           nobuild: true
           zipAfterPublish: false
+          publishReadyToRun: false
           workingDirectory: '$(System.DefaultWorkingDirectory)/StoicDreams.SampleWebsite'
       - task: PublishBuildArtifacts@1
         displayName: 'Transfer published files to Artifact container'

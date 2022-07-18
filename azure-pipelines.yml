@@ -8,6 +8,7 @@ trigger:
 
 stages:
 - stage: Alpha
+  jobs:
   - job: BlazorUI
     displayName: 'Build and Publish Blazor UI'
     pool:
@@ -33,12 +34,25 @@ stages:
         displayName: 'Build and pack the project'
         inputs:
           command: 'build'
-          projects: '**/StoicDreams.BlazorUI.csproj'
+          projects: '**/*.sln'
       - task: VisualStudioTestPlatformInstaller@1
-      - task: VSTest@2
-        displayName: 'Run the Unit Tests'
+      - task: DotNetCoreCLI@2
+        displayName: 'Run Build Tests'
         inputs:
-          codeCoverageEnabled: True
+          command: 'test'
+          projects: '**/**.BuildTests.csproj'
+          arguments: '--configuration $(buildConfiguration) --no-restore --collect: "XPlat Code Coverage"'
+          publishTestResults: true,
+          nobuild: true
+      - script: "dotnet tool install --global dotnet-reportgenerator-globaltool --version 4.5.8"
+        displayName: "Install ReportGenerator tool"
+      - script: 'reportgenerator -reports:**/coverage.cobertura.xml -targetdir:$(Build.SourcesDirectory)/coverlet/reports -reporttypes:"Cobertura"'
+        displayName: "Create reports"
+      - task: PublishCodeCoverageResults@1
+        displayName: "Publish code coverage report"
+        inputs:
+          codeCoverageTool: "Cobertura"
+          summaryFileLocation: "$(Build.SourcesDirectory)/coverlet/reports/Cobertura.xml"
       - task: Bash@3
         displayName: 'Push package to nuget store'
         inputs:

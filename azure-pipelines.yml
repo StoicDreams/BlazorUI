@@ -10,7 +10,7 @@ stages:
 - stage: Alpha
   jobs:
   - job: BlazorUI
-    displayName: 'Build and Publish Blazor UI'
+    displayName: 'Build and Publish Blazor UI Framework'
     pool:
       vmImage: 'windows-latest'
     steps:
@@ -63,3 +63,34 @@ stages:
         inputs:
           targetType: inline
           script: pushResult=$(cat nugetpush.txt); re=".*StoicDreams\.BlazorUI\.([0-9\.]+)\.nupkg.*";if [[ $pushResult =~ $re ]]; then echo ${BASH_REMATCH[1]}; fi
+
+  - job: BlazorUIWebsite
+    displayName: 'Build and Publish Blazor UI Sample Website'
+    pool:
+      vmImage: 'windows-latest'
+    steps:
+    - task: UseDotNet@2
+      inputs:
+        packageType: 'sdk'
+        version: '6.x'
+        includePreviewVersions: true
+    - task: DotNetCoreCLI@2
+      inputs:
+        command: 'restore'
+        projects: '**/*.sln'
+        includeNuGetOrg: true
+    - task: DotNetCoreCLI@2
+      inputs:
+        command: 'build'
+        projects: '**/*.csproj'
+    - task: DotNetCoreCLI@2
+      inputs:
+        command: 'publish'
+        publishWebProjects: true
+        zipAfterPublish: false
+        workingDirectory: '$(System.DefaultWorkingDirectory)/StoicDreams.SampleWebsite'
+    - task: PublishBuildArtifacts@1
+      inputs:
+        PathtoPublish: '$(System.DefaultWorkingDirectory)/StoicDreams.SampleWebsite'
+        ArtifactName: 'drop'
+        publishLocation: 'Container'

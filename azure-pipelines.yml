@@ -69,28 +69,33 @@ stages:
     pool:
       vmImage: 'windows-latest'
     steps:
-    - task: UseDotNet@2
-      inputs:
-        packageType: 'sdk'
-        version: '6.x'
-        includePreviewVersions: true
-    - task: DotNetCoreCLI@2
-      inputs:
-        command: 'restore'
-        projects: '**/*.sln'
-        includeNuGetOrg: true
-    - task: DotNetCoreCLI@2
-      inputs:
-        command: 'build'
-        projects: '**/*.csproj'
-    - task: DotNetCoreCLI@2
-      inputs:
-        command: 'publish'
-        publishWebProjects: true
-        zipAfterPublish: false
-        workingDirectory: '$(System.DefaultWorkingDirectory)/StoicDreams.SampleWebsite'
-    - task: PublishBuildArtifacts@1
-      inputs:
-        PathtoPublish: '$(System.DefaultWorkingDirectory)/StoicDreams.SampleWebsite'
-        ArtifactName: 'drop'
-        publishLocation: 'Container'
+      - task: UseDotNet@2
+        displayName: 'Set .NET SDK Version'
+        inputs:
+          packageType: 'sdk'
+          version: '6.x'
+          includePreviewVersions: true
+      - task: DotNetCoreCLI@2
+        displayName: 'Restore Nuget Dependencies'
+        inputs:
+          command: 'restore'
+          projects: '**/*.sln'
+          includeNuGetOrg: true
+      - task: DotNetCoreCLI@2
+        displayName: 'Build Solution'
+        inputs:
+          command: 'build'
+          projects: '**/*.sln'
+      - task: DotNetCoreCLI@2
+        displayName: 'Publish Sample Website'
+        inputs:
+          command: 'publish'
+          publishWebProjects: true
+          zipAfterPublish: false
+          workingDirectory: '$(System.DefaultWorkingDirectory)/StoicDreams.SampleWebsite'
+      - task: PublishBuildArtifacts@1
+        displayName: 'Transfer published files to Artifact container'
+        inputs:
+          PathtoPublish: '$(System.DefaultWorkingDirectory)/StoicDreams.SampleWebsite'
+          ArtifactName: 'drop'
+          publishLocation: 'Container'

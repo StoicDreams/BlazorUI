@@ -110,7 +110,7 @@ stages:
         displayName: 'Publish Sample Website'
         inputs:
           command: 'publish'
-          arguments: '**/StoicDreams.SampleWebsite.csproj --configuration $(buildConfiguration) --no-restore --no-build --self-contained true'
+          arguments: '$(System.DefaultWorkingDirectory)/StoicDreams.SampleWebsite/StoicDreams.SampleWebsite.csproj --configuration $(buildConfiguration) --no-restore --no-build --self-contained true'
           zipAfterPublish: false
           workingDirectory: 'StoicDreams.SampleWebsite'
       - task: PublishBuildArtifacts@1

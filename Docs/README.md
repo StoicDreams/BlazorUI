@@ -4,17 +4,50 @@
 
 UI Framework and component library for Blazor based Websites and Maui projects.
 
-## **Notice:** This project is very early in development!
+> ## **Notice:** This project is very early in development!
+> This project should technically have all the functionality to build a complete website, but at this stage there is a lot of experimental work being done and breaking changes could be introduced with each update.
 
-If I can get in and sustain a very productive groove, this project might be ready for production-level development by the end of 2022.
+If you do decide to use it please provide us feedback on our website at [www.stoicdreams.com](https://www.stoicdreams.com).
 
-More realistically though, because of other priorities, time constraints, and the sheer amount of work that needs to be done, it perhaps might be closer to the end of 2023 before I would start recommending people to use this library.
+## MudBlazor - [www.MudBlazor.com](https://www.mudblazor.com)
+###### Library Docs - [MudBlazor.com/docs/overview](https://mudblazor.com/docs/overview)
 
-In the meantime, if you're needing an awesome framework to help you develop a Blazor based project with then we highly recommend checking out [MudBlazor](https://www.mudblazor.com). Not only is it the best Blazor framework I've see or tried, but it's also free. It has a focus on Material design, and their components, documentation, and templates are much more developer friendly in my opinion than the other design frameworks I've seen and tried.
+Due to its sheer awesomeness we have decided to use MudBlazor as a base for our component library. We will do our best to update this project to keep it up to date with MudBlazor updates. And we'll do our best to make sure our integrations and components do not conflict with expected behavior from MudBlazor components.
+
+Not only is it the best Blazor framework I've see or tried, but it's also free. It has a focus on Material design, and their components, documentation, and templates are much more developer friendly in my opinion than the other design frameworks I've seen and tried.
 
 ## Project Goals
 
-This Blazor UI framework is targeting a developer experience to allow developers to be able to develop websites and Maui Blazor app (Desktop & Mobile) without needing to know or touch any html, css, or javascript.
+This Blazor UI framework is targeting a developer experience that will allow developers to be able to develop websites and Maui Blazor app (Desktop & Mobile) without needing to know or touch any html, css, or javascript.
+
+Where component frameworks such as MudBlazor typically give you a bunch of smaller components that need to be stitched together with countless options for doing so, Blazor UI's goal is to get rid of boilerplate coding such as index.html files, and package together these smaller components into larger components, including the `MUIApp` which replaces the normal `App` component that a developer would normally have to create and manage for each new app.
+
+As an example here is the `Program.cs` contenxt taken from our Sample Website:
+```csharp
+using Microsoft.AspNetCore.Components.Web;
+using Microsoft.AspNetCore.Components.WebAssembly.Hosting;
+using StoicDreams.SampleWebsite.Shared;
+
+WebAssemblyHostBuilder builder = WebAssemblyHostBuilder.CreateDefault(args);
+builder.RootComponents.Add<BUIApp>("#app");
+builder.RootComponents.Add<HeadOutlet>("head::after");
+
+builder.Services.AddScoped(sp => new HttpClient { BaseAddress = new Uri(builder.HostEnvironment.BaseAddress) });
+builder.Services.AddStoicDreamsBlazorUI(options =>
+{
+	options.AppName = "Stoic Dreams Blazor UI Sample App";
+	options.CssFiles.Add("css/app.css");
+	options.CssFiles.Add("StoicDreams.SampleWebsite.styles.css");
+	options.HeadElements.Add(ElementDetail.Create("link", ("rel", "manifest")));
+	options.HeadElements.Add(ElementDetail.Create("link", ("rel", "apple-touch-icon"), ("sizes", "512x512"), ("href", "icon-512.png")));
+	options.HeadElements.Add(ElementDetail.Create("link", ("rel", "apple-touch-icon"), ("sizes", "192x192"), ("href", "icon-192.png")));
+	options.BodyElements.Add(ElementDetail.Create("script", ("body", "navigator.serviceWorker.register('service-worker.js');"), ("type", "text/javascript")));
+	options.SetLayout<MainLayout>();
+});
+
+await builder.Build().RunAsync();
+
+```
 
 While this project will take some inspiration from and is expected to share some features from design frameworks such as Material and Fluent design systems, it is not in our interest to strictly follow any other frameworks or design patterns. We like a lot of what they do and provide, but we also thing they do some things wrong.
 

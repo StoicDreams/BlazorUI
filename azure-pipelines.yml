@@ -13,6 +13,8 @@ stages:
     displayName: 'Build and Publish Blazor UI Framework'
     pool:
       vmImage: 'windows-latest'
+    variables:
+      buildConfiguration: 'Release'
     steps:
       - task: NuGetToolInstaller@1
         inputs:
@@ -64,10 +66,27 @@ stages:
           targetType: inline
           script: pushResult=$(cat nugetpush.txt); re=".*StoicDreams\.BlazorUI\.([0-9\.]+)\.nupkg.*";if [[ $pushResult =~ $re ]]; then echo ${BASH_REMATCH[1]}; fi
 
+  - job: DelayToAllowNugetTimeToPublish
+    displayName: 'Give Nuget.org time to process publishing'
+    dependsOn:
+    - BlazorUI
+    condition: succeeded()
+    pool: Server
+    steps:
+    - task: Delay@1
+      inputs:
+        delayForMinutes: '5'
+
+
   - job: BlazorUIWebsite
     displayName: 'Build and Publish Blazor UI Sample Website'
+    dependsOn:
+    - DelayToAllowNugetTimeToPublish
+    condition: succeeded()
     pool:
       vmImage: 'windows-latest'
+    variables:
+      buildConfiguration: 'Release'
     steps:
       - task: UseDotNet@2
         displayName: 'Set .NET SDK Version'
@@ -90,6 +109,7 @@ stages:
         displayName: 'Publish Sample Website'
         inputs:
           command: 'publish'
+          arguments: ''
           projects: '**/*SampleWebsite.csproj'
           zipAfterPublish: false
           workingDirectory: '$(System.DefaultWorkingDirectory)/StoicDreams.SampleWebsite'

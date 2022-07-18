@@ -90,8 +90,8 @@ stages:
         displayName: 'Publish Sample Website'
         inputs:
           command: 'publish'
+          projects: '**/*SampleWebsite.csproj'
           publishWebProjects: true
-          publishReadyToRun: false
           zipAfterPublish: false
           workingDirectory: '$(System.DefaultWorkingDirectory)/StoicDreams.SampleWebsite'
       - task: PublishBuildArtifacts@1

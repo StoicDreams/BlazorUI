@@ -44,13 +44,13 @@ if($version -ne $null) {
 	Write-Host Found Version: $version -ForegroundColor Green
 	$rootpath = Get-Location
 	$rootpath = $rootpath.ToString().ToLower()
-	Write-Host Path: $rootpath
-	while($rootpath.Contains('BlazorUI')) {
+	Write-Host Path: "Root Path Start: $rootpath"
+	while($rootpath.Contains('blazorui')) {
 		cd ..
 		$rootpath = Get-Location
 		$rootpath = $rootpath.ToString().ToLower()
-		Write-Host $rootpath
 	}
+	Write-Host Path: "Root Path End: $rootpath"
 	$newXML = '<PackageReference Include="StoicDreams.BlazorUI" Version="'+$version+'" />'
 	Get-ChildItem -Path .\ -Filter *.csproj -Recurse -File | ForEach-Object {
 		UpdateProjectVersion $_.FullName $version

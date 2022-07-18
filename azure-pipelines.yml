@@ -110,6 +110,7 @@ stages:
         inputs:
           command: 'publish'
           arguments: ''
+          configuration: $(buildConfiguration)
           projects: '**/*SampleWebsite.csproj'
           zipAfterPublish: false
           workingDirectory: '$(System.DefaultWorkingDirectory)/StoicDreams.SampleWebsite'

@@ -1,6 +1,6 @@
 {
-  "name": "StoicDreams.SampleWebsite",
-  "short_name": "StoicDreams.SampleWebsite",
+  "name": "Stoic Dreams Blazor UI Demo & Documenation",
+  "short_name": "Blazor UI Docs",
   "start_url": "./",
   "display": "standalone",
   "background_color": "#ffffff",

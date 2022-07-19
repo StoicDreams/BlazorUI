@@ -5,6 +5,7 @@
 # Ignore build files
 bin
 obj
+temp
 
 # Ignore NCrunch files
 *ncrunch*

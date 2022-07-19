@@ -9,17 +9,35 @@
 	{
 		<BUITitleBar />
 	}
-	<MudDrawerContainer Class="mud-height-full">
-		<MudDrawer @bind-Open="@LeftDrawerOpen" Anchor="Anchor.Left" Elevation="0" Variant="@LeftDrawerVariant">
+	<MudDrawer @bind-Open="@LeftDrawerOpen" Anchor="Anchor.Left" Elevation="0" Variant="@LeftDrawerVariant" ClipMode="DrawerClipMode.Docked">
+		<MudNavMenu>
+			<Virtualize Items="@NavList" Context="navItem">
+				@if (string.IsNullOrWhiteSpace(navItem.Href))
+				{
+					<MudNavLink Icon="@navItem.Icon"
+						OnClick="() => navItem.OnClick?.Invoke(navItem)"
+						>
+						@navItem.Name
+					</MudNavLink>
+				}
+				else
+				{
+					<MudNavLink Icon="@navItem.Icon"
+						Href="@navItem.Href"
+						OnClick="() => navItem.OnClick?.Invoke(navItem)"
+						>
+						@navItem.Name
+					</MudNavLink>
+				}
+			</Virtualize>
+		</MudNavMenu>
+	</MudDrawer>
+	<MudDrawer @bind-Open="@RightDrawerOpen" Anchor="Anchor.Right" Elevation="0" Variant="@RightDrawerVariant">
 
-		</MudDrawer>
-		<MudDrawer @bind-Open="@RightDrawerOpen" Anchor="Anchor.Right" Elevation="0" Variant="@RightDrawerVariant">
-
-		</MudDrawer>
-		<MudMainContent>
-			@Body
-		</MudMainContent>
-	</MudDrawerContainer>
+	</MudDrawer>
+	<MudMainContent>
+		@Body
+	</MudMainContent>
 	@if (AppOptions.TitleBarPosition == TitleBarPosition.Bottom)
 	{
 		<BUITitleBar />
@@ -32,6 +50,7 @@
 	private bool RightDrawerOpen { get => AppState.GetData<bool>(AppStateDataTags.TitleBarRightDrawerOpen); set => AppState.SetData<bool>(AppStateDataTags.TitleBarRightDrawerOpen, value); }
 	private DrawerVariant LeftDrawerVariant { get => AppState.GetData<DrawerVariant>(AppStateDataTags.AppLeftDrawerVariant); set => AppState.SetData<DrawerVariant>(AppStateDataTags.AppLeftDrawerVariant, value); }
 	private DrawerVariant RightDrawerVariant { get => AppState.GetData<DrawerVariant>(AppStateDataTags.AppRightDrawerVariant); set => AppState.SetData<DrawerVariant>(AppStateDataTags.AppRightDrawerVariant, value); }
+	private List<NavDetail> NavList { get => AppState.GetData<List<NavDetail>>(AppStateDataTags.NavList) ?? new(); set => AppState.SetData<List<NavDetail>>(AppStateDataTags.NavList, value); }
 
 	protected override async Task OnInitializedAsync()
 	{
@@ -49,7 +68,8 @@
 		AppStateDataTags.TitleBarLeftDrawerOpen.ToString(),
 		AppStateDataTags.TitleBarRightDrawerOpen.ToString(),
 		AppStateDataTags.AppLeftDrawerVariant.ToString(),
-		AppStateDataTags.AppRightDrawerVariant.ToString()
+		AppStateDataTags.AppRightDrawerVariant.ToString(),
+		AppStateDataTags.NavList.ToString()
 	};
 	private void HandleStateChange(IDictionary<string, bool> keys)
 	{

@@ -39,6 +39,20 @@ public interface IAppOptions
 	/// Add details for elements to add to body tag during startup.
 	/// </summary>
 	IList<ElementDetail> BodyElements { get; }
+
+	/// <summary>
+	/// Apply a razor component to the app on startup.
+	/// This should be a component that you want persisted for as long as the app is open.
+	/// This is a good place to have app startup initializers such as auth/login checking, initial nav loading, etc.
+	/// </summary>
+	/// <typeparam name="TStartupComponent"></typeparam>
+	void ApplyOnStartup<TStartupComponent>() where TStartupComponent : ComponentBase;
+
+	/// <summary>
+	/// Apply startup states during app initialization.
+	/// </summary>
+	/// <param name="action"></param>
+	void ApplyStateOnStartup(Action<IAppState> action);
 	#endregion
 
 	#region Layout Configurations

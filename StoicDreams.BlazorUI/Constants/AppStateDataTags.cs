@@ -6,5 +6,6 @@ public enum AppStateDataTags
 	TitleBarLeftDrawerOpen,
 	TitleBarRightDrawerOpen,
 	AppLeftDrawerVariant,
-	AppRightDrawerVariant
+	AppRightDrawerVariant,
+	NavList
 }

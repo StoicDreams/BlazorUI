@@ -6,7 +6,7 @@ public class PageDetailTests : TestFrameworkBlazor
 	[InlineData("This is a test")]
 	public void Verify_AppState_Updates_On_Render(string title)
 	{
-		IRenderActions<PageDetail> actions = ArrangeRenderTest<PageDetail>(options =>
+		IRenderActions<BUIPageDetail> actions = ArrangeRenderTest<BUIPageDetail>(options =>
 		{
 			options.Parameters["Title"] = title;
 		}, this.StartupTestServices);

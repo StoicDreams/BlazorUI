@@ -43,7 +43,7 @@ public class AppStateTests : TestFramework
 
 		actions.Act(a =>
 		{
-			a.Service.ApplyChanges(() =>
+			a.Service.ApplyChangesAsync(() =>
 			{
 				a.Service.SetData("test", subscriberId);
 				return ValueTask.CompletedTask;
@@ -59,7 +59,7 @@ public class AppStateTests : TestFramework
 		actions.Act(a =>
 		{
 			a.Service.UnsubscribeToDataChanges(subscriberId);
-			a.Service.ApplyChanges(() =>
+			a.Service.ApplyChangesAsync(() =>
 			{
 				return ValueTask.CompletedTask;
 			});

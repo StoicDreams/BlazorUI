@@ -23,3 +23,7 @@
 <MudBlazor.MudThemeProvider />
 <MudBlazor.MudDialogProvider />
 <MudBlazor.MudSnackbarProvider />
+
+@if (AppStartup != null) {
+	<DynamicComponent Type="AppStartup" />
+}

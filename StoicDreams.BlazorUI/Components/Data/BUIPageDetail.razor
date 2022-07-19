@@ -6,7 +6,7 @@
 
 	protected override async Task OnInitializedAsync()
 	{
-		await AppState.ApplyChanges(() =>
+		await AppState.ApplyChangesAsync(() =>
 		{
 			AppState.SetData(AppStateDataTags.PageTitle, Title);
 			return ValueTask.CompletedTask;

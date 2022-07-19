@@ -15,6 +15,9 @@ public class AppState : IAppState
 		SetData(AppStateDataTags.AppRightDrawerVariant.ToString(), options.RightDrawerVariant);
 	}
 
+	public void SetData<TData>(AppStateDataTags tag, TData? data) => SetData(tag.ToString(), data);
+	public TData? GetData<TData>(AppStateDataTags tag) => GetData<TData>(tag.ToString());
+
 	public void SetData<TData>(string name, TData? data)
 	{
 		SaveSimpleDataToStorage(name, data);
@@ -66,7 +69,7 @@ public class AppState : IAppState
 		handler.Invoke(Changelog);
 	} 
 
-	public async ValueTask ApplyChanges(Func<ValueTask> changeHandler)
+	public async ValueTask ApplyChangesAsync(Func<ValueTask> changeHandler)
 	{
 		await changeHandler.Invoke();
 		TriggerChange("ApplyChanges");

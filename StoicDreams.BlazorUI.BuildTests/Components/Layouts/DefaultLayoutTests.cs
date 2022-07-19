@@ -5,7 +5,7 @@ public class DefaultLayoutTests : TestFrameworkBlazor
 	[Fact]
 	public void Verify_Render()
 	{
-		IRenderActions<DefaultLayout> actions = ArrangeRenderTest<DefaultLayout>(options =>
+		IRenderActions<BUIDefaultLayout> actions = ArrangeRenderTest<BUIDefaultLayout>(options =>
 		{
 
 		}, this.StartupTestServices);

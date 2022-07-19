@@ -11,6 +11,7 @@ public partial class BUIApp : ComponentBase, IDisposable
 	private Guid ComponentId { get; } = Guid.NewGuid();
 	private Assembly AppAssembly => Assembly.GetEntryAssembly() ?? Assembly.GetCallingAssembly();
 	private Type AppLayout => ((AppOptions)AppOptions).MainLayout;
+	private Type? AppStartup => ((AppOptions)AppOptions).AppStartupComponent;
 
 	private string AppTitle => AppOptions.TitleFormat
 			.Replace("{AppName}", AppOptions.AppName)
@@ -22,6 +23,8 @@ public partial class BUIApp : ComponentBase, IDisposable
 		await RunSetupFromOptions();
 		AppState.SubscribeToDataChanges(ComponentId, HandleDataChanges);
 		await base.OnInitializedAsync();
+		// Trigger to clear any values from startup, not expecting anything to be expecting AppInitialized key.
+		AppState.TriggerChange("AppInitialized");
 	}
 
 	public void Dispose()
@@ -53,5 +56,6 @@ public partial class BUIApp : ComponentBase, IDisposable
 		{
 			await JSInterop.AddElementToBody(detail.TagName, detail.Attributes);
 		}
+		((AppOptions)AppOptions).ApplyStartupState?.Invoke(AppState);
 	}
 }

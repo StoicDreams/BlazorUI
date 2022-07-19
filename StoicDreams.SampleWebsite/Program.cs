@@ -17,6 +17,10 @@ builder.Services.AddStoicDreamsBlazorUI(options =>
 	options.BodyElements.Add(ElementDetail.Create("script", ("body", "navigator.serviceWorker.register('service-worker.js');"), ("type", "text/javascript")));
 	options.TitleBarPosition = TitleBarPosition.Top;
 	options.LeftDrawerVariant = DrawerVariant.Mini;
+	options.ApplyStateOnStartup(appState =>
+	{
+		appState.SetData(AppStateDataTags.NavList, NavData.SiteNav);
+	});
 });
 
 await builder.Build().RunAsync();

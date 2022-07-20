@@ -1,11 +1,15 @@
-﻿@using Microsoft.AspNetCore.Components.Routing
-@inject IAppOptions AppOptions
-@inject IAppState AppState
+﻿@inherits BUICore
+
+@using Microsoft.AspNetCore.Components.Routing
 @inject IJSRuntime JSRuntime
 @inject IJsInterop JSInterop
 @inject NavigationManager NavManager
 
 <PageTitle>@AppTitle</PageTitle>
+
+<MudBlazor.MudThemeProvider />
+<MudBlazor.MudDialogProvider />
+<MudBlazor.MudSnackbarProvider />
 
 <Router AppAssembly="@AppAssembly">
 	<Found Context="routeData">
@@ -20,10 +24,46 @@
 	</NotFound>
 </Router>
 
-<MudBlazor.MudThemeProvider />
-<MudBlazor.MudDialogProvider />
-<MudBlazor.MudSnackbarProvider />
-
 @if (AppStartup != null) {
 	<DynamicComponent Type="AppStartup" />
+}
+
+@code {
+	private Assembly AppAssembly => Assembly.GetEntryAssembly() ?? Assembly.GetCallingAssembly();
+	private Type AppLayout => HiddenOptions.MainLayout;
+	private Type? AppStartup => HiddenOptions.AppStartupComponent;
+
+	private string AppTitle => AppOptions.TitleFormat
+			.Replace("{AppName}", AppOptions.AppName)
+			.Replace("{PageTitle}", AppState.GetData<string>(AppStateDataTags.PageTitle) ?? string.Empty)
+			;
+
+	protected override async Task OnInitializedAsync()
+	{
+		await RunSetupFromOptions();
+		await base.OnInitializedAsync();
+		// Trigger to clear any values from startup, not expecting anything to be expecting AppInitialized key.
+		AppState.TriggerChange("AppInitialized");
+	}
+
+	private async ValueTask RunSetupFromOptions()
+	{
+		foreach (string file in AppOptions.CssFiles)
+		{
+			await JSInterop.AddCSSFile(file);
+		}
+		foreach (string file in AppOptions.JavascriptFiles)
+		{
+			await JSInterop.AddJSFile(file);
+		}
+		foreach (ElementDetail detail in AppOptions.HeadElements)
+		{
+			await JSInterop.AddElementToHead(detail.TagName, detail.Attributes);
+		}
+		foreach (ElementDetail detail in AppOptions.BodyElements)
+		{
+			await JSInterop.AddElementToBody(detail.TagName, detail.Attributes);
+		}
+		((AppOptions)AppOptions).ApplyStartupState?.Invoke(AppState);
+	}
 }

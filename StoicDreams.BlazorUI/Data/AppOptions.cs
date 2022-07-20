@@ -29,6 +29,12 @@ public class AppOptions : IAppOptions
 	{
 		MainLayout = typeof(TLayout);
 	}
+	public Type TitleBarContent { get; set; } = typeof(MudSpacer);
+	public void SetTitleBarContent<TTitleBar>() 
+		where TTitleBar : LayoutComponentBase
+	{
+		TitleBarContent = typeof(TTitleBar);
+	}
 	public TitleBarPosition TitleBarPosition { get; set; }
 	public DrawerVariant LeftDrawerVariant { get; set; } = DrawerVariant.Temporary;
 	public DrawerVariant RightDrawerVariant { get; set; } = DrawerVariant.Temporary;

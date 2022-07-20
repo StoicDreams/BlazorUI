@@ -1,8 +1,4 @@
-﻿@inherits LayoutComponentBase
-@implements IDisposable
-
-@inject IAppOptions AppOptions
-@inject IAppState AppState
+﻿@inherits BUICoreLayout
 
 <MudLayout>
 	@if (AppOptions.TitleBarPosition == TitleBarPosition.Top)
@@ -45,35 +41,14 @@
 </MudLayout>
 
 @code {
-	private Guid ComponentId { get; } = Guid.NewGuid();
-	private bool LeftDrawerOpen { get => AppState.GetData<bool>(AppStateDataTags.TitleBarLeftDrawerOpen); set => AppState.SetData<bool>(AppStateDataTags.TitleBarLeftDrawerOpen, value); }
-	private bool RightDrawerOpen { get => AppState.GetData<bool>(AppStateDataTags.TitleBarRightDrawerOpen); set => AppState.SetData<bool>(AppStateDataTags.TitleBarRightDrawerOpen, value); }
-	private DrawerVariant LeftDrawerVariant { get => AppState.GetData<DrawerVariant>(AppStateDataTags.AppLeftDrawerVariant); set => AppState.SetData<DrawerVariant>(AppStateDataTags.AppLeftDrawerVariant, value); }
-	private DrawerVariant RightDrawerVariant { get => AppState.GetData<DrawerVariant>(AppStateDataTags.AppRightDrawerVariant); set => AppState.SetData<DrawerVariant>(AppStateDataTags.AppRightDrawerVariant, value); }
-	private List<NavDetail> NavList { get => AppState.GetData<List<NavDetail>>(AppStateDataTags.NavList) ?? new(); set => AppState.SetData<List<NavDetail>>(AppStateDataTags.NavList, value); }
+	private bool LeftDrawerOpen { get => GetState<bool>(AppStateDataTags.TitleBarLeftDrawerOpen); set => AppState.SetData<bool>(AppStateDataTags.TitleBarLeftDrawerOpen, value); }
+	private bool RightDrawerOpen { get => GetState<bool>(AppStateDataTags.TitleBarRightDrawerOpen); set => AppState.SetData<bool>(AppStateDataTags.TitleBarRightDrawerOpen, value); }
+	private DrawerVariant LeftDrawerVariant { get => GetState<DrawerVariant>(AppStateDataTags.AppLeftDrawerVariant); set => AppState.SetData<DrawerVariant>(AppStateDataTags.AppLeftDrawerVariant, value); }
+	private DrawerVariant RightDrawerVariant { get => GetState<DrawerVariant>(AppStateDataTags.AppRightDrawerVariant); set => AppState.SetData<DrawerVariant>(AppStateDataTags.AppRightDrawerVariant, value); }
+	private List<NavDetail> NavList { get => GetState<List<NavDetail>>(AppStateDataTags.NavList) ?? new(); set => AppState.SetData<List<NavDetail>>(AppStateDataTags.NavList, value); }
 
 	protected override async Task OnInitializedAsync()
 	{
-		AppState.SubscribeToDataChanges(ComponentId, HandleStateChange);
 		await base.OnInitializedAsync();
-	}
-
-	public void Dispose()
-	{
-		AppState.UnsubscribeToDataChanges(ComponentId);
-	}
-
-	private readonly string[] MyStateKeys = new[]
-	{
-		AppStateDataTags.TitleBarLeftDrawerOpen.ToString(),
-		AppStateDataTags.TitleBarRightDrawerOpen.ToString(),
-		AppStateDataTags.AppLeftDrawerVariant.ToString(),
-		AppStateDataTags.AppRightDrawerVariant.ToString(),
-		AppStateDataTags.NavList.ToString()
-	};
-	private void HandleStateChange(IDictionary<string, bool> keys)
-	{
-		if (!keys.Keys.Where(key => MyStateKeys.Contains(key)).Any()) { return; }
-		InvokeAsync(StateHasChanged);
 	}
 }

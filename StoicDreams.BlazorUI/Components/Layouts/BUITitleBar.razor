@@ -1,13 +1,23 @@
-﻿@inject IAppOptions AppOptions
-@inject IAppState AppState
+﻿@inherits BUICore
 
 <MudAppBar Elevation="1">
-	<MudIconButton Icon="@Icons.Material.Filled.Menu" Color="Color.Inherit" Edge="Edge.Start" OnClick="@ToggleLeftDrawer" />
-	<MudSpacer />
-	<MudIconButton Icon="@Icons.Material.Filled.Menu" Color="Color.Inherit" Edge="Edge.Start" OnClick="@ToggleRightDrawer" />
+	@if (LeftDrawerEnabled)
+	{
+		<MudIconButton Icon="@LeftDrawerIcon" Color="Color.Inherit" Edge="Edge.Start" OnClick="@ToggleLeftDrawer" />
+	}
+	<DynamicComponent Type="@HiddenOptions.TitleBarContent" />
+	@if (RightDrawerEnabled)
+	{
+		<MudIconButton Icon="@RightDrawerIcon" Color="Color.Inherit" Edge="Edge.Start" OnClick="@ToggleRightDrawer" />
+	}
 </MudAppBar>
 
 @code {
+	private bool LeftDrawerEnabled => GetState<bool>(AppStateDataTags.LeftDrawerEnabled);
+	private bool RightDrawerEnabled => GetState<bool>(AppStateDataTags.RightDrawerEnabled);
+	private string LeftDrawerIcon => GetState<string?>(AppStateDataTags.TitleBarLeftDrawerIcon) ?? Icons.Material.Filled.Menu;
+	private string RightDrawerIcon => GetState<string?>(AppStateDataTags.TitleBarRightDrawerIcon) ?? Icons.Material.Filled.Menu;
+
 	private void ToggleLeftDrawer()
 	{
 		AppState.ApplyChanges(() =>

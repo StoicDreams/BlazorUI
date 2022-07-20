@@ -64,6 +64,13 @@ public interface IAppOptions
 	void SetLayout<TLayout>() where TLayout : LayoutComponentBase;
 
 	/// <summary>
+	/// Use this to override title bar content between optional left and right drawer buttons.
+	/// Default is MudSpacer
+	/// </summary>
+	/// <typeparam name="TTitleBar"></typeparam>
+	void SetTitleBarContent<TTitleBar>() where TTitleBar : LayoutComponentBase;
+
+	/// <summary>
 	/// Position for app's title bar.
 	/// Default is Top.
 	/// </summary>

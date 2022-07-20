@@ -19,6 +19,8 @@ builder.Services.AddStoicDreamsBlazorUI(options =>
 	options.ApplyStateOnStartup(appState =>
 	{
 		appState.SetData(AppStateDataTags.NavList, NavData.SiteNav);
+		appState.SetData(AppStateDataTags.LeftDrawerEnabled, true);
+		appState.SetData(AppStateDataTags.RightDrawerEnabled, true);
 	});
 });
 

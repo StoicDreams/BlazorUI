@@ -240,6 +240,6 @@ html, body, #app {
 		margin: auto 5px;
 	}
 
-#buiTitleBar h1 {
+.buiTitleBar h1 {
 	font-size: inherit;
 }

@@ -8,7 +8,7 @@ builder.RootComponents.Add<HeadOutlet>("head::after");
 builder.Services.AddScoped(sp => new HttpClient { BaseAddress = new Uri(builder.HostEnvironment.BaseAddress) });
 builder.Services.AddStoicDreamsBlazorUI(options =>
 {
-	options.AppName = "Stoic Dreams Blazor UI";
+	options.AppName = "Blazor UI";
 	options.CssFiles.Add("css/app.css");
 	options.HeadElements.Add(ElementDetail.Create("link", ("rel", "manifest")));
 	options.HeadElements.Add(ElementDetail.Create("link", ("rel", "apple-touch-icon"), ("sizes", "512x512"), ("href", "icon-512.png")));

@@ -29,9 +29,9 @@ public class AppOptions : IAppOptions
 	{
 		MainLayout = typeof(TLayout);
 	}
-	public Type TitleBarContent { get; set; } = typeof(MudSpacer);
+	public Type TitleBarContent { get; set; } = typeof(BUITitleContent);
 	public void SetTitleBarContent<TTitleBar>() 
-		where TTitleBar : LayoutComponentBase
+		where TTitleBar : ComponentBase
 	{
 		TitleBarContent = typeof(TTitleBar);
 	}

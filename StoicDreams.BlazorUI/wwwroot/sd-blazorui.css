@@ -239,3 +239,7 @@ html, body, #app {
 		display: inline-block;
 		margin: auto 5px;
 	}
+
+#buiTitleBar h1 {
+	font-size: inherit;
+}

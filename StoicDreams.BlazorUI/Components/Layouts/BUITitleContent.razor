@@ -1,0 +1,12 @@
+﻿@inherits BUICore
+
+<h1>
+	@AppName - @PageTitle
+</h1>
+
+<MudSpacer />
+
+@code {
+	private string AppName => AppOptions.AppName;
+	private string PageTitle => GetState<string>(AppStateDataTags.PageTitle, string.Empty);
+}

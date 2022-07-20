@@ -10,7 +10,6 @@ builder.Services.AddStoicDreamsBlazorUI(options =>
 {
 	options.AppName = "Stoic Dreams Blazor UI";
 	options.CssFiles.Add("css/app.css");
-	options.CssFiles.Add("StoicDreams.SampleWebsite.styles.css");
 	options.HeadElements.Add(ElementDetail.Create("link", ("rel", "manifest")));
 	options.HeadElements.Add(ElementDetail.Create("link", ("rel", "apple-touch-icon"), ("sizes", "512x512"), ("href", "icon-512.png")));
 	options.HeadElements.Add(ElementDetail.Create("link", ("rel", "apple-touch-icon"), ("sizes", "192x192"), ("href", "icon-192.png")));

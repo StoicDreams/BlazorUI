@@ -29,6 +29,14 @@ public class AppOptions : IAppOptions
 	{
 		MainLayout = typeof(TLayout);
 	}
+
+	public Type PageNotFound { get; set; } = typeof(BUIDefaultPageNotFound);
+	public void SetPageNotFound<TNotFound>()
+		where TNotFound : ComponentBase
+	{
+		PageNotFound = typeof(TNotFound);
+	}
+
 	public Type TitleBarContent { get; set; } = typeof(BUITitleContent);
 	public void SetTitleBarContent<TTitleBar>() 
 		where TTitleBar : ComponentBase

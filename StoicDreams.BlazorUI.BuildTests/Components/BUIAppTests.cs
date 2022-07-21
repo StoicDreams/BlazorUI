@@ -17,7 +17,7 @@ public class BUIAppTests : TestFrameworkBlazor
 
 		actions.Assert(a =>
 		{
-			a.Render.Markup.Should().Contain("Sorry, there's nothing at this address");
+			a.Render.Markup.Should().Contain("The page you are looking for could not be found");
 		});
 
 		actions.Act(a =>

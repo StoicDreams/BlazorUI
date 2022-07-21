@@ -71,6 +71,13 @@ public interface IAppOptions
 	void SetTitleBarContent<TTitleBar>() where TTitleBar : ComponentBase;
 
 	/// <summary>
+	/// Change the component displayed when a user visits a page that doesn't match a mapped path.
+	/// Defaults to BUIDefaultPageNotFound
+	/// </summary>
+	/// <typeparam name="TNotFound"></typeparam>
+	void SetPageNotFound<TNotFound>() where TNotFound : ComponentBase;
+
+	/// <summary>
 	/// Position for app's title bar.
 	/// Default is Top.
 	/// </summary>

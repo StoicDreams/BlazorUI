@@ -19,7 +19,7 @@
 	<NotFound>
 		<PageTitle>Not found</PageTitle>
 		<LayoutView Layout="@AppLayout">
-			<p role="alert">Sorry, there's nothing at this address.</p>
+			<DynamicComponent Type="PageNotFound" />
 		</LayoutView>
 	</NotFound>
 </Router>
@@ -31,6 +31,7 @@
 @code {
 	private Assembly AppAssembly => Assembly.GetEntryAssembly() ?? Assembly.GetCallingAssembly();
 	private Type AppLayout => HiddenOptions.MainLayout;
+	private Type PageNotFound => HiddenOptions.PageNotFound;
 	private Type? AppStartup => HiddenOptions.AppStartupComponent;
 
 	private string AppTitle => AppOptions.TitleFormat

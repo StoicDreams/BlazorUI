@@ -14,7 +14,7 @@
 	{
 		Type transitionFromType = TransitionType.fromType;
 		Type transitionToType = TransitionType.toType;
-		string effect = Transition.IntoView ? "inview fadeIn" : "fadeOut";
+		string effect = Transition.IntoView ? "fadeIn inview" : "fadeOut";
 		string direction = Transition.Backwards ? "Up" : "Down";
 		return $"{effect}{direction}";
 	}

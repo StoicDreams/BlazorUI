@@ -1,7 +1,7 @@
 ﻿@inherits BUICore
 
 <h1>
-	@AppName - @PageTitle
+	@GetPageTitleDisplay
 </h1>
 
 <MudSpacer />
@@ -9,4 +9,16 @@
 @code {
 	private string AppName => AppOptions.AppName;
 	private string PageTitle => GetState<string>(AppStateDataTags.PageTitle, string.Empty);
+
+	private string GetPageTitleDisplay
+	{
+		get
+		{
+			string appName = AppName;
+			string title = PageTitle;
+			if (string.IsNullOrWhiteSpace(appName) && string.IsNullOrWhiteSpace(title)) { return string.Empty; }
+			if (string.IsNullOrWhiteSpace(appName)) { return title; }
+			return $"{appName} - {title}";
+		}
+	}
 }

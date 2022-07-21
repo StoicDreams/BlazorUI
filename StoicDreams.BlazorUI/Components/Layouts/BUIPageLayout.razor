@@ -8,14 +8,14 @@
 @code {
 	private string TransitioningDirection => this.Transition.Backwards ? "Up" : "Down";
 
-	private string TransitioningClass => Transition.FirstRender ? "" : $"animate__{TransitioningEffect()} animate__faster animate__animated";
+	private string TransitioningClass => Transition.FirstRender ? "" : $"{TransitioningEffect()} animate__faster animate__animated";
 
 	private string TransitioningEffect()
 	{
 		Type transitionFromType = TransitionType.fromType;
 		Type transitionToType = TransitionType.toType;
-		string effect = Transition.IntoView ? "fadeIn inview" : "fadeOut";
+		string effect = Transition.IntoView ? "fadeIn" : "fadeOut";
 		string direction = Transition.Backwards ? "Up" : "Down";
-		return $"{effect}{direction}";
+		return $"animate__{effect}{direction}{(Transition.IntoView ? " inview" : string.Empty)}";
 	}
 }

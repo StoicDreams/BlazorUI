@@ -1,0 +1,21 @@
+﻿@inherits TransitionableLayoutComponent
+@using BlazorTransitionableRoute
+
+<main class="@TransitioningClass">
+	@Body
+</main>
+
+@code {
+	private string TransitioningDirection => this.Transition.Backwards ? "Up" : "Down";
+
+	private string TransitioningClass => Transition.FirstRender ? "" : $"animate__{TransitioningEffect()} animate__faster animate__animated";
+
+	private string TransitioningEffect()
+	{
+		Type transitionFromType = TransitionType.fromType;
+		Type transitionToType = TransitionType.toType;
+		string effect = Transition.IntoView ? "inview fadeIn" : "fadeOut";
+		string direction = Transition.Backwards ? "Up" : "Down";
+		return $"{effect}{direction}";
+	}
+}

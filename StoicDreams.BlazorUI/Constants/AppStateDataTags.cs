@@ -6,6 +6,8 @@ public enum AppStateDataTags
 	AppRightDrawerVariant,
 	LeftDrawerEnabled,
 	NavList,
+	NavTransitionInMilliseconds,
+	NavTransitionOutMilliseconds,
 	PageTitle,
 	RightDrawerEnabled,
 	TitleBarLeftDrawerOpen,

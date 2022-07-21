@@ -23,7 +23,7 @@ public class AppOptions : IAppOptions
 	#endregion
 
 	#region Layout Options
-	public Type MainLayout { get; set; } = typeof(BUIDefaultLayout);
+	public Type MainLayout { get; set; } = typeof(BUIAppLayout);
 	public void SetLayout<TLayout>()
 		where TLayout : LayoutComponentBase
 	{

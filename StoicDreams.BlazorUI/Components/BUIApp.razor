@@ -3,18 +3,23 @@
 @using Microsoft.AspNetCore.Components.Routing
 @inject IJSRuntime JSRuntime
 @inject IJsInterop JSInterop
-@inject NavigationManager NavManager
-
-<PageTitle>@AppTitle</PageTitle>
 
 <MudBlazor.MudThemeProvider />
 <MudBlazor.MudDialogProvider />
 <MudBlazor.MudSnackbarProvider />
 
+<PageTitle>@AppTitle</PageTitle>
+
 <Router AppAssembly="@AppAssembly">
 	<Found Context="routeData">
-		<RouteView RouteData="@routeData" DefaultLayout="@AppLayout" />
-		<FocusOnNavigate RouteData="@routeData" Selector="h1" />
+		<LayoutView Layout="@AppLayout">
+			<BlazorTransitionableRoute.TransitionableRoutePrimary RouteData="@routeData" ForgetStateOnTransition="true">
+				<BlazorTransitionableRoute.TransitionableRouteView DefaultLayout="@PageLayout" />
+			</BlazorTransitionableRoute.TransitionableRoutePrimary>
+			<BlazorTransitionableRoute.TransitionableRouteSecondary RouteData="@routeData" ForgetStateOnTransition="true">
+				<BlazorTransitionableRoute.TransitionableRouteView DefaultLayout="@PageLayout" />
+			</BlazorTransitionableRoute.TransitionableRouteSecondary>
+		</LayoutView>
 	</Found>
 	<NotFound>
 		<PageTitle>Not found</PageTitle>
@@ -31,6 +36,7 @@
 @code {
 	private Assembly AppAssembly => Assembly.GetEntryAssembly() ?? Assembly.GetCallingAssembly();
 	private Type AppLayout => HiddenOptions.MainLayout;
+	private Type PageLayout => typeof(BUIPageLayout);
 	private Type PageNotFound => HiddenOptions.PageNotFound;
 	private Type? AppStartup => HiddenOptions.AppStartupComponent;
 
@@ -41,10 +47,19 @@
 
 	protected override async Task OnInitializedAsync()
 	{
+		await RunDefaultSetups();
 		await RunSetupFromOptions();
 		await base.OnInitializedAsync();
 		// Trigger to clear any values from startup, not expecting anything to be expecting AppInitialized key.
 		AppState.TriggerChange("AppInitialized");
+	}
+
+	private async Task RunDefaultSetups()
+	{
+		AppState.SetData(AppStateDataTags.NavTransitionOutMilliseconds, 300);
+		AppState.SetData(AppStateDataTags.NavTransitionInMilliseconds, 300);
+		await JSInterop.AddCSSFile("css/routetransition.4.0.0.min.css");
+		await JSInterop.AddJSFile("jsInterop.js");
 	}
 
 	private async ValueTask RunSetupFromOptions()

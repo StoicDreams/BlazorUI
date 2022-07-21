@@ -8,7 +8,7 @@
 
 @code {
 	private string AppName => AppOptions.AppName;
-	private string PageTitle => GetState<string>(AppStateDataTags.PageTitle, string.Empty);
+	private string PageTitle => GetState<string>(AppStateDataTags.PageTitle, () => string.Empty);
 
 	private string GetPageTitleDisplay
 	{

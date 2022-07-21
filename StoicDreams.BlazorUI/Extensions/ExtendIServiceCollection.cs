@@ -1,5 +1,4 @@
 ﻿using MudBlazor.Services;
-using System.Reflection;
 
 namespace StoicDreams.BlazorUI.Extensions;
 
@@ -12,8 +11,9 @@ public static partial class ExtendIServiceCollection
 		setupHandler?.Invoke(appOptions);
 		services.AddSingleton<IAppOptions>(appOptions);
 		services.AddSingleton<IAppState, AppState>();
-		services.AddTransient<IJsInterop, JsInterop>();
+		services.AddTransient<Data.IJsInterop, JsInterop>();
 		services.AddMudServices();
+		services.AddScoped<BlazorTransitionableRoute.IRouteTransitionInvoker, BlazorTransitionableRoute.DefaultRouteTransitionInvoker>();
 
 		return services;
 	}

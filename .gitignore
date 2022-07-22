@@ -1,6 +1,7 @@
 # Ignore IDE files
 .vs
 .idea
+*.lutconfig
 
 # Ignore build files
 bin

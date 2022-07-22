@@ -42,7 +42,7 @@ public class BUIPageLayoutTests : TestFrameworkBlazor
 		{
 			Dictionary<string, object> map = new();
 			IReadOnlyDictionary<string, object> roMap = new ReadOnlyDictionary<string, object>(map);
-			RouteData routeData = new(typeof(Pages.Error), roMap);
+			RouteData routeData = new(typeof(Pages.BUIError), roMap);
 			options.Parameters.Add("Transition", Transition.Create(routeData, routeData, intoView, isBackwards, isFirstRender));
 			options.Parameters.Add("Body", MockRender("Mock Content"));
 		}, this.StartupTestServices);

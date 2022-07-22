@@ -2,13 +2,27 @@
 @using BlazorTransitionableRoute
 
 <main class="@TransitioningClass">
-	@Body
+	<ErrorBoundary @ref="ErrorFragment" Context="error">
+		<ChildContent>
+			@Body
+		</ChildContent>
+		<ErrorContent>
+			<BUIError Exception="@error" />
+		</ErrorContent>
+	</ErrorBoundary>
 </main>
 
 @code {
 	private string TransitioningDirection => this.Transition.Backwards ? "Up" : "Down";
-
 	private string TransitioningClass => Transition.FirstRender ? "" : $"{TransitioningEffect()} animate__faster animate__animated";
+
+	private ErrorBoundary? ErrorFragment { get; set; }
+
+	protected override void OnParametersSet()
+	{
+		ErrorFragment?.Recover();
+		base.OnParametersSet();
+	}
 
 	private string TransitioningEffect()
 	{

@@ -1,0 +1,22 @@
+﻿@page "/error"
+
+<MudAlert Severity="Severity.Error">
+	@if (Exception != null)
+	{
+		@Exception.Message
+	}
+	else
+	{
+		@ErrorMessage
+	}
+</MudAlert>
+
+@code {
+	[Parameter]
+	[SupplyParameterFromQuery(Name = "error")]
+	public string ErrorMessage { get; set; } = GenericErrorMessage;
+	[Parameter]
+	public Exception? Exception { get; set; }
+
+	private const string GenericErrorMessage = "An unexpected error occurred handling your request.";
+}

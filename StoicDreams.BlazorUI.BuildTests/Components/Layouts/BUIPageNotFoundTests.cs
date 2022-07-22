@@ -1,11 +1,11 @@
 ﻿namespace StoicDreams.BlazorUI.Components.Layouts;
 
-public class BUIDefaultPageNotFoundTests : TestFrameworkBlazor
+public class BUIPageNotFoundTests : TestFrameworkBlazor
 {
 	[Fact]
 	public void Verify_Render()
 	{
-		IRenderActions<BUIDefaultPageNotFound> actions = ArrangeRenderTest<BUIDefaultPageNotFound>(_ => { }, this.StartupTestServices);
+		IRenderActions<BUIPageNotFound> actions = ArrangeRenderTest<BUIPageNotFound>(_ => { }, this.StartupTestServices);
 
 		actions.Act(a => { });
 

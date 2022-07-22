@@ -7,7 +7,6 @@ public class BUIAppTests : TestFrameworkBlazor
 	{
 		IRenderActions<BUIApp> actions = ArrangeRenderTest<BUIApp>(options =>
 		{
-			options.Parameters.Add("ChildContent", MockRender("Mock Content"));
 		}, this.StartupTestServices);
 
 		actions.Act(a =>

@@ -1,6 +1,6 @@
 ﻿namespace StoicDreams.BlazorUI.Components.Layouts;
 
-public class DefaultLayoutTests : TestFrameworkBlazor
+public class BUIAppLayoutTests : TestFrameworkBlazor
 {
 	[Fact]
 	public void Verify_Render()

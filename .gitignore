@@ -2,6 +2,7 @@
 .vs
 .idea
 *.lutconfig
+*.coverage
 
 # Ignore build files
 bin

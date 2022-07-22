@@ -12,3 +12,4 @@ global using StoicDreams.BlazorUI.Data;
 global using StoicDreams.BlazorUI.DataTypes;
 global using StoicDreams.BlazorUI.Extensions;
 global using Xunit;
+global using System.Diagnostics.CodeAnalysis;

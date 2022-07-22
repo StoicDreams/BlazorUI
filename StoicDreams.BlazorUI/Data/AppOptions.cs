@@ -30,7 +30,7 @@ public class AppOptions : IAppOptions
 		MainLayout = typeof(TLayout);
 	}
 
-	public Type PageNotFound { get; set; } = typeof(BUIDefaultPageNotFound);
+	public Type PageNotFound { get; set; } = typeof(BUIPageNotFound);
 	public void SetPageNotFound<TNotFound>()
 		where TNotFound : ComponentBase
 	{

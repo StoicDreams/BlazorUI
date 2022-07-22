@@ -8,6 +8,7 @@ public static class ExtendTestFrameworkBlazor
 {
 	public static IServiceCollection StartupTestServices(this TestFrameworkBlazor test, IServiceCollection services)
 	{
+		services.AddMudServices();
 		services.AddMock<IJsInterop>();
 		services.AddMock<IJSRuntime>();
 		AppOptions options = new();
@@ -17,7 +18,6 @@ public static class ExtendTestFrameworkBlazor
 		options.BodyElements.Add(ElementDetail.Create("script"));
 		services.AddSingleton<IAppOptions>(options);
 		services.AddSingleton<IAppState, AppState>();
-		services.AddMudServices();
 		return services;
 	}
 }

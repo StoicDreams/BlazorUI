@@ -1,4 +1,5 @@
 namespace StoicDreams.BlazorUI;
+using Microsoft.JSInterop.Infrastructure;
 
 public class JsInterop : IJsInterop, IAsyncDisposable
 {
@@ -44,7 +45,7 @@ public class JsInterop : IJsInterop, IAsyncDisposable
 	{
 		if (InteropModule.IsValueCreated)
 		{
-			var module = await InteropModule.Value;
+			IJSObjectReference module = await InteropModule.Value;
 			await module.DisposeAsync();
 		}
 	}

@@ -31,6 +31,11 @@ public class JsInterop : IJsInterop, IAsyncDisposable
 		IJSObjectReference module = await InteropModule.Value;
 		await module.InvokeVoidAsync("AddElementToBody", tag, attributes);
 	}
+	public async ValueTask UpdateTitle(string title)
+	{
+		IJSObjectReference module = await InteropModule.Value;
+		await module.InvokeVoidAsync("UpdateTitle", title);
+	}
 
 	private Lazy<Task<IJSObjectReference>> InteropModule { get; }
 

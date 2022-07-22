@@ -20,9 +20,11 @@ public class BUITitleContentTests : TestFrameworkBlazor
 			a.Render.Markup.Contains("Test App").Should().BeFalse();
 		});
 
-		actions.Act(a =>
+		actions.Act(async a =>
 		{
 			a.GetService<IAppState>().TriggerChange(AppStateDataTags.PageTitle.ToString());
+			await Task.Delay(100);
+			a.Render.SetParametersAndRender();
 		});
 
 		actions.Assert(a =>

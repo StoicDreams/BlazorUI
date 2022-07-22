@@ -21,6 +21,10 @@ export function AddElementToBody(tag, attributes) {
 	AddElement(tag, attributes, document.body);
 }
 
+export function UpdateTitle(title) {
+	document.title = title;
+}
+
 function AddElement(tag, attributes, parent) {
 	let element = document.createElement(tag);
 	Object.keys(attributes).forEach(key => {

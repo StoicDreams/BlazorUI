@@ -1,8 +1,14 @@
 ﻿@inject IAppState AppState
+@inject IJsInterop JSInterop
+@inject IAppOptions AppOptions
 
 @code {
 	[Parameter]
 	public string Title { get; set; } = string.Empty;
+	private string AppTitle => AppOptions.TitleFormat
+			.Replace("{AppName}", AppOptions.AppName)
+			.Replace("{PageTitle}", AppState.GetData<string>(AppStateDataTags.PageTitle) ?? string.Empty)
+			;
 
 	protected override async Task OnInitializedAsync()
 	{
@@ -11,6 +17,7 @@
 			AppState.SetData(AppStateDataTags.PageTitle, Title);
 			return ValueTask.CompletedTask;
 		});
+		await JSInterop.UpdateTitle(AppTitle);
 		await base.OnInitializedAsync();
 	}
 }

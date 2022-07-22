@@ -36,7 +36,7 @@ public abstract class BUICore : ComponentBase, IDisposable
 	{
 		if (WatchStateKeys.Keys.Count == 0) { return; }
 		if (!WatchStateKeys.Keys.Where(key => keys.ContainsKey(key)).Any()) { return; }
-		InvokeAsync(StateHasChanged);
+		_ = InvokeAsync(StateHasChanged);
 	}
 
 	public void Dispose()

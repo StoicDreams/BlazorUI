@@ -79,15 +79,9 @@ public class JsInteropTests : TestFramework
 		Mock<IJSObjectReference> mockJsObjectReference= Mock(setupHandler);
 		IActions<IJsInterop> actions = ArrangeUnitTest<IJsInterop, JsInterop>(options =>
 		{
-			options.GetMock<IJSRuntime>(mock => mock.Setup(m => m.InvokeAsync<IJSObjectReference>("import", new object?[] { "./sd-blazorui-interop.js" }))
+			options.GetMock<IJSRuntime>(mock => mock.Setup(m => m.InvokeAsync<IJSObjectReference>("import", new object?[] { JsInterop.InteropFilePath }))
 				.Returns(() => ValueTask.FromResult(mockJsObjectReference.Object)));
 		});
 		return (actions, mockJsObjectReference);
-	}
-
-	private void SetupIJSObjectReference(IArrangeUnitOptions options, Mock<IJSObjectReference> mockJsObjectReference)
-	{
-		options.GetMock<IJSRuntime>(mock => mock.Setup(m => m.InvokeAsync<IJSObjectReference>("import", new object?[] { "./sd-blazorui-interop.js" }))
-			.Returns(() => ValueTask.FromResult(mockJsObjectReference.Object)));
 	}
 }

@@ -1,5 +1,8 @@
 ﻿namespace StoicDreams.BlazorUI.Constants;
 
+/// <summary>
+/// Internal use IAppState data tag names.
+/// </summary>
 public enum AppStateDataTags
 {
 	/// <summary>

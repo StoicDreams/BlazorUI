@@ -1,5 +1,4 @@
-﻿
-namespace StoicDreams.SampleWebsite;
+﻿namespace StoicDreams.SampleWebsite;
 
 public static class AppSettings
 {

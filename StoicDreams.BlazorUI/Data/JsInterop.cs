@@ -6,7 +6,7 @@ public class JsInterop : IJsInterop, IAsyncDisposable
 	public JsInterop(IJSRuntime jsRuntime)
 	{
 		InteropModule = new(() => jsRuntime.InvokeAsync<IJSObjectReference>(
-			"import", "./sd-blazorui-interop.js").AsTask());
+			"import", "./sd-blazorui-interop.1.0.0.js").AsTask());
 	}
 
 	public async ValueTask AddJSFile(string filePath)

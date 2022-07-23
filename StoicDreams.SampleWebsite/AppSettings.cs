@@ -16,8 +16,7 @@ public static class AppSettings
 		options.ApplyStateOnStartup(appState =>
 		{
 			appState.SetData(AppStateDataTags.NavList, GetSiteNavigation());
-			appState.SetData(AppStateDataTags.LeftDrawerEnabled, true);
-			appState.SetData(AppStateDataTags.RightDrawerEnabled, true);
+			appState.SetData(AppStateDataTags.RightDrawerOnClick, HandlerRightDrawerClickState(appState));
 		});
 	}
 
@@ -26,4 +25,16 @@ public static class AppSettings
 		NavDetail.Create("Home", Icons.Material.TwoTone.Home, "/"),
 		NavDetail.Create("Docs", Icons.Material.TwoTone.LibraryBooks, "/start"),
 	};
+
+	private static Func<DrawerClickState, ValueTask> HandlerRightDrawerClickState(IAppState appState)
+	{
+		return (DrawerClickState state) =>
+		{
+			if (state == DrawerClickState.Opening)
+			{
+				appState.SetData(AppStateDataTags.RightDrawerContent, typeof(SideContentSample));
+			}
+			return ValueTask.CompletedTask;
+		};
+	}
 }

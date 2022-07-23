@@ -13,8 +13,12 @@
 </MudAppBar>
 
 @code {
-	private bool LeftDrawerEnabled => GetState<bool>(AppStateDataTags.LeftDrawerEnabled);
-	private bool RightDrawerEnabled => GetState<bool>(AppStateDataTags.RightDrawerEnabled);
+	private Func<DrawerClickState, ValueTask>? LeftDrawerOnClick => GetState<Func<DrawerClickState, ValueTask>?>(AppStateDataTags.LeftDrawerOnClick);
+	private Func<DrawerClickState, ValueTask>? RightDrawerOnClick => GetState<Func<DrawerClickState, ValueTask>?>(AppStateDataTags.RightDrawerOnClick);
+	private bool LeftDrawerHasContent => GetState<Type?>(AppStateDataTags.LeftDrawerContent) != null;
+	private bool RightDrawerHasContent => GetState<Type?>(AppStateDataTags.RightDrawerContent) != null;
+	private bool LeftDrawerEnabled => LeftDrawerOnClick != null || LeftDrawerHasContent;
+	private bool RightDrawerEnabled => RightDrawerOnClick != null || RightDrawerHasContent;
 	private string LeftDrawerIcon => GetState<string?>(AppStateDataTags.TitleBarLeftDrawerIcon) ?? Icons.Material.Filled.Menu;
 	private string RightDrawerIcon => GetState<string?>(AppStateDataTags.TitleBarRightDrawerIcon) ?? Icons.Material.Filled.Menu;
 
@@ -22,7 +26,9 @@
 	{
 		AppState.ApplyChanges(() =>
 		{
-			AppState.SetData(AppStateDataTags.TitleBarLeftDrawerOpen, !AppState.GetData<bool>(AppStateDataTags.TitleBarLeftDrawerOpen));
+			bool isOpen = !AppState.GetData<bool>(AppStateDataTags.TitleBarLeftDrawerOpen);
+			AppState.SetData(AppStateDataTags.TitleBarLeftDrawerOpen, isOpen);
+			LeftDrawerOnClick?.Invoke(GetState(isOpen));
 		});
 	}
 
@@ -30,7 +36,15 @@
 	{
 		AppState.ApplyChanges(() =>
 		{
-			AppState.SetData(AppStateDataTags.TitleBarRightDrawerOpen, !AppState.GetData<bool>(AppStateDataTags.TitleBarRightDrawerOpen));
+			bool isOpen = !AppState.GetData<bool>(AppStateDataTags.TitleBarRightDrawerOpen);
+			AppState.SetData(AppStateDataTags.TitleBarRightDrawerOpen, isOpen);
+			RightDrawerOnClick?.Invoke(GetState(isOpen));
 		});
 	}
+
+	private DrawerClickState GetState(bool isOpen) => isOpen switch
+	{
+		true => DrawerClickState.Opening,
+		_ => DrawerClickState.Closing
+	};
 }

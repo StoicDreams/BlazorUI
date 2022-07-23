@@ -6,30 +6,30 @@
 		<BUITitleBar />
 	}
 	<MudDrawer @bind-Open="@LeftDrawerOpen" Anchor="Anchor.Left" Elevation="0" Variant="@LeftDrawerVariant" ClipMode="DrawerClipMode.Docked">
-		<MudNavMenu>
-			<Virtualize Items="@NavList" Context="navItem">
-				@if (string.IsNullOrWhiteSpace(navItem.Href))
-				{
-					<MudNavLink Icon="@navItem.Icon"
-						OnClick="() => navItem.OnClick?.Invoke(navItem)"
-						>
-						@navItem.Name
-					</MudNavLink>
-				}
-				else
-				{
-					<MudNavLink Icon="@navItem.Icon"
-						Href="@navItem.Href"
-						OnClick="() => navItem.OnClick?.Invoke(navItem)"
-						>
-						@navItem.Name
-					</MudNavLink>
-				}
-			</Virtualize>
-		</MudNavMenu>
+		@if (LeftDrawerContent != null)
+		{
+			<ErrorBoundary>
+				<ChildContent>
+					<DynamicComponent Type="LeftDrawerContent" />
+				</ChildContent>
+				<ErrorContent>
+					<MudAlert Severity="Severity.Error">Failed to load expected content.</MudAlert>
+				</ErrorContent>
+			</ErrorBoundary>
+		}
 	</MudDrawer>
 	<MudDrawer @bind-Open="@RightDrawerOpen" Anchor="Anchor.Right" Elevation="0" Variant="@RightDrawerVariant">
-
+		@if (RightDrawerContent != null)
+		{
+			<ErrorBoundary>
+				<ChildContent>
+					<DynamicComponent Type="RightDrawerContent" />
+				</ChildContent>
+				<ErrorContent>
+					<MudAlert Severity="Severity.Error">Failed to load expected content.</MudAlert>
+				</ErrorContent>
+			</ErrorBoundary>
+		}
 	</MudDrawer>
 	<MudMainContent>
 		@Body
@@ -45,7 +45,8 @@
 	private bool RightDrawerOpen { get => GetState<bool>(AppStateDataTags.TitleBarRightDrawerOpen); set => AppState.SetData<bool>(AppStateDataTags.TitleBarRightDrawerOpen, value); }
 	private DrawerVariant LeftDrawerVariant { get => GetState<DrawerVariant>(AppStateDataTags.AppLeftDrawerVariant); set => AppState.SetData<DrawerVariant>(AppStateDataTags.AppLeftDrawerVariant, value); }
 	private DrawerVariant RightDrawerVariant { get => GetState<DrawerVariant>(AppStateDataTags.AppRightDrawerVariant); set => AppState.SetData<DrawerVariant>(AppStateDataTags.AppRightDrawerVariant, value); }
-	private List<NavDetail> NavList { get => GetState<List<NavDetail>>(AppStateDataTags.NavList) ?? new(); set => AppState.SetData<List<NavDetail>>(AppStateDataTags.NavList, value); }
+	private Type? LeftDrawerContent => GetState<Type?>(AppStateDataTags.LeftDrawerContent);
+	private Type? RightDrawerContent => GetState<Type?>(AppStateDataTags.RightDrawerContent);
 
 	protected override async Task OnInitializedAsync()
 	{

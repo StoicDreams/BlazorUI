@@ -1,0 +1,24 @@
+﻿@inherits BUICore
+
+<MudNavMenu>
+	<Virtualize Items="@NavList" Context="navItem">
+		@if (string.IsNullOrWhiteSpace(navItem.Href))
+		{
+			<MudNavLink Icon="@navItem.Icon"
+					OnClick="() => navItem.OnClick?.Invoke(navItem)">
+				@navItem.Name
+			</MudNavLink>
+		}
+		else
+		{
+			<MudNavLink Icon="@navItem.Icon"
+					Href="@navItem.Href"
+					OnClick="() => navItem.OnClick?.Invoke(navItem)">
+				@navItem.Name
+			</MudNavLink>
+		}
+	</Virtualize>
+</MudNavMenu>
+@code {
+	private List<NavDetail> NavList { get => GetState<List<NavDetail>>(AppStateDataTags.NavList) ?? new(); set => AppState.SetData<List<NavDetail>>(AppStateDataTags.NavList, value); }
+}

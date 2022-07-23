@@ -8,7 +8,7 @@
 <MudBlazor.MudDialogProvider />
 <MudBlazor.MudSnackbarProvider />
 
-<Router AppAssembly="@AppAssembly">
+<Router AppAssembly="@AppAssembly" AdditionalAssemblies="FrameworkAssemblies">
 	<Found Context="routeData">
 		<LayoutView Layout="@AppLayout">
 			<BlazorTransitionableRoute.TransitionableRoutePrimary RouteData="@routeData" ForgetStateOnTransition="true">
@@ -37,6 +37,7 @@
 	private Type PageLayout => typeof(BUIPageLayout);
 	private Type PageNotFound => HiddenOptions.PageNotFound;
 	private Type? AppStartup => HiddenOptions.AppStartupComponent;
+	private IEnumerable<Assembly> FrameworkAssemblies => new Assembly[] { typeof(BUIApp).Assembly };
 
 	protected override async Task OnInitializedAsync()
 	{

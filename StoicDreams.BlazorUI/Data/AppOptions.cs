@@ -37,6 +37,13 @@ public class AppOptions : IAppOptions
 		PageNotFound = typeof(TNotFound);
 	}
 
+	public Type ErrorPage { get; set; } = typeof(BUIError);
+	public void SetErrorPage<TErrorPage>()
+		where TErrorPage : ComponentBase, IErrorPage
+	{
+		ErrorPage = typeof(TErrorPage);
+	}
+
 	public Type TitleBarContent { get; set; } = typeof(BUITitleContent);
 	public void SetTitleBarContent<TTitleBar>() 
 		where TTitleBar : ComponentBase

@@ -9,6 +9,9 @@ global using StoicDreams.BlazorUI.Constants;
 global using StoicDreams.BlazorUI.Data;
 global using StoicDreams.BlazorUI.DataTypes;
 global using StoicDreams.BlazorUI.Extensions;
+global using StoicDreams.BlazorUI.Interfaces;
+global using StoicDreams.BlazorUI.Interfaces.Pages;
+global using StoicDreams.BlazorUI.Pages;
 
 using System.Runtime.CompilerServices;
 [assembly: InternalsVisibleTo("DynamicProxyGenAssembly2")]

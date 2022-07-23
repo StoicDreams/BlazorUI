@@ -36,7 +36,6 @@
 		<StaticWebAssetBasePath>/</StaticWebAssetBasePath>
 	</PropertyGroup>
 
-
 	<ItemGroup>
 		<SupportedPlatform Include="browser" />
 	</ItemGroup>
@@ -49,7 +48,6 @@
 	</ItemGroup>
 
 	<ItemGroup>
-		<Folder Include="Interfaces\DataTypes\" />
 		<Folder Include="PowerShell\" />
 	</ItemGroup>
 

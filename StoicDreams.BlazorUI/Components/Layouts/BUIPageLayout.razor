@@ -1,5 +1,6 @@
 ﻿@inherits TransitionableLayoutComponent
 @using BlazorTransitionableRoute
+@inject IAppOptions AppOptions
 
 <main class="@TransitioningClass">
 	<ErrorBoundary @ref="ErrorFragment" Context="error">
@@ -7,7 +8,7 @@
 			@Body
 		</ChildContent>
 		<ErrorContent>
-			<BUIError Exception="@error" />
+			<DynamicComponent Type="ErrorPage" Parameters="GetErrorPageParameters(error)" />
 		</ErrorContent>
 	</ErrorBoundary>
 </main>
@@ -15,6 +16,11 @@
 @code {
 	private string TransitioningDirection => this.Transition.Backwards ? "Up" : "Down";
 	private string TransitioningClass => Transition.FirstRender ? "" : $"{TransitioningEffect()} animate__faster animate__animated";
+	private Type ErrorPage => ((AppOptions)AppOptions).ErrorPage;
+	private Dictionary<string, object> GetErrorPageParameters(Exception error) => new()
+	{
+		{"Exception", error }
+	};
 
 	private ErrorBoundary? ErrorFragment { get; set; }
 

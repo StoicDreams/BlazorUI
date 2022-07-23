@@ -78,6 +78,13 @@ public interface IAppOptions
 	void SetPageNotFound<TNotFound>() where TNotFound : ComponentBase;
 
 	/// <summary>
+	/// Change the default error page/component.
+	/// Defaults to BUIError
+	/// </summary>
+	/// <typeparam name="TErrorPage"></typeparam>
+	void SetErrorPage<TErrorPage>() where TErrorPage : ComponentBase, IErrorPage;
+
+	/// <summary>
 	/// Position for app's title bar.
 	/// Default is Top.
 	/// </summary>

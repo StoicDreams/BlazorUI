@@ -5,6 +5,8 @@ public abstract class BUICore : ComponentBase, IDisposable
 #pragma warning disable CS8618 // Non-nullable field must contain a non-null value when exiting constructor. Consider declaring as nullable.
 	[Inject] protected IAppOptions AppOptions { get; private set; }
 	[Inject] protected IAppState AppState { get; private set; }
+	[Inject] protected ISnackbar Snackbar { get; private set; }
+
 #pragma warning restore CS8618 // Non-nullable field must contain a non-null value when exiting constructor. Consider declaring as nullable.
 	protected AppOptions HiddenOptions => (AppOptions)AppOptions;
 

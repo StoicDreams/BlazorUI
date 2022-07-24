@@ -5,8 +5,13 @@
 @inject IJsInterop JSInterop
 
 <MudBlazor.MudThemeProvider />
-<MudBlazor.MudDialogProvider />
+<MudBlazor.MudDialogProvider
+	MaxWidth="MaxWidth.ExtraExtraLarge"
+	DisableBackdropClick="true"
+	Position="DialogPosition.Center"
+	/>
 <MudBlazor.MudSnackbarProvider />
+<BUIThemeManager />
 
 <Router AppAssembly="@AppAssembly" AdditionalAssemblies="FrameworkAssemblies">
 	<Found Context="routeData">
@@ -53,6 +58,7 @@
 		AppState.SetData(AppStateDataTags.NavTransitionOutMilliseconds, 300);
 		AppState.SetData(AppStateDataTags.NavTransitionInMilliseconds, 300);
 		AppState.SetData(AppStateDataTags.LeftDrawerContent, typeof(BUINavMenu));
+		AppState.SetData(AppStateDataTags.TitleBarElevation, 5);
 		await JSInterop.AddCSSFile("css/routetransition.4.0.0.min.css");
 		await JSInterop.AddJSFile("jsInterop.js");
 	}

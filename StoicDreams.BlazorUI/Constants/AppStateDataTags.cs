@@ -16,6 +16,16 @@ public enum AppStateDataTags
 	/// </summary>
 	AppRightDrawerVariant,
 	/// <summary>
+	/// Bool flag setting if title bar should be dense.
+	/// Defaults to true
+	/// </summary>
+	DenseTitleBar,
+	/// <summary>
+	/// Bool flag setting if tables should be dense.
+	/// Defaults to true
+	/// </summary>
+	DenseTables,
+	/// <summary>
 	/// Set with Func<DrawerClickState, ValueTask>
 	/// Defaults to null
 	/// </summary>
@@ -55,6 +65,16 @@ public enum AppStateDataTags
 	/// </summary>
 	RightDrawerContent,
 	/// <summary>
+	/// Set bool if title bar uses dense setting (reduced padding)
+	/// Defaults to false
+	/// </summary>
+	TitleBarIsDense,
+	/// <summary>
+	/// Integer value between 1 and 10 setting shadow amount for title bar.
+	/// Defaults to 5
+	/// </summary>
+	TitleBarElevation,
+	/// <summary>
 	/// Bool value set internally when left drawer state is changed
 	/// </summary>
 	TitleBarLeftDrawerOpen,
@@ -74,4 +94,14 @@ public enum AppStateDataTags
 	/// Defaults to null - title bar uses Icons.Material.Filled.Menu when null
 	/// </summary>
 	TitleBarRightDrawerIcon,
+	/// <summary>
+	/// Title added to left drawer button for accessibility
+	/// Defaults to "Toggle Left Drawer"
+	/// </summary>
+	TitleBarLeftDrawerTitle,
+	/// <summary>
+	/// Title added to right drawer button for accessibility
+	/// Defaults to "Toggle Right Drawer"
+	/// </summary>
+	TitleBarRightDrawerTitle,
 }

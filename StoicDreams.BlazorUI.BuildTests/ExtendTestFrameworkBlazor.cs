@@ -1,6 +1,5 @@
 ﻿using Microsoft.Extensions.DependencyInjection;
 using Microsoft.JSInterop;
-using MudBlazor.Services;
 
 namespace StoicDreams.BlazorUI;
 
@@ -8,7 +7,7 @@ public static class ExtendTestFrameworkBlazor
 {
 	public static IServiceCollection StartupTestServices(this TestFrameworkBlazor test, IServiceCollection services)
 	{
-		services.AddMudServices();
+		ExtendIServiceCollection.AddStoicDreamsBlazorUI(services);
 		services.AddMock<IJsInterop>();
 		services.AddMock<IJSRuntime>();
 		AppOptions options = new();

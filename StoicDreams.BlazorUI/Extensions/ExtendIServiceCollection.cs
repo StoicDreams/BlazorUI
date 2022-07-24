@@ -4,15 +4,28 @@ namespace StoicDreams.BlazorUI.Extensions;
 
 public static partial class ExtendIServiceCollection
 {
-	public static IServiceCollection AddStoicDreamsBlazorUI(this IServiceCollection services, Action<IAppOptions>? setupHandler = null)
+	public static IServiceCollection AddStoicDreamsBlazorUI(this IServiceCollection services,
+		Action<IAppOptions>? setupHandler = null,
+		Action<MudServicesConfiguration>? mudConfigHandler = null
+		)
 	{
 		IAppOptions appOptions = new AppOptions();
 		appOptions.CssFiles.Add($"{AppAssembly.GetName().Name}.styles.css");
 		setupHandler?.Invoke(appOptions);
 		services.AddSingleton<IAppOptions>(appOptions);
 		services.AddSingleton<IAppState, AppState>();
+		services.AddSingleton<IThemeState, ThemeState>();
 		services.AddTransient<Data.IJsInterop, JsInterop>();
-		services.AddMudServices();
+		services.AddMudServices(config =>
+		{
+			config.SnackbarConfiguration.PositionClass = Defaults.Classes.Position.BottomRight;
+			config.SnackbarConfiguration.ClearAfterNavigation = false;
+			config.SnackbarConfiguration.ShowTransitionDuration = 300;
+			config.SnackbarConfiguration.HideTransitionDuration = 300;
+			config.SnackbarConfiguration.SnackbarVariant = Variant.Filled;
+			config.SnackbarConfiguration.MaxDisplayedSnackbars = 10;
+			mudConfigHandler?.Invoke(config);
+		});
 		services.AddScoped<BlazorTransitionableRoute.IRouteTransitionInvoker, BlazorTransitionableRoute.DefaultRouteTransitionInvoker>();
 
 		return services;

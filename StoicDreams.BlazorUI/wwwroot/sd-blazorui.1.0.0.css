@@ -1,5 +1,5 @@
-﻿:root
-{
+﻿:root {
+	--htag-font-size: 1.5rem;
 	--nav-transition-in: 300ms;
 	--nav-transition-out: 300ms;
 	--mud-palette-black: #272c34ff;
@@ -120,37 +120,37 @@
 	--mud-typography-default-letterspacing: .01071em;
 	--mud-typography-default-text-transform: none;
 	--mud-typography-h1-family: 'Roboto','Helvetica','Arial','sans-serif';
-	--mud-typography-h1-size: 6rem;
+	--mud-typography-h1-size: var(--htag-font-size);
 	--mud-typography-h1-weight: 300;
 	--mud-typography-h1-lineheight: 1.167;
 	--mud-typography-h1-letterspacing: -.01562em;
 	--mud-typography-h1-text-transform: none;
 	--mud-typography-h2-family: 'Roboto','Helvetica','Arial','sans-serif';
-	--mud-typography-h2-size: 3.75rem;
+	--mud-typography-h2-size: var(--htag-font-size);
 	--mud-typography-h2-weight: 300;
 	--mud-typography-h2-lineheight: 1.2;
 	--mud-typography-h2-letterspacing: -.00833em;
 	--mud-typography-h2-text-transform: none;
 	--mud-typography-h3-family: 'Roboto','Helvetica','Arial','sans-serif';
-	--mud-typography-h3-size: 3rem;
+	--mud-typography-h3-size: var(--htag-font-size);
 	--mud-typography-h3-weight: 400;
 	--mud-typography-h3-lineheight: 1.167;
 	--mud-typography-h3-letterspacing: 0;
 	--mud-typography-h3-text-transform: none;
 	--mud-typography-h4-family: 'Roboto','Helvetica','Arial','sans-serif';
-	--mud-typography-h4-size: 2.125rem;
+	--mud-typography-h4-size: var(--htag-font-size);
 	--mud-typography-h4-weight: 400;
 	--mud-typography-h4-lineheight: 1.235;
 	--mud-typography-h4-letterspacing: .00735em;
 	--mud-typography-h4-text-transform: none;
 	--mud-typography-h5-family: 'Roboto','Helvetica','Arial','sans-serif';
-	--mud-typography-h5-size: 1.5rem;
+	--mud-typography-h5-size: var(--htag-font-size);
 	--mud-typography-h5-weight: 400;
 	--mud-typography-h5-lineheight: 1.334;
 	--mud-typography-h5-letterspacing: 0;
 	--mud-typography-h5-text-transform: none;
 	--mud-typography-h6-family: 'Roboto','Helvetica','Arial','sans-serif';
-	--mud-typography-h6-size: 1.25rem;
+	--mud-typography-h6-size: var(--htag-font-size);
 	--mud-typography-h6-weight: 500;
 	--mud-typography-h6-lineheight: 1.6;
 	--mud-typography-h6-letterspacing: .0075em;
@@ -262,3 +262,12 @@ html, body, #app, .router {
 	.mud-main-content > main.inview {
 		z-index: 1;
 	}
+.mud-dialog .mud-dialog-title {
+	background-color: var(--mud-palette-primary);
+	color: var(--mud-palette-primary-text);
+}
+
+.mud-dialog .mud-dialog-actions {
+	background-color: var(--mud-palette-background-grey);
+	color: var(--mud-palette-text-primary);
+}

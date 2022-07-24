@@ -1,5 +1,4 @@
 namespace StoicDreams.BlazorUI;
-using Microsoft.JSInterop.Infrastructure;
 
 public class JsInterop : IJsInterop, IAsyncDisposable
 {

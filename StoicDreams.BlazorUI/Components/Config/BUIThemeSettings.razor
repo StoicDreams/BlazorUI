@@ -1,0 +1,60 @@
+﻿@inherits BUICore
+
+@inject IThemeState ThemeState
+
+<BUIDialogConfirm OnSave="OnSave">
+	<MudText Typo="Typo.h6">Theme Colors</MudText>
+	<MudContainer>
+		@foreach (ColorData item in ColorSettings)
+		{
+			<MudColorPicker Label="@item.Name" Value="@item.HexValue" ValueChanged="(color => ApplyColorUpdate(color.Value, item))" />
+		}
+	</MudContainer>
+</BUIDialogConfirm>
+
+@code {
+
+	private List<ColorData> ColorSettings { get; set; } = new();
+	private ThemeConfig LoadedConfig => ThemeState.Current;
+	private ThemeState State => (ThemeState)ThemeState;
+
+	protected override Task OnInitializedAsync()
+	{
+		BuildColorSetting();
+		return base.OnInitializedAsync();
+	}
+
+	private void ApplyColorUpdate(string hexValue, ColorData color)
+	{
+		color.HexValue = hexValue;
+		ThemeConfig config = LoadedConfig;
+		Type configType = config.GetType();
+		PropertyInfo? info = configType.GetProperty(color.Name);
+		if (info == null) { return; }
+		ColorData newValue = hexValue;
+		info.SetValue(config, newValue);
+		State.TriggerChange();
+	}
+
+	private void BuildColorSetting()
+	{
+		ThemeConfig config = LoadedConfig;
+		Type configType = config.GetType();
+		PropertyInfo[] configFields = configType.GetProperties();
+		List<ColorData> colorSettings = new();
+		foreach (PropertyInfo info in configFields)
+		{
+			if (info.PropertyType != typeof(ColorData)) { continue; }
+			object? value = info.GetValue(config);
+			if (value == null) { continue; }
+			ColorData color = (ColorData)value;
+			colorSettings.Add(ColorData.Create(info.Name, color));
+		}
+		ColorSettings = colorSettings;
+	}
+
+	private void OnSave()
+	{
+		Snackbar.Add("Simulated Save!", Severity.Info);
+	}
+}

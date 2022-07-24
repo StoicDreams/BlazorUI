@@ -1,6 +1,6 @@
-﻿using BlazorTransitionableRoute;
-using Microsoft.AspNetCore.Components;
+﻿using Microsoft.AspNetCore.Components;
 using System.Collections.ObjectModel;
+using Transition = BlazorTransitionableRoute.Transition;
 
 namespace StoicDreams.BlazorUI.Components.Layouts;
 

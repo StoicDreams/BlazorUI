@@ -1,0 +1,18 @@
+﻿@inject IDialogService DialogService
+
+<MudContainer>
+	<MudText Typo="Typo.h3">App Settings</MudText>
+	<MudDivider />
+	<MudButton Icon="@Icons.Material.Filled.DisplaySettings" Title="View Theme Settings Manager" OnClick="OpenThemeSettings" FullWidth="true">Theme Settings</MudButton>
+</MudContainer>
+
+@code {
+	private void OpenThemeSettings()
+	{
+		DialogOptions options = new()
+			{
+				DisableBackdropClick = true
+			};
+		DialogService.Show<BUIThemeSettings>("Theme Settings Manager", options);
+	}
+}

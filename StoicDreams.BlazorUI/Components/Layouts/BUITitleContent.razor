@@ -1,12 +1,12 @@
 ﻿@inherits BUICore
 
-<h1>
+<MudText Typo="Typo.h1">
 	@GetPageTitleDisplay
-</h1>
+</MudText>
 
 <MudSpacer />
 
-
+<MudIconButton Icon="@Icons.Material.Filled.Settings" Color="Color.Inherit" Title="Open App Settings" OnClick="ToggleNav" />
 
 @code {
 	private string AppName => AppOptions.AppName;
@@ -22,5 +22,14 @@
 			if (string.IsNullOrWhiteSpace(appName)) { return title; }
 			return $"{appName} - {title}";
 		}
+	}
+
+	private void ToggleNav()
+	{
+		AppState.ApplyChanges(() =>
+		{
+			AppState.SetData(AppStateDataTags.RightDrawerContent, typeof(BUIAppSettings));
+			AppState.SetData(AppStateDataTags.TitleBarRightDrawerOpen, true);
+		});
 	}
 }

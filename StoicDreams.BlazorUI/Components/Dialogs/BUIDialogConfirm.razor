@@ -1,0 +1,39 @@
+﻿
+<MudDialog>
+	<DialogContent>
+		@ChildContent
+	</DialogContent>
+	<DialogActions>
+		<MudButton Icon="@Icons.Material.Filled.Cancel" Color="Color.Warning" OnClick="Cancel" Title="@CancelTitle">@CancelText</MudButton>
+		<MudSpacer />
+		<MudButton Icon="@Icons.Material.Filled.Save" Color="Color.Success" OnClick="Confirm" Title="@ConfirmTitle">@ConfirmText</MudButton>
+	</DialogActions>
+</MudDialog>
+
+@code {
+	[CascadingParameter]
+	private MudDialogInstance Dialog { get; set; } = new();
+	[Parameter]
+	public RenderFragment? ChildContent { get; set; }
+	[Parameter]
+	public Action? OnSave { get; set; }
+	[Parameter]
+	public Action? OnCancel { get; set; }
+
+	protected virtual string CancelText { get; set; } = "Cancel";
+	protected virtual string ConfirmText { get; set; } = "Confirm";
+	protected virtual string CancelTitle { get; set; } = "Cancel";
+	protected virtual string ConfirmTitle { get; set; } = "Confirm";
+
+	private void Cancel()
+	{
+		OnCancel?.Invoke();
+		Dialog.Cancel();
+	}
+
+	private void Confirm()
+	{
+		OnSave?.Invoke();
+		Dialog.Close(DialogResult.Ok(true));
+	}
+}

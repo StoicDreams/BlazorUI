@@ -16,6 +16,7 @@ public static class AppSettings
 		{
 			appState.SetData(AppStateDataTags.NavList, GetSiteNavigation());
 			appState.SetData(AppStateDataTags.RightDrawerOnClick, HandlerRightDrawerClickState(appState));
+			appState.SetData(AppStateDataTags.TitleBarLeftDrawerTitle, "Toggle Navigation Menu");
 		});
 	}
 

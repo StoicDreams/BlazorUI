@@ -1,0 +1,116 @@
+﻿@inherits BUICore
+
+@inject IThemeState ThemeState
+
+@GetStyles
+
+@code {
+	private ThemeState State => (ThemeState)ThemeState;
+	private ThemeConfig Config => State.Current;
+
+	private MarkupString GetStyles => new($@"
+<style type=""text/css"">
+	:root {{
+		--htag-font-size: 1.5rem;
+		--nav-transition-in: 300ms;
+		--nav-transition-out: 300ms;
+		--mud-palette-black: {Config.Black};
+		--mud-palette-white: {Config.White};
+		--mud-palette-primary: {Config.Primary};
+		--mud-palette-primary-rgb: {Config.Primary.RgbValue};
+		--mud-palette-primary-text: #ffffffff;
+		--mud-palette-primary-darken: rgb(62,44,221);
+		--mud-palette-primary-lighten: rgb(118,106,231);
+		--mud-palette-primary-hover: rgba({Config.Primary.RgbValue},0.058823529411764705);
+		--mud-palette-secondary: {Config.Secondary};
+		--mud-palette-secondary-rgb: {Config.Secondary.RgbValue};
+		--mud-palette-secondary-text: #ffffffff;
+		--mud-palette-secondary-darken: rgb(255,31,105);
+		--mud-palette-secondary-lighten: rgb(255,102,153);
+		--mud-palette-secondary-hover: rgba({Config.Secondary.RgbValue},0.058823529411764705);
+		--mud-palette-tertiary: {Config.Tertiary};
+		--mud-palette-tertiary-rgb: {Config.Tertiary.RgbValue};
+		--mud-palette-tertiary-text: #ffffffff;
+		--mud-palette-tertiary-darken: rgb(25,169,140);
+		--mud-palette-tertiary-lighten: rgb(42,223,187);
+		--mud-palette-tertiary-hover: rgba({Config.Tertiary.RgbValue},0.058823529411764705);
+		--mud-palette-info: {Config.Info};
+		--mud-palette-info-rgb: {Config.Info.RgbValue};
+		--mud-palette-info-text: #ffffffff;
+		--mud-palette-info-darken: rgb(12,128,223);
+		--mud-palette-info-lighten: rgb(71,167,245);
+		--mud-palette-info-hover: rgba({Config.Info.RgbValue},0.058823529411764705);
+		--mud-palette-success: {Config.Success};
+		--mud-palette-success-rgb: {Config.Success.RgbValue};
+		--mud-palette-success-text: #ffffffff;
+		--mud-palette-success-darken: rgb(0,163,68);
+		--mud-palette-success-lighten: rgb(0,235,98);
+		--mud-palette-success-hover: rgba({Config.Success.RgbValue},0.058823529411764705);
+		--mud-palette-warning: {Config.Warning};
+		--mud-palette-warning-rgb: {Config.Warning.RgbValue};
+		--mud-palette-warning-text: #ffffffff;
+		--mud-palette-warning-darken: rgb(214,129,0);
+		--mud-palette-warning-lighten: rgb(255,167,36);
+		--mud-palette-warning-hover: rgba({Config.Warning.RgbValue},0.058823529411764705);
+		--mud-palette-error: {Config.Error};
+		--mud-palette-error-rgb: {Config.Error.RgbValue};
+		--mud-palette-error-text: #ffffffff;
+		--mud-palette-error-darken: rgb(242,28,13);
+		--mud-palette-error-lighten: rgb(246,96,85);
+		--mud-palette-error-hover: rgba({Config.Error.RgbValue},0.058823529411764705);
+		--mud-palette-dark: {Config.Dark};
+		--mud-palette-dark-rgb: {Config.Dark.RgbValue};
+		--mud-palette-dark-text: #ffffffff;
+		--mud-palette-dark-darken: rgb(46,46,46);
+		--mud-palette-dark-lighten: rgb(87,87,87);
+		--mud-palette-dark-hover: rgba({Config.Dark.RgbValue},0.058823529411764705);
+		--mud-palette-text-primary: #424242ff;
+		--mud-palette-text-secondary: #00000089;
+		--mud-palette-text-disabled: #00000060;
+		--mud-palette-action-default: #00000089;
+		--mud-palette-action-default-hover: rgba(0,0,0,0.058823529411764705);
+		--mud-palette-action-disabled: #00000042;
+		--mud-palette-action-disabled-background: #0000001e;
+		--mud-palette-surface: {Config.Surface};
+		--mud-palette-background: {Config.AppBackground};
+		--mud-palette-background-grey: #f5f5f5ff;
+		--mud-palette-drawer-background: {Config.DrawerBackground};
+		--mud-palette-drawer-text: #424242ff;
+		--mud-palette-drawer-icon: #616161ff;
+		--mud-palette-appbar-background: {Config.AppBarBackground};
+		--mud-palette-appbar-text: #ffffffff;
+		--mud-palette-lines-default: #0000001e;
+		--mud-palette-lines-inputs: #bdbdbdff;
+		--mud-palette-table-lines: #e0e0e0ff;
+		--mud-palette-table-striped: #00000005;
+		--mud-palette-table-hover: #0000000a;
+		--mud-palette-divider: #e0e0e0ff;
+		--mud-palette-divider-light: #000000cc;
+		--mud-palette-grey-default: #9E9E9E;
+		--mud-palette-grey-light: #BDBDBD;
+		--mud-palette-grey-lighter: #E0E0E0;
+		--mud-palette-grey-dark: #757575;
+		--mud-palette-grey-darker: #616161;
+		--mud-palette-overlay-dark: rgba(33,33,33,0.4980392156862745);
+		--mud-palette-overlay-light: rgba(255,255,255,0.4980392156862745);
+		--mud-typography-default-size: .875rem;
+		--mud-typography-h1-size: var(--htag-font-size);
+		--mud-typography-h2-size: var(--htag-font-size);
+		--mud-typography-h3-size: var(--htag-font-size);
+		--mud-typography-h4-size: var(--htag-font-size);
+		--mud-typography-h5-size: var(--htag-font-size);
+		--mud-typography-h6-size: var(--htag-font-size);
+	}}
+</style>");
+
+	protected override Task OnInitializedAsync()
+	{
+		State.ListenForChanges(ComponentId, HandleChange);
+		return base.OnInitializedAsync();
+	}
+
+	private void HandleChange()
+	{
+		InvokeAsync(StateHasChanged);
+	}
+}

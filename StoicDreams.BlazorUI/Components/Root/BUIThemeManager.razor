@@ -7,6 +7,7 @@
 @code {
 	private ThemeState State => (ThemeState)ThemeState;
 	private ThemeConfig Config => State.Current;
+	private List<ThemeConfig> ConfigList => GetState<List<ThemeConfig>>(AppStateDataTags.Themes) ?? new();
 
 	private MarkupString GetStyles => new($@"
 <style type=""text/css"">
@@ -103,8 +104,15 @@
 	}}
 </style>");
 
+
+
 	protected override Task OnInitializedAsync()
 	{
+		List<ThemeConfig> list = ConfigList;
+		if (list.Count > 0)
+		{
+			State.Current = list[0];
+		}
 		State.ListenForChanges(ComponentId, HandleChange);
 		return base.OnInitializedAsync();
 	}

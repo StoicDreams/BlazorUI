@@ -2,6 +2,7 @@
 
 public record ThemeConfig
 {
+	public string Name { get; set; } = "Custom";
 	/// <summary>
 	/// Milliseconds timing for navigation to transition pages in
 	/// Defaults to 300
@@ -19,6 +20,9 @@ public record ThemeConfig
 	/// Text / Offset color used against dark backgrounds
 	/// </summary>
 	public ColorData White { get; set; } = "#ffffff";
+	public ColorData AppBarBackground { get; set; } = "#594ae2";
+	public ColorData AppBackground { get; set; } = "#ffffff";
+	public ColorData DrawerBackground { get; set; } = "#ffffff";
 	public ColorData Primary { get; set; } = "#594ae2";
 	public ColorData Secondary { get; set; } = "#ff4081";
 	public ColorData Tertiary { get; set; } = "#1ec8a5";
@@ -27,7 +31,4 @@ public record ThemeConfig
 	public ColorData Warning { get; set; } = "#ff9800";
 	public ColorData Error { get; set; } = "#f44336";
 	public ColorData Dark { get; set; } = "#424242";
-	public ColorData AppBarBackground { get; set; } = "#594ae2";
-	public ColorData DrawerBackground { get; set; } = "#ffffff";
-	public ColorData AppBackground { get; set; } = "#ffffff";
 }

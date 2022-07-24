@@ -18,7 +18,7 @@ public static partial class ExtendIServiceCollection
 		services.AddTransient<Data.IJsInterop, JsInterop>();
 		services.AddMudServices(config =>
 		{
-			config.SnackbarConfiguration.PositionClass = Defaults.Classes.Position.BottomRight;
+			config.SnackbarConfiguration.PositionClass = MudBlazor.Defaults.Classes.Position.BottomRight;
 			config.SnackbarConfiguration.ClearAfterNavigation = false;
 			config.SnackbarConfiguration.ShowTransitionDuration = 300;
 			config.SnackbarConfiguration.HideTransitionDuration = 300;

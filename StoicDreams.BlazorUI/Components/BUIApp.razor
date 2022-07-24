@@ -55,10 +55,8 @@
 
 	private async Task RunDefaultSetups()
 	{
-		AppState.SetData(AppStateDataTags.NavTransitionOutMilliseconds, 300);
-		AppState.SetData(AppStateDataTags.NavTransitionInMilliseconds, 300);
-		AppState.SetData(AppStateDataTags.LeftDrawerContent, typeof(BUINavMenu));
-		AppState.SetData(AppStateDataTags.TitleBarElevation, 5);
+		AppState.SetupDefaultAppStates();
+
 		await JSInterop.AddCSSFile("css/routetransition.4.0.0.min.css");
 		await JSInterop.AddJSFile("jsInterop.js");
 	}

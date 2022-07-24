@@ -31,4 +31,42 @@ public record ThemeConfig
 	public ColorData Warning { get; set; } = "#ff9800";
 	public ColorData Error { get; set; } = "#f44336";
 	public ColorData Dark { get; set; } = "#424242";
+
+	public ThemeConfig Copy => new()
+	{
+		Name = Name,
+		NavTransitionIn = NavTransitionIn,
+		NavTransitionOut = NavTransitionOut,
+		Black = Black.HexValue,
+		White = White.HexValue,
+		AppBarBackground = AppBarBackground.HexValue,
+		DrawerBackground = DrawerBackground.HexValue,
+		Primary = Primary.HexValue,
+		Secondary = Secondary.HexValue,
+		Tertiary = Tertiary.HexValue,
+		Info = Info.HexValue,
+		Success = Success.HexValue,
+		Warning = Warning.HexValue,
+		Error = Error.HexValue,
+		Dark = Dark.HexValue,
+	};
+
+	public void CopyValues(ThemeConfig config)
+	{
+		Name = config.Name;
+		NavTransitionIn = config.NavTransitionIn;
+		NavTransitionOut = config.NavTransitionOut;
+		Black = config.Black.HexValue;
+		White = config.White.HexValue;
+		AppBarBackground = config.AppBarBackground.HexValue;
+		DrawerBackground = config.DrawerBackground.HexValue;
+		Primary = config.Primary.HexValue;
+		Secondary = config.Secondary.HexValue;
+		Tertiary = config.Tertiary.HexValue;
+		Info = config.Info.HexValue;
+		Success = config.Success.HexValue;
+		Warning = config.Warning.HexValue;
+		Error = config.Error.HexValue;
+		Dark = config.Dark.HexValue;
+	}
 }

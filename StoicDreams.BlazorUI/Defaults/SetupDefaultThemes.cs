@@ -13,6 +13,7 @@ public static partial class Setup
 				AppBackground = "#1d1c1dff",
 				DrawerBackground = "#1d1c1dff",
 				Black = "#101010ff",
+				Warning = "#ff5500ff",
 			},
 			new()
 			{

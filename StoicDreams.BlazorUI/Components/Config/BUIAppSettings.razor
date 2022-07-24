@@ -1,12 +1,30 @@
-﻿@inject IDialogService DialogService
+﻿@inherits BUICore
+@inject IDialogService DialogService
+@inject IThemeState ThemeState
 
-<MudContainer>
+<MudPaper>
 	<MudText Typo="Typo.h3">App Settings</MudText>
 	<MudDivider />
+	@if (ShowThemeSelector)
+	{
+		<MudSelect FullWidth="true" Value="@ThemeState.Current" ValueChanged="(ThemeConfig config) => HandleThemeChange(config)">
+			@foreach (ThemeConfig config in ThemeState.Themes)
+			{
+				<MudSelectItem Value="@config">@config.Name</MudSelectItem>
+			}
+		</MudSelect>
+	}
 	<MudButton Icon="@Icons.Material.Filled.DisplaySettings" Title="View Theme Settings Manager" OnClick="OpenThemeSettings" FullWidth="true">Theme Settings</MudButton>
-</MudContainer>
+</MudPaper>
 
 @code {
+	private bool ShowThemeSelector => ThemeState.Themes.Count > 1;
+
+	private void HandleThemeChange(ThemeConfig value)
+	{
+
+	}
+
 	private void OpenThemeSettings()
 	{
 		DialogOptions options = new()

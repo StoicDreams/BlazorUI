@@ -1,5 +1,4 @@
 ﻿using System.Text;
-using static MudBlazor.Colors;
 
 namespace StoicDreams.BlazorUI.DataTypes;
 
@@ -43,6 +42,8 @@ public class ColorData
 			}
 			if (value.Length != 8) { return; }
 			Value = value.ToString();
+			SetRGB();
+			SetIsDarkColor();
 		}
 		catch (Exception ex)
 		{
@@ -56,41 +57,63 @@ public class ColorData
 	private string HexB => Value[4..6];
 	private string Alpha => Value[6..8];
 
-	public string Offset
+	public string Lighter
 	{
 		get
 		{
-			(int red, int green, int blue) = GetRgb;
-			if ((red * 0.299 + green * 0.587 + blue * 0.114) > 186) { return "var(--mud-palette-black)"; }
-			return "var(--mud-palette-white)";
+			(int red, int green, int blue) = RGB;
+			red = Math.Min(255, red + ShiftAmount);
+			green = Math.Min(255, green + ShiftAmount);
+			blue = Math.Min(255, blue + ShiftAmount);
+			return $"#{red.ToBaseEncode(16, 1)}{green.ToBaseEncode(16, 1)}{blue.ToBaseEncode(16, 1)}ff";
 		}
 	}
+
+	public string Darker
+	{
+		get
+		{
+			(int red, int green, int blue) = RGB;
+			red = Math.Max(0, red - ShiftAmount);
+			green = Math.Max(0, green - ShiftAmount);
+			blue = Math.Max(0, blue - ShiftAmount);
+			return $"#{red.ToBaseEncode(16, 1)}{green.ToBaseEncode(16,1)}{blue.ToBaseEncode(16,1)}ff";
+		}
+	}
+
+	private int ShiftAmount = 10;
+
+	private bool IsDarkColor { get; set; }
+	private void SetIsDarkColor()
+	{
+		IsDarkColor = (RGB.Red * 0.299 + RGB.Green * 0.587 + RGB.Blue * 0.114) < 212;
+	}
+
+	public string Shifted => IsDarkColor ? Lighter : Darker;
+
+	public string Offset => IsDarkColor ? "var(--mud-palette-white)" : "var(--mud-palette-black)";
 
 	public string RgbValue
 	{
 		get
 		{
-			(int red, int green, int blue) = GetRgb;
-			return $"{red},{green},{blue}";
+			return $"{RGB.Red},{RGB.Green},{RGB.Blue}";
 		}
 	}
 
-	private (int red, int green, int blue) GetRgb
+	private (int Red, int Green, int Blue) RGB { get; set; } = (0, 0, 0);
+	private void SetRGB()
 	{
-		get
+		try
 		{
-			try
-			{
-				int red = Convert.ToInt32(HexR, 16);
-				int green = Convert.ToInt32(HexG, 16);
-				int blue = Convert.ToInt32(HexB, 16);
-				return (red,green,blue);
-			}
-			catch (Exception ex)
-			{
-				Error = ex.Message;
-			}
-			return (0,0,0);
+			int red = Convert.ToInt32(HexR, 16);
+			int green = Convert.ToInt32(HexG, 16);
+			int blue = Convert.ToInt32(HexB, 16);
+			RGB = (red,green,blue);
+		}
+		catch (Exception ex)
+		{
+			Error = ex.Message;
 		}
 	}
 
@@ -98,13 +121,10 @@ public class ColorData
 	{
 		get
 		{
-			double hue, saturation, luminance, red, green, blue;
-			{
-				(int r, int g, int b) = GetRgb;
-				red = r / 255.0;
-				green = g / 255.0;
-				blue = b / 255.0;
-			}
+			double hue, saturation, luminance;
+			double red = RGB.Red / 255.0;
+			double green = RGB.Green / 255.0;
+			double blue = RGB.Blue / 255.0;
 			double cmax = Math.Max(red, Math.Max(green, blue));
 			double cmin = Math.Min(red, Math.Min(green, blue));
 
@@ -146,23 +166,6 @@ public class ColorData
 				}
 			}
 			return $"{(hue * 360):N0},{saturation:N2},{luminance:N2}";
-		}
-	}
-
-	private double Luminosity
-	{
-		get
-		{
-			double dr, dg, db;
-			{
-				(int r, int g, int b) = GetRgb;
-				dr = r / 255.0;
-				dg = g / 255.0;
-				db = b / 255.0;
-			}
-			double cmax = Math.Max(dr, Math.Max(dg, db));
-			double cmin = Math.Min(dr, Math.Min(dg, db));
-			return (cmax + cmin) / 2.0;
 		}
 	}
 

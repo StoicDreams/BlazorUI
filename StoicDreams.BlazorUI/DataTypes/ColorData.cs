@@ -1,4 +1,5 @@
 ﻿using System.Text;
+using static MudBlazor.Colors;
 
 namespace StoicDreams.BlazorUI.DataTypes;
 
@@ -55,25 +56,35 @@ public class ColorData
 	private string HexB => Value[4..6];
 	private string Alpha => Value[6..8];
 
+	public string Offset
+	{
+		get
+		{
+			(int red, int green, int blue) = GetRgb;
+			if ((red * 0.299 + green * 0.587 + blue * 0.114) > 186) { return "var(--mud-palette-black)"; }
+			return "var(--mud-palette-white)";
+		}
+	}
+
 	public string RgbValue
 	{
 		get
 		{
-			(int r, int g, int b) = GetRgb;
-			return $"{r},{g},{b}";
+			(int red, int green, int blue) = GetRgb;
+			return $"{red},{green},{blue}";
 		}
 	}
 
-	private (int r, int g, int b) GetRgb
+	private (int red, int green, int blue) GetRgb
 	{
 		get
 		{
 			try
 			{
-				int r = Convert.ToInt32(HexR, 16);
-				int g = Convert.ToInt32(HexG, 16);
-				int b = Convert.ToInt32(HexB, 16);
-				return (r,g,b);
+				int red = Convert.ToInt32(HexR, 16);
+				int green = Convert.ToInt32(HexG, 16);
+				int blue = Convert.ToInt32(HexB, 16);
+				return (red,green,blue);
 			}
 			catch (Exception ex)
 			{
@@ -87,62 +98,71 @@ public class ColorData
 	{
 		get
 		{
-			try
+			double hue, saturation, luminance, red, green, blue;
 			{
-				double h, s, l, dr, dg, db;
-				{
-					(int r, int g, int b) = GetRgb;
-					dr = r / 255.0;
-					dg = g / 255.0;
-					db = b / 255.0;
-				}
-				double cmax = Math.Max(dr, Math.Max(dg, db));
-				double cmin = Math.Min(dr, Math.Min(dg, db));
+				(int r, int g, int b) = GetRgb;
+				red = r / 255.0;
+				green = g / 255.0;
+				blue = b / 255.0;
+			}
+			double cmax = Math.Max(red, Math.Max(green, blue));
+			double cmin = Math.Min(red, Math.Min(green, blue));
 
-				l = (cmax + cmin) / 2.0;
-				if (cmax == cmin)
+			luminance = (cmax + cmin) / 2.0;
+			if (cmax == cmin)
+			{
+				saturation = 0.0;
+				hue = 0.0;
+			}
+			else
+			{
+				if (luminance < 0.5)
 				{
-					s = 0.0;
-					h = 0.0;
+					saturation = (cmax - cmin) / (cmax + cmin);
 				}
 				else
 				{
-					if (l < 0.5)
-					{
-						s = (cmax - cmin) / (cmax + cmin);
-					}
-					else
-					{
-						s = (cmax - cmin) / (2.0 - cmax - cmin);
-					}
-					double delta = cmax - cmin;
-
-					if (dr == cmax)
-					{
-						h = (dg - db) / delta;
-					}
-					else if (dg == cmax)
-					{
-						h = 2.0 + (db - dr) / delta;
-					}
-					else
-					{
-						h = 4.0 + (dr - dg) / delta;
-					}
-					h /= 6.0;
-
-					if (h < 0.0)
-					{
-						h += 1.0;
-					}
+					saturation = (cmax - cmin) / (2.0 - cmax - cmin);
 				}
-				return $"{(h*360):N0},{s:N2},{l:N2}";
+				double delta = cmax - cmin;
+
+				if (red == cmax)
+				{
+					hue = (green - blue) / delta;
+				}
+				else if (green == cmax)
+				{
+					hue = 2.0 + (blue - red) / delta;
+				}
+				else
+				{
+					hue = 4.0 + (red - green) / delta;
+				}
+				hue /= 6.0;
+
+				if (hue < 0.0)
+				{
+					hue += 1.0;
+				}
 			}
-			catch (Exception ex)
+			return $"{(hue * 360):N0},{saturation:N2},{luminance:N2}";
+		}
+	}
+
+	private double Luminosity
+	{
+		get
+		{
+			double dr, dg, db;
 			{
-				Error = ex.Message;
+				(int r, int g, int b) = GetRgb;
+				dr = r / 255.0;
+				dg = g / 255.0;
+				db = b / 255.0;
 			}
-			return "0,0,1";
+			double cmax = Math.Max(dr, Math.Max(dg, db));
+			double cmin = Math.Min(dr, Math.Min(dg, db));
+			return (cmax + cmin) / 2.0;
 		}
 	}
 

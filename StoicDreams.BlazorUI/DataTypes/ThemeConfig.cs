@@ -14,7 +14,7 @@ public record ThemeConfig
 	/// <summary>
 	/// Text / Offset color used against light backgrounds
 	/// </summary>
-	public ColorData Black { get; set; } = "#272c34";
+	public ColorData Black { get; set; } = "#333333";
 	/// <summary>
 	/// Text / Offset color used against dark backgrounds
 	/// </summary>
@@ -30,5 +30,4 @@ public record ThemeConfig
 	public ColorData AppBarBackground { get; set; } = "#594ae2";
 	public ColorData DrawerBackground { get; set; } = "#ffffff";
 	public ColorData AppBackground { get; set; } = "#ffffff";
-	public ColorData Surface { get; set; } = "#ffffff";
 }

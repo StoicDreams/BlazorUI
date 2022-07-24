@@ -263,8 +263,8 @@ html, body, #app, .router {
 		z-index: 1;
 	}
 .mud-dialog .mud-dialog-title {
-	background-color: var(--mud-palette-primary);
-	color: var(--mud-palette-primary-text);
+	background-color: var(--mud-palette-appbar-background);
+	color: var(--mud-palette-appbar-text);
 }
 
 .mud-dialog .mud-dialog-actions {

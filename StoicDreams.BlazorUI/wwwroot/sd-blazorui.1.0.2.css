@@ -262,6 +262,10 @@ html, body, #app, .router {
 	.mud-main-content > main.inview {
 		z-index: 1;
 	}
+	.mud-dialog {
+		max-height: 100%;
+		overflow: auto;
+	}
 .mud-dialog .mud-dialog-title {
 	background-color: var(--mud-palette-appbar-background);
 	color: var(--mud-palette-appbar-text);

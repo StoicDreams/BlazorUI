@@ -5,16 +5,18 @@
 <BUIDialogConfirm OnSave="OnSave" OnCancel="OnCancel">
 	<MudText Typo="Typo.h6">Theme Colors</MudText>
 	<MudTextField Label="Name" @bind-Value="LoadedConfig.Name" MaxLength="50" HelperText="Change name and save to create new Theme." />
-	<MudContainer>
+	<MudGrid>
 		@foreach (ColorData item in ColorSettings)
 		{
-			<MudColorPicker Label="@item.Name"
-				Value="@item.HexValue"
-				ValueChanged="(color => ApplyColorUpdate(color.Value, item))"
-				DisableToolbar="false"
-				/>
+			<MudItem xs="12" sm="6" md="4" lg="3" xl="2">
+				<MudColorPicker Label="@item.Name"
+					Value="@item.HexValue"
+					ValueChanged="(color => ApplyColorUpdate(color.Value, item))"
+					DisableToolbar="false"
+					/>
+			</MudItem>
 		}
-	</MudContainer>
+	</MudGrid>
 </BUIDialogConfirm>
 
 @code {
@@ -55,8 +57,10 @@
 			if (info.PropertyType != typeof(ColorData)) { continue; }
 			object? value = info.GetValue(config);
 			if (value == null) { continue; }
-			ColorData color = (ColorData)value;
-			colorSettings.Add(ColorData.Create(info.Name, color));
+			if (value is ColorData color)
+			{
+				colorSettings.Add(ColorData.Create(config.GetDisplay(info.Name), color));
+			}
 		}
 		ColorSettings = colorSettings;
 	}

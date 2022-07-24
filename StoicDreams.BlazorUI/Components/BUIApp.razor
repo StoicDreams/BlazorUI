@@ -3,6 +3,7 @@
 @using Microsoft.AspNetCore.Components.Routing
 @inject IJSRuntime JSRuntime
 @inject IJsInterop JSInterop
+@inject IThemeState ThemeState
 
 <MudBlazor.MudThemeProvider />
 <MudBlazor.MudDialogProvider
@@ -47,6 +48,7 @@
 	protected override async Task OnInitializedAsync()
 	{
 		await RunDefaultSetups();
+		ThemeState.SetupDefaultThemes();
 		await RunSetupFromOptions();
 		await base.OnInitializedAsync();
 		// Trigger to clear any values from startup, not expecting anything to be expecting AppInitialized key.

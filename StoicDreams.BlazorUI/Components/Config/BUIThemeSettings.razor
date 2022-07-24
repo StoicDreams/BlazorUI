@@ -9,7 +9,7 @@
 		@foreach (ColorData item in ColorSettings)
 		{
 			<MudItem xs="12" sm="6" md="4" lg="3" xl="2">
-				<MudColorPicker Label="@item.Name"
+				<MudColorPicker Label="@item.MemberName"
 					Value="@item.HexValue"
 					ValueChanged="(color => ApplyColorUpdate(color.Value, item))"
 					DisableToolbar="false"
@@ -39,7 +39,7 @@
 		color.HexValue = hexValue;
 		ThemeConfig config = LoadedConfig;
 		Type configType = config.GetType();
-		PropertyInfo? info = configType.GetProperty(color.Name);
+		PropertyInfo? info = configType.GetProperty(color.MemberName);
 		if (info == null) { return; }
 		ColorData newValue = hexValue;
 		info.SetValue(config, newValue);
@@ -59,7 +59,7 @@
 			if (value == null) { continue; }
 			if (value is ColorData color)
 			{
-				colorSettings.Add(ColorData.Create(config.GetDisplay(info.Name), color));
+				colorSettings.Add(ColorData.Create(config.GetDisplay(info.Name), info.Name, color));
 			}
 		}
 		ColorSettings = colorSettings;
@@ -67,7 +67,35 @@
 
 	private void OnSave()
 	{
-		Snackbar.Add("Simulated Save!", Severity.Info);
+		if (LoadedConfig.Name != StartingConfig.Name)
+		{
+			SaveNew();
+			return;
+		}
+		StartingConfig.CopyValues(LoadedConfig);
+		Snackbar.Add("Current theme updated!", Severity.Info);
+	}
+
+	private void SaveNew()
+	{
+		List<ThemeConfig> list = ThemeState.Themes;
+		foreach (ThemeConfig config in list)
+		{
+			if (config.Name == LoadedConfig.Name && config.Id != LoadedConfig.Id)
+			{
+				config.CopyValues(LoadedConfig);
+				LoadedConfig.CopyValues(StartingConfig);
+				ThemeState.Current = config;
+				Snackbar.Add($"Updated theme {config.Name}!", Severity.Info);
+				return;
+			}
+		}
+		ThemeConfig newConfig = new();
+		newConfig.CopyValues(LoadedConfig);
+		LoadedConfig.CopyValues(StartingConfig);
+		ThemeState.Themes.Add(newConfig);
+		ThemeState.Current = newConfig;
+		Snackbar.Add($"Added theme {newConfig.Name}!", Severity.Info);
 	}
 
 	private void OnCancel()

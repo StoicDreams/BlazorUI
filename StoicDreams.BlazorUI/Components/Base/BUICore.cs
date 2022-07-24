@@ -12,6 +12,11 @@ public abstract class BUICore : ComponentBase, IDisposable
 
 	protected Guid ComponentId { get; } = Guid.NewGuid();
 
+	/// <summary>
+	/// Used in a workaround for a rendering issue when updating lists they don't redraw correctly.
+	/// </summary>
+	protected bool FlipState { get; set; }
+
 	protected override async Task OnInitializedAsync()
 	{
 		AppState.SubscribeToDataChanges(ComponentId, HandleStateChanges);
@@ -41,7 +46,7 @@ public abstract class BUICore : ComponentBase, IDisposable
 		_ = InvokeAsync(StateHasChanged);
 	}
 
-	public void Dispose()
+	public virtual void Dispose()
 	{
 		WatchStateKeys.Clear();
 		AppState.UnsubscribeToDataChanges(ComponentId);

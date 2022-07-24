@@ -65,10 +65,6 @@ public enum AppStateDataTags
 	/// </summary>
 	RightDrawerContent,
 	/// <summary>
-	/// List<ThemeConfig> value list of themes
-	/// </summary>
-	Themes,
-	/// <summary>
 	/// Set bool if title bar uses dense setting (reduced padding)
 	/// Defaults to false
 	/// </summary>

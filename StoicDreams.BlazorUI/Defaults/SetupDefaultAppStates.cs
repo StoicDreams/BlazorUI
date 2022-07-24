@@ -8,6 +8,5 @@ public static partial class Setup
 		appState.SetData(AppStateDataTags.NavTransitionInMilliseconds, 300);
 		appState.SetData(AppStateDataTags.LeftDrawerContent, typeof(BUINavMenu));
 		appState.SetData(AppStateDataTags.TitleBarElevation, 5);
-		appState.SetupDefaultThemes();
 	}
 }

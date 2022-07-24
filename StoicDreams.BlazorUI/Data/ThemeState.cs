@@ -1,22 +1,34 @@
 ﻿namespace StoicDreams.BlazorUI.Data;
 
-public class ThemeState : IThemeState
+public class ThemeState : StateManager, IThemeState
 {
-	public ThemeConfig Current { get; set; } = new();
-	public List<ThemeConfig> Themes { get; } = new();
-
-	public void ListenForChanges(Guid callerId, Action handler)
+	public ThemeState() : base()
 	{
-		ChangeHandlers[callerId] = handler;
+		ThemeWatcher = new(HandlerThemeUpdate);
 	}
 
-	public void TriggerChange()
+	public ThemeConfig Current
 	{
-		foreach (Guid key in ChangeHandlers.Keys)
+		get
 		{
-			ChangeHandlers[key].Invoke();
+			return CurrentConfig;
+		}
+		set
+		{
+			CurrentConfig = value;
+			TriggerChange();
 		}
 	}
 
-	private Dictionary<Guid, Action> ChangeHandlers { get; } = new();
+
+	public List<ThemeConfig> Themes => ThemeWatcher;
+	private ListWatcher<ThemeConfig> ThemeWatcher { get; }
+
+	private void HandlerThemeUpdate()
+	{
+
+	}
+
+
+	private ThemeConfig CurrentConfig { get; set; } = new();
 }

@@ -2,9 +2,9 @@
 
 public static partial class Setup
 {
-	public static void SetupDefaultThemes(this IAppState appState)
+	public static void SetupDefaultThemes(this IThemeState themeState)
 	{
-		appState.SetData(AppStateDataTags.Themes, new List<ThemeConfig>()
+		themeState.Themes.AddRange(new List<ThemeConfig>()
 		{
 			new()
 			{
@@ -24,5 +24,6 @@ public static partial class Setup
 				Black = "#282828ff",
 			}
 		});
+		((ThemeState)themeState).TriggerChange();
 	}
 }

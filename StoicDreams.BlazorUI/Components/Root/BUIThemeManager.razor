@@ -5,9 +5,38 @@
 @GetStyles
 
 @code {
-	private ThemeState State => (ThemeState)ThemeState;
-	private ThemeConfig Config => State.Current;
-	private List<ThemeConfig> ConfigList => GetState<List<ThemeConfig>>(AppStateDataTags.Themes) ?? new();
+	private ThemeConfig Config => ThemeState.Current;
+	private List<ThemeConfig> ConfigList => ThemeState.Themes;
+
+
+	protected override Task OnInitializedAsync()
+	{
+		ThemeState.SubscribeToDataChanges(ComponentId, HandleChange);
+		return base.OnInitializedAsync();
+	}
+
+	public override void Dispose()
+	{
+		ThemeState.UnsubscribeToDataChanges(ComponentId);
+		base.Dispose();
+	}
+
+	private bool IsFirstChange { get; set; } = true;
+	private void HandleChange()
+	{
+		if (IsFirstChange) { ApplyDefaultTheme(); }
+		InvokeAsync(StateHasChanged);
+	}
+
+	private void ApplyDefaultTheme()
+	{
+		IsFirstChange = false;
+		List<ThemeConfig> list = ConfigList;
+		if (list.Count > 0)
+		{
+			ThemeState.Current = list[0];
+		}
+	}
 
 	private MarkupString GetStyles => new($@"
 <style type=""text/css"">
@@ -104,21 +133,4 @@
 	}}
 </style>");
 
-
-
-	protected override Task OnInitializedAsync()
-	{
-		List<ThemeConfig> list = ConfigList;
-		if (list.Count > 0)
-		{
-			State.Current = list[0];
-		}
-		State.ListenForChanges(ComponentId, HandleChange);
-		return base.OnInitializedAsync();
-	}
-
-	private void HandleChange()
-	{
-		InvokeAsync(StateHasChanged);
-	}
 }

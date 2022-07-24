@@ -2,6 +2,8 @@
 
 public record ThemeConfig
 {
+	public Guid Id { get; } = Guid.NewGuid();
+
 	public string Name { get; set; } = "Custom";
 
 	/// <summary>
@@ -50,6 +52,9 @@ public record ThemeConfig
 	[Display("Dark")]
 	public ColorData Dark { get; set; } = "#424242";
 
+	/// <summary>
+	/// Return a new instance of this theme config with values copied
+	/// </summary>
 	public ThemeConfig Copy => new()
 	{
 		Name = Name,
@@ -58,6 +63,7 @@ public record ThemeConfig
 		Black = Black.HexValue,
 		White = White.HexValue,
 		AppBarBackground = AppBarBackground.HexValue,
+		AppBackground = AppBackground.HexValue,
 		DrawerBackground = DrawerBackground.HexValue,
 		Primary = Primary.HexValue,
 		Secondary = Secondary.HexValue,
@@ -69,6 +75,10 @@ public record ThemeConfig
 		Dark = Dark.HexValue,
 	};
 
+	/// <summary>
+	/// Copy values from the passed config to this config.
+	/// </summary>
+	/// <param name="config"></param>
 	public void CopyValues(ThemeConfig config)
 	{
 		Name = config.Name;
@@ -77,6 +87,7 @@ public record ThemeConfig
 		Black = config.Black.HexValue;
 		White = config.White.HexValue;
 		AppBarBackground = config.AppBarBackground.HexValue;
+		AppBackground = config.AppBackground.HexValue;
 		DrawerBackground = config.DrawerBackground.HexValue;
 		Primary = config.Primary.HexValue;
 		Secondary = config.Secondary.HexValue;

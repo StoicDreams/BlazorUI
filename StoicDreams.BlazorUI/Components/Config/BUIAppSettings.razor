@@ -5,24 +5,69 @@
 <MudPaper>
 	<MudText Typo="Typo.h3">App Settings</MudText>
 	<MudDivider />
-	@if (ShowThemeSelector)
-	{
-		<MudSelect FullWidth="true" Value="@ThemeState.Current" ValueChanged="(ThemeConfig config) => HandleThemeChange(config)">
-			@foreach (ThemeConfig config in ThemeState.Themes)
+	<MudPaper>
+		@if (ShowThemeSelector)
+		{
+			@if (FlipState)
 			{
-				<MudSelectItem Value="@config">@config.Name</MudSelectItem>
+				<MudSelect Label="Select Theme" FullWidth="true" Value="@SelectedId" ValueChanged="(Guid id) => HandleThemeChange(id)">
+					@foreach (ThemeConfig config in LoadedThemes)
+					{
+						<MudSelectItem Value="@config.Id">@config.Name</MudSelectItem>
+					}
+				</MudSelect>
 			}
-		</MudSelect>
-	}
-	<MudButton Icon="@Icons.Material.Filled.DisplaySettings" Title="View Theme Settings Manager" OnClick="OpenThemeSettings" FullWidth="true">Theme Settings</MudButton>
+			else
+			{
+				<MudSelect Label="Select Theme" FullWidth="true" Value="@SelectedId" ValueChanged="(Guid id) => HandleThemeChange(id)">
+					@foreach (ThemeConfig config in LoadedThemes)
+					{
+						<MudSelectItem Value="@config.Id">@config.Name</MudSelectItem>
+					}
+				</MudSelect>
+			}
+		}
+		<MudButton Icon="@Icons.Material.Filled.DisplaySettings" Title="View Theme Settings Manager" OnClick="OpenThemeSettings" FullWidth="true">Theme Settings</MudButton>
+	</MudPaper>
 </MudPaper>
 
 @code {
-	private bool ShowThemeSelector => ThemeState.Themes.Count > 1;
+	private bool ShowThemeSelector => LoadedThemes.Count > 1;
+	private Guid SelectedId => ThemeState.Current.Id;
 
-	private void HandleThemeChange(ThemeConfig value)
+	private List<ThemeConfig> LoadedThemes { get; set; } = new();
+
+	protected override Task OnInitializedAsync()
 	{
+		ThemeState.SubscribeToDataChanges(ComponentId, HandleThemesUpdate);
+		LoadedThemes = ThemeState.Themes;
+		return base.OnInitializedAsync();
+	}
 
+	public override void Dispose()
+	{
+		ThemeState.UnsubscribeToDataChanges(ComponentId);
+		base.Dispose();
+	}
+
+	private void HandleThemesUpdate()
+	{
+		InvokeAsync(() =>
+		{
+			LoadedThemes = ThemeState.Themes;
+			FlipState = !FlipState;
+			StateHasChanged();
+		});
+	}
+
+	private void HandleThemeChange(Guid id)
+	{
+		foreach (ThemeConfig config in LoadedThemes)
+		{
+			if (config.Id != id) { continue; }
+			ThemeState.Current = config;
+			return;
+		}
 	}
 
 	private void OpenThemeSettings()
@@ -32,5 +77,9 @@
 				DisableBackdropClick = true
 			};
 		DialogService.Show<BUIThemeSettings>("Theme Settings Manager", options);
+		AppState.ApplyChanges(() =>
+		{
+			AppState.SetData(AppStateDataTags.TitleBarRightDrawerOpen, false);
+		});
 	}
 }

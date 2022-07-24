@@ -4,7 +4,8 @@ namespace StoicDreams.BlazorUI.DataTypes;
 
 public class ColorData
 {
-	public string Name { get; set; } = string.Empty;
+	public string UserDisplay { get; set; } = string.Empty;
+	public string MemberName { get; set; } = string.Empty;
 
 	public string HexValue { get => GetHexFromValue; set => SetValueFromHex(value); }
 
@@ -174,7 +175,7 @@ public class ColorData
 		return HexValue;
 	}
 
-	public static ColorData Create(string name, string hexValue) => new() { Name = name, HexValue = hexValue };
+	public static ColorData Create(string userDisplay, string memberName, string hexValue) => new() { UserDisplay = userDisplay, MemberName = memberName, HexValue = hexValue };
 	public static implicit operator ColorData(string hexValue) => new() { HexValue = hexValue };
 	public static implicit operator string(ColorData color) => color.HexValue;
 }

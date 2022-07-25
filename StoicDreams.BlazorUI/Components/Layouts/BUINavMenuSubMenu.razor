@@ -1,4 +1,7 @@
-﻿
+﻿@implements IDisposable
+@using Microsoft.AspNetCore.Components.Routing
+@inject NavigationManager NavManager
+
 @foreach (NavDetail item in NavList)
 {
 	@if (item.IsNavGroup)
@@ -18,6 +21,8 @@
 	{
 		<MudNavLink Icon="@item.Icon"
 			Href="@item.Href"
+			Class="@GetClass(item.Href)"
+			Match="NavLinkMatch.All"
 			OnClick="() => item.OnClick?.Invoke(item)">
 			@item.Name
 		</MudNavLink>
@@ -26,4 +31,31 @@
 @code {
 	[Parameter]
 	public List<NavDetail> NavList { get; set; } = new();
+	private string CurrentPath { get; set; } = string.Empty;
+
+
+	protected override Task OnInitializedAsync()
+	{
+		CurrentPath = $"/{NavManager.ToBaseRelativePath(NavManager.Uri).ToLower()}";
+		NavManager.LocationChanged += HandleNavUpdate;
+		return base.OnInitializedAsync();
+	}
+
+	public void Dispose()
+	{
+		NavManager.LocationChanged -= HandleNavUpdate;
+	}
+
+	private void HandleNavUpdate(object? sender, LocationChangedEventArgs args)
+	{
+		CurrentPath = $"/{NavManager.ToBaseRelativePath(args.Location).ToLower()}";
+		InvokeAsync(StateHasChanged);
+	}
+
+	private string GetClass(string href)
+	{
+		string path = href.ToLower();
+		if (path == CurrentPath) { return "active"; }
+		return "hello";
+	}
 }

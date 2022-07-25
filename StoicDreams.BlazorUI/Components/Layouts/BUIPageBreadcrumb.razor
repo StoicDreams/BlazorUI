@@ -18,6 +18,12 @@
 		return base.OnInitializedAsync();
 	}
 
+	public override void Dispose()
+	{
+		NavManager.LocationChanged -= HandleLocationChange;
+		base.Dispose();
+	}
+
 	private void HandleLocationChange(object? sender, LocationChangedEventArgs args)
 	{
 		SetBreadcrumbItems(NavManager.ToBaseRelativePath(args.Location));

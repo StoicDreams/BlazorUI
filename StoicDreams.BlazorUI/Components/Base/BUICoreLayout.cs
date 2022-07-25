@@ -20,6 +20,14 @@ public abstract class BUICoreLayout : LayoutComponentBase, IDisposable
 	protected TValue GetState<TValue>(string key, TValue defaultValue) => WatchState(key, AppState.GetData<TValue>(key) ?? defaultValue);
 	protected TValue? GetState<TValue>(AppStateDataTags key) => WatchState(key, AppState.GetData<TValue>(key));
 	protected TValue GetState<TValue>(AppStateDataTags key, TValue defaultValue) => WatchState(key, AppState.GetData<TValue>(key) ?? defaultValue);
+	protected void SetState<TValue>(AppStateDataTags key, TValue? value) => AppState.SetData(key, value);
+	protected void SetStateWithTrigger<TValue>(AppStateDataTags key, TValue? value)
+	{
+		AppState.ApplyChanges(() =>
+		{
+			AppState.SetData(key, value);
+		});
+	}
 
 	private TValue WatchState<TValue>(AppStateDataTags key, TValue value) => WatchState(key.ToString(), value);
 	private TValue WatchState<TValue>(string key, TValue value)

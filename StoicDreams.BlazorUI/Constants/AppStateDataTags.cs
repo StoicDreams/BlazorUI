@@ -16,10 +16,10 @@ public enum AppStateDataTags
 	/// </summary>
 	AppRightDrawerVariant,
 	/// <summary>
-	/// Bool flag setting if title bar should be dense.
-	/// Defaults to true
+	/// Bool flag setting if breadcrumb display should be shown.
+	/// Default setup enables this.
 	/// </summary>
-	DenseTitleBar,
+	BreadcrumbEnabled,
 	/// <summary>
 	/// Bool flag setting if tables should be dense.
 	/// Defaults to true

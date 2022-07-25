@@ -1,0 +1,45 @@
+﻿@using Microsoft.AspNetCore.Components.Routing
+@inherits BUICore
+@inject NavigationManager NavManager
+
+@if (ShowBreadcrumb)
+{
+	<MudBreadcrumbs Items="Items" Separator="/" />
+}
+
+@code {
+	private List<BreadcrumbItem> Items { get; set; } = new();
+	private bool ShowBreadcrumb { get => GetState<bool>(AppStateDataTags.BreadcrumbEnabled);  }
+
+	protected override Task OnInitializedAsync()
+	{
+		SetBreadcrumbItems(NavManager.ToBaseRelativePath(NavManager.Uri));
+		NavManager.LocationChanged += HandleLocationChange;
+		return base.OnInitializedAsync();
+	}
+
+	private void HandleLocationChange(object? sender, LocationChangedEventArgs args)
+	{
+		SetBreadcrumbItems(NavManager.ToBaseRelativePath(args.Location));
+	}
+
+	private void SetBreadcrumbItems(string location)
+	{
+		string[] split = location.Split('/', StringSplitOptions.RemoveEmptyEntries | StringSplitOptions.TrimEntries);
+		List<BreadcrumbItem> items = new();
+		bool homeIsDisabled = split.Length == 0 || (split.Length == 1 && split[0] == "home");
+		items.Add(new BreadcrumbItem("Home", "/", homeIsDisabled, Icons.Material.TwoTone.Home));
+		string path = "";
+
+		for (int index = 0; index < split.Length; ++index)
+		{
+			path += $"/{split[index]}";
+			string icon = Icons.Material.TwoTone.Circle;
+			bool disabled = index == split.Length - 1;
+			BreadcrumbItem item = new(split[index], path, disabled, icon);
+			items.Add(item);
+		}
+		Items = items;
+		StateHasChanged();
+	}
+}

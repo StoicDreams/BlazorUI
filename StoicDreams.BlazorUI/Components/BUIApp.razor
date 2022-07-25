@@ -49,7 +49,6 @@
 	{
 		await RunDefaultSetups();
 		ThemeState.SetupDefaultThemes();
-		await RunSetupFromOptions();
 		await base.OnInitializedAsync();
 		// Trigger to clear any values from startup, not expecting anything to be expecting AppInitialized key.
 		AppState.TriggerChange("AppInitialized");
@@ -58,29 +57,6 @@
 	private async Task RunDefaultSetups()
 	{
 		AppState.SetupDefaultAppStates();
-
-		await JSInterop.AddCSSFile("css/routetransition.4.0.0.min.css");
-		await JSInterop.AddJSFile("jsInterop.js");
-	}
-
-	private async ValueTask RunSetupFromOptions()
-	{
-		foreach (string file in AppOptions.CssFiles)
-		{
-			await JSInterop.AddCSSFile(file);
-		}
-		foreach (string file in AppOptions.JavascriptFiles)
-		{
-			await JSInterop.AddJSFile(file);
-		}
-		foreach (ElementDetail detail in AppOptions.HeadElements)
-		{
-			await JSInterop.AddElementToHead(detail.TagName, detail.Attributes);
-		}
-		foreach (ElementDetail detail in AppOptions.BodyElements)
-		{
-			await JSInterop.AddElementToBody(detail.TagName, detail.Attributes);
-		}
-		((AppOptions)AppOptions).ApplyStartupState?.Invoke(AppState);
+		await JSInterop.SetupDefaultJsInterop(AppOptions, AppState);
 	}
 }

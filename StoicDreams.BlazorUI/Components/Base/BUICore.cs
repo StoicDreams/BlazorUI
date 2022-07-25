@@ -27,6 +27,14 @@ public abstract class BUICore : ComponentBase, IDisposable
 	protected TValue GetState<TValue>(string key, Func<TValue> getDefaultValue) => WatchState(key, AppState.GetData<TValue>(key) ?? getDefaultValue.Invoke());
 	protected TValue? GetState<TValue>(AppStateDataTags key) => WatchState(key, AppState.GetData<TValue>(key));
 	protected TValue GetState<TValue>(AppStateDataTags key, Func<TValue> getDefaultValue) => WatchState(key, AppState.GetData<TValue>(key) ?? getDefaultValue.Invoke());
+	protected void SetState<TValue>(AppStateDataTags key, TValue? value) => AppState.SetData(key, value);
+	protected void SetStateWithTrigger<TValue>(AppStateDataTags key, TValue? value)
+	{
+		AppState.ApplyChanges(() =>
+		{
+			AppState.SetData(key, value);
+		});
+	}
 
 	private TValue WatchState<TValue>(AppStateDataTags key, TValue value) => WatchState(key.ToString(), value);
 	private TValue WatchState<TValue>(string key, TValue value)

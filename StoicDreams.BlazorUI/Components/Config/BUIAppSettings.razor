@@ -29,9 +29,16 @@
 	<MudButton Icon="@Icons.Material.Filled.DisplaySettings" Color="Color.Primary" Title="View Theme Settings Manager" OnClick="OpenThemeSettings" FullWidth="true">Theme Settings</MudButton>
 </BUIDrawerPaper>
 
+<BUIDrawerPaper>
+	<MudSwitch Label="Dense Title Bar" @bind-Checked="DenseTitlebar" Color="Color.Primary" />
+	<MudSwitch Label="Breadcrumb Enabled" @bind-Checked="ShowBreadcrumb" Color="Color.Primary" />
+</BUIDrawerPaper>
+
 @code {
 	private bool ShowThemeSelector => LoadedThemes.Count > 1;
 	private Guid SelectedId => ThemeState.Current.Id;
+	private bool DenseTitlebar { get => GetState<bool>(AppStateDataTags.TitleBarIsDense); set => SetStateWithTrigger(AppStateDataTags.TitleBarIsDense, value); }
+	private bool ShowBreadcrumb { get => GetState<bool>(AppStateDataTags.BreadcrumbEnabled); set => SetStateWithTrigger(AppStateDataTags.BreadcrumbEnabled, value); }
 
 	private List<ThemeConfig> LoadedThemes { get; set; } = new();
 

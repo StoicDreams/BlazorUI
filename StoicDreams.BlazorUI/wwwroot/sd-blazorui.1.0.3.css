@@ -275,3 +275,14 @@ html, body, #app, .router {
 	background-color: var(--mud-palette-background-grey);
 	color: var(--mud-palette-text-primary);
 }
+ul.mud-breadcrumbs {
+	padding: 3px 0 0;
+	position: relative;
+	z-index: 2;
+	background-color: var(--mud-palette-background-grey);
+	font-size: 0.677rem;
+}
+.mud-breadcrumbs + main {
+	margin-top: -28px;
+	padding-top: 28px;
+}

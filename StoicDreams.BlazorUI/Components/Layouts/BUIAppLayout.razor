@@ -41,6 +41,7 @@
 		}
 	</MudDrawer>
 	<MudMainContent>
+		<BUIPageBreadcrumb />
 		@Body
 	</MudMainContent>
 	@if (AppOptions.TitleBarPosition == TitleBarPosition.Bottom)
@@ -50,10 +51,10 @@
 </MudLayout>
 
 @code {
-	private bool LeftDrawerOpen { get => GetState<bool>(AppStateDataTags.TitleBarLeftDrawerOpen); set => AppState.SetData<bool>(AppStateDataTags.TitleBarLeftDrawerOpen, value); }
-	private bool RightDrawerOpen { get => GetState<bool>(AppStateDataTags.TitleBarRightDrawerOpen); set => AppState.SetData<bool>(AppStateDataTags.TitleBarRightDrawerOpen, value); }
-	private DrawerVariant LeftDrawerVariant { get => GetState<DrawerVariant>(AppStateDataTags.AppLeftDrawerVariant); set => AppState.SetData<DrawerVariant>(AppStateDataTags.AppLeftDrawerVariant, value); }
-	private DrawerVariant RightDrawerVariant { get => GetState<DrawerVariant>(AppStateDataTags.AppRightDrawerVariant); set => AppState.SetData<DrawerVariant>(AppStateDataTags.AppRightDrawerVariant, value); }
+	private bool LeftDrawerOpen { get => GetState<bool>(AppStateDataTags.TitleBarLeftDrawerOpen); set => SetStateWithTrigger<bool>(AppStateDataTags.TitleBarLeftDrawerOpen, value); }
+	private bool RightDrawerOpen { get => GetState<bool>(AppStateDataTags.TitleBarRightDrawerOpen); set => SetStateWithTrigger<bool>(AppStateDataTags.TitleBarRightDrawerOpen, value); }
+	private DrawerVariant LeftDrawerVariant { get => GetState<DrawerVariant>(AppStateDataTags.AppLeftDrawerVariant); set => SetStateWithTrigger<DrawerVariant>(AppStateDataTags.AppLeftDrawerVariant, value); }
+	private DrawerVariant RightDrawerVariant { get => GetState<DrawerVariant>(AppStateDataTags.AppRightDrawerVariant); set => SetStateWithTrigger<DrawerVariant>(AppStateDataTags.AppRightDrawerVariant, value); }
 	private Type? LeftDrawerContent => GetState<Type?>(AppStateDataTags.LeftDrawerContent);
 	private Type? RightDrawerContent => GetState<Type?>(AppStateDataTags.RightDrawerContent);
 

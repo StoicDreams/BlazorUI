@@ -5,7 +5,12 @@
 	{
 		<BUITitleBar />
 	}
-	<MudDrawer @bind-Open="@LeftDrawerOpen" Anchor="Anchor.Left" Elevation="0" Variant="@LeftDrawerVariant" ClipMode="DrawerClipMode.Docked">
+	<MudDrawer @bind-Open="@LeftDrawerOpen"
+		Anchor="Anchor.Left"
+		Elevation="0"
+		Variant="@LeftDrawerVariant"
+		ClipMode="DrawerClipMode.Docked"
+		>
 		@if (LeftDrawerContent != null)
 		{
 			<ErrorBoundary>
@@ -18,7 +23,11 @@
 			</ErrorBoundary>
 		}
 	</MudDrawer>
-	<MudDrawer @bind-Open="@RightDrawerOpen" Anchor="Anchor.Right" Elevation="0" Variant="@RightDrawerVariant">
+	<MudDrawer @bind-Open="@RightDrawerOpen"
+		Anchor="Anchor.Right"
+		Elevation="0"
+		Variant="@RightDrawerVariant"
+		>
 		@if (RightDrawerContent != null)
 		{
 			<ErrorBoundary>

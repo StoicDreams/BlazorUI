@@ -2,34 +2,32 @@
 @inject IDialogService DialogService
 @inject IThemeState ThemeState
 
-<MudPaper>
-	<MudText Typo="Typo.h3">App Settings</MudText>
-	<MudDivider />
-	<MudPaper>
-		@if (ShowThemeSelector)
+<BUIDrawerHeader>App Settings</BUIDrawerHeader>
+
+<BUIDrawerPaper>
+	@if (ShowThemeSelector)
+	{
+		@if (FlipState)
 		{
-			@if (FlipState)
-			{
-				<MudSelect Label="Select Theme" FullWidth="true" Value="@SelectedId" ValueChanged="(Guid id) => HandleThemeChange(id)">
-					@foreach (ThemeConfig config in LoadedThemes)
-					{
-						<MudSelectItem Value="@config.Id">@config.Name</MudSelectItem>
-					}
-				</MudSelect>
-			}
-			else
-			{
-				<MudSelect Label="Select Theme" FullWidth="true" Value="@SelectedId" ValueChanged="(Guid id) => HandleThemeChange(id)">
-					@foreach (ThemeConfig config in LoadedThemes)
-					{
-						<MudSelectItem Value="@config.Id">@config.Name</MudSelectItem>
-					}
-				</MudSelect>
-			}
+			<MudSelect Label="Select Theme" FullWidth="true" Value="@SelectedId" ValueChanged="(Guid id) => HandleThemeChange(id)">
+				@foreach (ThemeConfig config in LoadedThemes)
+				{
+					<MudSelectItem Value="@config.Id">@config.Name</MudSelectItem>
+				}
+			</MudSelect>
 		}
-		<MudButton Icon="@Icons.Material.Filled.DisplaySettings" Title="View Theme Settings Manager" OnClick="OpenThemeSettings" FullWidth="true">Theme Settings</MudButton>
-	</MudPaper>
-</MudPaper>
+		else
+		{
+			<MudSelect Label="Select Theme" FullWidth="true" Value="@SelectedId" ValueChanged="(Guid id) => HandleThemeChange(id)">
+				@foreach (ThemeConfig config in LoadedThemes)
+				{
+					<MudSelectItem Value="@config.Id">@config.Name</MudSelectItem>
+				}
+			</MudSelect>
+		}
+	}
+	<MudButton Icon="@Icons.Material.Filled.DisplaySettings" Color="Color.Primary" Title="View Theme Settings Manager" OnClick="OpenThemeSettings" FullWidth="true">Theme Settings</MudButton>
+</BUIDrawerPaper>
 
 @code {
 	private bool ShowThemeSelector => LoadedThemes.Count > 1;

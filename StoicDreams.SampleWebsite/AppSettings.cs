@@ -23,7 +23,15 @@ public static class AppSettings
 	private static List<NavDetail> GetSiteNavigation() => new()
 	{
 		NavDetail.Create("Home", Icons.Material.TwoTone.Home, "/"),
-		NavDetail.Create("Docs", Icons.Material.TwoTone.LibraryBooks, "/start"),
+		NavDetail.CreateGroup("Docs", Icons.Material.TwoTone.Source, new NavDetail[]
+		{
+			NavDetail.Create("Start", Icons.Material.TwoTone.LibraryBooks, "/docs/getting-started"),
+			NavDetail.CreateGroup("Markdown", Icons.Material.TwoTone.Code, new NavDetail[]
+			{
+				NavDetail.Create("Home", Icons.Material.TwoTone.Doorbell, "/docs/markdown"),
+				NavDetail.Create("Home", Icons.Material.TwoTone.EmojiEmotions, "/docs/markdown/emojis"),
+			})
+		})
 	};
 
 	private static Func<DrawerClickState, ValueTask> HandlerRightDrawerClickState(IAppState appState)

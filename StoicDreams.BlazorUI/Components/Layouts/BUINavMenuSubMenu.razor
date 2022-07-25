@@ -1,0 +1,29 @@
+﻿
+@foreach (NavDetail item in NavList)
+{
+	@if (item.IsNavGroup)
+	{
+		<MudNavGroup Title="@item.Name" Icon="@item.Icon">
+			<BUINavMenuSubMenu NavList="@item.SubNav" />
+		</MudNavGroup>
+	}
+	else if (string.IsNullOrWhiteSpace(item.Href))
+	{
+		<MudNavLink Icon="@item.Icon"
+			OnClick="() => item.OnClick?.Invoke(item)">
+			@item.Name
+		</MudNavLink>
+	}
+	else
+	{
+		<MudNavLink Icon="@item.Icon"
+			Href="@item.Href"
+			OnClick="() => item.OnClick?.Invoke(item)">
+			@item.Name
+		</MudNavLink>
+	}
+}
+@code {
+	[Parameter]
+	public List<NavDetail> NavList { get; set; } = new();
+}

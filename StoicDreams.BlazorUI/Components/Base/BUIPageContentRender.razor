@@ -1,0 +1,20 @@
+﻿@inject IMarkdown Markdown
+
+@foreach (PageSegment segment in PageSegments)
+{
+	@switch (segment.SegmentType)
+	{
+		case PageSegmentTypes.Spacer:
+			<MudSpacer />
+			break;
+		case PageSegmentTypes.Markdown:
+			@Markdown.GetMarkup(segment.Content)
+			break;
+	}
+}
+
+@code {
+	[Parameter]
+	public List<PageSegment> PageSegments { get; set; } = new();
+
+}

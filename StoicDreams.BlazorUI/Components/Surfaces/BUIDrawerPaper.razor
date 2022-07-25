@@ -1,0 +1,9 @@
+﻿
+<MudPaper Class="pa-1 ma-1">
+	@ChildContent
+</MudPaper>
+
+@code {
+	[Parameter]
+	public RenderFragment? ChildContent { get; set; }
+}

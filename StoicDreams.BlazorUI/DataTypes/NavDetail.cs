@@ -13,7 +13,18 @@ public class NavDetail
 	public string Icon { get; set; } = string.Empty;
 
 	/// <summary>
+	/// Returns true if this instance contains SubNav items.
+	/// </summary>
+	public bool IsNavGroup => SubNav.Count > 0;
+
+	/// <summary>
+	/// Populate to use button as a group container.
+	/// </summary>
+	public List<NavDetail> SubNav { get; set; } = new();
+
+	/// <summary>
 	/// Url path to navigate to on click.
+	/// Not used if SubNav is populated.
 	/// </summary>
 	public string Href { get; set; } = string.Empty;
 
@@ -44,5 +55,20 @@ public class NavDetail
 			Href = href,
 			OnClick = onClick
 		};
+	}
+
+	public static NavDetail CreateGroup(
+		string name,
+		string icon,
+		IEnumerable<NavDetail> subNav
+		)
+	{
+		NavDetail instance =  new()
+		{
+			Name = name,
+			Icon = icon,
+		};
+		instance.SubNav.AddRange(subNav);
+		return instance;
 	}
 }

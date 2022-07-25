@@ -27,9 +27,9 @@ public static partial class ExtendIServiceCollection
 			mudConfigHandler?.Invoke(config);
 		});
 		services.AddScoped<BlazorTransitionableRoute.IRouteTransitionInvoker, BlazorTransitionableRoute.DefaultRouteTransitionInvoker>();
+		services.SetupMarkdownSupport();
 
 		return services;
 	}
 	private static Assembly AppAssembly => Assembly.GetEntryAssembly() ?? Assembly.GetCallingAssembly();
-
 }

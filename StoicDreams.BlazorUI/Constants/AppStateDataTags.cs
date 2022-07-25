@@ -41,6 +41,10 @@ public enum AppStateDataTags
 	/// </summary>
 	NavList,
 	/// <summary>
+	/// Set color for active item in nav menu
+	/// </summary>
+	NavMenuActiveColor,
+	/// <summary>
 	/// Set with integer value
 	/// Defaults to 300
 	/// </summary>

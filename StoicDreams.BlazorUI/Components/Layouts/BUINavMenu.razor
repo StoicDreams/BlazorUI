@@ -1,8 +1,9 @@
 ﻿@inherits BUICore
 
-<MudNavMenu Color="Color.Primary" Bordered="true" Dense="false" >
+<MudNavMenu Color="NavActiveColor" Bordered="true" Dense="false">
 	<BUINavMenuSubMenu NavList="NavList" />
 </MudNavMenu>
 @code {
 	private List<NavDetail> NavList { get => GetState<List<NavDetail>>(AppStateDataTags.NavList) ?? new(); set => SetStateWithTrigger<List<NavDetail>>(AppStateDataTags.NavList, value); }
+	private Color NavActiveColor { get => GetState<Color>(AppStateDataTags.NavMenuActiveColor); }
 }

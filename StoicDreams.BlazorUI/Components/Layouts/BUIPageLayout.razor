@@ -2,7 +2,7 @@
 @using BlazorTransitionableRoute
 @inject IAppOptions AppOptions
 
-<main class="@TransitioningClass">
+<div class="@TransitioningClass">
 	<ErrorBoundary @ref="ErrorFragment" Context="error">
 		<ChildContent>
 			@Body
@@ -11,11 +11,11 @@
 			<DynamicComponent Type="ErrorPage" Parameters="GetErrorPageParameters(error)" />
 		</ErrorContent>
 	</ErrorBoundary>
-</main>
+</div>
 
 @code {
 	private string TransitioningDirection => this.Transition.Backwards ? "Up" : "Down";
-	private string TransitioningClass => Transition.FirstRender ? "" : $"{TransitioningEffect()} animate__faster animate__animated";
+	private string TransitioningClass => Transition.FirstRender ? "page-transitional" : $"{TransitioningEffect()} animate__faster animate__animated page-transitional";
 	private Type ErrorPage => ((AppOptions)AppOptions).ErrorPage;
 	private Dictionary<string, object> GetErrorPageParameters(Exception error) => new()
 	{

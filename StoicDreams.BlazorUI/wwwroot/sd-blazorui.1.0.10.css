@@ -273,10 +273,22 @@ html, body, #app, .router {
 		max-width: 100%;
 		overflow: auto;
 		z-index: 0;
-		padding: var(--main-padding-size);
+		margin: 0;
+		padding: 0;
 		width: 100%;
 	}
-		.mud-main-content > main > .mud-alert {
+		.mud-main-content > main > .page-transitional {
+			display: block;
+			position: absolute;
+			top: 0;
+			left: 0;
+			width: 100%;
+			height: auto;
+			padding: var(--main-padding-size);
+			margin: 0;
+			border: none;
+		}
+		.mud-main-content > main > .page-transitional > .mud-alert {
 			margin-left: calc(-1 * var(--main-padding-size));
 			margin-right: calc(-1 * var(--main-padding-size));
 		}
@@ -308,8 +320,7 @@ ul.mud-breadcrumbs {
 	font-size: 0.75rem;
 }
 
-.mud-breadcrumbs + main {
-	margin-top: -28px;
+.mud-breadcrumbs + main > .page-transitional {
 	padding-top: 28px;
 }
 

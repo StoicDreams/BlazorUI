@@ -25,7 +25,7 @@
 		get
 		{
 			List<string> list = new();
-			int maxColumnCount = 5, maxRowCount = 5;
+			int maxColumnCount = 3, maxRowCount = 20;
 			StringBuilder markup = new(), rowEmoji = new(), rowText = new();
 			string[] header = new string[maxColumnCount];
 			Array.Fill(header, "     ");
@@ -39,7 +39,7 @@
 				rowEmoji.Append($" {EmojiList[index]} |");
 				rowText.Append($" `{EmojiList[index]}` |");
 				++col;
-				if (col > maxColumnCount)
+				if (col >= maxColumnCount)
 				{
 					col = 0;
 					markup.AppendLine(rowEmoji.ToString());
@@ -47,7 +47,7 @@
 					rowEmoji.Clear();
 					rowText.Clear();
 					++row;
-					if (row > maxRowCount)
+					if (row >= maxRowCount)
 					{
 						row = 0;
 						list.Add(markup.ToString());

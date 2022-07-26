@@ -265,13 +265,21 @@ html, body, #app, .router {
 	}
 
 	.mud-main-content > main {
-		position: absolute;
+		position: sticky;
+		height: 100%;
+		top: 0;
+		bottom: 0;
 		max-height: 100%;
 		max-width: 100%;
 		overflow: auto;
 		z-index: 0;
 		padding: var(--main-padding-size);
+		width: 100%;
 	}
+		.mud-main-content > main > .mud-alert {
+			margin-left: calc(-1 * var(--main-padding-size));
+			margin-right: calc(-1 * var(--main-padding-size));
+		}
 
 		.mud-main-content > main.inview {
 			z-index: 1;

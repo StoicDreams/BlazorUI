@@ -440,3 +440,7 @@ ul.mud-breadcrumbs {
 .mud-navmenu.mud-navmenu-dark .mud-nav-item.active .mud-nav-link:not(.mud-nav-link-disabled) .mud-nav-link-icon {
 	color: var(--mud-palette-dark);
 }
+.center {
+	text-align: center;
+	margin: auto;
+}

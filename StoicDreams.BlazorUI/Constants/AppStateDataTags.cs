@@ -26,6 +26,10 @@ public enum AppStateDataTags
 	/// </summary>
 	DenseTables,
 	/// <summary>
+	/// Bool value set true when navigation has started and set false when navigation has ended.
+	/// </summary>
+	IsNavigating,
+	/// <summary>
 	/// Set with Func<DrawerClickState, ValueTask>
 	/// Defaults to null
 	/// </summary>

@@ -15,6 +15,7 @@
 		await AppState.ApplyChangesAsync(() =>
 		{
 			AppState.SetData(AppStateDataTags.PageTitle, Title);
+			AppState.SetData(AppStateDataTags.IsNavigating, false);
 			return ValueTask.CompletedTask;
 		});
 		await JSInterop.UpdateTitle(AppTitle);

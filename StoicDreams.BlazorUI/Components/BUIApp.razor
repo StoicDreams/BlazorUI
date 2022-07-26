@@ -14,7 +14,7 @@
 <MudBlazor.MudSnackbarProvider />
 <BUIThemeManager />
 
-<Router AppAssembly="@AppAssembly" AdditionalAssemblies="FrameworkAssemblies">
+<Router AppAssembly="@AppAssembly" AdditionalAssemblies="FrameworkAssemblies" OnNavigateAsync="HandleNavigationStart">
 	<Found Context="routeData">
 		<LayoutView Layout="@AppLayout">
 			<BlazorTransitionableRoute.TransitionableRoutePrimary RouteData="@routeData" ForgetStateOnTransition="true">
@@ -58,5 +58,10 @@
 	{
 		AppState.SetupDefaultAppStates();
 		await JSInterop.SetupDefaultJsInterop(AppOptions, AppState);
+	}
+
+	private void HandleNavigationStart()
+	{
+		SetStateWithTrigger(AppStateDataTags.IsNavigating, true);
 	}
 }

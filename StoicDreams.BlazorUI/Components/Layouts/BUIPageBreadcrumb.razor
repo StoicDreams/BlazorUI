@@ -2,6 +2,11 @@
 @inherits BUICore
 @inject NavigationManager NavManager
 
+@if (IsNavigating)
+{
+	<MudProgressLinear Indeterminate="true" Color="Color.Tertiary" Striped="true" Size="Size.Small" />
+}
+
 @if (ShowBreadcrumb)
 {
 	<MudBreadcrumbs Items="Items" Separator="/" />
@@ -10,6 +15,7 @@
 @code {
 	private List<BreadcrumbItem> Items { get; set; } = new();
 	private bool ShowBreadcrumb { get => GetState<bool>(AppStateDataTags.BreadcrumbEnabled);  }
+	private bool IsNavigating { get => GetState<bool>(AppStateDataTags.IsNavigating); }
 
 	protected override Task OnInitializedAsync()
 	{

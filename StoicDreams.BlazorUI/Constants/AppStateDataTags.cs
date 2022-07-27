@@ -26,6 +26,10 @@ public enum AppStateDataTags
 	/// </summary>
 	DenseTables,
 	/// <summary>
+	/// Default message to display when the error page/component is displayed.
+	/// </summary>
+	ErrorPageDefaultMessage,
+	/// <summary>
 	/// Bool value set true when navigation has started and set false when navigation has ended.
 	/// </summary>
 	IsNavigating,
@@ -63,6 +67,10 @@ public enum AppStateDataTags
 	/// Defaults to 300
 	/// </summary>
 	NavTransitionOutMilliseconds,
+	/// <summary>
+	/// Default message to use by not found page/component when displayed
+	/// </summary>
+	NotFoundDefaultMessage,
 	/// <summary>
 	/// Set with string to use for page title
 	/// </summary>

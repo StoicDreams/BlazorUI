@@ -1,0 +1,17 @@
+﻿@page "/notfound"
+
+@inject IAppState AppState
+
+<BUIPageDetail Title="Page Not Found" />
+
+<MudAlert Severity="Severity.Error">@GetMessage</MudAlert>
+
+@code {
+	[Parameter]
+	[SupplyParameterFromQuery(Name = "message")]
+	public string Message { get; set; } = string.Empty;
+
+	private string GetMessage => string.IsNullOrWhiteSpace(Message) ? AppState.GetData<string?>(AppStateDataTags.NotFoundDefaultMessage) ?? DefaultMessage : Message;
+
+	private const string DefaultMessage = "The page you are looking for could not be found.";
+}

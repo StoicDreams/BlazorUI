@@ -1,5 +1,7 @@
 ﻿@page "/error"
 
+@inject IAppState AppState
+
 <BUIPageDetail Title="Error" />
 
 <MudAlert Severity="Severity.Error">
@@ -9,17 +11,18 @@
 	}
 	else
 	{
-		@ErrorMessage
+		@GetMessage
 	}
 </MudAlert>
 
 @code {
 	[Parameter]
 	[SupplyParameterFromQuery(Name = "error")]
-	public string ErrorMessage { get; set; } = GenericErrorMessage;
+	public string Message { get; set; } = string.Empty;
 	[Parameter]
 	public Exception? Exception { get; set; }
 
+	private string GetMessage => string.IsNullOrWhiteSpace(Message) ? AppState.GetData<string?>(AppStateDataTags.NotFoundDefaultMessage) ?? DefaultMessage : Message;
 
-	private const string GenericErrorMessage = "An unexpected error occurred handling your request.";
+	private const string DefaultMessage = "An unexpected error occurred handling your request.";
 }

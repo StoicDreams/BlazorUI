@@ -24,6 +24,5 @@ public static partial class Setup
 				Black = "#282828ff",
 			}
 		});
-		((ThemeState)themeState).TriggerChange();
 	}
 }

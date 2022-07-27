@@ -12,7 +12,7 @@ public static class AppSettings
 		options.BodyElements.Add(ElementDetail.Create("script", ("body", "navigator.serviceWorker.register('service-worker.js');"), ("type", "text/javascript")));
 		options.TitleBarPosition = TitleBarPosition.Top;
 		options.LeftDrawerVariant = DrawerVariant.Mini;
-		options.ApplyOnStartup<SampleWebsite.Components.AppStartup>();
+		options.ApplyOnStartup<SampleWebsite.Components.WebStartup>();
 		options.ApplyStateOnStartup(appState =>
 		{
 			appState.SetData(AppStateDataTags.NavList, GetSiteNavigation());

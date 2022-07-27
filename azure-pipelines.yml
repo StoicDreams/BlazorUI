@@ -96,8 +96,8 @@ stages:
         displayName: 'Set .NET SDK Version'
         inputs:
           packageType: 'sdk'
-          version: '6.x'
-          includePreviewVersions: false
+          version: '7.x'
+          includePreviewVersions: true
       - task: DotNetCoreCLI@2
         displayName: 'Restore Nuget Dependencies'
         inputs:

@@ -15,5 +15,6 @@ public static partial class Setup
 		appState.SetData(AppStateDataTags.TitleBarShowAppName, true);
 		appState.SetData(AppStateDataTags.TitleBarShowPageTitle, true);
 		appState.SetData(AppStateDataTags.NavMenuActiveColor, Color.Tertiary);
+		appState.SetData(AppStateDataTags.MinNavTransitionProgressDisplay, 1000);
 	}
 }

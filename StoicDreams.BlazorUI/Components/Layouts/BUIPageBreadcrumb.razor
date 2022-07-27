@@ -1,4 +1,5 @@
 ﻿@using Microsoft.AspNetCore.Components.Routing
+@using System.Diagnostics
 @inherits BUICore
 @inject NavigationManager NavManager
 
@@ -14,8 +15,9 @@
 
 @code {
 	private List<BreadcrumbItem> Items { get; set; } = new();
-	private bool ShowBreadcrumb { get => GetState<bool>(AppStateDataTags.BreadcrumbEnabled);  }
-	private bool IsNavigating { get => GetState<bool>(AppStateDataTags.IsNavigating); }
+	private bool ShowBreadcrumb => GetState<bool>(AppStateDataTags.BreadcrumbEnabled);
+	private bool IsNavigating => GetIsNavigating;
+	private int MinTransitionProgressTiming => GetState<int>(AppStateDataTags.MinNavTransitionProgressDisplay);
 
 	protected override Task OnInitializedAsync()
 	{
@@ -28,6 +30,32 @@
 	{
 		NavManager.LocationChanged -= HandleLocationChange;
 		base.Dispose();
+	}
+
+	private Stopwatch NavTimer = Stopwatch.StartNew();
+	private bool GetIsNavigating
+	{
+		get
+		{
+			bool isNavigating = GetState<bool>(AppStateDataTags.IsNavigating);
+			if (!isNavigating && NavTimer.ElapsedMilliseconds < MinTransitionProgressTiming)
+			{
+				int waitForMilliseconds = (int)Math.Max(0, MinTransitionProgressTiming - NavTimer.ElapsedMilliseconds);
+				InvokeAsync(() => WaitAndRefresh(waitForMilliseconds));
+				return true;
+			}
+			if (isNavigating)
+			{
+				NavTimer.Restart();
+			}
+			return isNavigating;
+		}
+	}
+
+	private async Task WaitAndRefresh(int milliseconds)
+	{
+		await Task.Delay(milliseconds);
+		StateHasChanged();
 	}
 
 	private void HandleLocationChange(object? sender, LocationChangedEventArgs args)

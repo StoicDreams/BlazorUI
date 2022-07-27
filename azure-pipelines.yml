@@ -31,16 +31,16 @@ stages:
         inputs:
           command: 'restore'
           projects: |
-            *.BlazorUI.csproj
-            *.BuildTests.csproj
+            **/*.BlazorUI.csproj
+            **/*.BuildTests.csproj
           includeNuGetOrg: true
       - task: DotNetCoreCLI@2
         displayName: 'Build and pack the project'
         inputs:
           command: 'build'
           projects: |
-            *.BlazorUI.csproj
-            *.BuildTests.csproj
+            **/*.BlazorUI.csproj
+            **/*.BuildTests.csproj
       - task: VisualStudioTestPlatformInstaller@1
       - task: DotNetCoreCLI@2
         displayName: 'Run Build Tests'

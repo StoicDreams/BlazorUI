@@ -1,0 +1,10 @@
+﻿@inject IMarkdown Markdown
+
+@GetContent
+
+@code {
+	[Parameter]
+	public string Markup { get; set; } = string.Empty;
+
+	private MarkupString GetContent => Markdown.GetMarkup(Markup);
+}

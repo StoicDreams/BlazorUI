@@ -93,6 +93,10 @@ public enum AppStateDataTags
 	/// </summary>
 	TitleBarLeftDrawerIcon,
 	/// <summary>
+	/// Set with string | RenderFragment to display content to the left of the Title Display
+	/// </summary>
+	TitleBarLogo,
+	/// <summary>
 	/// Bool value set internally when right drawer state is changed
 	/// </summary>
 	TitleBarRightDrawerOpen,
@@ -112,4 +116,12 @@ public enum AppStateDataTags
 	/// Defaults to "Toggle Right Drawer"
 	/// </summary>
 	TitleBarRightDrawerTitle,
+	/// <summary>
+	/// bool flag - set true to display app name in title bar, false to not.
+	/// </summary>
+	TitleBarShowAppName,
+	/// <summary>
+	/// bool flag - set true to display page title in title bar, false to not.
+	/// </summary>
+	TitleBarShowPageTitle
 }

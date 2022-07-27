@@ -20,7 +20,7 @@
 		</When>
 		<Otherwise>
 			<ItemGroup>
-				<PackageReference Include="StoicDreams.BlazorUI" Version="1.2.60" />
+				<PackageReference Include="StoicDreams.BlazorUI" Version="1.2.70" />
 			</ItemGroup>
 		</Otherwise>
 	</Choose>

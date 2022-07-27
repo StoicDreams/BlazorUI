@@ -17,8 +17,8 @@
 	private Func<DrawerClickState, ValueTask>? RightDrawerOnClick => GetState<Func<DrawerClickState, ValueTask>?>(AppStateDataTags.RightDrawerOnClick);
 	private bool LeftDrawerHasContent => GetState<Type?>(AppStateDataTags.LeftDrawerContent) != null;
 	private bool RightDrawerHasContent => GetState<Type?>(AppStateDataTags.RightDrawerContent) != null;
-	private bool LeftDrawerEnabled => LeftDrawerOnClick != null || LeftDrawerHasContent;
-	private bool RightDrawerEnabled => RightDrawerOnClick != null || RightDrawerHasContent;
+	private bool LeftDrawerEnabled => LeftDrawerOnClick != null;
+	private bool RightDrawerEnabled => RightDrawerOnClick != null;
 	private string LeftDrawerIcon => GetState<string?>(AppStateDataTags.TitleBarLeftDrawerIcon) ?? Icons.Material.Filled.Menu;
 	private string RightDrawerIcon => GetState<string?>(AppStateDataTags.TitleBarRightDrawerIcon) ?? Icons.Material.Filled.Menu;
 	private string LeftDrawerTitle => GetState<string?>(AppStateDataTags.TitleBarLeftDrawerTitle) ?? "Toggle Left Drawer";

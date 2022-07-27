@@ -48,7 +48,6 @@
 	protected override async Task OnInitializedAsync()
 	{
 		await RunDefaultSetups();
-		ThemeState.SetupDefaultThemes();
 		await base.OnInitializedAsync();
 		// Trigger to clear any values from startup, not expecting anything to be expecting AppInitialized key.
 		AppState.TriggerChange("AppInitialized");

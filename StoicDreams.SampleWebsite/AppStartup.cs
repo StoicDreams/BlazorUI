@@ -38,5 +38,8 @@ public class AppStartup : BUICore
 				Black = "#282828ff",
 			}
 		});
+
+		// Make sure to set your default theme as current
+		ThemeState.Current = ThemeState.Themes[0];
 	}
 }

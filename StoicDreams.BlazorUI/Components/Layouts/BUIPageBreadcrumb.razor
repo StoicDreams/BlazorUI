@@ -1,5 +1,4 @@
 ﻿@using Microsoft.AspNetCore.Components.Routing
-@using System.Diagnostics
 @inherits BUICore
 @inject NavigationManager NavManager
 
@@ -30,6 +29,12 @@
 	{
 		NavManager.LocationChanged -= HandleLocationChange;
 		base.Dispose();
+	}
+
+	protected override void OnStateUpdate()
+	{
+		SetBreadcrumbItems(NavManager.ToBaseRelativePath(NavManager.Uri));
+		base.OnStateUpdate();
 	}
 
 	private Stopwatch NavTimer = Stopwatch.StartNew();

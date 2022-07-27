@@ -7,12 +7,11 @@
 <BUIMarkdown Markup="@TopMarkup" />
 
 <MudPaper Class="emoji-tables d-flex align-content-start flex-wrap flex-grow-1 gap-4" MaxWidth="100%">
-	@foreach (string item in GetMarkdownList)
-	{
+	<MudVirtualize Items="GetMarkdownList" Context="item">
 		<MudPaper Class="center">
 			<BUIMarkdown Markup="@item" />
 		</MudPaper>
-	}
+	</MudVirtualize>
 </MudPaper>
 
 @code {
@@ -20,12 +19,23 @@
 ## Our Markdown supports Emojis :wink:!
 ".Trim();
 
-	private List<string> GetMarkdownList
+	private ICollection<string> GetMarkdownList
+	{
+		get
+		{
+			CachedList ??= BuildMarkdownList;
+			return CachedList;
+		}
+	}
+
+	private static List<string>? CachedList { get; set; }
+
+	private static List<string> BuildMarkdownList
 	{
 		get
 		{
 			List<string> list = new();
-			int maxColumnCount = 3, maxRowCount = 20;
+			int maxColumnCount = 3, maxRowCount = 10;
 			StringBuilder markup = new(), rowEmoji = new(), rowText = new();
 			string[] header = new string[maxColumnCount];
 			Array.Fill(header, "     ");

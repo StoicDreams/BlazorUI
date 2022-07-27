@@ -45,7 +45,7 @@ public enum AppStateDataTags
 	LeftDrawerContent,
 	/// <summary>
 	/// Minimum time to show navigation progress bar in milliseconds.
-	/// Defaults to 1000 (1 second)
+	/// Defaults to 600 (0.6 second)
 	/// </summary>
 	MinNavTransitionProgressDisplay,
 	/// <summary>

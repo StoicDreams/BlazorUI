@@ -1,16 +1,33 @@
 ﻿@inherits BUICore
 
-<MudText Typo="Typo.h1">
-	@GetPageTitleDisplay
-</MudText>
+@if (LogoText != null)
+{
+	<div class="mr-2">@LogoText</div>
+}
+else if (LogoFragment != null)
+{
+	<div class="mr-2">@LogoFragment</div>
+}
+
+@if (ShowTitleDisplay)
+{
+	<MudText Typo="Typo.h1">
+		@GetPageTitleDisplay
+	</MudText>
+}
 
 <MudSpacer />
 
 <MudIconButton Icon="@Icons.Material.Filled.Settings" Color="Color.Inherit" Title="Open App Settings" OnClick="ToggleNav" />
 
 @code {
-	private string AppName => AppOptions.AppName;
-	private string PageTitle => GetState<string>(AppStateDataTags.PageTitle, () => string.Empty);
+	private string AppName => ShowAppName ? AppOptions.AppName : string.Empty;
+	private string PageTitle => ShowPageTitle ? GetState<string>(AppStateDataTags.PageTitle, () => string.Empty) : string.Empty;
+	private bool ShowAppName => GetState<bool>(AppStateDataTags.TitleBarShowAppName);
+	private bool ShowPageTitle => GetState<bool>(AppStateDataTags.TitleBarShowPageTitle);
+	private string? LogoText => GetState<string?>(AppStateDataTags.TitleBarLogo);
+	private RenderFragment? LogoFragment => GetState<RenderFragment?>(AppStateDataTags.TitleBarLogo);
+	private bool ShowTitleDisplay => ShowAppName || ShowPageTitle;
 
 	private string GetPageTitleDisplay
 	{

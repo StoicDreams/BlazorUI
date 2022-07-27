@@ -3,7 +3,7 @@
 [Route("/docs/getting-started")]
 [Route("/docs/gettingstarted")]
 [Route("/docs/start")]
-public class GettingStarted : BUICorePage
+public class GettingStarted : BUIMarkdownPage
 {
 	protected override Task OnInitializedAsync()
 	{

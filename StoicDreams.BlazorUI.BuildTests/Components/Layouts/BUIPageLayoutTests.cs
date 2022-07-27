@@ -7,7 +7,7 @@ namespace StoicDreams.BlazorUI.Components.Layouts;
 public class BUIPageLayoutTests : TestFrameworkBlazor
 {
 	[Theory]
-	[InlineData("", true, false)]
+	[InlineData("page-transitional", true, false)]
 	public void Verify_Render_FirstRender(string expectedClass, bool intoView, bool isBackwards)
 	{
 		IRenderActions<BUIPageLayout> actions = ArrangeThisTest(intoView, isBackwards, true);
@@ -17,7 +17,7 @@ public class BUIPageLayoutTests : TestFrameworkBlazor
 		actions.Assert(a =>
 		{
 			a.Render.Markup.Should().Contain("Mock Content");
-			a.Render.Find("main").ClassName.Should().BeEquivalentTo(expectedClass);
+			a.Render.Find(".page-transitional").ClassName.Should().BeEquivalentTo(expectedClass);
 		});
 	}
 
@@ -32,7 +32,7 @@ public class BUIPageLayoutTests : TestFrameworkBlazor
 		actions.Assert(a =>
 		{
 			a.Render.Markup.Should().Contain("Mock Content");
-			a.Render.Find("main").ClassName.Should().Contain(expectedClass);
+			a.Render.Find(".page-transitional").ClassName.Should().Contain(expectedClass);
 		});
 	}
 

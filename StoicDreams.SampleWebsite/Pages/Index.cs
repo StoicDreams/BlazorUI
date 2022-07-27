@@ -2,7 +2,7 @@
 
 [Route("/")]
 [Route("/home")]
-public class Index : BUICorePage
+public class Index : BUIMarkdownPage
 {
 	protected override Task OnInitializedAsync()
 	{

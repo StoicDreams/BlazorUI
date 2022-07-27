@@ -1,1 +1,9 @@
 ﻿/* Custom styles and overwrites go here */
+
+.emoji-tables table tbody > tr:nth-child(odd) td {
+	font-size: 2.7rem;
+}
+
+.emoji-tables tbody > tr:nth-child(even) td {
+	font-size: 0.75rem;
+}

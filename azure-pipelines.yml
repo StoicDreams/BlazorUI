@@ -30,13 +30,17 @@ stages:
         displayName: 'Restore nuget packages'
         inputs:
           command: 'restore'
-          projects: '**/*.sln'
+          projects: |
+            **/*.BlazorUI.csproj
+            **/*.BuildTests.csproj
           includeNuGetOrg: true
       - task: DotNetCoreCLI@2
         displayName: 'Build and pack the project'
         inputs:
           command: 'build'
-          projects: '**/*.sln'
+          projects: |
+            **/*.BlazorUI.csproj
+            **/*.BuildTests.csproj
       - task: VisualStudioTestPlatformInstaller@1
       - task: DotNetCoreCLI@2
         displayName: 'Run Build Tests'
@@ -93,7 +97,7 @@ stages:
         inputs:
           packageType: 'sdk'
           version: '6.x'
-          includePreviewVersions: true
+          includePreviewVersions: false
       - task: DotNetCoreCLI@2
         displayName: 'Restore Nuget Dependencies'
         inputs:

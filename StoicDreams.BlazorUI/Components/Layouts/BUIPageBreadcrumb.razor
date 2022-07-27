@@ -14,8 +14,9 @@
 
 @code {
 	private List<BreadcrumbItem> Items { get; set; } = new();
-	private bool ShowBreadcrumb { get => GetState<bool>(AppStateDataTags.BreadcrumbEnabled);  }
-	private bool IsNavigating { get => GetState<bool>(AppStateDataTags.IsNavigating); }
+	private bool ShowBreadcrumb => GetState<bool>(AppStateDataTags.BreadcrumbEnabled);
+	private bool IsNavigating => GetIsNavigating;
+	private int MinTransitionProgressTiming => GetState<int>(AppStateDataTags.MinNavTransitionProgressDisplay);
 
 	protected override Task OnInitializedAsync()
 	{
@@ -30,25 +31,82 @@
 		base.Dispose();
 	}
 
+	protected override void OnStateUpdate()
+	{
+		SetBreadcrumbItems(NavManager.ToBaseRelativePath(NavManager.Uri));
+		base.OnStateUpdate();
+	}
+
+	private Stopwatch NavTimer = Stopwatch.StartNew();
+	private bool GetIsNavigating
+	{
+		get
+		{
+			bool isNavigating = GetState<bool>(AppStateDataTags.IsNavigating);
+			if (!isNavigating && NavTimer.ElapsedMilliseconds < MinTransitionProgressTiming)
+			{
+				int waitForMilliseconds = (int)Math.Max(0, MinTransitionProgressTiming - NavTimer.ElapsedMilliseconds);
+				InvokeAsync(() => WaitAndRefresh(waitForMilliseconds));
+				return true;
+			}
+			if (isNavigating)
+			{
+				NavTimer.Restart();
+			}
+			return isNavigating;
+		}
+	}
+
+	private async Task WaitAndRefresh(int milliseconds)
+	{
+		await Task.Delay(milliseconds);
+		StateHasChanged();
+	}
+
 	private void HandleLocationChange(object? sender, LocationChangedEventArgs args)
 	{
 		SetBreadcrumbItems(NavManager.ToBaseRelativePath(args.Location));
 	}
 
+	private Dictionary<string, string> GetNavIconMap
+	{
+		get
+		{
+			Dictionary<string, string> map = new();
+			List<NavDetail> nav = GetState<List<NavDetail>>(AppStateDataTags.NavList) ?? new();
+			AddItemsToMap(map, nav);
+			return map;
+		}
+	}
+
+	private void AddItemsToMap(Dictionary<string, string> map, List<NavDetail> navList)
+	{
+		foreach (NavDetail item in navList)
+		{
+			if (item.IsNavGroup)
+			{
+				AddItemsToMap(map, item.SubNav);
+				continue;
+			}
+			if (string.IsNullOrWhiteSpace(item.Href)) { continue; }
+			map[item.Href.ToLower()] = item.Icon;
+		}
+	}
+
 	private void SetBreadcrumbItems(string location)
 	{
+		Dictionary<string, string> map = GetNavIconMap;
 		string[] split = location.Split('/', StringSplitOptions.RemoveEmptyEntries | StringSplitOptions.TrimEntries);
 		List<BreadcrumbItem> items = new();
 		bool homeIsDisabled = split.Length == 0 || (split.Length == 1 && split[0] == "home");
-		items.Add(new BreadcrumbItem("Home", "/", homeIsDisabled, Icons.Material.TwoTone.Home));
+		items.Add(new BreadcrumbItem("Home", "/", homeIsDisabled, map.ContainsKey("/") ? map["/"] : Icons.Material.TwoTone.Home));
 		string path = "";
 
 		for (int index = 0; index < split.Length; ++index)
 		{
-			path += $"/{split[index]}";
-			string icon = Icons.Material.TwoTone.Circle;
-			bool disabled = index == split.Length - 1;
-			BreadcrumbItem item = new(split[index], path, disabled, icon);
+			path += $"/{split[index]}".ToLower();
+			if (!map.ContainsKey(path)) { continue; }
+			BreadcrumbItem item = new(split[index], path, index == split.Length - 1, map[path]);
 			items.Add(item);
 		}
 		Items = items;

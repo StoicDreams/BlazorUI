@@ -12,6 +12,8 @@ public class BUITitleContentTests : TestFrameworkBlazor
 
 		actions.Act(a =>
 		{
+			a.GetService<IAppState>().SetData(AppStateDataTags.TitleBarShowAppName, true);
+			a.GetService<IAppState>().SetData(AppStateDataTags.TitleBarShowPageTitle, true);
 			a.GetService<IAppOptions>().AppName = "Test App";
 		});
 

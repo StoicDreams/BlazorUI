@@ -1,7 +1,7 @@
 ﻿namespace StoicDreams.SampleWebsite.Pages.Docs.Markdown;
 
 [Route("/docs/markdown")]
-public class MarkdownHome : BUICorePage
+public class MarkdownHome : BUIMarkdownPage
 {
 	protected override Task OnInitializedAsync()
 	{

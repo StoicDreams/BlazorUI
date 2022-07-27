@@ -8,7 +8,7 @@ public class BUIErrorTests : TestFrameworkBlazor
 		IRenderActions<BUIError> actions = ArrangeRenderTest<BUIError>(options =>
 		{
 
-		});
+		}, this.StartupTestServices);
 
 		actions.Act();
 
@@ -21,7 +21,7 @@ public class BUIErrorTests : TestFrameworkBlazor
 		IRenderActions<BUIError> actions = ArrangeRenderTest<BUIError>(options =>
 		{
 			options.Parameters.Add("Exception", new Exception("This is a test error message"));
-		});
+		}, this.StartupTestServices);
 
 		actions.Act();
 

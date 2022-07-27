@@ -11,6 +11,8 @@
 
 	protected override Task OnInitializedAsync()
 	{
+		ThemeState.SetupDefaultThemes();
+		ApplyDefaultTheme();
 		ThemeState.SubscribeToDataChanges(ComponentId, HandleChange);
 		return base.OnInitializedAsync();
 	}
@@ -24,7 +26,6 @@
 	private bool IsFirstChange { get; set; } = true;
 	private void HandleChange()
 	{
-		if (IsFirstChange) { ApplyDefaultTheme(); }
 		InvokeAsync(StateHasChanged);
 	}
 

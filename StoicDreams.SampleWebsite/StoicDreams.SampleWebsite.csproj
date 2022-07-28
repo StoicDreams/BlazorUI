@@ -1,4 +1,4 @@
-<Project Sdk="Microsoft.NET.Sdk.BlazorWebAssembly">
+﻿<Project Sdk="Microsoft.NET.Sdk.BlazorWebAssembly">
 
 	<PropertyGroup>
 		<TargetFramework>net6.0</TargetFramework>
@@ -10,15 +10,11 @@
 	<ItemGroup>
 		<PackageReference Include="Microsoft.AspNetCore.Components.WebAssembly" Version="6.0.7" />
 	</ItemGroup>
-
-	<Choose>
-		<When Condition="'$(Configuration)' == 'Debug'">
-			<ItemGroup>
-				<BlazorWebAssemblyLazyLoad Include="Microsoft.CodeAnalysis.CSharp.dll" />
-				<BlazorWebAssemblyLazyLoad Include="Microsoft.CodeAnalysis.dll" />
-			</ItemGroup>
-		</When>
-	</Choose>
+	
+	<ItemGroup>
+		<BlazorWebAssemblyLazyLoad Include="Microsoft.CodeAnalysis.CSharp.dll" />
+		<BlazorWebAssemblyLazyLoad Include="Microsoft.CodeAnalysis.dll" />
+	</ItemGroup>
 
 	<Choose>
 		<When Condition="'$(Configuration)' == 'Debug'">

@@ -9,18 +9,27 @@
 
 	<ItemGroup>
 		<PackageReference Include="Microsoft.AspNetCore.Components.WebAssembly" Version="6.0.7" />
-		<PackageReference Include="Microsoft.AspNetCore.Components.WebAssembly.DevServer" Version="6.0.7" PrivateAssets="all" />
 	</ItemGroup>
 
 	<Choose>
 		<When Condition="'$(Configuration)' == 'Debug'">
 			<ItemGroup>
+				<BlazorWebAssemblyLazyLoad Include="Microsoft.CodeAnalysis.CSharp.dll" />
+				<BlazorWebAssemblyLazyLoad Include="Microsoft.CodeAnalysis.dll" />
+			</ItemGroup>
+		</When>
+	</Choose>
+
+	<Choose>
+		<When Condition="'$(Configuration)' == 'Debug'">
+			<ItemGroup>
 				<ProjectReference Include="..\StoicDreams.BlazorUI\StoicDreams.BlazorUI.csproj" />
+				<PackageReference Include="Microsoft.AspNetCore.Components.WebAssembly.DevServer" Version="6.0.7" PrivateAssets="all" />
 			</ItemGroup>
 		</When>
 		<Otherwise>
 			<ItemGroup>
-				<PackageReference Include="StoicDreams.BlazorUI" Version="1.3.12" />
+				<PackageReference Include="StoicDreams.BlazorUI" Version="1.3.16" />
 			</ItemGroup>
 		</Otherwise>
 	</Choose>

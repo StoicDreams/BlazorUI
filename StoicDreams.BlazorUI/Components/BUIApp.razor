@@ -4,6 +4,7 @@
 @inject IJSRuntime JSRuntime
 @inject IJsInterop JSInterop
 @inject IThemeState ThemeState
+@inject NavigationManager NavManager
 
 <MudBlazor.MudThemeProvider />
 <MudBlazor.MudDialogProvider
@@ -61,8 +62,11 @@
 		await JSInterop.SetupDefaultJsInterop(AppOptions, AppState);
 	}
 
-	private void HandleNavigationStart()
+	private void HandleNavigationStart(NavigationContext navContext)
 	{
+		if (navContext.Path == currentNavPath) { return; }
+		currentNavPath = navContext.Path;
 		SetStateWithTrigger(AppStateDataTags.IsNavigating, true);
 	}
+	private string currentNavPath = "appstartup";
 }

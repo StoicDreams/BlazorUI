@@ -1,12 +1,8 @@
 ﻿@inherits BUICore
 
-@if (LogoText != null)
+@if (TryGetLogo(out RenderFragment logo))
 {
-	<div class="mr-2">@LogoText</div>
-}
-else if (LogoFragment != null)
-{
-	<div class="mr-2">@LogoFragment</div>
+	<div class="logo mr-2">@logo</div>
 }
 
 @if (ShowTitleDisplay)
@@ -25,9 +21,23 @@ else if (LogoFragment != null)
 	private string PageTitle => ShowPageTitle ? GetState<string>(AppStateDataTags.PageTitle, () => string.Empty) : string.Empty;
 	private bool ShowAppName => GetState<bool>(AppStateDataTags.TitleBarShowAppName);
 	private bool ShowPageTitle => GetState<bool>(AppStateDataTags.TitleBarShowPageTitle);
-	private string? LogoText => GetState<string?>(AppStateDataTags.TitleBarLogo);
-	private RenderFragment? LogoFragment => GetState<RenderFragment?>(AppStateDataTags.TitleBarLogo);
 	private bool ShowTitleDisplay => ShowAppName || ShowPageTitle;
+	private bool TryGetLogo(out RenderFragment logo)
+	{
+		string? logoText = GetState<string?>(AppStateDataTags.TitleBarLogo);
+		RenderFragment? loadedLogo = GetState<RenderFragment?>(AppStateDataTags.TitleBarLogo);
+		if (loadedLogo != null) {
+			logo = loadedLogo;
+			return true;
+		}
+		if (!string.IsNullOrWhiteSpace(logoText))
+		{
+			logo = logoText.ConvertToRenderFragment();
+			return true;
+		}
+		logo = "".ConvertToRenderFragment();
+		return false;
+	}
 
 	private string GetPageTitleDisplay
 	{

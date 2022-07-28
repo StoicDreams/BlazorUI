@@ -23,21 +23,24 @@ public class AppStartup : BUICore
 			new()
 			{
 				Name = "Dark Mode",
-				AppBarBackground = "#451b8eff",
+				AppBarBackground = "#57007Fff",
 				AppBackground = "#1d1c1dff",
 				DrawerBackground = "#1d1c1dff",
 				Black = "#101010ff",
 				Warning = "#ff5500ff",
+				Secondary = "#bf0f49ff"
 			},
 			new()
 			{
 				Name = "Light Mode",
-				AppBarBackground = "#5118b4ff",
+				AppBarBackground = "#57007Fff",
 				AppBackground = "#ebe6daff",
 				DrawerBackground = "#ebe6daff",
 				Black = "#282828ff",
+				Warning = "#e86202ff",
+				Secondary = "#bf0f49ff"
 			}
-		});
+		}); ;
 
 		// Make sure to set your default theme as current
 		ThemeState.Current = ThemeState.Themes[0];

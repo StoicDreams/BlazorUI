@@ -5,55 +5,45 @@
 <BUIDialogConfirm OnSave="OnSave" OnCancel="OnCancel">
 	<MudText Typo="Typo.h6">Theme Colors</MudText>
 	<MudTextField Label="Name" @bind-Value="LoadedConfig.Name" MaxLength="50" HelperText="Change name and save to create new Theme." />
-	<MudGrid>
+	<MudGrid Class="mt-2 mb-2">
 		@foreach (ColorData item in ColorSettings)
 		{
-			<MudItem xs="12" sm="6" md="4" lg="3" xl="2">
+			<MudItem xs="12" sm="6" md="4" lg="3" xl="2" Class="ma-2" Style="@($"background-color: {item.HexValue};color: {item.Offset};")">
 				<MudColorPicker Label="@item.MemberName"
 					Value="@item.HexValue"
 					ValueChanged="(color => ApplyColorUpdate(color.Value, item))"
 					DisableToolbar="false"
-					/>
+					Style="@($"color: {item.Offset}")" />
 			</MudItem>
 		}
 	</MudGrid>
-	<MudPaper Class="d-flex flex-wrap">
-		<MudPaper>
-			<MudText Typo="Typo.caption">Default</MudText>
-			<MudProgressCircular Color="Color.Default" Indeterminate="true" Size="Size.Large" />
-		</MudPaper>
-		<MudPaper>
-			<MudText Typo="Typo.caption">Primary</MudText>
-			<MudProgressCircular Color="Color.Primary" Indeterminate="true" Size="Size.Large" />
-		</MudPaper>
-		<MudPaper>
-			<MudText Typo="Typo.caption">Secondary</MudText>
-			<MudProgressCircular Color="Color.Secondary" Indeterminate="true" Size="Size.Large" />
-		</MudPaper>
-		<MudPaper>
-			<MudText Typo="Typo.caption">Tertiary</MudText>
-			<MudProgressCircular Color="Color.Tertiary" Indeterminate="true" Size="Size.Large" />
-		</MudPaper>
-		<MudPaper>
-			<MudText Typo="Typo.caption">Info</MudText>
-			<MudProgressCircular Color="Color.Info" Indeterminate="true" Size="Size.Large" />
-		</MudPaper>
-		<MudPaper>
-			<MudText Typo="Typo.caption">Success</MudText>
-			<MudProgressCircular Color="Color.Success" Indeterminate="true" Size="Size.Large" />
-		</MudPaper>
-		<MudPaper>
-			<MudText Typo="Typo.caption">Warning</MudText>
-			<MudProgressCircular Color="Color.Warning" Indeterminate="true" Size="Size.Large" />
-		</MudPaper>
-		<MudPaper>
-			<MudText Typo="Typo.caption">Error</MudText>
-			<MudProgressCircular Color="Color.Error" Indeterminate="true" Size="Size.Large" />
-		</MudPaper>
-		<MudPaper>
-			<MudText Typo="Typo.caption">Dark</MudText>
-			<MudProgressCircular Color="Color.Dark" Indeterminate="true" Size="Size.Large" />
-		</MudPaper>
+	<MudPaper Class="d-flex justify-center flex-wrap ma-4 gap-4">
+		@foreach (Color color in ThemeColors)
+		{
+			<MudPaper Class="d-flex flex-column">
+				<MudButton Color="color" Variant="Variant.Filled">@color Filled</MudButton>
+				<MudButton Color="color" Variant="Variant.Text">@color Text</MudButton>
+				<MudButton Color="color" Variant="Variant.Outlined">@color Outline</MudButton>
+			</MudPaper>
+		}
+	</MudPaper>
+	<MudPaper Class="d-flex flex-column flex-wrap ma-4 gap-4">
+		@foreach (Color color in ThemeColors)
+		{
+			<MudPaper Class="d-flex flex-row">
+				<MudText Typo="Typo.caption" Class="ma-2">@color</MudText>
+				<MudProgressLinear Class="ma-3" Indeterminate="true" Color="color" Size="Size.Large" Striped="true" />
+			</MudPaper>
+		}
+	</MudPaper>
+	<MudPaper Class="d-flex justify-center flex-wrap ma-4 gap-4">
+		@foreach (Color color in ThemeColors)
+		{
+			<MudPaper Class="d-flex flex-column">
+				<MudText Typo="Typo.caption">@color</MudText>
+				<MudProgressCircular Color="color" Indeterminate="true" Size="Size.Large" />
+			</MudPaper>
+		}
 	</MudPaper>
 </BUIDialogConfirm>
 
@@ -63,6 +53,18 @@
 	private ThemeConfig LoadedConfig { get; set; } = new();
 	private ThemeState State => (ThemeState)ThemeState;
 	private ThemeConfig StartingConfig { get; set; } = new();
+	private List<Color> ThemeColors { get; } = new()
+	{
+		Color.Default,
+		Color.Primary,
+		Color.Secondary,
+		Color.Tertiary,
+		Color.Info,
+		Color.Success,
+		Color.Warning,
+		Color.Error,
+		Color.Dark
+	};
 
 	protected override Task OnInitializedAsync()
 	{

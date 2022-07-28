@@ -248,6 +248,11 @@ html, body, #app, .router {
 .buiTitleBar h1 {
 	font-size: inherit;
 }
+.buiTitleBar .logo svg,
+.buiTitleBar .logo img {
+	height: 34px;
+	vertical-align: middle;
+}
 
 .mud-main-content {
 	position: relative;

@@ -10,7 +10,6 @@ public static partial class ExtendIServiceCollection
 		)
 	{
 		IAppOptions appOptions = new AppOptions();
-		appOptions.CssFiles.Add($"{AppAssembly.GetName().Name}.styles.css");
 		setupHandler?.Invoke(appOptions);
 		services.AddSingleton<IAppOptions>(appOptions);
 		services.AddSingleton<IAppState, AppState>();

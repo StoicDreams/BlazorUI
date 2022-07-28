@@ -48,6 +48,11 @@
 	</MudSelect>
 </BUIDrawerPaper>
 
+@if (TryGetSubContent(out Type? subComponent))
+{
+	<DynamicComponent Type="subComponent" />
+}
+
 @code {
 	private bool ShowThemeSelector => LoadedThemes.Count > 1;
 	private Guid SelectedId => ThemeState.Current.Id;
@@ -68,6 +73,12 @@
 	{
 		ThemeState.UnsubscribeToDataChanges(ComponentId);
 		base.Dispose();
+	}
+
+	private bool TryGetSubContent(out Type? subContent)
+	{
+		subContent = GetState<Type>(AppStateDataTags.AppSettingsSubComponent);
+		return subContent != null;
 	}
 
 	private void HandleThemesUpdate()

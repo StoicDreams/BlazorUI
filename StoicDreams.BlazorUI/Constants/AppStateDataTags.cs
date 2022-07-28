@@ -6,6 +6,15 @@
 public enum AppStateDataTags
 {
 	/// <summary>
+	/// Type dictating content to display in side bar when user clicks Settings icon in title bar.
+	/// Defaults to BUIAppSettings
+	/// </summary>
+	AppSettingsComponent,
+	/// <summary>
+	/// Type component allowing extra content to be added within BUIAppSettings display
+	/// </summary>
+	AppSettingsSubComponent,
+	/// <summary>
 	/// Set with DrawerVariant value
 	/// Defaults to default enum value
 	/// </summary>
@@ -136,5 +145,11 @@ public enum AppStateDataTags
 	/// <summary>
 	/// bool flag - set true to display page title in title bar, false to not.
 	/// </summary>
-	TitleBarShowPageTitle
+	TitleBarShowPageTitle,
+	/// <summary>
+	/// Type of component to use for displaying content on the right side of the title bar
+	/// Defaults to BUITitleBarQuickLinks
+	/// </summary>
+	TitleBarRightSideContent,
+
 }

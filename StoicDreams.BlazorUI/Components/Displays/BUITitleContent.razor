@@ -14,7 +14,7 @@
 
 <MudSpacer />
 
-<MudIconButton Icon="@Icons.Material.Filled.Settings" Color="Color.Inherit" Title="Open App Settings" OnClick="ToggleNav" />
+<DynamicComponent Type="TitleBarRightSideContent" />
 
 @code {
 	private string AppName => ShowAppName ? AppOptions.AppName : string.Empty;
@@ -22,6 +22,7 @@
 	private bool ShowAppName => GetState<bool>(AppStateDataTags.TitleBarShowAppName);
 	private bool ShowPageTitle => GetState<bool>(AppStateDataTags.TitleBarShowPageTitle);
 	private bool ShowTitleDisplay => ShowAppName || ShowPageTitle;
+	private Type TitleBarRightSideContent => GetState<Type>(AppStateDataTags.TitleBarRightSideContent) ?? typeof(BUITitleBarQuickLinks);
 	private bool TryGetLogo(out RenderFragment logo)
 	{
 		string? logoText = GetState<string?>(AppStateDataTags.TitleBarLogo);
@@ -49,14 +50,5 @@
 			if (string.IsNullOrWhiteSpace(appName)) { return title; }
 			return $"{appName} - {title}";
 		}
-	}
-
-	private void ToggleNav()
-	{
-		AppState.ApplyChanges(() =>
-		{
-			AppState.SetData(AppStateDataTags.RightDrawerContent, typeof(BUIAppSettings));
-			AppState.SetData(AppStateDataTags.TitleBarRightDrawerOpen, true);
-		});
 	}
 }

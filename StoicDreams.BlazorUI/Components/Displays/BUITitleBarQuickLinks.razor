@@ -1,0 +1,17 @@
+﻿@inherits BUICore
+
+<MudIconButton Icon="@Icons.Material.Filled.Settings" Color="Color.Inherit" Title="Open App Settings" OnClick="ToggleNav" />
+
+@code {
+	private Type AppSettingComponent => GetState<Type>(AppStateDataTags.AppSettingsComponent) ?? typeof(BUIAppSettings);
+
+
+	private void ToggleNav()
+	{
+		AppState.ApplyChanges(() =>
+		{
+			AppState.SetData(AppStateDataTags.RightDrawerContent, AppSettingComponent);
+			AppState.SetData(AppStateDataTags.TitleBarRightDrawerOpen, true);
+		});
+	}
+}

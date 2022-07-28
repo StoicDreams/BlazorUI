@@ -28,11 +28,22 @@
 	</Found>
 	<NotFound>
 		<BUIPageDetail Title="Not Found" />
-		<LayoutView Layout="@AppLayout">
-			<div class="page-transitional">
-				<DynamicComponent Type="PageNotFound" />
-			</div>
-		</LayoutView>
+		@if (FlipState)
+		{
+			<LayoutView Layout="@AppLayout">
+				<div class="page-transitional">
+					<DynamicComponent Type="PageNotFound" />
+				</div>
+			</LayoutView>
+		}
+		else
+		{
+			<LayoutView Layout="@AppLayout">
+				<div class="page-transitional">
+					<DynamicComponent Type="PageNotFound" />
+				</div>
+			</LayoutView>
+		}
 	</NotFound>
 </Router>
 
@@ -66,6 +77,7 @@
 	{
 		if (navContext.Path == currentNavPath) { return; }
 		currentNavPath = navContext.Path;
+		FlipState = !FlipState;
 		SetStateWithTrigger(AppStateDataTags.IsNavigating, true);
 	}
 	private string currentNavPath = "appstartup";

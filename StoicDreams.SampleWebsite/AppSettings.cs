@@ -33,7 +33,9 @@ public static class AppSettings
 				NavDetail.Create("Home", Icons.Material.TwoTone.Doorbell, "/docs/markdown"),
 				NavDetail.Create("Home", Icons.Material.TwoTone.EmojiEmotions, "/docs/markdown/emojis"),
 			})
-		})
+		}),
+		NavDetail.Create("Terms", Icons.Material.TwoTone.Handshake, "/terms"),
+		NavDetail.Create("Privacy", Icons.Material.TwoTone.PrivacyTip, "/privacy")
 	};
 
 	private static Func<DrawerClickState, ValueTask> HandlerRightDrawerClickState(IAppState appState)

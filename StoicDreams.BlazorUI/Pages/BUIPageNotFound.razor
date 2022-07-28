@@ -4,7 +4,10 @@
 
 <BUIPageDetail Title="Page Not Found" />
 
-<MudAlert Severity="Severity.Error">@GetMessage</MudAlert>
+<MudPaper Class="ma-10 pa-10 d-flex flex-column gap-10 align-center" Elevation="0">
+	<MudIcon Icon="@Icons.Material.TwoTone.Info" Color="Color.Info" Style="font-size: 20rem" />
+	<MudAlert Severity="Severity.Info">@GetMessage</MudAlert>
+</MudPaper>
 
 @code {
 	[Parameter]
@@ -12,6 +15,12 @@
 	public string Message { get; set; } = string.Empty;
 
 	private string GetMessage => string.IsNullOrWhiteSpace(Message) ? AppState.GetData<string?>(AppStateDataTags.NotFoundDefaultMessage) ?? DefaultMessage : Message;
+
+	protected override Task OnInitializedAsync()
+	{
+		AppState.SetData(AppStateDataTags.IsNavigating, false);
+		return base.OnInitializedAsync();
+	}
 
 	private const string DefaultMessage = "The page you are looking for could not be found.";
 }

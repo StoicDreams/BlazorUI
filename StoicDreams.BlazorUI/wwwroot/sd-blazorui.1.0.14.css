@@ -322,6 +322,7 @@ ul.mud-breadcrumbs {
 	position: relative;
 	z-index: 2;
 	background-color: var(--mud-palette-background-grey);
+	color: var(--mud-palette-text-primary);
 	font-size: 0.75rem;
 }
 

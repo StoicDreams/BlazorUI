@@ -1,0 +1,22 @@
+﻿@inherits BUICore
+@page "/"
+@page "/home"
+
+<BUIPageDetail Title="Welcome" />
+
+<MudPaper Class="d-flex flex-row">
+	<MudText Typo="Typo.h2">You have reached the Demo and Documentation website for Blazor UI from Stoic Dreams!</MudText>
+	<MudSpacer />
+	<MudStack Row="false" Class="mt-2 mb-3 ml-4">
+		<MudButton Variant="Variant.Filled" Color="Color.Info" Size="Size.Small" Href="https://github.com/StoicDreams/BlazorUI" Target="_blank" EndIcon="@Icons.Material.TwoTone.OpenInNew">GitHub - GitHub.com/StoicDreams/BlazorUI</MudButton>
+		<MudButton Variant="Variant.Filled" Color="Color.Info" Size="Size.Small" Href="https://nuget.org/StoicDreams/BlazorUI" Target="_blank" EndIcon="@Icons.Material.TwoTone.OpenInNew">Nuget - NuGet.org/StoicDreams/BlazorUI</MudButton>
+	</MudStack>
+</MudPaper>
+
+<BUIStandardSection>
+	<MudText>This website is being developed in conjuction with our new Blazor UI framework.</MudText>
+	<MudText>We want to emphasize that this is a true framework and not a component library. The goal of Blazor UI is to provide a pre-defined structure as a starting point so developers can focus on just adding site content.</MudText>
+</BUIStandardSection>
+
+@code {
+}

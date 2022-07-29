@@ -4,18 +4,39 @@
 
 @if (IsNavigating)
 {
-	<MudProgressLinear Indeterminate="true" Color="Color.Tertiary" Striped="true" Size="Size.Small" />
+	<MudProgressLinear Indeterminate="true" Color="ActiveColor" Striped="true" Size="Size.Small" />
 }
 
 @if (ShowBreadcrumb)
 {
-	<MudBreadcrumbs Items="Items" Separator="/" />
+	<MudBreadcrumbs Items="Items" Context="item" Class="mud-theme-dark">
+		<SeparatorTemplate>
+			<MudIcon Icon="@Icons.Material.Filled.ArrowRight" Class="mt-n2 mb-n2 ml-n3 mr-n3" />
+		</SeparatorTemplate>
+		<ItemTemplate>
+			@if (item.Disabled)
+			{
+				<MudLink Color="ActiveColor">
+					<MudIcon Icon="@item.Icon" Color="ActiveColor" />
+					@item.Text
+				</MudLink>
+			}
+			else
+			{
+				<MudLink Color="Color.Inherit" Href="@item.Href">
+					<MudIcon Icon="@item.Icon" />
+					@item.Text
+				</MudLink>
+			}
+		</ItemTemplate>
+	</MudBreadcrumbs>
 }
 
 @code {
 	private List<BreadcrumbItem> Items { get; set; } = new();
 	private bool ShowBreadcrumb => GetState<bool>(AppStateDataTags.BreadcrumbEnabled);
 	private bool IsNavigating => GetIsNavigating;
+	private Color ActiveColor => GetState<Color>(AppStateDataTags.NavMenuActiveColor);
 	private int MinTransitionProgressTiming => GetState<int>(AppStateDataTags.MinNavTransitionProgressDisplay);
 
 	protected override Task OnInitializedAsync()

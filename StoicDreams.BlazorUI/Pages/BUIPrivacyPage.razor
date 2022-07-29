@@ -1,0 +1,10 @@
+﻿@inherits BUICore
+@page "/privacy"
+
+<BUIPageDetail Title="Privacy Policy" />
+
+<DynamicComponent Type="GetContentType" />
+
+@code {
+	private Type GetContentType => GetState<Type>(AppStateDataTags.PrivacyPageContent) ?? typeof(BUIPrivacyPageContent);
+}

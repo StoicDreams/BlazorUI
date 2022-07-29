@@ -203,7 +203,7 @@
 	--mud-zindex-popover: 1200;
 	--mud-zindex-snackbar: 1500;
 	--mud-zindex-tooltip: 1600;
-	--main-padding-size: 5px;
+	--main-padding-size: 10px;
 }
 
 html, body, #app, .router {
@@ -327,6 +327,7 @@ ul.mud-breadcrumbs {
 
 .mud-breadcrumbs + main > .page-transitional {
 	padding-top: 28px;
+	padding-top: calc(20px + var(--main-padding-size));
 }
 
 .mud-navmenu.mud-navmenu-primary .mud-nav-item.active .mud-nav-link:not(.mud-nav-link-disabled):hover:not(.mud-nav-link-disabled),

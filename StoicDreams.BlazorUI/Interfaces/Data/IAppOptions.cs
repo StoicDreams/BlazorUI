@@ -11,6 +11,17 @@ public interface IAppOptions
 	/// </summary>
 	string AppName { get; set; }
 
+	/// <summary>
+	/// Name of your company.
+	/// </summary>
+	string CompanyName { get; set; }
+
+	/// <summary>
+	/// Root domains of your website (e.g. StoicDreams.com).
+	/// Exclude use of www or other subdomains here.
+	/// </summary>
+	string Domain { get; set; }
+
 	#region Startup settings
 	/// <summary>
 	/// Format expression for title tag.

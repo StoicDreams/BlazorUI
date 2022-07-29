@@ -85,6 +85,11 @@ public enum AppStateDataTags
 	/// </summary>
 	PageTitle,
 	/// <summary>
+	/// Type of component to use for Privacy Page content.
+	/// Defaults to BUIPrivacyPageContent
+	/// </summary>
+	PrivacyPageContent,
+	/// <summary>
 	/// Set with Func<DrawerClickState, ValueTask>
 	/// Defaults to null
 	/// </summary>
@@ -94,6 +99,11 @@ public enum AppStateDataTags
 	/// Defaults to typeof(BUINavMenu)
 	/// </summary>
 	RightDrawerContent,
+	/// <summary>
+	/// Type of component to use for Terms page content.
+	/// Defaults to BUITermsPageContent.
+	/// </summary>
+	TermsPageContent,
 	/// <summary>
 	/// Set bool if title bar uses dense setting (reduced padding)
 	/// Defaults to false

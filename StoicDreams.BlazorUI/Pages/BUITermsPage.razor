@@ -1,0 +1,10 @@
+﻿@inherits BUICore
+@page "/terms"
+
+<BUIPageDetail Title="Terms & Conditions" />
+
+<DynamicComponent Type="GetContentType" />
+
+@code {
+	private Type GetContentType => GetState<Type>(AppStateDataTags.TermsPageContent) ?? typeof(BUITermsPageContent);
+}

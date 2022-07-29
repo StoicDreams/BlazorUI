@@ -1,0 +1,11 @@
+﻿
+<MudPaper Class="ma-2 pa-4" Elevation="Elevation">
+	@ChildContent
+</MudPaper>
+
+@code {
+	[Parameter]
+	public RenderFragment? ChildContent { get; set; }
+	[Parameter]
+	public int Elevation { get; set; } = 10;
+}

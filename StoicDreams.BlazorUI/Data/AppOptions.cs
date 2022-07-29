@@ -3,6 +3,9 @@
 public class AppOptions : IAppOptions
 {
 	public string AppName { get; set; } = string.Empty;
+	public string CompanyName { get; set; } = string.Empty;
+	public string Domain { get; set; } = string.Empty;
+
 	#region Startup Options
 	public string TitleFormat { get; set; } = "{AppName} - {PageTitle}";
 	public IList<string> CssFiles { get; } = new List<string>();

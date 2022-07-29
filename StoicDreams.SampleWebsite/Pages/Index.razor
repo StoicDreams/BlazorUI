@@ -4,18 +4,19 @@
 
 <BUIPageDetail Title="Welcome" />
 
-<MudPaper Class="d-flex flex-row">
-	<MudText Typo="Typo.h2">You have reached the Demo and Documentation website for Blazor UI from Stoic Dreams!</MudText>
-	<MudSpacer />
-	<MudStack Row="false" Class="mt-2 mb-3 ml-4">
-		<MudButton Variant="Variant.Filled" Color="Color.Info" Size="Size.Small" Href="https://github.com/StoicDreams/BlazorUI" Target="_blank" EndIcon="@Icons.Material.TwoTone.OpenInNew">GitHub - GitHub.com/StoicDreams/BlazorUI</MudButton>
-		<MudButton Variant="Variant.Filled" Color="Color.Info" Size="Size.Small" Href="https://nuget.org/StoicDreams/BlazorUI" Target="_blank" EndIcon="@Icons.Material.TwoTone.OpenInNew">Nuget - NuGet.org/StoicDreams/BlazorUI</MudButton>
-	</MudStack>
+<MudPaper Class="d-flex flex-row" Elevation="0">
+	<MudPaper Elevation="0" Class="flex-grow-1 mt-2">
+		<BUISectionTitle>You have reached the Demo and Documentation website for Blazor UI from Stoic Dreams!</BUISectionTitle>
+	</MudPaper>
+	<MudPaper Class="d-flex flex-wrap gap-2 mt-2 mb-3 ml-4 justify-end" Elevation="0">
+		<MudButton Variant="Variant.Filled" Color="Color.Info" Size="Size.Small" Href="https://github.com/StoicDreams/BlazorUI" Target="_blank" StartIcon="@Icons.Custom.Brands.GitHub" EndIcon="@Icons.Material.TwoTone.OpenInNew" title="GitHub.com/StoicDreams/BlazorUI">GitHub</MudButton>
+		<MudButton Variant="Variant.Filled" Color="Color.Info" Size="Size.Small" Href="https://nuget.org/packages/StoicDreams.BlazorUI" Target="_blank" StartIcon="@Icons.Material.TwoTone.Store" EndIcon="@Icons.Material.TwoTone.OpenInNew" title="NuGet.org/packages/StoicDreams.BlazorUI">Nuget</MudButton>
+	</MudPaper>
 </MudPaper>
 
 <BUIStandardSection>
-	<MudText>This website is being developed in conjuction with our new Blazor UI framework.</MudText>
-	<MudText>We want to emphasize that this is a true framework and not a component library. The goal of Blazor UI is to provide a pre-defined structure as a starting point so developers can focus on just adding site content.</MudText>
+	<BUIParagraph>This website is being developed in conjuction with our new Blazor UI framework.</BUIParagraph>
+	<BUIParagraph>We want to emphasize that this is a true framework and not a component library. The goal of Blazor UI is to provide a pre-defined structure as a starting point so developers can focus on just adding site content.</BUIParagraph>
 </BUIStandardSection>
 
 @code {

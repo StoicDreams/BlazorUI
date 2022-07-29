@@ -1,6 +1,6 @@
 # Stoic Dreams Blazor UI
 ###### GitHub: [GitHub.com/StoicDreams/BlazorUI](https://github.com/StoicDreams/BlazorUI)
-###### Nuget: [NuGet.org/StoicDreams/BlazorUI](https://nuget.org/StoicDreams/BlazorUI)
+###### Nuget: [NuGet.org/packages/StoicDreams.BlazorUI](https://nuget.org/packages/StoicDreams.BlazorUI)
 ###### Demo & Docs: [blazorui.stoicdreams.com](https://blazorui.stoicdreams.com)
 
 UI Framework and component library for Blazor based Websites and Maui projects.

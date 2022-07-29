@@ -15,6 +15,7 @@ public static partial class ExtendIServiceCollection
 		services.AddSingleton<IAppState, AppState>();
 		services.AddSingleton<IThemeState, ThemeState>();
 		services.AddTransient<Data.IJsInterop, JsInterop>();
+		services.AddTransient<IApiRequest, ApiRequest>();
 		services.AddMudServices(config =>
 		{
 			config.SnackbarConfiguration.PositionClass = MudBlazor.Defaults.Classes.Position.BottomRight;

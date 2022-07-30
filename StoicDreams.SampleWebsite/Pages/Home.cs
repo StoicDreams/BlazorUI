@@ -4,11 +4,10 @@
 [Route("/home")]
 public class Home : BUIPage
 {
-	protected override Task InitializePage()
+	protected override ValueTask InitializePage()
 	{
 		Title = "Welcome";
-		PageMarkup.AddRange(new PageSegment[]
-		{
+		SetPageContent(
 			Paper(PaperTypes.FlexRow)
 				.AddChild(Paper(PaperTypes.Grow, "mt-2")
 					.AddChild(SectionTitle("You have reached the Demo and Documentation website for Blazor UI from Stoic Dreams!"))
@@ -21,8 +20,8 @@ public class Home : BUIPage
 				.AddChild(Paragraph("This website is being developed in conjuction with our new Blazor UI framework."))
 				.AddChild(Paragraph("We want to emphasize that this is a true framework and not a component library. The goal of Blazor UI is to provide a pre-defined structure as a starting point so developers can focus on just adding site content.")),
 			SectionTitle("Project Goals")
-		});
-		return Task.CompletedTask;
+		);
+		return ValueTask.CompletedTask;
 	}
 
 }

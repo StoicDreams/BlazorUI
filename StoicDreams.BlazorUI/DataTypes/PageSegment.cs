@@ -3,14 +3,9 @@
 public class PageSegment 
 {
 	/// <summary>
-	/// Specifies the segment type.
-	/// </summary>
-	public PageSegmentTypes SegmentType { get; init; } = PageSegmentTypes.Component;
-
-	/// <summary>
 	/// Content type of this segment
 	/// </summary>
-	public IPageSegmentType? Content { get; init; }
+	public Type Content { get; init; } = typeof(MudSpacer);
 
 	/// <summary>
 	/// Parameters to pass to component when Content contains a Type Value.
@@ -47,15 +42,11 @@ public class PageSegment
 	}
 
 	/// <summary>
-	/// Create a page segment consisting of markdown to be translated to HTML.
-	/// Pass in an empty string to display a MudSpacer component instead of Markdown content.
+	/// Create a paragraph page segment consisting.
+	/// Pass in an empty string to display a MudSpacer component instead of a paragraph element.
 	/// </summary>
 	/// <param name="markdown"></param>
-	public static PageSegment Create(string content) => new()
-	{
-		SegmentType = string.IsNullOrEmpty(content) ? PageSegmentTypes.Spacer : PageSegmentTypes.Markdown,
-		Content = content
-	};
+	public static PageSegment Create(string content) => string.IsNullOrWhiteSpace(content) ? Create<MudSpacer>() : Create<BUIParagraph>(("ChildContent", content.ConvertToRenderFragment()));
 
 	/// <summary>
 	/// Create a component consisting of the specified component Type.
@@ -67,7 +58,6 @@ public class PageSegment
 	/// <returns></returns>
 	public static PageSegment Create<T>(Dictionary<string, object> parameters, IEnumerable<PageSegment>? children = null) => new()
 	{
-		SegmentType = PageSegmentTypes.Component,
 		Content = typeof(T),
 		Parameters = parameters,
 		Children = children?.ToList() ?? new()
@@ -83,7 +73,6 @@ public class PageSegment
 	/// <returns></returns>
 	public static PageSegment Create<T>(params (string name, object value)[] parameters) => new()
 	{
-		SegmentType = PageSegmentTypes.Component,
 		Content = typeof(T),
 		Parameters = parameters.ToDictionary(n => n.name, v => v.value)
 	};

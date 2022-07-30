@@ -78,7 +78,7 @@
 		if (navContext.Path == currentNavPath) { return; }
 		currentNavPath = navContext.Path;
 		FlipState = !FlipState;
-		SetStateWithTrigger(AppStateDataTags.IsNavigating, true);
+		SetStateWithTrigger(AppStateDataTags.IsLoadingPage, true);
 	}
 	private string currentNavPath = "appstartup";
 }

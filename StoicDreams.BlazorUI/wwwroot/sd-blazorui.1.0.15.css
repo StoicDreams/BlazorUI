@@ -457,3 +457,14 @@ ul.mud-breadcrumbs {
 		padding-right: 16px;
 	}
 }
+.mud-skeleton-wave::after {
+	top: 0;
+	left: 0;
+	right: 0;
+	bottom: 0;
+	content: "";
+	position: absolute;
+	animation: mud-skeleton-keyframes-wave 1.6s linear .5s infinite;
+	transform: translateX(-100%);
+	background: linear-gradient(90deg,transparent,rgba(0,0,0,0.4),transparent);
+}

@@ -63,7 +63,7 @@
 	{
 		get
 		{
-			bool isNavigating = GetState<bool>(AppStateDataTags.IsNavigating);
+			bool isNavigating = GetState<bool>(AppStateDataTags.IsLoadingPage);
 			if (!isNavigating && NavTimer.ElapsedMilliseconds < MinTransitionProgressTiming)
 			{
 				int waitForMilliseconds = (int)Math.Max(0, MinTransitionProgressTiming - NavTimer.ElapsedMilliseconds);

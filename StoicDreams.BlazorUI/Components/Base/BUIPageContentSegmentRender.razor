@@ -1,25 +1,6 @@
 ﻿@inject IMarkdown Markdown
 
-@switch (Segment.Content)
-{
-	case null:
-		break;
-	case PageSegmentType segmentType:
-		<DynamicComponent Type="segmentType.Value" Parameters="GetParameters" />
-		break;
-	case PageSegmentMarkdown segmentMarkdown:
-		@switch (Segment.SegmentType)
-		{
-			case PageSegmentTypes.Markdown:
-				@Markdown.GetMarkup(segmentMarkdown.Value)
-				break;
-			case PageSegmentTypes.Spacer:
-				<MudSpacer />
-				break;
-		}
-		break;
-}
-
+<DynamicComponent Type="Segment.Content" Parameters="GetParameters" />
 
 @code {
 	[Parameter]

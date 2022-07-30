@@ -4,9 +4,13 @@ public abstract partial class BUIPage
 {
 	protected string Title { get; set; } = string.Empty;
 
-	protected List<PageSegment> PageMarkup { get; set; } = new();
+	protected List<PageSegment> PageSegments { get; set; } = new();
 
-	protected bool FlipState { get; set; }
+	protected void SetPageContent(params PageSegment[] segments)
+	{
+		PageSegments = segments.ToList();
+		StateHasChanged();
+	}
 
 	protected PageSegment CreatePageSegment<T>(string text)
 	{
@@ -23,7 +27,7 @@ public abstract partial class BUIPage
 	/// Make sure to set this.Title within this method.
 	/// </summary>
 	/// <returns></returns>
-	protected abstract Task InitializePage();
+	protected abstract ValueTask InitializePage();
 
 	protected override async Task OnInitializedAsync()
 	{

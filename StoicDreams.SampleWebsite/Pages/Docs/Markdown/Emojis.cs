@@ -1,54 +1,70 @@
-﻿@inherits BUICore
+﻿using System.Text;
 
-@page "/docs/markdown/emojis"
-@inject HttpClient Client
-@inject ISnackbar SnackBar
-@inject IApiRequest ApiRequest
+namespace StoicDreams.SampleWebsite.Pages.Docs.Markdown;
 
-@using System.Text
-
-<BUIPageDetail Title="Markdown Emojis" />
-
-<BUIMarkdown Markup="@TopMarkup" />
-
-@if (CachedList != null)
+[Route("/docs/markdown/emojis")]
+public class Emojis : BUIPage
 {
-	<MudPaper Class="emoji-tables d-flex align-content-start flex-wrap flex-grow-1 gap-4" MaxWidth="100%">
-		<MudVirtualize Items="CachedList" Context="item">
-			<MudPaper Class="center">
-				<BUIMarkdown Markup="@item" />
-			</MudPaper>
-		</MudVirtualize>
-	</MudPaper>
-}
-else
-{
-	<MudSkeleton SkeletonType="SkeletonType.Rectangle" Width="100%" Height="800px" Animation="Animation.Wave" />
-}
+	[Inject] private HttpClient? Client { get; set; }
+	[Inject] private ISnackbar? SnackBar { get; set; }
+	[Inject] private IApiRequest? ApiRequest { get; set; }
 
-@code {
-	private string TopMarkup { get; } = @"
-## Our Markdown supports Emojis :wink:!
-".Trim();
-
-	protected override Task OnInitializedAsync()
+	[MemberNotNull(nameof(Client), nameof(SnackBar), nameof(ApiRequest))]
+	private void ValidateInjection()
 	{
-		SetState(AppStateDataTags.IsNavigating, true);
-		_ = LoadEmojies();
-		return base.OnInitializedAsync();
+		if (Client == null) { throw new NullReferenceException("Failed to inject HttpClient."); }
+		if (SnackBar == null) { throw new NullReferenceException("Failed to inject ISnackbar."); }
+		if (ApiRequest == null) { throw new NullReferenceException("Failed to inject IApiRequest."); }
 	}
+
+	protected override ValueTask InitializePage()
+	{
+		Title = "Markdown Emojis";
+		SetPageContent();
+		return ValueTask.CompletedTask;
+	}
+
+	private void SetPageContent()
+	{
+		if (CachedList == null)
+		{
+			SetPageContent(
+				PageIntroduction,
+				Skeleton(SkeletonType.Rectangle, "100%", "800px")
+				);
+			_ = LoadEmojies();
+			return;
+		}
+		else
+		{
+			SetPageContent(
+				PageIntroduction,
+				Paper(PaperTypes.Wrap, "emoji-tables gap-4")
+					.AddChild(Virtualize(CachedList, item =>
+						Paper(PaperTypes.None, "None")
+							.AddChild(MarkdownSection(item))
+						)
+					)
+				);
+		}
+	}
+
+	private PageSegment PageIntroduction => MarkdownSection("## Our Markdown supports Emojis :wink:!");
 
 	private async Task LoadEmojies()
 	{
+		ValidateInjection();
+		SetState(AppStateDataTags.IsLoadingPage, true);
 		TResult<string[]> result = await ApiRequest.Get<string[]>("https://www.myfi.ws/bui/emojis.json", true);
 		if (!result.IsOkay)
 		{
 			SnackBar.Add($"Failed to load emojis. {result.Message}", Severity.Error);
-			SetState(AppStateDataTags.IsNavigating, false);
+			SetState(AppStateDataTags.IsLoadingPage, false);
 			return;
 		}
 		CachedList = BuildMarkdownList(result.Result);
-		SetState(AppStateDataTags.IsNavigating, false);
+		SetPageContent();
+		SetState(AppStateDataTags.IsLoadingPage, false);
 		StateHasChanged();
 	}
 

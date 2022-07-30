@@ -7,6 +7,7 @@ global using StoicDreams.BlazorUI.Components.Base;
 global using StoicDreams.BlazorUI.Components.Content;
 global using StoicDreams.BlazorUI.Components.Displays;
 global using StoicDreams.BlazorUI.Components.Layouts;
+global using StoicDreams.BlazorUI.Components.Surfaces;
 global using StoicDreams.BlazorUI.Constants;
 global using StoicDreams.BlazorUI.Content;
 global using StoicDreams.BlazorUI.Data;

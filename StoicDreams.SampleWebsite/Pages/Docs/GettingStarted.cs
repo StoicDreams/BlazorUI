@@ -5,14 +5,13 @@
 [Route("/docs/start")]
 public class GettingStarted : BUIPage
 {
-	protected override Task InitializePage()
+	protected override ValueTask InitializePage()
 	{
 		Title = "Getting Started";
-		PageMarkup.AddRange(new PageSegment[]
-		{
+		SetPageContent(
 			"## Documentation - Getting Started",
-			"Coming soon!",
-		});
-		return Task.CompletedTask;
+			"Coming soon!"
+		);
+		return ValueTask.CompletedTask;
 	}
 }

@@ -39,9 +39,11 @@ public enum AppStateDataTags
 	/// </summary>
 	ErrorPageDefaultMessage,
 	/// <summary>
-	/// Bool value set true when navigation has started and set false when navigation has ended.
+	/// Bool value indicating when page loading or navigation is in progress.
+	/// Framework sets true when navigation has started and set false when page title has been set.
+	/// Developers should also update this state explicitly when loading page content.
 	/// </summary>
-	IsNavigating,
+	IsLoadingPage,
 	/// <summary>
 	/// Set with Func<DrawerClickState, ValueTask>
 	/// Defaults to null

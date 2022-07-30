@@ -1,10 +1,22 @@
-﻿<BUIPageDetail Title="@Title" />
+﻿@inherits BUICore
+
+<BUIPageDetail Title="@Title" />
 
 @if (FlipState)
 {
-	<BUIPageContentRender PageSegments="PageMarkup" />
+	<BUIPageContentRender PageSegments="PageSegments" />
 }
 else
 {
-	<BUIPageContentRender PageSegments="PageMarkup" />
+	<BUIPageContentRender PageSegments="PageSegments" />
+}
+
+@code {
+	public static RenderFragment GetRenderFragment<T>(params (string name,object value)[] parameters)
+	{
+		return __builder =>
+		{
+			<DynamicComponent Type="typeof(T)" Parameters="@(parameters.ToDictionary(n => n.name, v => v.value))" />
+		};
+	}
 }

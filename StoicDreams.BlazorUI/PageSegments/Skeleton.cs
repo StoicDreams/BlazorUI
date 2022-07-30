@@ -10,12 +10,13 @@ public abstract partial class BUIPage
 	/// <param name="classes"></param>
 	/// <param name="elevation"></param>
 	/// <returns></returns>
-	public static PageSegment Paper(PaperTypes paperType, string? classes = null, int elevation = 0)
+	public static PageSegment Skeleton(SkeletonType skeleton, string width = "100%", string height = "100%", Animation animation = Animation.Wave)
 	{
-		return PageSegment.Create<MudPaper>(
-			("Class", $"{paperType.GetClasses()} {classes ?? string.Empty}".Trim()),
-			("Elevation", elevation),
-			("MaxWidth", "100%")
+		return PageSegment.Create<MudSkeleton>(
+			("SkeletonType", skeleton),
+			("Width", width),
+			("Height", height),
+			("Animation", animation)
 			);
 	}
 

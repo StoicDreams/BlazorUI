@@ -3,14 +3,13 @@
 [Route("/docs/markdown")]
 public class MarkdownHome : BUIPage
 {
-	protected override Task InitializePage()
+	protected override ValueTask InitializePage()
 	{
 		Title = "Markdown";
-		PageMarkup.AddRange(new PageSegment[]
-		{
+		SetPageContent(
 			"## Blazor UI supports writing content using Markdown!",
-			"This page will be the root of documenting Markdown support in Blazor UI.",
-		});
-		return Task.CompletedTask;
+			"This page will be the root of documenting Markdown support in Blazor UI."
+		);
+		return ValueTask.CompletedTask;
 	}
 }

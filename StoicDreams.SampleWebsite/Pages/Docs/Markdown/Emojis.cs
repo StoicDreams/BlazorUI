@@ -41,7 +41,7 @@ public class Emojis : BUIPage
 				PageIntroduction,
 				Paper(PaperTypes.Wrap, "emoji-tables gap-4")
 					.AddChild(Virtualize(CachedList, item =>
-						Paper(PaperTypes.None, "None")
+						Paper(PaperTypes.None, "center")
 							.AddChild(MarkdownSection(item))
 						)
 					)

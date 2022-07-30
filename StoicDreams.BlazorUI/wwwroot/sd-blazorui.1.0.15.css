@@ -466,5 +466,6 @@ ul.mud-breadcrumbs {
 	position: absolute;
 	animation: mud-skeleton-keyframes-wave 1.6s linear .5s infinite;
 	transform: translateX(-100%);
-	background: linear-gradient(90deg,transparent,rgba(0,0,0,0.4),transparent);
+	background: linear-gradient(70deg,transparent,var(--mud-palette-background-grey),transparent);
+	opacity: 0.7;
 }

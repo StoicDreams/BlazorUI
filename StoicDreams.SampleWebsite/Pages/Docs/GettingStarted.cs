@@ -9,8 +9,8 @@ public class GettingStarted : BUIPage
 	{
 		Title = "Getting Started";
 		SetPageContent(
-			"## Documentation - Getting Started",
-			"Coming soon!"
+			SectionTitle("Documentation - Getting Started"),
+			Paragraph("Coming soon!")
 		);
 		return ValueTask.CompletedTask;
 	}

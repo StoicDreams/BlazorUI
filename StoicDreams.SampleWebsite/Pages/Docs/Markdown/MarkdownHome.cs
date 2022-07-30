@@ -7,8 +7,8 @@ public class MarkdownHome : BUIPage
 	{
 		Title = "Markdown";
 		SetPageContent(
-			"## Blazor UI supports writing content using Markdown!",
-			"This page will be the root of documenting Markdown support in Blazor UI."
+			SectionTitle("Blazor UI supports writing content using Markdown!"),
+			Paragraph("This page will be the root of documenting Markdown support in Blazor UI.")
 		);
 		return ValueTask.CompletedTask;
 	}

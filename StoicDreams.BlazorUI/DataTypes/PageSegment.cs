@@ -22,6 +22,30 @@ public class PageSegment
 	/// </summary>
 	public List<PageSegment> Children { get; init; } = new();
 
+	public PageSegment AddParameter(string name, object value)
+	{
+		Parameters[name] = value;
+		return this;
+	}
+
+	public PageSegment AddChild(PageSegment child)
+	{
+		Children.Add(child);
+		return this;
+	}
+
+	public PageSegment AddChild<T>(string text)
+	{
+		Children.Add(Create<T>().AddParameter("ChildContent", text.ConvertToRenderFragment()));
+		return this;
+	}
+
+	public PageSegment AddChild<T>(params (string name, object value)[] parameters)
+	{
+		Children.Add(Create<T>(parameters));
+		return this;
+	}
+
 	/// <summary>
 	/// Create a page segment consisting of markdown to be translated to HTML.
 	/// Pass in an empty string to display a MudSpacer component instead of Markdown content.

@@ -3,6 +3,8 @@ global using Microsoft.Extensions.DependencyInjection;
 global using Microsoft.JSInterop;
 global using MudBlazor;
 global using StoicDreams.BlazorUI.Base;
+global using StoicDreams.BlazorUI.Components.Base;
+global using StoicDreams.BlazorUI.Components.Content;
 global using StoicDreams.BlazorUI.Components.Displays;
 global using StoicDreams.BlazorUI.Components.Layouts;
 global using StoicDreams.BlazorUI.Constants;

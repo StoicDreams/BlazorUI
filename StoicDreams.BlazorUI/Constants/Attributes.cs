@@ -1,4 +1,6 @@
-﻿namespace StoicDreams.BlazorUI.Constants;
+﻿using System.Formats.Asn1;
+
+namespace StoicDreams.BlazorUI.Constants;
 
 public static class Attributes
 {
@@ -42,6 +44,30 @@ public static class Attributes
 		DisplayAttribute[] attributes = GetAttributesFromFieldName<DisplayAttribute, TClass>(fieldName);
 		if (attributes.Length == 0) { return fieldName; }
 		return attributes[0].Display;
+	}
+
+	public static string GetData<TClass>(this TClass instance)
+	{
+		if (instance is Enum enumValue)
+		{
+			DataAttribute[] displayAttributes = instance.GetAttributeFromEnum<DataAttribute, TClass>();
+			if (displayAttributes.Length == 0)
+			{
+				return string.Empty;
+			}
+			string[] data = displayAttributes.Select(item => item.Data).ToArray();
+			return string.Join(' ', data);
+		}
+		Type type = typeof(TClass);
+		Attribute[] attributes = System.Attribute.GetCustomAttributes(type);
+		foreach (Attribute attribute in attributes)
+		{
+			if (attribute is DisplayAttribute found)
+			{
+				return found.Display;
+			}
+		}
+		return type.Name;
 	}
 
 	/// <summary>
@@ -97,5 +123,15 @@ public class DisplayAttribute : Attribute
 	public DisplayAttribute(string displayName)
 	{
 		this.Display = displayName;
+	}
+}
+
+[AttributeUsage(AttributeTargets.All, Inherited = false, AllowMultiple = true)]
+public class DataAttribute : Attribute
+{
+	public string Data { get; set; }
+	public DataAttribute(string displayName)
+	{
+		this.Data = displayName;
 	}
 }

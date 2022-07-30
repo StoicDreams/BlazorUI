@@ -1,9 +1,9 @@
 ﻿namespace StoicDreams.SampleWebsite.Pages.Docs.Markdown;
 
 [Route("/docs/markdown")]
-public class MarkdownHome : BUIMarkdownPage
+public class MarkdownHome : BUIPage
 {
-	protected override Task OnInitializedAsync()
+	protected override Task InitializePage()
 	{
 		Title = "Markdown";
 		PageMarkup.AddRange(new PageSegment[]
@@ -11,6 +11,6 @@ public class MarkdownHome : BUIMarkdownPage
 			"## Blazor UI supports writing content using Markdown!",
 			"This page will be the root of documenting Markdown support in Blazor UI.",
 		});
-		return base.OnInitializedAsync();
+		return Task.CompletedTask;
 	}
 }

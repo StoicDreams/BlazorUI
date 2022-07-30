@@ -3,9 +3,9 @@
 [Route("/docs/getting-started")]
 [Route("/docs/gettingstarted")]
 [Route("/docs/start")]
-public class GettingStarted : BUIMarkdownPage
+public class GettingStarted : BUIPage
 {
-	protected override Task OnInitializedAsync()
+	protected override Task InitializePage()
 	{
 		Title = "Getting Started";
 		PageMarkup.AddRange(new PageSegment[]
@@ -13,6 +13,6 @@ public class GettingStarted : BUIMarkdownPage
 			"## Documentation - Getting Started",
 			"Coming soon!",
 		});
-		return base.OnInitializedAsync();
+		return Task.CompletedTask;
 	}
 }

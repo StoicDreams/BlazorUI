@@ -41,7 +41,7 @@ else
 	private async Task LoadEmojies()
 	{
 		TResult<string[]> result = await ApiRequest.Get<string[]>("https://www.myfi.ws/bui/emojis.json", true);
-		if (result.Status != TResultStatus.Success)
+		if (!result.IsOkay)
 		{
 			SnackBar.Add($"Failed to load emojis. {result.Message}", Severity.Error);
 			SetState(AppStateDataTags.IsNavigating, false);

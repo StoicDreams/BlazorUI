@@ -2,6 +2,7 @@
 
 public enum PageSegmentTypes
 {
+	Component,
 	Markdown,
 	Spacer
 }

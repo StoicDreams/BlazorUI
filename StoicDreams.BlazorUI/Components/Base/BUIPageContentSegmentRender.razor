@@ -1,0 +1,50 @@
+﻿@inject IMarkdown Markdown
+
+@switch (Segment.Content)
+{
+	case null:
+		break;
+	case PageSegmentType segmentType:
+		<DynamicComponent Type="segmentType.Value" Parameters="GetParameters" />
+		break;
+	case PageSegmentMarkdown segmentMarkdown:
+		@switch (Segment.SegmentType)
+		{
+			case PageSegmentTypes.Markdown:
+				@Markdown.GetMarkup(segmentMarkdown.Value)
+				break;
+			case PageSegmentTypes.Spacer:
+				<MudSpacer />
+				break;
+		}
+		break;
+}
+
+
+@code {
+	[Parameter]
+	public PageSegment Segment { get; set; } = new();
+
+	private Dictionary<string, object> GetParameters
+	{
+		get
+		{
+			if (Segment.Children.Count > 0)
+			{
+				Segment.Parameters["ChildContent"] = BuildSubContent();
+			}
+			return Segment.Parameters;
+		}
+	}
+
+	private RenderFragment BuildSubContent()
+	{
+		return __builder =>
+		{
+			@foreach (PageSegment segment in Segment.Children)
+			{
+				<BUIPageContentSegmentRender Segment="segment" />
+			}
+		};
+	}
+}

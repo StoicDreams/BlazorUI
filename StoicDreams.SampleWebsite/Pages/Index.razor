@@ -1,6 +1,5 @@
-﻿@inherits BUICore
-@page "/"
-@page "/home"
+﻿@inject NavigationManager NavManager
+@inherits BUICore
 
 <BUIPageDetail Title="Welcome" />
 
@@ -19,5 +18,12 @@
 	<BUIParagraph>We want to emphasize that this is a true framework and not a component library. The goal of Blazor UI is to provide a pre-defined structure as a starting point so developers can focus on just adding site content.</BUIParagraph>
 </BUIStandardSection>
 
+<BUISectionTitle>Project Goals</BUISectionTitle>
+
 @code {
+	protected override Task OnInitializedAsync()
+	{
+		NavManager.NavigateTo("/home");
+		return base.OnInitializedAsync();
+	}
 }

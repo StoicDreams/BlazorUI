@@ -113,7 +113,7 @@ stages:
       - task: CmdLine@2
         displayName: 'Publish Sample Website'
         inputs:
-          script: 'C:\hostedtoolcache\windows\dotnet\dotnet.exe publish $(System.DefaultWorkingDirectory)/StoicDreams.SampleWebsite/StoicDreams.SampleWebsite.csproj --configuration $(buildConfiguration) --no-restore --no-build --self-contained true'
+          script: 'C:\hostedtoolcache\windows\dotnet\dotnet.exe publish $(System.DefaultWorkingDirectory)/StoicDreams.SampleWebsite/StoicDreams.SampleWebsite.csproj --configuration $(buildConfiguration) --no-restore --no-build --self-contained true /p:LinkDuringPublish=false'
       - task: PublishBuildArtifacts@1
         displayName: 'Transfer published files to Artifact container'
         inputs:

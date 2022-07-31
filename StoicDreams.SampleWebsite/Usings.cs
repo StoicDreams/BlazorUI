@@ -13,3 +13,4 @@ global using StoicDreams.BlazorUI.Extensions;
 global using StoicDreams.SampleWebsite;
 global using StoicDreams.SampleWebsite.Components;
 global using System.Diagnostics.CodeAnalysis;
+global using System.Text;

@@ -1,7 +1,4 @@
-﻿using StoicDreams.BlazorUI.DataTypes;
-using System.Text;
-
-namespace StoicDreams.SampleWebsite.Pages.Docs.Markdown;
+﻿namespace StoicDreams.SampleWebsite.Pages.Docs.Markdown;
 
 [Route("/docs/markdown/emojis")]
 public class Emojis : BUIPage

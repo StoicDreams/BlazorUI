@@ -11,12 +11,11 @@
 		<PackageReference Include="Microsoft.AspNetCore.Components.WebAssembly" Version="6.0.7" />
 	</ItemGroup>
 
-	<!--
 	<ItemGroup>
+		<BlazorWebAssemblyLazyLoad Include="Microsoft.CodeAnalysis.Razor.dll" />
 		<BlazorWebAssemblyLazyLoad Include="Microsoft.CodeAnalysis.CSharp.dll" />
 		<BlazorWebAssemblyLazyLoad Include="Microsoft.CodeAnalysis.dll" />
 	</ItemGroup>
-	-->
 
 	<Choose>
 		<When Condition="'$(Configuration)' == 'Debug'">
@@ -27,7 +26,7 @@
 		</When>
 		<Otherwise>
 			<ItemGroup>
-				<PackageReference Include="StoicDreams.BlazorUI" Version="1.6.13" />
+				<PackageReference Include="StoicDreams.BlazorUI" Version="1.6.15" />
 			</ItemGroup>
 		</Otherwise>
 	</Choose>

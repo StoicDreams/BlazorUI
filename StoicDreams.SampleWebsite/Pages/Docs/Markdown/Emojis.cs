@@ -26,6 +26,7 @@ public class Emojis : BUIPage
 
 	private void SetPageContent()
 	{
+		FlipState = !FlipState;
 		if (CachedList == null)
 		{
 			SetPageContent(
@@ -37,7 +38,6 @@ public class Emojis : BUIPage
 		}
 		else
 		{
-			/*
 			SetPageContent(
 				PageIntroduction,
 				Paper(PaperTypes.Wrap, "emoji-tables gap-4")
@@ -47,7 +47,6 @@ public class Emojis : BUIPage
 						)
 					)
 				);
-			*/
 		}
 	}
 

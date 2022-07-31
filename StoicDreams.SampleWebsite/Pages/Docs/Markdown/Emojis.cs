@@ -37,6 +37,7 @@ public class Emojis : BUIPage
 		}
 		else
 		{
+			/*
 			SetPageContent(
 				PageIntroduction,
 				Paper(PaperTypes.Wrap, "emoji-tables gap-4")
@@ -46,6 +47,7 @@ public class Emojis : BUIPage
 						)
 					)
 				);
+			*/
 		}
 	}
 

@@ -10,11 +10,13 @@
 	<ItemGroup>
 		<PackageReference Include="Microsoft.AspNetCore.Components.WebAssembly" Version="6.0.7" />
 	</ItemGroup>
-	
+
+	<!--
 	<ItemGroup>
 		<BlazorWebAssemblyLazyLoad Include="Microsoft.CodeAnalysis.CSharp.dll" />
 		<BlazorWebAssemblyLazyLoad Include="Microsoft.CodeAnalysis.dll" />
 	</ItemGroup>
+	-->
 
 	<Choose>
 		<When Condition="'$(Configuration)' == 'Debug'">

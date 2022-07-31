@@ -1,4 +1,5 @@
-﻿using System.Text;
+﻿using StoicDreams.BlazorUI.DataTypes;
+using System.Text;
 
 namespace StoicDreams.SampleWebsite.Pages.Docs.Markdown;
 
@@ -20,19 +21,21 @@ public class Emojis : BUIPage
 	protected override ValueTask InitializePage()
 	{
 		Title = "Markdown Emojis";
-		SetPageContent();
+		UpdatePageContent();
 		return ValueTask.CompletedTask;
 	}
 
-	private void SetPageContent()
+	private void UpdatePageContent()
 	{
 		FlipState = !FlipState;
+		ValidateInjection();
 		if (CachedList == null)
 		{
 			SetPageContent(
 				PageIntroduction,
 				Skeleton(SkeletonType.Rectangle, "100%", "800px")
 				);
+			SnackBar.Add($"Init Page Content.", Severity.Info);
 			_ = LoadEmojies();
 			return;
 		}
@@ -64,10 +67,11 @@ public class Emojis : BUIPage
 			SetState(AppStateDataTags.IsLoadingPage, false);
 			return;
 		}
+		SnackBar.Add($"Emojis Loaded.", Severity.Info);
 		CachedList = BuildMarkdownList(result.Result);
-		SetPageContent();
+		SnackBar.Add($"Cache set.", Severity.Info);
 		SetState(AppStateDataTags.IsLoadingPage, false);
-		StateHasChanged();
+		UpdatePageContent();
 	}
 
 	private static List<string>? CachedList { get; set; }

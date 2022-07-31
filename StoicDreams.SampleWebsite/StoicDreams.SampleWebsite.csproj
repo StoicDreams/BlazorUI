@@ -18,85 +18,6 @@
 		<BlazorWebAssemblyLazyLoad Include="Microsoft.CodeAnalysis.CSharp.resources.dll" />
 		<BlazorWebAssemblyLazyLoad Include="Microsoft.CodeAnalysis.resources.dll" />
 		<BlazorWebAssemblyLazyLoad Include="Microsoft.CodeAnalysis.Razor.dll" />
-		<BlazorWebAssemblyLazyLoad Include="System.Globalization.dll" />
-		<BlazorWebAssemblyLazyLoad Include="System.IO.FileSystem.dll" />
-		<!--
-		<BlazorWebAssemblyLazyLoad Include="Markdig.dll" />
-		<BlazorWebAssemblyLazyLoad Include="Microsoft.Extensions.Configuration.dll" />
-		<BlazorWebAssemblyLazyLoad Include="Microsoft.Extensions.Configuration.Abstractions.dll" />
-		<BlazorWebAssemblyLazyLoad Include="System.Reflection.Metadata.dll" />
-		<BlazorWebAssemblyLazyLoad Include="System.Threading.Tasks.Parallel.dll" />
-		<BlazorWebAssemblyLazyLoad Include="MudBlazor.dll" />
-		<BlazorWebAssemblyLazyLoad Include="Microsoft.Extensions.Logging.dll" />
-		<BlazorWebAssemblyLazyLoad Include="System.Threading.dll" />
-		<BlazorWebAssemblyLazyLoad Include="System.ComponentModel.TypeConverter.dll" />
-		<BlazorWebAssemblyLazyLoad Include="System.Xml.XDocument.dll" />
-		<BlazorWebAssemblyLazyLoad Include="System.Net.Http.dll" />
-		<BlazorWebAssemblyLazyLoad Include="System.Runtime.InteropServices.RuntimeInformation.dll" />
-		<BlazorWebAssemblyLazyLoad Include="System.IO.Compression.dll" />
-		<BlazorWebAssemblyLazyLoad Include="Microsoft.Extensions.Options.dll" />
-		<BlazorWebAssemblyLazyLoad Include="System.Runtime.Intrinsics.dll" />
-		<BlazorWebAssemblyLazyLoad Include="System.Text.Encoding.CodePages.dll" />
-		<BlazorWebAssemblyLazyLoad Include="Microsoft.Extensions.Configuration.Json.dll" />
-		<BlazorWebAssemblyLazyLoad Include="System.Private.Xml.dll" />
-		<BlazorWebAssemblyLazyLoad Include="System.Reflection.Primitives.dll" />
-		<BlazorWebAssemblyLazyLoad Include="System.Runtime.CompilerServices.Unsafe.dll" />
-		<BlazorWebAssemblyLazyLoad Include="System.Security.Cryptography.Primitives.dll" />
-		<BlazorWebAssemblyLazyLoad Include="Microsoft.Extensions.Logging.Abstractions.dll" />
-		<BlazorWebAssemblyLazyLoad Include="System.Resources.ResourceManager.dll" />
-		<BlazorWebAssemblyLazyLoad Include="Microsoft.AspNetCore.Components.Forms.dll" />
-		<BlazorWebAssemblyLazyLoad Include="StoicDreams.BlazorUI.dll" />
-		<BlazorWebAssemblyLazyLoad Include="System.Collections.Concurrent.dll" />
-		<BlazorWebAssemblyLazyLoad Include="Microsoft.Extensions.DependencyInjection.Abstractions.dll" />
-		<BlazorWebAssemblyLazyLoad Include="Microsoft.Extensions.DependencyInjection.dll" />
-		<BlazorWebAssemblyLazyLoad Include="System.Runtime.InteropServices.dll" />
-		<BlazorWebAssemblyLazyLoad Include="System.dll" />
-		<BlazorWebAssemblyLazyLoad Include="System.Threading.Tasks.dll" />
-		<BlazorWebAssemblyLazyLoad Include="System.ComponentModel.dll" />
-		<BlazorWebAssemblyLazyLoad Include="System.Memory.dll" />
-		<BlazorWebAssemblyLazyLoad Include="System.Collections.Immutable.dll" />
-		<BlazorWebAssemblyLazyLoad Include="System.Xml.XPath.XDocument.dll" />
-		<BlazorWebAssemblyLazyLoad Include="System.Runtime.Numerics.dll" />
-		<BlazorWebAssemblyLazyLoad Include="Microsoft.AspNetCore.Components.Web.dll" />
-		<BlazorWebAssemblyLazyLoad Include="System.Diagnostics.Tracing.dll" />
-		<BlazorWebAssemblyLazyLoad Include="System.Private.Xml.Linq.dll" />
-		<BlazorWebAssemblyLazyLoad Include="Microsoft.JSInterop.WebAssembly.dll" />
-		<BlazorWebAssemblyLazyLoad Include="System.Runtime.Extensions.dll" />
-		<BlazorWebAssemblyLazyLoad Include="System.Collections.NonGeneric.dll" />
-		<BlazorWebAssemblyLazyLoad Include="netstandard.dll" />
-		<BlazorWebAssemblyLazyLoad Include="System.Text.Encoding.Extensions.dll" />
-		<BlazorWebAssemblyLazyLoad Include="System.Linq.dll" />
-		<BlazorWebAssemblyLazyLoad Include="Microsoft.JSInterop.dll" />
-		<BlazorWebAssemblyLazyLoad Include="System.Net.Primitives.dll" />
-		<BlazorWebAssemblyLazyLoad Include="StoicDreams.SampleWebsite.dll" />
-		<BlazorWebAssemblyLazyLoad Include="System.Threading.Thread.dll" />
-		<BlazorWebAssemblyLazyLoad Include="System.ComponentModel.Annotations.dll" />
-		<BlazorWebAssemblyLazyLoad Include="System.Private.Uri.dll" />
-		<BlazorWebAssemblyLazyLoad Include="Microsoft.AspNetCore.Components.WebAssembly.dll" />
-		<BlazorWebAssemblyLazyLoad Include="System.Xml.ReaderWriter.dll" />
-		<BlazorWebAssemblyLazyLoad Include="System.Runtime.dll" />
-		<BlazorWebAssemblyLazyLoad Include="System.Runtime.Loader.dll" />
-		<BlazorWebAssemblyLazyLoad Include="System.IO.MemoryMappedFiles.dll" />
-		<BlazorWebAssemblyLazyLoad Include="System.Threading.ThreadPool.dll" />
-		<BlazorWebAssemblyLazyLoad Include="System.Private.Runtime.InteropServices.JavaScript.dll" />
-		<BlazorWebAssemblyLazyLoad Include="Microsoft.AspNetCore.Razor.Language.dll" />
-		<BlazorWebAssemblyLazyLoad Include="System.Linq.Expressions.dll" />
-		<BlazorWebAssemblyLazyLoad Include="System.Text.Encodings.Web.dll" />
-		<BlazorWebAssemblyLazyLoad Include="System.Collections.dll" />
-		<BlazorWebAssemblyLazyLoad Include="System.Diagnostics.Debug.dll" />
-		<BlazorWebAssemblyLazyLoad Include="System.Diagnostics.StackTrace.dll" />
-		<BlazorWebAssemblyLazyLoad Include="System.Security.Cryptography.Algorithms.dll" />
-		<BlazorWebAssemblyLazyLoad Include="System.Runtime.Serialization.Primitives.dll" />
-		<BlazorWebAssemblyLazyLoad Include="System.Text.RegularExpressions.dll" />
-		<BlazorWebAssemblyLazyLoad Include="System.ComponentModel.Primitives.dll" />
-		<BlazorWebAssemblyLazyLoad Include="Microsoft.Extensions.Primitives.dll" />
-		<BlazorWebAssemblyLazyLoad Include="System.ObjectModel.dll" />
-		<BlazorWebAssemblyLazyLoad Include="Microsoft.AspNetCore.Components.dll" />
-		<BlazorWebAssemblyLazyLoad Include="System.Console.dll" />
-		<BlazorWebAssemblyLazyLoad Include="System.Text.Json.dll" />
-		<BlazorWebAssemblyLazyLoad Include="System.Private.CoreLib.dll" />
-		<BlazorWebAssemblyLazyLoad Include="BlazorTransitionableRoute.dll" />
-		-->
 	</ItemGroup>
 
 	<Choose>
@@ -108,7 +29,7 @@
 		</When>
 		<Otherwise>
 			<ItemGroup>
-				<PackageReference Include="StoicDreams.BlazorUI" Version="1.6.40" />
+				<PackageReference Include="StoicDreams.BlazorUI" Version="1.6.46" />
 			</ItemGroup>
 		</Otherwise>
 	</Choose>

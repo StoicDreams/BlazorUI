@@ -457,6 +457,9 @@ ul.mud-breadcrumbs {
 		padding-right: 16px;
 	}
 }
+.mud-skeleton {
+	background-color: rgba(128,128,128,0.3);
+}
 .mud-skeleton-wave::after {
 	top: 0;
 	left: 0;
@@ -466,7 +469,7 @@ ul.mud-breadcrumbs {
 	position: absolute;
 	animation: mud-skeleton-keyframes-wave 1.6s linear .5s infinite;
 	transform: translateX(-100%);
-	background: linear-gradient(70deg,transparent,var(--mud-palette-background-grey),transparent);
+	background: linear-gradient(90deg,transparent,rgba(var(--mud-palette-primary-rgb),0.5),transparent);
 	opacity: 0.7;
 }
 .framework-version {

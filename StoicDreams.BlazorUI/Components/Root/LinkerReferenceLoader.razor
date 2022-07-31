@@ -1,0 +1,141 @@
+﻿@inherits BUICore
+
+@code {
+	private bool LinkerBypass => false;// GetState<bool>("___doNotSetMe");
+	/*
+	* This file exists to bypass Blazor Linker issues caused by the dynamic nature of how this framework runs.
+	* This issue was detected when creating BUIPage based pages through .cs files instead of .razor files, the linker fails to recognize the use of components.
+	* When running Release mode, the Blazor Linker scans the project and trims out anything it doesn't see being used.
+	* In this case it doesn't recognized components as being used when done through the DynamicComponent.
+	* So here we have a hidden component to fake use all components so the Linker will recognize they're being used and not remove them from Release publishings.
+	*/
+	private byte[] EmptyItems = Array.Empty<byte>();
+}
+
+@if (LinkerBypass)
+{
+	<MudAppBar />
+	<MudAlert />
+	<MudAutocomplete Value="false" />
+	<MudAvatar />
+	<MudAvatarColumn Value="false" />
+	<MudAvatarGroup />
+	<MudBadge />
+	<MudBooleanInput Checked="false" />
+	<MudButtonGroup />
+	<MudCard />
+	<MudCardActions />
+	<MudCardContent />
+	<MudCardHeader />
+	<MudCardMedia />
+	<MudCarousel ItemsSource="EmptyItems" />
+	<MudCarouselItem />
+	<MudChart />
+	<MudCheckBox Checked="false" />
+	<MudChip />
+	<MudChipSet />
+	<MudCollapse />
+	<MudColumn Value="false" />
+	<MudContainer />
+	<MudDataGrid Items="EmptyItems" />
+	<MudDataGridPager T="bool" />
+	<MudDatePicker />
+	<MudDateRangePicker />
+	<MudDialog />
+	<MudDialogInstance />
+	<MudDialogProvider />
+	<MudDivider />
+	<MudDrawer />
+	<MudDropContainer T="bool" />
+	<MudDropZone T="bool" />
+	<MudDynamicDropItem T="bool" />
+	<MudDynamicTabs />
+	<MudElement />
+	<MudExpansionPanel />
+	<MudExpansionPanels />
+	<MudFab />
+	<MudField />
+	<MudFileUploader />
+	<MudFocusTrap />
+	<MudForm />
+	<MudGrid />
+	<MudHidden />
+	<MudHighlighter />
+	<MudIcon />
+	<MudIconButton />
+	<MudImage />
+	<MudInput Value="false" />
+	<MudInputControl />
+	<MudInputLabel />
+	<MudInputString />
+	<MudItem />
+	<MudLayout />
+	<MudLink />
+	<MudList />
+	<MudListItem />
+	<MudListSubheader />
+	<MudMainContent />
+	<MudMask />
+	<MudMenu />
+	<MudMenuItem />
+	<MudMessageBox />
+	<MudNumericField T="int" />
+	<MudOverlay />
+	<MudPageContentNavigation />
+	<MudPagination />
+	<MudPaper />
+	<MudPicker T="bool" />
+	<MudPickerContent />
+	<MudPickerToolbar />
+	<MudPopover />
+	<MudPopoverProvider />
+	<MudProgressCircular />
+	<MudProgressLinear />
+	<MudRadio T="bool" />
+	<MudRadioGroup T="bool" />
+	<MudRangeInput T="bool" />
+	<MudRating />
+	<MudRatingItem />
+	<MudRender />
+	<MudRTLProvider />
+	<MudScrollToTop />
+	<MudSelect T="bool" />
+	<MudSelectItem T="bool" />
+	<MudSimpleTable />
+	<MudSkeleton />
+	<MudSlider T="bool" />
+	<MudSnackbarElement />
+	<MudSnackbarProvider />
+	<MudSortableColumn ModelType="bool" T="bool" />
+	<MudSpacer />
+	<MudSparkLine />
+	<MudStack />
+	<MudSwipeArea />
+	<MudSwitch Checked="false" />
+	<MudTable T="bool" />
+	<MudTableGroupRow T="bool" />
+	<MudTablePager />
+	<MudTableSortLabel T="bool" />
+	<MudTabPanel />
+	<MudTabs />
+	<MudTd />
+	<MudTemplateColumn T="bool" />
+	<MudText />
+	<MudTextField T="bool" />
+	<MudTFootRow />
+	<MudTh />
+	<MudTHeadRow />
+	<MudThemeProvider />
+	<MudTimeline />
+	<MudTimelineItem />
+	<MudTimePicker />
+	<MudToggleIconButton />
+	<MudToolBar />
+	<MudTooltip />
+	<MudTr />
+	<MudTreeView T="bool" />
+	<MudTreeViewItem T="bool" />
+	<MudTreeViewItemToggleButton />
+	<MudVirtualize Items="EmptyItems" />
+}
+

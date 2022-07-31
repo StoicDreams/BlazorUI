@@ -15,7 +15,6 @@ public class Emojis : BUIPage
 
 	private void UpdatePageContent()
 	{
-		FlipState = !FlipState;
 		if (CachedList == null)
 		{
 			SetPageContent(

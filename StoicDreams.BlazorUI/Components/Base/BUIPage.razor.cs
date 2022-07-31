@@ -8,14 +8,10 @@ public abstract partial class BUIPage
 
 	protected void SetPageContent(params PageSegment[] segments)
 	{
-		InvokeAsync(() =>
-		{
-			LastRenderCache = PageSegments;
-			PageSegments = segments.ToList();
-			StateHasChanged();
-		});
+		FlipState = !FlipState;
+		PageSegments = segments.ToList();
+		StateHasChanged();
 	}
-	private List<PageSegment>? LastRenderCache { get; set; }
 
 	protected PageSegment CreatePageSegment<T>(string text)
 	{

@@ -53,12 +53,25 @@
 	<DynamicComponent Type="subComponent" />
 }
 
+<MudSpacer />
+<MudPaper Class="framework-version align-self-center pa-1">
+	Blazor UI Framework: @FrameworkVersion
+</MudPaper>
+
 @code {
 	private bool ShowThemeSelector => LoadedThemes.Count > 1;
 	private Guid SelectedId => ThemeState.Current.Id;
 	private bool DenseTitlebar { get => GetState<bool>(AppStateDataTags.TitleBarIsDense); set => SetStateWithTrigger(AppStateDataTags.TitleBarIsDense, value); }
 	private bool ShowBreadcrumb { get => GetState<bool>(AppStateDataTags.BreadcrumbEnabled); set => SetStateWithTrigger(AppStateDataTags.BreadcrumbEnabled, value); }
 	private Color NavActiveColor { get => GetState<Color>(AppStateDataTags.NavMenuActiveColor); set => SetStateWithTrigger(AppStateDataTags.NavMenuActiveColor, value); }
+	private static readonly string FrameworkVersion = TrimVersion(typeof(BUIApp).Assembly.GetName()?.Version?.ToString() ?? "");
+
+	private static string TrimVersion(string version)
+	{
+		string[] segments = version.Split('.');
+		if (segments.Length <= 3) { return version; }
+		return string.Join('.', segments[0..3]);
+	}
 
 	private List<ThemeConfig> LoadedThemes { get; set; } = new();
 

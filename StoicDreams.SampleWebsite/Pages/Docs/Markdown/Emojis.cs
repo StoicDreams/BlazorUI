@@ -21,6 +21,8 @@ public class Emojis : BUIPage
 	protected override ValueTask InitializePage()
 	{
 		Title = "Markdown Emojis";
+		ValidateInjection();
+		SnackBar.Add($"Page Init.", Severity.Info);
 		UpdatePageContent();
 		return ValueTask.CompletedTask;
 	}
@@ -29,19 +31,18 @@ public class Emojis : BUIPage
 	{
 		FlipState = !FlipState;
 		ValidateInjection();
+		SnackBar.Add($"Update Page Content.", Severity.Info);
 		if (CachedList == null)
 		{
 			SetPageContent(
 				PageIntroduction,
 				Skeleton(SkeletonType.Rectangle, "100%", "800px")
 				);
-			SnackBar.Add($"Init Page Content.", Severity.Info);
 			_ = LoadEmojies();
 			return;
 		}
 		else
 		{
-			return;
 			SetPageContent(
 				PageIntroduction,
 				Paper(PaperTypes.Wrap, "emoji-tables gap-4")

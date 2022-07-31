@@ -469,3 +469,6 @@ ul.mud-breadcrumbs {
 	background: linear-gradient(70deg,transparent,var(--mud-palette-background-grey),transparent);
 	opacity: 0.7;
 }
+.framework-version {
+	font-size: 0.8rem;
+}

@@ -38,6 +38,7 @@ public class Emojis : BUIPage
 		}
 		else
 		{
+			return;
 			SetPageContent(
 				PageIntroduction,
 				Paper(PaperTypes.Wrap, "emoji-tables gap-4")

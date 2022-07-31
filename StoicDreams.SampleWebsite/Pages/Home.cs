@@ -22,7 +22,8 @@ public class Home : BUIPage
 			SectionTitle("Project Goals"),
 			StandardSection()
 				.AddChild(Paragraph("This Blazor UI framework is targeting a developer experience that will allow developers to programatically develop websites and Maui Blazor apps (Desktop & Mobile) entirely through C# coding, without the need to touch any html, css, or javascript.")),
-			SectionTitle("Current State of Development")
+			SectionTitle("Current State of Development"),
+			StandardSection()
 				.AddChild(Paragraph("This framework is very early in development, with a lot of experimental work being done to flesh out ideas and concepts that may or may not make it into the final product."))
 				.AddChild(Paragraph("Because of this experimental stage in development, it can be expected that breaking changes will occur in any update, even within patch version updates. This will continue throughout the lifespan of 1.X versions of Blazor UI."))
 				.AddChild(Paragraph("When we have reached a point of being satisfied that Blazor UI is ready for production use we will bump the version up to 2.0 and follow stricture versioning regimens going forward."))

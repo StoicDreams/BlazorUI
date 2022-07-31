@@ -19,7 +19,6 @@ public class Emojis : BUIPage
 	{
 		Title = "Markdown Emojis";
 		ValidateInjection();
-		SnackBar.Add($"Page Init.", Severity.Info);
 		UpdatePageContent();
 		return ValueTask.CompletedTask;
 	}
@@ -28,7 +27,6 @@ public class Emojis : BUIPage
 	{
 		FlipState = !FlipState;
 		ValidateInjection();
-		SnackBar.Add($"Update Page Content.", Severity.Info);
 		if (CachedList == null)
 		{
 			SetPageContent(
@@ -61,13 +59,10 @@ public class Emojis : BUIPage
 		TResult<string[]> result = await ApiRequest.Get<string[]>("https://www.myfi.ws/bui/emojis.json", true);
 		if (!result.IsOkay)
 		{
-			SnackBar.Add($"Failed to load emojis. {result.Message}", Severity.Error);
 			SetState(AppStateDataTags.IsLoadingPage, false);
 			return;
 		}
-		SnackBar.Add($"Emojis Loaded.", Severity.Info);
 		CachedList = BuildMarkdownList(result.Result);
-		SnackBar.Add($"Cache set.", Severity.Info);
 		SetState(AppStateDataTags.IsLoadingPage, false);
 		UpdatePageContent();
 	}

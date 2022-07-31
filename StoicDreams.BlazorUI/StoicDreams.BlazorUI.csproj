@@ -12,7 +12,7 @@
 		<Description>
 			UI Framework and component library for Blazor based Websites and Maui projects.
 		</Description>
-		<Version>1.6.30</Version>
+		<Version>1.6.32</Version>
 		<Copyright>2022 Stoic Dreams</Copyright>
 		<PackageProjectUrl>https://www.stoicdreams.com</PackageProjectUrl>
 		<PackageLicenseExpression></PackageLicenseExpression>
@@ -34,6 +34,7 @@
 		<RepositoryType>git</RepositoryType>
 		<PackageTags>Stoic Dreams;Blazor UI;Blazor Components</PackageTags>
 		<StaticWebAssetBasePath>/</StaticWebAssetBasePath>
+		<BlazorWebAssemblyEnableLinking>false</BlazorWebAssemblyEnableLinking>
 	</PropertyGroup>
 
 	<ItemGroup>

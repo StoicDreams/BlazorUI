@@ -51,6 +51,12 @@
 	<DynamicComponent Type="AppStartup" />
 }
 
+@if (LinkerBypass)
+{
+	<MudSkeleton />
+	<MudVirtualize Items="Array.Empty<int>()" />
+}
+
 @code {
 	private Assembly AppAssembly => Assembly.GetEntryAssembly() ?? Assembly.GetCallingAssembly();
 	private Type AppLayout => HiddenOptions.MainLayout;
@@ -58,6 +64,7 @@
 	private Type PageNotFound => HiddenOptions.PageNotFound;
 	private Type? AppStartup => HiddenOptions.AppStartupComponent;
 	private IEnumerable<Assembly> FrameworkAssemblies => new Assembly[] { typeof(BUIApp).Assembly };
+	private bool LinkerBypass => GetState<bool>("___doNotSetMe");
 
 	protected override async Task OnInitializedAsync()
 	{

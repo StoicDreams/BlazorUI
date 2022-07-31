@@ -1,14 +1,12 @@
-﻿@inherits BUICore
-
-@code {
-	private bool LinkerBypass => false;// GetState<bool>("___doNotSetMe");
+﻿@code {
 	/*
 	* This file exists to bypass Blazor Linker issues caused by the dynamic nature of how this framework runs.
-	* This issue was detected when creating BUIPage based pages through .cs files instead of .razor files, the linker fails to recognize the use of components.
+	* This issue was detected when creating BUIPage based pages through .cs files instead of .razor files, the linker fails to recognize the use of components being used in this method.
 	* When running Release mode, the Blazor Linker scans the project and trims out anything it doesn't see being used.
-	* In this case it doesn't recognized components as being used when done through the DynamicComponent.
-	* So here we have a hidden component to fake use all components so the Linker will recognize they're being used and not remove them from Release publishings.
+	* In this case it seems it doesn't recognized components as being used when done through the DynamicComponent.
+	* So here we have a hidden component to fake razor syntax usage of all components not directly used by the framework so the Linker will recognize they're being used and not remove them from Release publishings.
 	*/
+	private bool LinkerBypass => false;
 	private byte[] EmptyItems = Array.Empty<byte>();
 }
 

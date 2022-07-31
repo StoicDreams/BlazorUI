@@ -3,22 +3,12 @@
 [Route("/docs/markdown/emojis")]
 public class Emojis : BUIPage
 {
-	[Inject] private HttpClient? Client { get; set; }
-	[Inject] private ISnackbar? SnackBar { get; set; }
-	[Inject] private IApiRequest? ApiRequest { get; set; }
-
-	[MemberNotNull(nameof(Client), nameof(SnackBar), nameof(ApiRequest))]
-	private void ValidateInjection()
-	{
-		if (Client == null) { throw new NullReferenceException("Failed to inject HttpClient."); }
-		if (SnackBar == null) { throw new NullReferenceException("Failed to inject ISnackbar."); }
-		if (ApiRequest == null) { throw new NullReferenceException("Failed to inject IApiRequest."); }
-	}
+	[Inject]
+	public IApiRequest ApiRequest { get; set; } = null!;
 
 	protected override ValueTask InitializePage()
 	{
 		Title = "Markdown Emojis";
-		ValidateInjection();
 		UpdatePageContent();
 		return ValueTask.CompletedTask;
 	}
@@ -26,7 +16,6 @@ public class Emojis : BUIPage
 	private void UpdatePageContent()
 	{
 		FlipState = !FlipState;
-		ValidateInjection();
 		if (CachedList == null)
 		{
 			SetPageContent(
@@ -54,7 +43,6 @@ public class Emojis : BUIPage
 
 	private async Task LoadEmojies()
 	{
-		ValidateInjection();
 		SetState(AppStateDataTags.IsLoadingPage, true);
 		TResult<string[]> result = await ApiRequest.Get<string[]>("https://www.myfi.ws/bui/emojis.json", true);
 		if (!result.IsOkay)

@@ -2,10 +2,8 @@
 
 public abstract class BUICoreLayout : LayoutComponentBase, IDisposable
 {
-#pragma warning disable CS8618 // Non-nullable field must contain a non-null value when exiting constructor. Consider declaring as nullable.
-	[Inject] protected IAppOptions AppOptions { get; private set; }
-	[Inject] protected IAppState AppState { get; private set; }
-#pragma warning restore CS8618 // Non-nullable field must contain a non-null value when exiting constructor. Consider declaring as nullable.
+	[Inject] protected IAppOptions AppOptions { get; private set; } = null!;
+	[Inject] protected IAppState AppState { get; private set; } = null!;
 	protected AppOptions HiddenOptions => (AppOptions)AppOptions;
 
 	protected Guid ComponentId { get; } = Guid.NewGuid();

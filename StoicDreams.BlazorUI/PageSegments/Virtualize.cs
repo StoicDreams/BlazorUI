@@ -1,16 +1,13 @@
-﻿using Microsoft.AspNetCore.Components.Rendering;
-
-namespace StoicDreams.BlazorUI.Components.Base;
+﻿namespace StoicDreams.BlazorUI.Components.Base;
 
 public abstract partial class BUIPage
 {
 	/// <summary>
-	/// Create a new paper page segment.
-	/// Expected base classes are built from PaperTypes value.
+	/// Create a page segment that uses MudVirtualize to dynamically render enumerable content based on what is currently in view to reduce rendering costs by not rendering content that is outside of the users view.
 	/// </summary>
-	/// <param name="paperType"></param>
-	/// <param name="classes"></param>
-	/// <param name="elevation"></param>
+	/// <typeparam name="TItem"></typeparam>
+	/// <param name="items"></param>
+	/// <param name="childContent"></param>
 	/// <returns></returns>
 	public static PageSegment Virtualize<TItem>(IEnumerable<TItem> items, Func<TItem, PageSegment> childContent)
 	{

@@ -30,4 +30,16 @@ else
 			<DynamicComponent Type="typeof(T)" Parameters="@(parameters.ToDictionary(n => n.name, v => v.value))" />
 		};
 	}
+
+	public static RenderFragment GetRenderFragment<T>(params RenderFragment[] children)
+	{
+		return __builder =>
+		{
+			@foreach (RenderFragment child in children)
+			{
+				@child
+			}
+		};
+	}
+
 }

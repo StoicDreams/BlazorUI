@@ -4,18 +4,27 @@ public abstract class StateManager
 {
 	public void SubscribeToDataChanges(Guid subscriberId, Action simpleChangeHandler)
 	{
-		SimpleChangeHandlers[subscriberId] = simpleChangeHandler;
+		lock (ChangeHandlerLock)
+		{
+			SimpleChangeHandlers[subscriberId] = simpleChangeHandler;
+		}
 	}
 
 	public void SubscribeToDataChanges(Guid subscriberId, Action<IDictionary<string, bool>> changeHandler)
 	{
-		ChangeHandlers[subscriberId] = changeHandler;
+		lock (ChangeHandlerLock)
+		{
+			ChangeHandlers[subscriberId] = changeHandler;
+		}
 	}
 
 	public void UnsubscribeToDataChanges(Guid subscriberId)
 	{
-		ChangeHandlers.Remove(subscriberId);
-		SimpleChangeHandlers.Remove(subscriberId);
+		lock (ChangeHandlerLock)
+		{
+			ChangeHandlers.Remove(subscriberId);
+			SimpleChangeHandlers.Remove(subscriberId);
+		}
 	}
 
 	public void SetData<TData>(AppStateDataTags tag, TData? data) => SetData(tag.ToString(), data);
@@ -25,62 +34,93 @@ public abstract class StateManager
 	public void SetData<TData>(string name, TData? data)
 	{
 		UpdatedKey(name);
-		if (data == null)
+		lock (DataLock)
 		{
-			Data.Remove(name);
-			return;
+			if (data == null)
+			{
+				Data.Remove(name);
+				return;
+			}
+			Data[name] = data;
 		}
-		Data[name] = data;
 	}
 
 	public TData? GetData<TData>(string name)
 	{
-		if (!Data.TryGetValue(name, out object? value) || value == null)
+		lock (DataLock)
 		{
-			return default;
-		}
-		try
-		{
-			return (TData)value;
-		}
-		catch
-		{
-			return default;
+			if (!Data.TryGetValue(name, out object? value) || value == null)
+			{
+				return default;
+			}
+			try
+			{
+				return (TData)value;
+			}
+			catch
+			{
+				return default;
+			}
 		}
 	}
 
 	public void TriggerChange(string? key = null)
 	{
-		if (key != null) { Changelog[key] = true; }		
-		foreach (Guid id in ChangeHandlers.Keys)
+		Dictionary<string, bool> currentState;
+		lock (ChangeLogLock)
 		{
-			ChangeHandlers[id]?.Invoke(Changelog);
+			if (key != null) { Changelog[key] = true; }
+			currentState = Changelog.ToDictionary(k => k.Key, v => v.Value);
 		}
-		foreach (Guid id in SimpleChangeHandlers.Keys)
+		Action<IDictionary<string, bool>>[] handlers;
+		Action[] simpleHandlers;
+		lock (ChangeHandlerLock)
 		{
-			SimpleChangeHandlers[id]?.Invoke();
+			handlers = ChangeHandlers.Values.ToArray();
+			simpleHandlers = SimpleChangeHandlers.Values.ToArray();
+		}
+		foreach (Action<IDictionary<string, bool>> handler in handlers)
+		{
+			handler?.Invoke(currentState);
+		}
+		foreach (Action handler in simpleHandlers)
+		{
+			handler?.Invoke();
 		}
 	}
 	public async ValueTask ApplyChangesAsync(Func<ValueTask> changeHandler)
 	{
 		await changeHandler.Invoke();
 		TriggerChange("ApplyChanges");
-		Changelog.Clear();
+		lock (ChangeLogLock)
+		{
+			Changelog.Clear();
+		}
 	}
 
 	public void ApplyChanges(Action changeHandler)
 	{
 		changeHandler.Invoke();
 		TriggerChange("ApplyChanges");
-		Changelog.Clear();
+		lock (ChangeLogLock)
+		{
+			Changelog.Clear();
+		}
 	}
 	private void UpdatedKey(string key)
 	{
-		Changelog[key] = true;
+		lock(ChangeLogLock)
+		{
+			Changelog[key] = true;
+		}
 	}
 
 	protected Dictionary<string, object> Data { get; } = new();
 	protected Dictionary<string, bool> Changelog { get; } = new();
 	protected Dictionary<Guid, Action<IDictionary<string, bool>>> ChangeHandlers { get; } = new();
 	protected Dictionary<Guid, Action> SimpleChangeHandlers { get; } = new();
+
+	private readonly object DataLock = new();
+	private readonly object ChangeLogLock = new();
+	private readonly object ChangeHandlerLock = new();
 }

@@ -10,7 +10,9 @@ public class GettingStarted : BUIPage
 		Title = "Getting Started";
 		SetPageContent(
 			SectionTitle("Documentation - Getting Started"),
-			Paragraph("Coming soon!")
+			StandardSection(
+				"Welcome to the Stoic Dreams Blazor UI documentation."
+				)
 		);
 		return ValueTask.CompletedTask;
 	}

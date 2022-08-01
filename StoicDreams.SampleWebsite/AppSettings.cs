@@ -21,6 +21,7 @@ public static class AppSettings
 			appState.SetData(AppStateDataTags.NavList, GetSiteNavigation());
 			appState.SetData(AppStateDataTags.RightDrawerOnClick, HandlerRightDrawerClickState(appState));
 			appState.SetData(AppStateDataTags.TitleBarLeftDrawerTitle, "Toggle Navigation Menu");
+			appState.SetData(AppStateDataTags.TitleBarRightSideContent, typeof(TitleBarStrip));
 		});
 	}
 
@@ -32,8 +33,8 @@ public static class AppSettings
 			NavDetail.Create("Start", Icons.Material.TwoTone.LibraryBooks, "/docs/getting-started"),
 			NavDetail.CreateGroup("Markdown", Icons.Material.TwoTone.Code, new NavDetail[]
 			{
-				NavDetail.Create("Home", Icons.Material.TwoTone.Doorbell, "/docs/markdown"),
-				NavDetail.Create("Home", Icons.Material.TwoTone.EmojiEmotions, "/docs/markdown/emojis"),
+				NavDetail.Create("Markdown", Icons.Material.TwoTone.Doorbell, "/docs/markdown"),
+				NavDetail.Create("Emojis", Icons.Material.TwoTone.EmojiEmotions, "/docs/markdown/emojis"),
 			})
 		}),
 		NavDetail.Create("Terms", Icons.Material.TwoTone.Handshake, "/terms"),

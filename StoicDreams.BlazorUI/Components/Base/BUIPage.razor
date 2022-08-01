@@ -1,4 +1,5 @@
 ﻿@inherits BUICore
+@inject IMarkdown Markdown
 
 <BUIPageDetail Title="@Title" />
 
@@ -16,6 +17,11 @@ else
 	{
 		return base.OnAfterRenderAsync(firstRender);
 	}
+
+	public static RenderFragment GetRenderFragment(string inlineText) => __builder =>
+	{
+		@inlineText
+	};
 
 	public static RenderFragment GetRenderFragment<T>(params (string name,object value)[] parameters)
 	{

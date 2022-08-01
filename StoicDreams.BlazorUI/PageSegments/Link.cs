@@ -7,23 +7,17 @@ public abstract partial class BUIPage
 	/// </summary>
 	/// <param name="text"></param>
 	/// <param name="href"></param>
-	/// <param name="startIcon"></param>
 	/// <param name="tooltip">defaults to href if null or empty</param>
 	/// <returns></returns>
-	public static PageSegment ButtonLink(string text, string href, string? startIcon = null, string? tooltip = null)
+	public static PageSegment Link(string text, string href, string? tooltip = null)
 	{
 		Dictionary<string, object> parameters = new()
 		{
-			{ "Variant", Variant.Filled },
 			{ "ChildContent", text.ConvertToRenderFragment() },
 			{ "Href", href },
-			{ "Size", Size.Small },
-			{ "Color", Color.Info },
-			{ "Target", "_blank" },
-			{ "EndIcon", Icons.Material.TwoTone.OpenInNew }
+			{ "Target", "_blank" }
 		};
-		if (!string.IsNullOrWhiteSpace(startIcon)) { parameters.Add("StartIcon", startIcon); }
 		return PageSegment.Create<MudTooltip>(("Text", string.IsNullOrWhiteSpace(tooltip) ? href.Replace("https://", "") : tooltip))
-			.AddChild(PageSegment.Create<MudButton>(parameters));
+			.AddChild(PageSegment.Create<MudLink>(parameters));
 	}
 }

@@ -1,6 +1,8 @@
 ﻿@inherits BUICore
 
-<MudIconButton Icon="@Icons.Material.Filled.Settings" Color="Color.Inherit" Title="Open App Settings" OnClick="ToggleNav" />
+<MudTooltip Text="Open App Settings" Placement="Placement.Left">
+	<MudIconButton Size="Size.Small" Icon="@Icons.Material.Filled.Settings" Color="Color.Inherit" OnClick="ToggleNav" />
+</MudTooltip>
 
 @code {
 	private Type AppSettingComponent => GetState<Type>(AppStateDataTags.AppSettingsComponent) ?? typeof(BUIAppSettings);

@@ -89,18 +89,18 @@
 		SetBreadcrumbItems(NavManager.ToBaseRelativePath(args.Location));
 	}
 
-	private Dictionary<string, string> GetNavIconMap
+	private Dictionary<string, NavDetail> GetNavIconMap
 	{
 		get
 		{
-			Dictionary<string, string> map = new();
+			Dictionary<string, NavDetail> map = new();
 			List<NavDetail> nav = GetState<List<NavDetail>>(AppStateDataTags.NavList) ?? new();
 			AddItemsToMap(map, nav);
 			return map;
 		}
 	}
 
-	private void AddItemsToMap(Dictionary<string, string> map, List<NavDetail> navList)
+	private void AddItemsToMap(Dictionary<string, NavDetail> map, List<NavDetail> navList)
 	{
 		foreach (NavDetail item in navList)
 		{
@@ -110,24 +110,25 @@
 				continue;
 			}
 			if (string.IsNullOrWhiteSpace(item.Href)) { continue; }
-			map[item.Href.ToLower()] = item.Icon;
+			map[item.Href.ToLower()] = item;
 		}
 	}
 
 	private void SetBreadcrumbItems(string location)
 	{
-		Dictionary<string, string> map = GetNavIconMap;
+		Dictionary<string, NavDetail> map = GetNavIconMap;
 		string[] split = location.Split('/', StringSplitOptions.RemoveEmptyEntries | StringSplitOptions.TrimEntries);
 		List<BreadcrumbItem> items = new();
 		bool homeIsDisabled = split.Length == 0 || (split.Length == 1 && split[0] == "home");
-		items.Add(new BreadcrumbItem("Home", "/", homeIsDisabled, map.ContainsKey("/") ? map["/"] : Icons.Material.TwoTone.Home));
+		items.Add(new BreadcrumbItem("Home", "/", homeIsDisabled, map.ContainsKey("/") ? map["/"].Icon : Icons.Material.TwoTone.Home));
 		string path = "";
 
 		for (int index = 0; index < split.Length; ++index)
 		{
 			path += $"/{split[index]}".ToLower();
 			if (!map.ContainsKey(path)) { continue; }
-			BreadcrumbItem item = new(split[index], path, index == split.Length - 1, map[path]);
+			NavDetail nav = map[path];
+			BreadcrumbItem item = new(nav.Name, path, index == split.Length - 1, nav.Icon);
 			items.Add(item);
 		}
 		Items = items;

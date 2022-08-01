@@ -3,12 +3,16 @@
 <MudAppBar Class="buiTitleBar" Elevation="1" Dense="IsDense">
 	@if (LeftDrawerEnabled)
 	{
-		<MudIconButton Icon="@LeftDrawerIcon" Color="Color.Inherit" Edge="Edge.Start" OnClick="@ToggleLeftDrawer" Title="@LeftDrawerTitle" />
+		<MudTooltip Text="@LeftDrawerTitle" Placement="Placement.Right">
+			<MudIconButton Icon="@LeftDrawerIcon" Color="Color.Inherit" Edge="Edge.Start" OnClick="@ToggleLeftDrawer" />
+		</MudTooltip>
 	}
 	<DynamicComponent Type="@HiddenOptions.TitleBarContent" />
 	@if (RightDrawerEnabled)
 	{
-		<MudIconButton Icon="@RightDrawerIcon" Color="Color.Inherit" Edge="Edge.End" OnClick="@ToggleRightDrawer" Title="@RightDrawerTitle" />
+		<MudTooltip Text="@RightDrawerTitle" Placement="Placement.Left">
+			<MudIconButton Icon="@RightDrawerIcon" Color="Color.Inherit" Edge="Edge.End" OnClick="@ToggleRightDrawer" />
+		</MudTooltip>
 	}
 </MudAppBar>
 

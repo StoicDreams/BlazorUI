@@ -46,7 +46,7 @@ public class PageSegment
 	/// Pass in an empty string to display a MudSpacer component instead of a paragraph element.
 	/// </summary>
 	/// <param name="markdown"></param>
-	public static PageSegment Create(string content) => string.IsNullOrWhiteSpace(content) ? Create<MudSpacer>() : Create<BUIParagraph>(("ChildContent", content.ConvertToRenderFragment()));
+	public static PageSegment Create(string content) => string.IsNullOrWhiteSpace(content) ? Create<MudSpacer>() : Create<BUIInline>(("ChildContent", content.ConvertToRenderFragment()));
 
 	/// <summary>
 	/// Create a component consisting of the specified component Type.
@@ -84,23 +84,3 @@ public class PageSegment
 	/// <param name="markdown"></param>
 	public static implicit operator PageSegment(string markdown) => Create(markdown);
 }
-
-#region Setup for Implicit Conversions form string|Type to PageSegment
-public abstract class IPageSegmentType
-{
-	public static implicit operator IPageSegmentType(string markdown) => new PageSegmentMarkdown() { Value = markdown };
-	public static implicit operator IPageSegmentType(Type markdown) => new PageSegmentType() { Value = markdown };
-}
-
-public class PageSegmentMarkdown : IPageSegmentType
-{
-	public string Value { get; set; } = string.Empty;
-	public static implicit operator PageSegmentMarkdown(string markdown) => new() { Value = markdown };
-}
-
-public class PageSegmentType : IPageSegmentType
-{
-	public Type Value { get; set; } = typeof(MudSpacer);
-	public static implicit operator PageSegmentType(Type markdown) => new() { Value = markdown };
-}
-#endregion

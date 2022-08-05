@@ -7,7 +7,7 @@ public class AppOptions : IAppOptions
 	public string Domain { get; set; } = string.Empty;
 
 	#region Startup Options
-	public string TitleFormat { get; set; } = "{AppName} - {PageTitle}";
+	public string TitleFormat { get; set; } = "{PageTitle} - {AppName}";
 	public IList<string> CssFiles { get; } = new List<string>();
 	public IList<string> JavascriptFiles { get; } = new List<string>();
 	public IList<ElementDetail> HeadElements { get; } = new List<ElementDetail>();

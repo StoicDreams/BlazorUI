@@ -1,0 +1,18 @@
+﻿@inherits BUICore
+@inject IJsInterop JSInterop
+
+<PageTitle>@AppTitle</PageTitle>
+
+@code {
+	private string Title => GetState<string>(AppStateDataTags.PageTitle, () => string.Empty);
+
+	private string AppTitle => AppOptions.TitleFormat
+			.Replace("{AppName}", AppOptions.AppName)
+			.Replace("{PageTitle}", Title)
+			;
+
+	protected override void OnStateUpdate()
+	{
+		InvokeAsync(StateHasChanged);
+	}
+}

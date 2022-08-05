@@ -1,6 +1,6 @@
 ﻿namespace StoicDreams.BlazorUI.Base;
 
-public abstract class StateManager
+public abstract class StateManager : IStateManager
 {
 	public void SubscribeToDataChanges(Guid subscriberId, Action simpleChangeHandler)
 	{

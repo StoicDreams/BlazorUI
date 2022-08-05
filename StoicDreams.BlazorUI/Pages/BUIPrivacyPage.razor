@@ -1,10 +1,14 @@
-﻿@inherits BUICore
+﻿@inherits BUIPage
 @page "/privacy"
-
-<BUIPageDetail Title="Privacy Policy" />
 
 <DynamicComponent Type="GetContentType" />
 
 @code {
 	private Type GetContentType => GetState<Type>(AppStateDataTags.PrivacyPageContent) ?? typeof(BUIPrivacyPageContent);
+
+	protected override Task OnInitializedAsync()
+	{
+		Title = "Privacy Policy";
+		return base.OnInitializedAsync();
+	}
 }

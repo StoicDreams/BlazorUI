@@ -1,8 +1,5 @@
-﻿@page "/error"
-
-@inject IAppState AppState
-
-<BUIPageDetail Title="Error" />
+﻿@inherits BUIPage
+@page "/error"
 
 <MudPaper Class="ma-10 pa-10 d-flex flex-column gap-10 align-center" Elevation="0">
 	<MudIcon Icon="@Icons.Material.TwoTone.Error" Color="Color.Error" Style="font-size: 20rem" />
@@ -25,11 +22,11 @@
 	[Parameter]
 	public Exception? Exception { get; set; }
 
-	private string GetMessage => string.IsNullOrWhiteSpace(Message) ? AppState.GetData<string?>(AppStateDataTags.NotFoundDefaultMessage) ?? DefaultMessage : Message;
+	private string GetMessage => string.IsNullOrWhiteSpace(Message) ? GetState<string?>(AppStateDataTags.NotFoundDefaultMessage) ?? DefaultMessage : Message;
 
 	protected override Task OnInitializedAsync()
 	{
-		AppState.SetData(AppStateDataTags.IsLoadingPage, false);
+		Title = "Error";
 		return base.OnInitializedAsync();
 	}
 

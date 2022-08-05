@@ -12,10 +12,9 @@ public static partial class ExtendIServiceCollection
 		IAppOptions appOptions = new AppOptions();
 		setupHandler?.Invoke(appOptions);
 		services.AddSingleton<IAppOptions>(appOptions);
-		services.AddSingleton<IAppState, AppState>();
-		services.AddSingleton<IThemeState, ThemeState>();
 		services.AddTransient<Data.IJsInterop, JsInterop>();
 		services.AddTransient<IApiRequest, ApiRequest>();
+		services.SetupStateManagers();
 		services.AddMudServices(config =>
 		{
 			config.SnackbarConfiguration.PositionClass = MudBlazor.Defaults.Classes.Position.BottomRight;
@@ -31,5 +30,15 @@ public static partial class ExtendIServiceCollection
 
 		return services;
 	}
+
+	private static IServiceCollection SetupStateManagers(this IServiceCollection services)
+	{
+		services.AddSingleton<IPageState, PageState>();
+		services.AddSingleton<ISessionState, SessionState>();
+		services.AddSingleton<IAppState, AppState>();
+		services.AddSingleton<IThemeState, ThemeState>();
+		return services;
+	}
+
 	private static Assembly AppAssembly => Assembly.GetEntryAssembly() ?? Assembly.GetCallingAssembly();
 }

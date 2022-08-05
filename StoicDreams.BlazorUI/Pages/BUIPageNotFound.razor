@@ -1,8 +1,5 @@
-﻿@page "/notfound"
-
-@inject IAppState AppState
-
-<BUIPageDetail Title="Page Not Found" />
+﻿@inherits BUIPage
+@page "/notfound"
 
 <MudPaper Class="ma-10 pa-10 d-flex flex-column gap-10 align-center" Elevation="0">
 	<MudIcon Icon="@Icons.Material.TwoTone.Info" Color="Color.Info" Style="font-size: 20rem" />
@@ -14,11 +11,11 @@
 	[SupplyParameterFromQuery(Name = "message")]
 	public string Message { get; set; } = string.Empty;
 
-	private string GetMessage => string.IsNullOrWhiteSpace(Message) ? AppState.GetData<string?>(AppStateDataTags.NotFoundDefaultMessage) ?? DefaultMessage : Message;
+	private string GetMessage => string.IsNullOrWhiteSpace(Message) ? GetState<string?>(AppStateDataTags.NotFoundDefaultMessage) ?? DefaultMessage : Message;
 
 	protected override Task OnInitializedAsync()
 	{
-		AppState.SetData(AppStateDataTags.IsLoadingPage, false);
+		Title = "Page Not Found";
 		return base.OnInitializedAsync();
 	}
 

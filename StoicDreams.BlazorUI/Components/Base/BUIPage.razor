@@ -1,45 +1,11 @@
 ﻿@inherits BUICore
-@inject IMarkdown Markdown
-
-<BUIPageDetail Title="@Title" />
-
-@if (FlipState)
-{
-	<BUIPageContentRender PageSegments="PageSegments" />
-}
-else
-{
-	<BUIPageContentRender PageSegments="PageSegments" />
-}
 
 @code {
-	protected override Task OnAfterRenderAsync(bool firstRender)
+	protected string Title { get => GetState<string>(AppStateDataTags.PageTitle, () => string.Empty); set => SetState(AppStateDataTags.PageTitle, value); }
+
+	protected override Task OnInitializedAsync()
 	{
-		return base.OnAfterRenderAsync(firstRender);
+		SetStateWithTrigger(AppStateDataTags.IsLoadingPage, false);
+		return base.OnInitializedAsync();
 	}
-
-	public static RenderFragment GetRenderFragment(string inlineText) => __builder =>
-	{
-		@inlineText
-	};
-
-	public static RenderFragment GetRenderFragment<T>(params (string name,object value)[] parameters)
-	{
-		return __builder =>
-		{
-			<DynamicComponent Type="typeof(T)" Parameters="@(parameters.ToDictionary(n => n.name, v => v.value))" />
-		};
-	}
-
-	public static RenderFragment GetRenderFragment(params RenderFragment[] children)
-	{
-		return __builder =>
-		{
-			@foreach (RenderFragment child in children)
-			{
-				@child
-			}
-		};
-	}
-
 }

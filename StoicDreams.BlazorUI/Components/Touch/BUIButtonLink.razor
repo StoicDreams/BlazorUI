@@ -1,0 +1,26 @@
+﻿
+<MudTooltip Text="@Tooltip">
+	<MudButton Variant="Variant.Filled" Href="@Href" Size="Size.Small" Color="Color.Info" Target="_blank" EndIcon="@Icons.Material.TwoTone.OpenInNew" StartIcon="@StartIcon">
+		@ChildContent
+	</MudButton>
+</MudTooltip>
+
+@code {
+	[Parameter]
+	public RenderFragment? ChildContent { get; set; }
+	[Parameter]
+	public string Href { get; set; } = string.Empty;
+	[Parameter]
+	public string StartIcon { get; set; } = string.Empty;
+	[Parameter]
+	public string Tooltip { get; set; } = string.Empty;
+
+	protected override Task OnInitializedAsync()
+	{
+		if (string.IsNullOrWhiteSpace(Tooltip))
+		{
+			Tooltip = Href.Replace("https://", "");
+		}
+		return base.OnInitializedAsync();
+	}
+}

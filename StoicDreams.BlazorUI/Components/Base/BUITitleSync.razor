@@ -1,0 +1,7 @@
+﻿@inherits BUICore
+
+<PageTitle>@Title</PageTitle>
+
+@code {
+	private string Title => GetState<string>(AppStateDataTags.PageTitle, () => string.Empty);
+}

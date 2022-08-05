@@ -1,6 +1,6 @@
-﻿namespace StoicDreams.BlazorUI.Components.Base;
+﻿namespace StoicDreams.BlazorUI.Components.Content;
 
-public abstract partial class BUIPage
+public abstract partial class BUIDynamicContent
 {
 	/// <summary>
 	/// Create a new external link button page segment.
@@ -13,11 +13,11 @@ public abstract partial class BUIPage
 	{
 		Dictionary<string, object> parameters = new()
 		{
-			{ "ChildContent", text.ConvertToRenderFragment() },
-			{ "Href", href },
-			{ "Target", "_blank" }
+			{ nameof(MudLink.ChildContent), text.ConvertToRenderFragment() },
+			{ nameof(MudLink.Href), href },
+			{ nameof(MudLink.Target), "_blank" }
 		};
-		return PageSegment.Create<MudTooltip>(("Text", string.IsNullOrWhiteSpace(tooltip) ? href.Replace("https://", "") : tooltip))
+		return PageSegment.Create<MudTooltip>((nameof(MudTooltip.Text), string.IsNullOrWhiteSpace(tooltip) ? href.Replace("https://", "") : tooltip))
 			.AddChild(PageSegment.Create<MudLink>(parameters));
 	}
 }

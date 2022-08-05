@@ -1,0 +1,40 @@
+﻿@inherits BUIPage
+@page "/"
+@page "/home"
+
+<BUIPaper PaperType="PaperTypes.FlexRow">
+	<BUIPaper PaperType="PaperTypes.Grow" Class="mt-2">
+		<BUISectionTitle>You have reached the Demo and Documentation website for Blazor UI from Stoic Dreams!</BUISectionTitle>
+	</BUIPaper>
+	<BUIPaper PaperType="PaperTypes.Wrap | PaperTypes.JustifyEnd" Class="gap-2 mt-2 mb-3 ml-4">
+		<BUIButtonLink StartIcon="@Icons.Custom.Brands.GitHub" Href="https://GitHub.com/StoicDreams/BlazorUI">GitHub</BUIButtonLink>
+		<BUIButtonLink StartIcon="@Icons.Material.TwoTone.Store" Href="https://NuGet.org/packages/StoicDreams.BlazorUI">Nuget</BUIButtonLink>
+	</BUIPaper>
+</BUIPaper>
+
+<BUIStandardSection>
+	<BUIParagraph>This website is being developed in conjuction with our new Blazor UI framework.</BUIParagraph>
+	<BUIParagraph>We want to emphasize that this is a true framework and not a component library. The goal of Blazor UI is to provide a pre-defined structure as a starting point so developers can focus on just adding site content.</BUIParagraph>
+</BUIStandardSection>
+
+<BUISectionTitle>Project Goals</BUISectionTitle>
+
+<BUIStandardSection>
+	<BUIParagraph>This Blazor UI framework is targeting a developer experience that will allow developers get started developing their websites and Maui Blazor apps (Desktop & Mobile) without needing to worry about building out all the initial boilerplate. The html, styles, layouts, navigation, and other systems are already integrated and ready-to-go. The developer can get started right away adding their own pages and content.</BUIParagraph>
+</BUIStandardSection>
+
+<BUISectionTitle>Current State of Development</BUISectionTitle>
+
+<BUIStandardSection>
+	<BUIParagraph>This framework is very early in development, with a lot of experimental work being done to flesh out ideas and concepts that may or may not make it into the final product.</BUIParagraph>
+	<BUIParagraph>Because of this experimental stage in development, it can be expected that breaking changes will occur in any update, even within patch version updates. This will continue throughout the lifespan of 1.X versions of Blazor UI.</BUIParagraph>
+	<BUIParagraph>When we have reached a point of being satisfied that Blazor UI is ready for production use we will bump the version up to 2.0 and follow stricture versioning regimens going forward.</BUIParagraph>
+</BUIStandardSection>
+
+@code {
+	protected override Task OnInitializedAsync()
+	{
+		Title = "Welcome";
+		return base.OnInitializedAsync();
+	}
+}

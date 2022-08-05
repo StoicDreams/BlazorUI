@@ -1,46 +1,35 @@
-﻿namespace StoicDreams.SampleWebsite.Pages.Docs.Markdown;
+﻿@inherits BUIPage
+@page "/docs/markdown/emojis"
+@inject IApiRequest ApiRequest
 
-[Route("/docs/markdown/emojis")]
-public class Emojis : BUIPage
-{
-	[Inject]
-	public IApiRequest ApiRequest { get; set; } = null!;
+<BUIMarkdown Markup="@PageIntroduction" />
 
-	protected override ValueTask InitializePage()
+<BUIPaper PaperType="PaperTypes.Wrap" Class="emoji-tables gap-4">
+	@if (CachedList == null)
+	{
+		<MudSkeleton Animation="Animation.Wave" Width="100%" Height="800px" />
+	}
+	else
+	{
+		<MudVirtualize Items="CachedList" Context="item">
+			<BUIPaper PaperType="PaperTypes.None" Class="center">
+				<BUIMarkdown Markup="@item" />
+			</BUIPaper>
+		</MudVirtualize>
+	}
+</BUIPaper>
+
+@code {
+	private string PageIntroduction => "## Our Markdown supports Emojis :wink:!";
+
+	protected override Task OnInitializedAsync()
 	{
 		Title = "Markdown Emojis";
-		UpdatePageContent();
-		return ValueTask.CompletedTask;
+		_ = LoadEmojis();
+		return base.OnInitializedAsync();
 	}
 
-	private void UpdatePageContent()
-	{
-		if (CachedList == null)
-		{
-			SetPageContent(
-				PageIntroduction,
-				Skeleton(SkeletonType.Rectangle, "100%", "800px")
-				);
-			_ = LoadEmojies();
-			return;
-		}
-		else
-		{
-			SetPageContent(
-				PageIntroduction,
-				Paper(PaperTypes.Wrap, "emoji-tables gap-4")
-					.AddChild(Virtualize(CachedList, item =>
-						Paper(PaperTypes.None, "center")
-							.AddChild(MarkdownSection(item))
-						)
-					)
-				);
-		}
-	}
-
-	private PageSegment PageIntroduction => MarkdownSection("## Our Markdown supports Emojis :wink:!");
-
-	private async Task LoadEmojies()
+	private async Task LoadEmojis()
 	{
 		SetState(AppStateDataTags.IsLoadingPage, true);
 		TResult<string[]> result = await ApiRequest.Get<string[]>("https://www.myfi.ws/bui/emojis.json", true);
@@ -51,7 +40,7 @@ public class Emojis : BUIPage
 		}
 		CachedList = BuildMarkdownList(result.Result);
 		SetState(AppStateDataTags.IsLoadingPage, false);
-		UpdatePageContent();
+		StateHasChanged();
 	}
 
 	private static List<string>? CachedList { get; set; }

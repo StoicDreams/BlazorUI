@@ -1,6 +1,6 @@
-﻿namespace StoicDreams.BlazorUI.Components.Base;
+﻿namespace StoicDreams.BlazorUI.Components.Content;
 
-public abstract partial class BUIPage
+public abstract partial class BUIDynamicContent
 {
 	/// <summary>
 	/// Create a new external link button page segment.
@@ -14,16 +14,16 @@ public abstract partial class BUIPage
 	{
 		Dictionary<string, object> parameters = new()
 		{
-			{ "Variant", Variant.Filled },
-			{ "ChildContent", text.ConvertToRenderFragment() },
-			{ "Href", href },
-			{ "Size", Size.Small },
-			{ "Color", Color.Info },
-			{ "Target", "_blank" },
-			{ "EndIcon", Icons.Material.TwoTone.OpenInNew }
+			{ nameof(MudButton.Variant), Variant.Filled },
+			{ nameof(MudButton.ChildContent), text.ConvertToRenderFragment() },
+			{ nameof(MudButton.Href), href },
+			{ nameof(MudButton.Size), Size.Small },
+			{ nameof(MudButton.Color), Color.Info },
+			{ nameof(MudButton.Target), "_blank" },
+			{ nameof(MudButton.EndIcon), Icons.Material.TwoTone.OpenInNew }
 		};
-		if (!string.IsNullOrWhiteSpace(startIcon)) { parameters.Add("StartIcon", startIcon); }
-		return PageSegment.Create<MudTooltip>(("Text", string.IsNullOrWhiteSpace(tooltip) ? href.Replace("https://", "") : tooltip))
+		if (!string.IsNullOrWhiteSpace(startIcon)) { parameters.Add(nameof(MudButton.StartIcon), startIcon); }
+		return PageSegment.Create<MudTooltip>((nameof(MudTooltip.Text), string.IsNullOrWhiteSpace(tooltip) ? href.Replace("https://", "") : tooltip))
 			.AddChild(PageSegment.Create<MudButton>(parameters));
 	}
 }

@@ -1,0 +1,18 @@
+﻿@inherits BUIPage
+@page "/docs/getting-started"
+@page "/docs/gettingstarted"
+@page "/docs/start"
+
+<BUISectionTitle>Documentation - Getting Started</BUISectionTitle>
+
+<BUIStandardSection>
+	<BUIParagraph>Welcome to the Stoic Dreams Blazor UI documentation.</BUIParagraph>
+</BUIStandardSection>
+
+@code {
+	protected override Task OnInitializedAsync()
+	{
+		Title = "Getting Started";
+		return base.OnInitializedAsync();
+	}
+}

@@ -1,0 +1,43 @@
+﻿@inherits BUICore
+@inject IMarkdown Markdown
+
+<BUIPageContentRender PageSegments="PageSegments" />
+
+@code {
+	[Parameter]
+	public List<PageSegment> PageSegments { get; set; } = new();
+
+	public static PageSegment CreatePageSegment<T>(string text)
+	{
+		return PageSegment.Create<T>().AddParameter("ChildContent", text.ConvertToRenderFragment());
+	}
+
+	public static PageSegment CreatePageSegment<T>(params (string name, object value)[] parameters)
+	{
+		return PageSegment.Create<T>(parameters);
+	}
+
+	public static RenderFragment GetRenderFragment(string inlineText) => __builder =>
+	{
+		@inlineText
+	};
+
+	public static RenderFragment GetRenderFragment<T>(params (string name, object value)[] parameters)
+	{
+		return __builder =>
+		{
+			<DynamicComponent Type="typeof(T)" Parameters="@(parameters.ToDictionary(n => n.name, v => v.value))" />
+		};
+	}
+
+	public static RenderFragment GetRenderFragment(params RenderFragment[] children)
+	{
+		return __builder =>
+		{
+			@foreach (RenderFragment child in children)
+			{
+				@child
+			}
+		};
+	}
+}

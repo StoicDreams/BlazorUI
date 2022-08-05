@@ -1,0 +1,16 @@
+﻿<MudPaper Class="@GetClass" Elevation="Elevation" MaxWidth="100%">
+	@ChildContent
+</MudPaper>
+
+@code {
+	[Parameter]
+	public RenderFragment? ChildContent { get; set; }
+	[Parameter]
+	public PaperTypes PaperType { get; set; }
+	[Parameter]
+	public string Class { get; set; } = string.Empty;
+	[Parameter]
+	public int Elevation { get; set; } = 0;
+
+	private string GetClass => $"{PaperType.GetClasses()} {Class}".Trim();
+}

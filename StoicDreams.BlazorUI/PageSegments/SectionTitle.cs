@@ -1,6 +1,6 @@
-﻿namespace StoicDreams.BlazorUI.Components.Base;
+﻿namespace StoicDreams.BlazorUI.Components.Content;
 
-public abstract partial class BUIPage
+public abstract partial class BUIDynamicContent
 {
 	/// <summary>
 	/// Create a section title page segment.

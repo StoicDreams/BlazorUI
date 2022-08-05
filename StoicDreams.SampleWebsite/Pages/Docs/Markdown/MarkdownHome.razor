@@ -1,0 +1,15 @@
+﻿@inherits BUIPage
+@page "/docs/markdown"
+
+<BUISectionTitle>Blazor UI supports writing content using Markdown!</BUISectionTitle>
+<BUIStandardSection>
+	<BUIParagraph>This page will be the root of documenting Markdown support in Blazor UI.</BUIParagraph>
+</BUIStandardSection>
+
+@code {
+	protected override Task OnInitializedAsync()
+	{
+		Title = "Markdown";
+		return base.OnInitializedAsync();
+	}
+}

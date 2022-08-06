@@ -1,15 +1,24 @@
-﻿namespace StoicDreams.BlazorUI.Data;
+﻿using StoicDreams.BlazorUI.Components.Displays;
+
+namespace StoicDreams.BlazorUI.Data;
 
 public class AppStateTests : TestFramework
 {
 	[Theory]
 	[InlineData("Hello")]
 	[InlineData(23409)]
+	[InlineData(typeof(BUITitleBar))]
 	public void Verify_State_Management<T>(T data)
 	{
 		Guid subscriberId = Guid.NewGuid();
 		int changeCounter = 0;
-		IActions<IAppState> actions = ArrangeUnitTest<IAppState, AppState>();
+		IActions<IAppState> actions = ArrangeTest<IAppState>(options =>
+		{
+			AppOptions appOptions = new();
+			options.AddService<IAppOptions>(() => appOptions);
+			options.AddService<IMemoryStorage, MemoryStorage>();
+			options.AddService<IAppState, AppState>();
+		});
 
 		actions.Act(a => a.Service.GetData<T>("test"));
 

@@ -22,6 +22,11 @@ public interface IAppOptions
 	/// </summary>
 	string Domain { get; set; }
 
+	/// <summary>
+	/// Set if this app is a website or application (mobile, desktop, etc).
+	/// </summary>
+	AppTypes AppType { get; set; }
+
 	#region Startup settings
 	/// <summary>
 	/// Format expression for title tag.

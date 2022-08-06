@@ -2,7 +2,7 @@
 
 public class ThemeState : StateManager, IThemeState
 {
-	public ThemeState() : base()
+	public ThemeState(IMemoryStorage memory) : base(memory)
 	{
 		ThemeWatcher = new(HandlerThemeUpdate);
 	}

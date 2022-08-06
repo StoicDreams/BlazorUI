@@ -5,6 +5,7 @@ public class AppOptions : IAppOptions
 	public string AppName { get; set; } = string.Empty;
 	public string CompanyName { get; set; } = string.Empty;
 	public string Domain { get; set; } = string.Empty;
+	public AppTypes AppType { get; set; }
 
 	#region Startup Options
 	public string TitleFormat { get; set; } = "{PageTitle} - {AppName}";

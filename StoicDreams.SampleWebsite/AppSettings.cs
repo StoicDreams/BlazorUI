@@ -7,6 +7,7 @@ public static class AppSettings
 		options.AppName = "Blazor UI";
 		options.CompanyName = "Stoic Dreams";
 		options.Domain = "StoicDreams.com";
+		options.AppType = AppTypes.Website;
 		options.CssFiles.Add("css/app.css");
 		options.HeadElements.Add(ElementDetail.Create("link", ("rel", "manifest")));
 		options.HeadElements.Add(ElementDetail.Create("link", ("rel", "apple-touch-icon"), ("sizes", "512x512"), ("href", "icon-512.png")));

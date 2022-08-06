@@ -2,6 +2,11 @@
 
 public class StateManager : IStateManager
 {
+	public StateManager(IMemoryStorage storage)
+	{
+		Memory = storage;
+	}
+
 	public virtual void SubscribeToDataChanges(Guid subscriberId, Action simpleChangeHandler)
 	{
 		lock (ChangeHandlerLock)
@@ -35,10 +40,10 @@ public class StateManager : IStateManager
 		{
 			if (data == null)
 			{
-				Data.Remove(name);
+				Memory.Remove(name);
 				return;
 			}
-			Data[name] = data;
+			Memory[name] = data;
 		}
 	}
 
@@ -46,18 +51,11 @@ public class StateManager : IStateManager
 	{
 		lock (DataLock)
 		{
-			if (!Data.TryGetValue(name, out object? value) || value == null)
+			if (!Memory.TryGetValue(name, out TData? value) || value == null)
 			{
 				return default;
 			}
-			try
-			{
-				return (TData)value;
-			}
-			catch
-			{
-				return default;
-			}
+			return value;
 		}
 	}
 
@@ -112,7 +110,7 @@ public class StateManager : IStateManager
 		}
 	}
 
-	protected Dictionary<string, object> Data { get; } = new();
+	protected IMemoryStorage Memory { get; }
 	protected Dictionary<string, bool> Changelog { get; } = new();
 	protected Dictionary<Guid, Action<IDictionary<string, bool>>> ChangeHandlers { get; } = new();
 	protected Dictionary<Guid, Action> SimpleChangeHandlers { get; } = new();

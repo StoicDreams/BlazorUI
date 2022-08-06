@@ -2,7 +2,7 @@
 
 public class AppState : StateManager, IAppState
 {
-	public AppState(IAppOptions options) : base()
+	public AppState(IMemoryStorage memory, IAppOptions options) : base(memory)
 	{
 		ApplyStartupOptionsToState(options);
 	}

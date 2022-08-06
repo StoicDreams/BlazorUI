@@ -12,8 +12,21 @@ public static partial class ExtendIServiceCollection
 		IAppOptions appOptions = new AppOptions();
 		setupHandler?.Invoke(appOptions);
 		services.AddSingleton<IAppOptions>(appOptions);
+		services.AddSingleton<IJsonConvert, JsonConvert>();
 		services.AddTransient<Data.IJsInterop, JsInterop>();
 		services.AddTransient<IApiRequest, ApiRequest>();
+		services.AddTransient<IMemoryStorage, MemoryStorage>();
+		services.AddSingleton<IAppStorage, AppStorage>();
+		services.AddSingleton<IWebStorage, WebStorage>();
+		services.AddTransient<IStateManager, StateManager>();
+		services.AddSingleton<IStorage>(serviceProvider =>
+		{
+			return appOptions.AppType switch
+			{
+				AppTypes.Application => serviceProvider.GetRequiredService<IAppStorage>(),
+				_ => serviceProvider.GetRequiredService<IWebStorage>()
+			};
+		});
 		services.SetupStateManagers();
 		services.AddMudServices(config =>
 		{

@@ -107,6 +107,11 @@ public enum AppStateDataTags
 	/// </summary>
 	RightDrawerContent,
 	/// <summary>
+	/// Holds StoragePermissions flag value.
+	/// This is expected to only be updated with user consent when they permit storing data on their device.
+	/// </summary>
+	StoragePermission,
+	/// <summary>
 	/// Type of component to use for Terms page content.
 	/// Defaults to BUITermsPageContent.
 	/// </summary>

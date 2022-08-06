@@ -10,7 +10,7 @@ public interface IStateManager
 	/// <typeparam name="TData"></typeparam>
 	/// <param name="name"></param>
 	/// <param name="data"></param>
-	void SetData<TData>(string name, TData? data);
+	ValueTask SetDataAsync<TData>(string name, TData? data);
 
 	/// <summary>
 	/// Get data for the specified custom tag name
@@ -18,7 +18,7 @@ public interface IStateManager
 	/// <typeparam name="TData"></typeparam>
 	/// <param name="name"></param>
 	/// <returns></returns>
-	TData? GetData<TData>(string name);
+	ValueTask<TData?> GetDataAsync<TData>(string name);
 
 	/// <summary>
 	/// Subscribe to event trigger called when a state has changed.
@@ -41,7 +41,7 @@ public interface IStateManager
 	/// Trigger a change event to be called, assuring given key is included in change handler Dictionary.
 	/// </summary>
 	/// <param name="key"></param>
-	void TriggerChange(string? key = null);
+	ValueTask TriggerChangeAsync(string? key = null);
 
 	/// <summary>
 	/// Use this method to group together multiple state changes and trigger event handlers when finished.
@@ -49,10 +49,4 @@ public interface IStateManager
 	/// <param name="changeHandler"></param>
 	/// <returns></returns>
 	ValueTask ApplyChangesAsync(Func<ValueTask> changeHandler);
-
-	/// <summary>
-	/// Use this method to group together multiple state changes and trigger event handlers when finished.
-	/// </summary>
-	/// <param name="changeHandler"></param>
-	void ApplyChanges(Action changeHandler);
 }

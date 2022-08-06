@@ -68,7 +68,7 @@
 		await base.OnInitializedAsync();
 		await RunDefaultSetups();
 		// Trigger to clear any values from startup, not expecting anything to be expecting AppInitialized key.
-		AppState.TriggerChange("AppInitialized");
+		await AppState.TriggerChangeAsync("AppInitialized");
 	}
 
 	private async Task RunDefaultSetups()

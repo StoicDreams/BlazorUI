@@ -1,4 +1,4 @@
-namespace StoicDreams.BlazorUI;
+﻿namespace StoicDreams.BlazorUI;
 
 public class ExtendStringTests : TestFramework
 {

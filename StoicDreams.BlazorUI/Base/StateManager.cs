@@ -33,33 +33,23 @@ public class StateManager : IStateManager
 	}
 
 
-	public void SetData<TData>(string name, TData? data)
+	public async ValueTask SetDataAsync<TData>(string name, TData? data)
 	{
 		UpdatedKey(name);
-		lock (DataLock)
+		if (data == null)
 		{
-			if (data == null)
-			{
-				Memory.Remove(name);
-				return;
-			}
-			Memory[name] = data;
+			await Memory.Remove(name);
+			return;
 		}
+		await Memory.SetValue(name, data);
 	}
 
-	public TData? GetData<TData>(string name)
+	public ValueTask<TData?> GetDataAsync<TData>(string name)
 	{
-		lock (DataLock)
-		{
-			if (!Memory.TryGetValue(name, out TData? value) || value == null)
-			{
-				return default;
-			}
-			return value;
-		}
+		return Memory.GetValue<TData>(name);
 	}
 
-	public virtual void TriggerChange(string? key = null)
+	public virtual ValueTask TriggerChangeAsync(string? key = null)
 	{
 		Dictionary<string, bool> currentState;
 		lock (ChangeLogLock)
@@ -82,25 +72,22 @@ public class StateManager : IStateManager
 		{
 			handler?.Invoke();
 		}
-	}
-	public virtual async ValueTask ApplyChangesAsync(Func<ValueTask> changeHandler)
-	{
-		await changeHandler.Invoke();
-		TriggerChange("ApplyChanges");
 		lock (ChangeLogLock)
 		{
 			Changelog.Clear();
 		}
+		return ValueTask.CompletedTask;
+	}
+	public virtual async ValueTask ApplyChangesAsync(Func<ValueTask> changeHandler)
+	{
+		await changeHandler.Invoke();
+		await TriggerChangeAsync("ApplyChanges");
 	}
 
 	public virtual void ApplyChanges(Action changeHandler)
 	{
 		changeHandler.Invoke();
-		TriggerChange("ApplyChanges");
-		lock (ChangeLogLock)
-		{
-			Changelog.Clear();
-		}
+		_ = TriggerChangeAsync("ApplyChanges");
 	}
 	private void UpdatedKey(string key)
 	{

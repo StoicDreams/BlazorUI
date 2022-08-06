@@ -30,13 +30,14 @@
 	private bool IsDense => GetAppState<bool>(AppStateDataTags.TitleBarIsDense);
 	private int Elevation => GetAppState<int>(AppStateDataTags.TitleBarElevation);
 
-	private void ToggleLeftDrawer()
+	private async Task ToggleLeftDrawer()
 	{
-		AppState.ApplyChanges(() =>
+		await AppState.ApplyChangesAsync(() =>
 		{
 			bool isOpen = !AppState.GetData<bool>(AppStateDataTags.TitleBarLeftDrawerOpen);
 			AppState.SetData(AppStateDataTags.TitleBarLeftDrawerOpen, isOpen);
 			LeftDrawerOnClick?.Invoke(GetState(isOpen));
+			return ValueTask.CompletedTask;
 		});
 	}
 

@@ -5,12 +5,13 @@
 /// Implemented by WebStorage for websites.
 /// Implemented by AppStorage for modile/desktop apps.
 /// </summary>
-public interface IStorage
+public interface IStorage : IDisposable
 {
+	IEnumerable<string> Keys { get; }
 
-	bool Remove(string key);
-	object this[string key] { get; set; }
-	bool TryGetValue<TValue>(string name, out TValue? value);
+	ValueTask<bool> Remove(string key);
+	ValueTask SetValue(string key, object value);
+	ValueTask<TValue?> GetValue<TValue>(string name);
 
-	void CopyFrom(IStorage storage);
+	ValueTask CopyFrom(IStorage storage);
 }

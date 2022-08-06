@@ -53,12 +53,12 @@
 </MudLayout>
 
 @code {
-	private bool LeftDrawerOpen { get => GetState<bool>(AppStateDataTags.TitleBarLeftDrawerOpen); set => SetStateWithTrigger<bool>(AppStateDataTags.TitleBarLeftDrawerOpen, value); }
-	private bool RightDrawerOpen { get => GetState<bool>(AppStateDataTags.TitleBarRightDrawerOpen); set => SetStateWithTrigger<bool>(AppStateDataTags.TitleBarRightDrawerOpen, value); }
-	private DrawerVariant LeftDrawerVariant { get => GetState<DrawerVariant>(AppStateDataTags.AppLeftDrawerVariant); set => SetStateWithTrigger<DrawerVariant>(AppStateDataTags.AppLeftDrawerVariant, value); }
-	private DrawerVariant RightDrawerVariant { get => GetState<DrawerVariant>(AppStateDataTags.AppRightDrawerVariant); set => SetStateWithTrigger<DrawerVariant>(AppStateDataTags.AppRightDrawerVariant, value); }
-	private Type? LeftDrawerContent => GetState<Type?>(AppStateDataTags.LeftDrawerContent);
-	private Type? RightDrawerContent => GetState<Type?>(AppStateDataTags.RightDrawerContent);
+	private bool LeftDrawerOpen { get => GetAppState<bool>(AppStateDataTags.TitleBarLeftDrawerOpen); set => SetAppStateWithTrigger<bool>(AppStateDataTags.TitleBarLeftDrawerOpen, value); }
+	private bool RightDrawerOpen { get => GetAppState<bool>(AppStateDataTags.TitleBarRightDrawerOpen); set => SetAppStateWithTrigger<bool>(AppStateDataTags.TitleBarRightDrawerOpen, value); }
+	private DrawerVariant LeftDrawerVariant { get => GetAppState<DrawerVariant>(AppStateDataTags.AppLeftDrawerVariant); set => SetAppStateWithTrigger<DrawerVariant>(AppStateDataTags.AppLeftDrawerVariant, value); }
+	private DrawerVariant RightDrawerVariant { get => GetAppState<DrawerVariant>(AppStateDataTags.AppRightDrawerVariant); set => SetAppStateWithTrigger<DrawerVariant>(AppStateDataTags.AppRightDrawerVariant, value); }
+	private Type? LeftDrawerContent => GetAppState<Type?>(AppStateDataTags.LeftDrawerContent);
+	private Type? RightDrawerContent => GetAppState<Type?>(AppStateDataTags.RightDrawerContent);
 
 	protected override async Task OnInitializedAsync()
 	{

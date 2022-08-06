@@ -1,4 +1,4 @@
-global using Bunit;
+﻿global using Bunit;
 global using FluentAssertions;
 global using Moq;
 global using MudBlazor;

@@ -5,20 +5,20 @@ namespace StoicDreams.BlazorUI.Components.Displays;
 
 public class BUITitleBarTests : TestFrameworkBlazor
 {
-    [Fact]
-    public void Verify_Render()
-    {
-        IRenderActions<BUITitleBar> actions = ArrangeRenderTest<BUITitleBar>(options =>
-        {
-        }, this.StartupTestServices);
+	[Fact]
+	public void Verify_Render()
+	{
+		IRenderActions<BUITitleBar> actions = ArrangeRenderTest<BUITitleBar>(options =>
+		{
+		}, this.StartupTestServices);
 
-        actions.Act(a =>
-        {
-        });
+		actions.Act(a =>
+		{
+		});
 
-        actions.Assert(a =>
-        {
-            a.Render.Find(".buiTitleBar").Should().IsNotNull();
-        });
-    }
+		actions.Assert(a =>
+		{
+			a.Render.Find(".buiTitleBar").Should().IsNotNull();
+		});
+	}
 }

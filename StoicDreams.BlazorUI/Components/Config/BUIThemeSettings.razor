@@ -83,7 +83,7 @@
 		if (info == null) { return; }
 		ColorData newValue = hexValue;
 		info.SetValue(config, newValue);
-		State.TriggerChange();
+		State.TriggerChangeAsync();
 	}
 
 	private void BuildColorSetting()

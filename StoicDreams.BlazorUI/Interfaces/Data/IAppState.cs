@@ -19,4 +19,10 @@ public interface IAppState : IStateManager
 	/// <param name="tag"></param>
 	/// <returns></returns>
 	TData? GetData<TData>(AppStateDataTags tag);
+
+	/// <summary>
+	/// Apply a group of updates and fire change trigger after updates.
+	/// </summary>
+	/// <param name="changeHandler"></param>
+	void ApplyChanges(Action changeHandler);
 }

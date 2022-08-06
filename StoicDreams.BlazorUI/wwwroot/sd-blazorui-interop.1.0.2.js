@@ -1,8 +1,22 @@
-// This is a JavaScript module that is loaded on demand. It can export any number of
+﻿// This is a JavaScript module that is loaded on demand. It can export any number of
 // functions, and may import other JavaScript modules if required.
 
-export function showPrompt(message) {
-  return prompt(message, 'Type anything here');
+export function CallMethod(method, args) {
+	try {
+		let instance = window;
+		let last = window;
+		method.split('.').forEach(s => {
+			last = instance;
+			instance = instance[s]
+		});
+		if (last != instance) {
+			return instance.bind(last)(...args);
+		}
+		return instance(...args);
+	} catch (ex) {
+		console.error(`Failed calling ${method}`, ex, ...args);
+	}
+	return null;
 }
 
 export function AddJSFile(filePath) {

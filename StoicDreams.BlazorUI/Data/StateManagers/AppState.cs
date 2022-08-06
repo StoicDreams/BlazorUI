@@ -4,15 +4,32 @@ public class AppState : StateManager, IAppState
 {
 	public AppState(IMemoryStorage memory, IAppOptions options) : base(memory)
 	{
-		ApplyStartupOptionsToState(options);
+		_ = ApplyStartupOptionsToState(options);
 	}
 
-	private void ApplyStartupOptionsToState(IAppOptions options)
+	public ValueTask SetDataAsync<TData>(AppStateDataTags tag, TData? data) => SetDataAsync(tag.ToString(), data);
+
+	public ValueTask<TData?> GetDataAsync<TData>(AppStateDataTags tag) => GetDataAsync<TData>(tag.ToString());
+
+	public void SetData<TData>(AppStateDataTags tag, TData? data)
 	{
-		SetData(AppStateDataTags.AppLeftDrawerVariant.ToString(), options.LeftDrawerVariant);
-		SetData(AppStateDataTags.AppRightDrawerVariant.ToString(), options.RightDrawerVariant);
+		ValueTask task = SetDataAsync(tag.ToString(), data);
+		task.AndForget(TaskOption.None);
 	}
-	public void SetData<TData>(AppStateDataTags tag, TData? data) => SetData(tag.ToString(), data);
 
-	public TData? GetData<TData>(AppStateDataTags tag) => GetData<TData>(tag.ToString());
+	public TData? GetData<TData>(AppStateDataTags tag)
+	{
+		return GetDataAsync<TData>(tag).GetAwaiter().GetResult();
+	}
+
+	public new void ApplyChanges(Action changeHandler)
+	{
+		base.ApplyChanges(changeHandler);
+	}
+
+	private async ValueTask ApplyStartupOptionsToState(IAppOptions options)
+	{
+		await SetDataAsync(AppStateDataTags.AppLeftDrawerVariant.ToString(), options.LeftDrawerVariant);
+		await SetDataAsync(AppStateDataTags.AppRightDrawerVariant.ToString(), options.RightDrawerVariant);
+	}
 }

@@ -16,7 +16,7 @@ public class ThemeState : StateManager, IThemeState
 		set
 		{
 			CurrentConfig = value;
-			TriggerChange();
+			TriggerChangeAsync();
 		}
 	}
 

@@ -6,22 +6,22 @@ namespace StoicDreams.BlazorUI.Data;
 
 public class JsonConvert : IJsonConvert
 {
-	public T Deserialize<T>(string json, Func<T> defaultIfMissing)
+	public ValueTask<T> Deserialize<T>(string json, Func<T> defaultIfMissing)
 	{
 		try
 		{
-			return JsonSerializer.Deserialize<T>(json, JsonOptionsCompact) ?? defaultIfMissing();
+			return ValueTask.FromResult(JsonSerializer.Deserialize<T>(json, JsonOptionsCompact) ?? defaultIfMissing());
 		}
 		catch
 		{
-			return defaultIfMissing();
+			return ValueTask.FromResult(defaultIfMissing());
 		}
 	}
 
-	public string Serialize(object data, bool tabbed = false)
+	public ValueTask<string> Serialize(object data, bool tabbed = false)
 	{
-		if (tabbed) { return JsonSerializer.Serialize(data, JsonOptionsReadable); }
-		return JsonSerializer.Serialize(data, JsonOptionsCompact);
+		if (tabbed) { return ValueTask.FromResult(JsonSerializer.Serialize(data, JsonOptionsReadable)); }
+		return ValueTask.FromResult(JsonSerializer.Serialize(data, JsonOptionsCompact));
 	}
 
 	private JsonSerializerOptions JsonOptionsCompact => new()

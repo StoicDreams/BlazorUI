@@ -20,7 +20,7 @@ public abstract class BUICore : ComponentBase, IDisposable
 	/// <summary>
 	/// Get the current page path (excluding any extra query data).
 	/// </summary>
-	protected string CurrentPage => GetAppState<string>(AppStateDataTags.CurrentPage, () => string.Empty);
+	protected string GetCurrentPage => GetAppState<string>(AppStateDataTags.CurrentPage, () => string.Empty);
 
 	protected override async Task OnInitializedAsync()
 	{
@@ -41,7 +41,7 @@ public abstract class BUICore : ComponentBase, IDisposable
 		{
 			SessionState.UnsubscribeToDataChanges(ComponentId);
 		};
-		string currentPage = CurrentPage;
+		string currentPage = GetCurrentPage;
 		PageStateWatcher.StateChangedHandler = () =>
 		{
 			OnPageStateupdate();
@@ -58,39 +58,36 @@ public abstract class BUICore : ComponentBase, IDisposable
 
 	#region App State Helpers
 	protected TValue? GetAppState<TValue>(AppStateDataTags key) => AppStateWatcher.WatchState(key, AppState.GetData<TValue>(key));
-	protected TValue GetAppState<TValue>(string key, Func<TValue> getDefaultValue) => AppStateWatcher.WatchState(key, AppState.GetData<TValue>(key) ?? getDefaultValue.Invoke());
 	protected TValue GetAppState<TValue>(AppStateDataTags key, Func<TValue> getDefaultValue) => AppStateWatcher.WatchState(key, AppState.GetData<TValue>(key) ?? getDefaultValue.Invoke());
 	protected void SetAppState<TValue>(AppStateDataTags key, TValue? value) => AppState.SetData(key, value);
 	protected void SetAppStateWithTrigger<TValue>(AppStateDataTags key, TValue? value)
 	{
-		AppState.ApplyChanges(() =>
-		{
-			AppState.SetData(key, value);
-		});
+		AppState.SetData(key, value);
+		_ = AppState.TriggerChangeAsync(key.AsName());
 	}
 	#endregion
 
 	#region Session State Helpers
-	protected TValue GetSessionState<TValue>(string key, Func<TValue> getDefaultValue) => SessionStateWatcher.WatchState(key, SessionState.GetData<TValue>(key) ?? getDefaultValue.Invoke());
-	protected void SetSessionState<TValue>(string key, TValue? value) => SessionState.SetData(key, value);
-	protected void SetSessionStateWithTrigger<TValue>(string key, TValue? value)
+	protected async ValueTask<TValue> GetSessionState<TValue>(string key, Func<TValue> getDefaultValue) => SessionStateWatcher.WatchState(key, await SessionState.GetDataAsync<TValue>(key) ?? getDefaultValue.Invoke());
+	protected ValueTask SetSessionState<TValue>(string key, TValue? value) => SessionState.SetDataAsync(key, value);
+	protected ValueTask SetSessionStateWithTrigger<TValue>(string key, TValue? value)
 	{
-		SessionState.ApplyChanges(() =>
+		return SessionState.ApplyChangesAsync(async () =>
 		{
-			SessionState.SetData(key, value);
+			await SessionState.SetDataAsync(key, value);
 		});
 	}
 	#endregion
 
 	#region Page State Helpers
-	protected TValue GetPageState<TValue>(string key, Func<TValue> getDefaultValue) => PageStateWatcher.WatchState(key, PageState.GetData<TValue>(CurrentPage, key) ?? getDefaultValue.Invoke());
-	protected void SetPageState<TValue>(string key, TValue? value) => SessionState.SetData(key, value);
-	protected void SetPageStateWithTrigger<TValue>(string key, TValue? value)
+	protected async ValueTask<TValue> GetPageState<TValue>(string key, Func<TValue> getDefaultValue) => PageStateWatcher.WatchState(key, await PageState.GetData<TValue>(GetCurrentPage, key) ?? getDefaultValue.Invoke());
+	protected ValueTask SetPageState<TValue>(string key, TValue? value) => SessionState.SetDataAsync(key, value);
+	protected async ValueTask SetPageStateWithTrigger<TValue>(string key, TValue? value)
 	{
-		string page = CurrentPage;
-		PageState.ApplyChanges(page, () =>
+		string page = GetCurrentPage;
+		await PageState.ApplyChangesAsync(page, async () =>
 		{
-			PageState.SetData(page, key, value);
+			await PageState.SetData(page, key, value);
 		});
 	}
 	#endregion

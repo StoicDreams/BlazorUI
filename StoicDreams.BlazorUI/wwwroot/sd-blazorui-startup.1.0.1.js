@@ -1,4 +1,4 @@
-(function AppStartup() {
+﻿(function AppStartup() {
 	"use strict"
 	function AddJSFile(filePath) {
 		let element = document.createElement('script');

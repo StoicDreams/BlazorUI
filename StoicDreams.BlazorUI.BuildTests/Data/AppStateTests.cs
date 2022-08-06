@@ -20,24 +20,24 @@ public class AppStateTests : TestFramework
 			options.AddService<IAppState, AppState>();
 		});
 
-		actions.Act(a => a.Service.GetData<T>("test"));
+		actions.Act(async a => await a.Service.GetDataAsync<T>("test"));
 
-		actions.Assert(a => a.Service.GetData<T>("test").Should().Be(default(T)));
+		actions.Assert(async a => (await a.Service.GetDataAsync<T>("test")).Should().Be(default(T)));
 
-		actions.Act(a => a.Service.SetData("test", data));
+		actions.Act(async a => await a.Service.SetDataAsync("test", data));
 
-		actions.Assert(a =>
+		actions.Assert(async a =>
 		{
-			a.Service.GetData<T>("test").Should().Be(data);
+			(await a.Service.GetDataAsync<T>("test")).Should().Be(data);
 			// getting by improper type will return requested type default.
-			a.Service.GetData<Guid>("test").Should().Be(Guid.Empty);
+			(await a.Service.GetDataAsync<Guid>("test")).Should().Be(Guid.Empty);
 			// invalid get will not corrupt actual stored data.
-			a.Service.GetData<T>("test").Should().Be(data);
+			(await a.Service.GetDataAsync<T>("test")).Should().Be(data);
 		});
 
-		actions.Act(a => a.Service.SetData<object?>("test", null));
+		actions.Act(async a => await a.Service.SetDataAsync<object?>("test", null));
 
-		actions.Assert(a => a.Service.GetData<object?>("test").Should().Be(null));
+		actions.Assert(async a => (await a.Service.GetDataAsync<object?>("test")).Should().Be(null));
 
 		actions.Act(a => a.Service.SubscribeToDataChanges(subscriberId, keys =>
 		{
@@ -46,31 +46,29 @@ public class AppStateTests : TestFramework
 
 		actions.Assert(a =>
 		{
-			a.Service.TriggerChange("unused");
+			a.Service.TriggerChangeAsync("unused");
 			changeCounter.Should().Be(1);
 		});
 
 		actions.Act(a =>
 		{
-			a.Service.ApplyChangesAsync(() =>
+			a.Service.ApplyChangesAsync(async () =>
 			{
-				a.Service.SetData("test", subscriberId);
-				return ValueTask.CompletedTask;
+				await a.Service.SetDataAsync("test", subscriberId);
 			});
 		});
 
-		actions.Assert(a =>
+		actions.Assert(async a =>
 		{
 			changeCounter.Should().Be(2);
-			a.Service.GetData<Guid>("test").Should().Be(subscriberId);
+			(await a.Service.GetDataAsync<Guid>("test")).Should().Be(subscriberId);
 		});
 
 		actions.Act(a =>
 		{
 			a.Service.UnsubscribeToDataChanges(subscriberId);
-			a.Service.ApplyChangesAsync(() =>
+			a.Service.ApplyChanges(() =>
 			{
-				return ValueTask.CompletedTask;
 			});
 		});
 

@@ -7,16 +7,16 @@ public class PageState : IPageState
 		ServiceProvider = serviceProvider;
 	}
 
-	public void SetData<TData>(string page, string name, TData? data)
+	public async ValueTask SetData<TData>(string page, string name, TData? data)
 	{
 		IStateManager state = GetState(page);
-		state.SetData<TData>(name, data);
+		await state.SetDataAsync<TData>(name, data);
 	}
 
-	public TData? GetData<TData>(string page, string name)
+	public async ValueTask<TData?> GetData<TData>(string page, string name)
 	{
 		IStateManager state = GetState(page);
-		return state.GetData<TData>(name);
+		return await state.GetDataAsync<TData>(name);
 	}
 
 	public void SubscribeToDataChanges(string page, Guid subscriberId, Action<IDictionary<string, bool>> changeHandler)
@@ -31,23 +31,17 @@ public class PageState : IPageState
 		state.UnsubscribeToDataChanges(subscriberId);
 	}
 
-	public void TriggerChange(string page, string? key = null)
+	public async ValueTask TriggerChange(string page, string? key = null)
 	{
 		IStateManager state = GetState(page);
-		state.TriggerChange(key);
+		await state.TriggerChangeAsync(key);
 	}
 
 	
-	public ValueTask ApplyChangesAsync(string page, Func<ValueTask> changeHandler)
+	public async ValueTask ApplyChangesAsync(string page, Func<ValueTask> changeHandler)
 	{
 		IStateManager state = GetState(page);
-		return state.ApplyChangesAsync(changeHandler);
-	}
-
-	public void ApplyChanges(string page, Action changeHandler)
-	{
-		IStateManager state = GetState(page);
-		state.ApplyChanges(changeHandler);
+		await state.ApplyChangesAsync(changeHandler);
 	}
 
 	private IStateManager GetState(string page)

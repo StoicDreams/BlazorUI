@@ -2,20 +2,40 @@
 
 public class MemoryStorage : Dictionary<string, object>, IMemoryStorage
 {
-	public bool TryGetValue<TValue>(string name, out TValue? value)
+	public new IEnumerable<string> Keys => base.Keys.ToArray();
+
+	public new ValueTask<bool> Remove(string key)
 	{
-		value = default;
-		if(!base.TryGetValue(name, out object? stored)) { return false; }
-		if (stored is TValue result)
-		{
-			value = result;
-			return true;
-		}
-		return false;
+		return ValueTask.FromResult(base.Remove(key));
 	}
 
-	public void CopyFrom(IStorage storage)
+	public ValueTask SetValue(string key, object value)
 	{
+		base[key] = value;
+		return ValueTask.CompletedTask;
+	}
 
+	public ValueTask<TValue?> GetValue<TValue>(string name)
+	{
+		if(base.TryGetValue(name, out object? stored) && stored is TValue result)
+		{
+			return ValueTask.FromResult<TValue?>(result);
+		}
+		return ValueTask.FromResult<TValue?>(default);
+	}
+
+	public async ValueTask CopyFrom(IStorage storage)
+	{
+		foreach (string key in storage.Keys)
+		{
+			object? value = await storage.GetValue<object>(key);
+			if (value == null) { continue; }
+			base[key] = value;
+		}
+	}
+
+	public void Dispose()
+	{
+		Clear();
 	}
 }

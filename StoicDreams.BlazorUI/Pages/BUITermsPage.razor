@@ -4,7 +4,7 @@
 <DynamicComponent Type="GetContentType" />
 
 @code {
-	private Type GetContentType => GetState<Type>(AppStateDataTags.TermsPageContent) ?? typeof(BUITermsPageContent);
+	private Type GetContentType => GetAppState<Type>(AppStateDataTags.TermsPageContent) ?? typeof(BUITermsPageContent);
 
 	protected override Task OnInitializedAsync()
 	{

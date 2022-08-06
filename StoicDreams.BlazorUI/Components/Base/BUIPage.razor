@@ -1,11 +1,13 @@
 ﻿@inherits BUICore
 
 @code {
-	protected string Title { get => GetState<string>(AppStateDataTags.PageTitle, () => string.Empty); set => SetState(AppStateDataTags.PageTitle, value); }
+	protected string Title { get => GetAppState<string>(AppStateDataTags.PageTitle, () => string.Empty); set => SetAppState(AppStateDataTags.PageTitle, value); }
+	protected string PageKey { get; set; } = string.Empty;
 
 	protected override Task OnInitializedAsync()
 	{
-		SetStateWithTrigger(AppStateDataTags.IsLoadingPage, false);
+		PageKey = GetAppState<string>(AppStateDataTags.CurrentPage, () => string.Empty);
+		SetAppStateWithTrigger(AppStateDataTags.IsLoadingPage, false);
 		return base.OnInitializedAsync();
 	}
 }

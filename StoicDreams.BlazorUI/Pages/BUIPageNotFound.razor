@@ -11,7 +11,7 @@
 	[SupplyParameterFromQuery(Name = "message")]
 	public string Message { get; set; } = string.Empty;
 
-	private string GetMessage => string.IsNullOrWhiteSpace(Message) ? GetState<string?>(AppStateDataTags.NotFoundDefaultMessage) ?? DefaultMessage : Message;
+	private string GetMessage => string.IsNullOrWhiteSpace(Message) ? GetAppState<string?>(AppStateDataTags.NotFoundDefaultMessage) ?? DefaultMessage : Message;
 
 	protected override Task OnInitializedAsync()
 	{

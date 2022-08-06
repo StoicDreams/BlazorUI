@@ -81,7 +81,7 @@ A Maui Blazor sample project will be added later after that framework and toolch
 
 **[Erik Gassler](https://www.erikgassler.com/home) - [Stoic Dreams](https://www.stoicdreams.com/home)** - Just a simpleton who likes making stuff with bits and bytes.
 
-**Support** - Visit [Stoic Dreams' Patreon page](https://www.patreon.com/stoicdreams) if you would like to provide support to Stoic Dreams.
+**Support** - Visit [Stoic Dreams' GitHub Sponsor page](https://github.com/sponsors/StoicDreams) if you would like to provide support to Stoic Dreams.
 Also make sure to share your support to the team at [MudBlazor](https://github.com/sponsors/MudBlazor) for the awesome work they're doing.
 
 

@@ -41,7 +41,7 @@ public interface IStateManager
 	/// Trigger a change event to be called, assuring given key is included in change handler Dictionary.
 	/// </summary>
 	/// <param name="key"></param>
-	void TriggerChange(string key);
+	void TriggerChange(string? key = null);
 
 	/// <summary>
 	/// Use this method to group together multiple state changes and trigger event handlers when finished.

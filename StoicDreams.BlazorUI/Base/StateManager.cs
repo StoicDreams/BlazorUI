@@ -1,8 +1,8 @@
 ﻿namespace StoicDreams.BlazorUI.Base;
 
-public abstract class StateManager : IStateManager
+public class StateManager : IStateManager
 {
-	public void SubscribeToDataChanges(Guid subscriberId, Action simpleChangeHandler)
+	public virtual void SubscribeToDataChanges(Guid subscriberId, Action simpleChangeHandler)
 	{
 		lock (ChangeHandlerLock)
 		{
@@ -10,7 +10,7 @@ public abstract class StateManager : IStateManager
 		}
 	}
 
-	public void SubscribeToDataChanges(Guid subscriberId, Action<IDictionary<string, bool>> changeHandler)
+	public virtual void SubscribeToDataChanges(Guid subscriberId, Action<IDictionary<string, bool>> changeHandler)
 	{
 		lock (ChangeHandlerLock)
 		{
@@ -18,7 +18,7 @@ public abstract class StateManager : IStateManager
 		}
 	}
 
-	public void UnsubscribeToDataChanges(Guid subscriberId)
+	public virtual void UnsubscribeToDataChanges(Guid subscriberId)
 	{
 		lock (ChangeHandlerLock)
 		{
@@ -27,9 +27,6 @@ public abstract class StateManager : IStateManager
 		}
 	}
 
-	public void SetData<TData>(AppStateDataTags tag, TData? data) => SetData(tag.ToString(), data);
-	
-	public TData? GetData<TData>(AppStateDataTags tag) => GetData<TData>(tag.ToString());
 
 	public void SetData<TData>(string name, TData? data)
 	{
@@ -64,7 +61,7 @@ public abstract class StateManager : IStateManager
 		}
 	}
 
-	public void TriggerChange(string? key = null)
+	public virtual void TriggerChange(string? key = null)
 	{
 		Dictionary<string, bool> currentState;
 		lock (ChangeLogLock)
@@ -88,7 +85,7 @@ public abstract class StateManager : IStateManager
 			handler?.Invoke();
 		}
 	}
-	public async ValueTask ApplyChangesAsync(Func<ValueTask> changeHandler)
+	public virtual async ValueTask ApplyChangesAsync(Func<ValueTask> changeHandler)
 	{
 		await changeHandler.Invoke();
 		TriggerChange("ApplyChanges");
@@ -98,7 +95,7 @@ public abstract class StateManager : IStateManager
 		}
 	}
 
-	public void ApplyChanges(Action changeHandler)
+	public virtual void ApplyChanges(Action changeHandler)
 	{
 		changeHandler.Invoke();
 		TriggerChange("ApplyChanges");

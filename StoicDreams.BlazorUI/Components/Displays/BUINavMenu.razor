@@ -4,6 +4,6 @@
 	<BUINavMenuSubMenu NavList="NavList" />
 </MudNavMenu>
 @code {
-	private List<NavDetail> NavList { get => GetState<List<NavDetail>>(AppStateDataTags.NavList) ?? new(); set => SetStateWithTrigger<List<NavDetail>>(AppStateDataTags.NavList, value); }
-	private Color NavActiveColor { get => GetState<Color>(AppStateDataTags.NavMenuActiveColor); }
+	private List<NavDetail> NavList { get => GetAppState<List<NavDetail>>(AppStateDataTags.NavList) ?? new(); set => SetAppStateWithTrigger<List<NavDetail>>(AppStateDataTags.NavList, value); }
+	private Color NavActiveColor { get => GetAppState<Color>(AppStateDataTags.NavMenuActiveColor); }
 }

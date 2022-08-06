@@ -30,6 +30,11 @@ public enum AppStateDataTags
 	/// </summary>
 	BreadcrumbEnabled,
 	/// <summary>
+	/// String of current page path (e.g. "/home").
+	/// Excludes any query data
+	/// </summary>
+	CurrentPage,
+	/// <summary>
 	/// Bool flag setting if tables should be dense.
 	/// Defaults to true
 	/// </summary>

@@ -17,18 +17,18 @@
 </MudAppBar>
 
 @code {
-	private Func<DrawerClickState, ValueTask>? LeftDrawerOnClick => GetState<Func<DrawerClickState, ValueTask>?>(AppStateDataTags.LeftDrawerOnClick);
-	private Func<DrawerClickState, ValueTask>? RightDrawerOnClick => GetState<Func<DrawerClickState, ValueTask>?>(AppStateDataTags.RightDrawerOnClick);
-	private bool LeftDrawerHasContent => GetState<Type?>(AppStateDataTags.LeftDrawerContent) != null;
-	private bool RightDrawerHasContent => GetState<Type?>(AppStateDataTags.RightDrawerContent) != null;
+	private Func<DrawerClickState, ValueTask>? LeftDrawerOnClick => GetAppState<Func<DrawerClickState, ValueTask>?>(AppStateDataTags.LeftDrawerOnClick);
+	private Func<DrawerClickState, ValueTask>? RightDrawerOnClick => GetAppState<Func<DrawerClickState, ValueTask>?>(AppStateDataTags.RightDrawerOnClick);
+	private bool LeftDrawerHasContent => GetAppState<Type?>(AppStateDataTags.LeftDrawerContent) != null;
+	private bool RightDrawerHasContent => GetAppState<Type?>(AppStateDataTags.RightDrawerContent) != null;
 	private bool LeftDrawerEnabled => LeftDrawerOnClick != null;
 	private bool RightDrawerEnabled => RightDrawerOnClick != null;
-	private string LeftDrawerIcon => GetState<string?>(AppStateDataTags.TitleBarLeftDrawerIcon) ?? Icons.Material.Filled.Menu;
-	private string RightDrawerIcon => GetState<string?>(AppStateDataTags.TitleBarRightDrawerIcon) ?? Icons.Material.Filled.Menu;
-	private string LeftDrawerTitle => GetState<string?>(AppStateDataTags.TitleBarLeftDrawerTitle) ?? "Toggle Left Drawer";
-	private string RightDrawerTitle => GetState<string?>(AppStateDataTags.TitleBarRightDrawerTitle) ?? "Toggle Right Drawer";
-	private bool IsDense => GetState<bool>(AppStateDataTags.TitleBarIsDense);
-	private int Elevation => GetState<int>(AppStateDataTags.TitleBarElevation);
+	private string LeftDrawerIcon => GetAppState<string?>(AppStateDataTags.TitleBarLeftDrawerIcon) ?? Icons.Material.Filled.Menu;
+	private string RightDrawerIcon => GetAppState<string?>(AppStateDataTags.TitleBarRightDrawerIcon) ?? Icons.Material.Filled.Menu;
+	private string LeftDrawerTitle => GetAppState<string?>(AppStateDataTags.TitleBarLeftDrawerTitle) ?? "Toggle Left Drawer";
+	private string RightDrawerTitle => GetAppState<string?>(AppStateDataTags.TitleBarRightDrawerTitle) ?? "Toggle Right Drawer";
+	private bool IsDense => GetAppState<bool>(AppStateDataTags.TitleBarIsDense);
+	private int Elevation => GetAppState<int>(AppStateDataTags.TitleBarElevation);
 
 	private void ToggleLeftDrawer()
 	{

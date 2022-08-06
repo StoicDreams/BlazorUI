@@ -61,9 +61,9 @@
 @code {
 	private bool ShowThemeSelector => LoadedThemes.Count > 1;
 	private Guid SelectedId => ThemeState.Current.Id;
-	private bool DenseTitlebar { get => GetState<bool>(AppStateDataTags.TitleBarIsDense); set => SetStateWithTrigger(AppStateDataTags.TitleBarIsDense, value); }
-	private bool ShowBreadcrumb { get => GetState<bool>(AppStateDataTags.BreadcrumbEnabled); set => SetStateWithTrigger(AppStateDataTags.BreadcrumbEnabled, value); }
-	private Color NavActiveColor { get => GetState<Color>(AppStateDataTags.NavMenuActiveColor); set => SetStateWithTrigger(AppStateDataTags.NavMenuActiveColor, value); }
+	private bool DenseTitlebar { get => GetAppState<bool>(AppStateDataTags.TitleBarIsDense, () => false); set => SetAppStateWithTrigger(AppStateDataTags.TitleBarIsDense, value); }
+	private bool ShowBreadcrumb { get => GetAppState<bool>(AppStateDataTags.BreadcrumbEnabled, () => false); set => SetAppStateWithTrigger(AppStateDataTags.BreadcrumbEnabled, value); }
+	private Color NavActiveColor { get => GetAppState<Color>(AppStateDataTags.NavMenuActiveColor, () => Color.Default); set => SetAppStateWithTrigger(AppStateDataTags.NavMenuActiveColor, value); }
 	private static readonly string FrameworkVersion = TrimVersion(typeof(BUIApp).Assembly.GetName()?.Version?.ToString() ?? "");
 
 	private static string TrimVersion(string version)
@@ -90,8 +90,8 @@
 
 	private bool TryGetSubContent(out Type? subContent)
 	{
-		subContent = GetState<Type>(AppStateDataTags.AppSettingsSubComponent);
-		return subContent != null;
+		subContent = GetAppState<Type>(AppStateDataTags.AppSettingsSubComponent, () => typeof(Nullable));
+		return subContent != typeof(Nullable);
 	}
 
 	private void HandleThemesUpdate()

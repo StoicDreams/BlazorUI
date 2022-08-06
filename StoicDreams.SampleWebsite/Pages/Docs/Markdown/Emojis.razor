@@ -31,15 +31,15 @@
 
 	private async Task LoadEmojis()
 	{
-		SetState(AppStateDataTags.IsLoadingPage, true);
+		SetAppState(AppStateDataTags.IsLoadingPage, true);
 		TResult<string[]> result = await ApiRequest.Get<string[]>("https://www.myfi.ws/bui/emojis.json", true);
 		if (!result.IsOkay)
 		{
-			SetState(AppStateDataTags.IsLoadingPage, false);
+			SetAppState(AppStateDataTags.IsLoadingPage, false);
 			return;
 		}
 		CachedList = BuildMarkdownList(result.Result);
-		SetState(AppStateDataTags.IsLoadingPage, false);
+		SetAppState(AppStateDataTags.IsLoadingPage, false);
 		StateHasChanged();
 	}
 

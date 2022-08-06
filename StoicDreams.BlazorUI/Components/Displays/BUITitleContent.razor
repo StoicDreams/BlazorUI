@@ -18,15 +18,15 @@
 
 @code {
 	private string AppName => ShowAppName ? AppOptions.AppName : string.Empty;
-	private string PageTitle => ShowPageTitle ? GetState<string>(AppStateDataTags.PageTitle, () => string.Empty) : string.Empty;
-	private bool ShowAppName => GetState<bool>(AppStateDataTags.TitleBarShowAppName);
-	private bool ShowPageTitle => GetState<bool>(AppStateDataTags.TitleBarShowPageTitle);
+	private string PageTitle => ShowPageTitle ? GetAppState<string>(AppStateDataTags.PageTitle, () => string.Empty) : string.Empty;
+	private bool ShowAppName => GetAppState<bool>(AppStateDataTags.TitleBarShowAppName);
+	private bool ShowPageTitle => GetAppState<bool>(AppStateDataTags.TitleBarShowPageTitle);
 	private bool ShowTitleDisplay => ShowAppName || ShowPageTitle;
-	private Type TitleBarRightSideContent => GetState<Type>(AppStateDataTags.TitleBarRightSideContent) ?? typeof(BUITitleBarQuickLinks);
+	private Type TitleBarRightSideContent => GetAppState<Type>(AppStateDataTags.TitleBarRightSideContent) ?? typeof(BUITitleBarQuickLinks);
 	private bool TryGetLogo(out RenderFragment logo)
 	{
-		string? logoText = GetState<string?>(AppStateDataTags.TitleBarLogo);
-		RenderFragment? loadedLogo = GetState<RenderFragment?>(AppStateDataTags.TitleBarLogo);
+		string? logoText = GetAppState<string?>(AppStateDataTags.TitleBarLogo);
+		RenderFragment? loadedLogo = GetAppState<RenderFragment?>(AppStateDataTags.TitleBarLogo);
 		if (loadedLogo != null) {
 			logo = loadedLogo;
 			return true;

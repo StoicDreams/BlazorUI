@@ -65,8 +65,8 @@
 
 	protected override async Task OnInitializedAsync()
 	{
-		await RunDefaultSetups();
 		await base.OnInitializedAsync();
+		await RunDefaultSetups();
 		// Trigger to clear any values from startup, not expecting anything to be expecting AppInitialized key.
 		AppState.TriggerChange("AppInitialized");
 	}
@@ -82,7 +82,8 @@
 		if (navContext.Path == currentNavPath) { return; }
 		currentNavPath = navContext.Path;
 		FlipState = !FlipState;
-		SetStateWithTrigger(AppStateDataTags.IsLoadingPage, true);
+		SetAppState(AppStateDataTags.CurrentPage, currentNavPath.Split('?')[0].Split('#')[0]);
+		SetAppStateWithTrigger(AppStateDataTags.IsLoadingPage, true);
 	}
 	private string currentNavPath = "appstartup";
 }

@@ -34,10 +34,10 @@
 
 @code {
 	private List<BreadcrumbItem> Items { get; set; } = new();
-	private bool ShowBreadcrumb => GetState<bool>(AppStateDataTags.BreadcrumbEnabled);
+	private bool ShowBreadcrumb => GetAppState<bool>(AppStateDataTags.BreadcrumbEnabled, () => false);
 	private bool IsNavigating => GetIsNavigating;
-	private Color ActiveColor => GetState<Color>(AppStateDataTags.NavMenuActiveColor);
-	private int MinTransitionProgressTiming => GetState<int>(AppStateDataTags.MinNavTransitionProgressDisplay);
+	private Color ActiveColor => GetAppState<Color>(AppStateDataTags.NavMenuActiveColor, () => Color.Inherit);
+	private int MinTransitionProgressTiming => GetAppState<int>(AppStateDataTags.MinNavTransitionProgressDisplay, () => 600);
 
 	protected override Task OnInitializedAsync()
 	{
@@ -52,10 +52,10 @@
 		base.Dispose();
 	}
 
-	protected override void OnStateUpdate()
+	protected override void OnAppStateUpdate()
 	{
 		SetBreadcrumbItems(NavManager.ToBaseRelativePath(NavManager.Uri));
-		base.OnStateUpdate();
+		base.OnAppStateUpdate();
 	}
 
 	private Stopwatch NavTimer = Stopwatch.StartNew();
@@ -63,7 +63,7 @@
 	{
 		get
 		{
-			bool isNavigating = GetState<bool>(AppStateDataTags.IsLoadingPage);
+			bool isNavigating = GetAppState<bool>(AppStateDataTags.IsLoadingPage, () => false);
 			if (!isNavigating && NavTimer.ElapsedMilliseconds < MinTransitionProgressTiming)
 			{
 				int waitForMilliseconds = (int)Math.Max(0, MinTransitionProgressTiming - NavTimer.ElapsedMilliseconds);
@@ -94,7 +94,7 @@
 		get
 		{
 			Dictionary<string, NavDetail> map = new();
-			List<NavDetail> nav = GetState<List<NavDetail>>(AppStateDataTags.NavList) ?? new();
+			List<NavDetail> nav = GetAppState<List<NavDetail>>(AppStateDataTags.NavList, () => new());
 			AddItemsToMap(map, nav);
 			return map;
 		}

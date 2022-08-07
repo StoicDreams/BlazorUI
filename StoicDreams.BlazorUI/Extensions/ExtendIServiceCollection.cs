@@ -19,6 +19,7 @@ public static partial class ExtendIServiceCollection
 		services.AddSingleton<IAppStorage, AppStorage>();
 		services.AddSingleton<IWebStorage, WebStorage>();
 		services.AddTransient<IStateManager, StateManager>();
+		services.AddSingleton<IAuthenticate, Authenticate>();
 		services.AddSingleton<IStorage>(serviceProvider =>
 		{
 			return appOptions.AppType switch
@@ -52,6 +53,4 @@ public static partial class ExtendIServiceCollection
 		services.AddSingleton<IThemeState, ThemeState>();
 		return services;
 	}
-
-	private static Assembly AppAssembly => Assembly.GetEntryAssembly() ?? Assembly.GetCallingAssembly();
 }

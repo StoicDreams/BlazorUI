@@ -29,13 +29,14 @@
 			<MudCardActions>
 				@if (CurrentPermission == StoragePermissions.None)
 				{
-					<MudButton Variant="Variant.Filled" StartIcon="@Icons.Material.TwoTone.PersonOff" Disabled="true">
+					<MudPaper Class="mud-theme-primary pa-2 d-flex align-center" Elevation="5">
+						<MudIcon Icon="@Icons.Material.TwoTone.PersonOff" Class="mr-2" />
 						@ButtonContentNoStorage
-					</MudButton>
+					</MudPaper>
 				}
 				else
 				{
-					<MudButton Variant="Variant.Filled" StartIcon="@Icons.Material.TwoTone.PersonOff" Color="Color.Warning" OnClick="SetToNone">
+					<MudButton Style="@ButtonStyles" Variant="Variant.Filled" StartIcon="@Icons.Material.TwoTone.PersonOff" Color="Color.Warning" OnClick="SetToNone">
 						@ButtonContentNoStorage
 					</MudButton>
 				}
@@ -58,13 +59,14 @@
 				<MudCardActions>
 					@if (CurrentPermission == StoragePermissions.CurrentInstance)
 					{
-						<MudButton Variant="Variant.Filled" StartIcon="@Icons.Material.TwoTone.Tab" Disabled="true">
+						<MudPaper Class="mud-theme-primary pa-2 d-flex align-center" Elevation="5">
+							<MudIcon Icon="@Icons.Material.TwoTone.Tab" Class="mr-2" />
 							@ButtonContentShortTermStorage
-						</MudButton>
+						</MudPaper>
 					}
 					else
 					{
-						<MudButton Variant="Variant.Filled" StartIcon="@Icons.Material.TwoTone.Tab" Color="Color.Warning" OnClick="SetToCurrentInstance">
+						<MudButton Style="@ButtonStyles" Variant="Variant.Filled" Class="justify-start" StartIcon="@Icons.Material.TwoTone.Tab" Color="Color.Warning" OnClick="SetToCurrentInstance">
 							@ButtonContentShortTermStorage
 						</MudButton>
 					}
@@ -86,13 +88,14 @@
 			<MudCardActions>
 				@if (CurrentPermission == StoragePermissions.LongTerm)
 				{
-					<MudButton Variant="Variant.Filled" StartIcon="@Icons.Material.TwoTone.Person" Disabled="true">
+					<MudPaper Class="mud-theme-primary pa-2 d-flex align-center" Elevation="5">
+						<MudIcon Icon="@Icons.Material.TwoTone.Person" Class="mr-2" />
 						@ButtonContentLongTermStorage
-					</MudButton>
+					</MudPaper>
 				}
 				else
 				{
-					<MudButton Variant="Variant.Filled" StartIcon="@Icons.Material.TwoTone.Person" Color="Color.Warning" OnClick="SetToLongTerm">
+					<MudButton Style="@ButtonStyles" Variant="Variant.Filled" StartIcon="@Icons.Material.TwoTone.Person" Color="Color.Warning" OnClick="SetToLongTerm">
 						@ButtonContentLongTermStorage
 					</MudButton>
 				}
@@ -108,6 +111,7 @@
 	private StoragePermissions CurrentPermission { get; set; }
 	private string CardStyles = "max-width:500px;";
 	private string CardHeaderClasses = "mud-theme-primary";
+	private string ButtonStyles = "text-align:left";
 
 	private string AppTypeReference => IsWebsite ? "website" : "application";
 	private string ConsentLabelForTracking => $"I confirm that I understand the above statements and I would like my usage tracked to help make this site better.";

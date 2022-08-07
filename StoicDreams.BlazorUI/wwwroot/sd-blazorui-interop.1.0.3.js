@@ -19,6 +19,10 @@ export function CallMethod(method, args) {
 	return null;
 }
 
+export function RunInlineScript(script) {
+	return eval(script);
+}
+
 export function AddJSFile(filePath) {
 	AddElement('script', {}, document.body);
 }

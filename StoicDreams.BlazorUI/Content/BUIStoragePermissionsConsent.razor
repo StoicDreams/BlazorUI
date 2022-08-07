@@ -1,0 +1,144 @@
+﻿@inherits BUICore
+
+<BUISectionTitle>Storage Consent</BUISectionTitle>
+
+<BUIStandardSection>
+	<BUIParagraph>This @AppTypeReference has multiple levels of data storage available for you to choose from, which will determine how data is stored on your device for this @AppTypeReference.</BUIParagraph>
+	<BUIPaper PaperType="PaperTypes.Wrap" Class="gap-4">
+		<MudSpacer />
+		<MudCard Outlined="true" Style="@CardStyles">
+			<MudCardHeader Class="@CardHeaderClasses">Memory-only Storage (default behavior - Maximum Security)</MudCardHeader>
+			<MudCardContent>
+				<BUIParagraph>With this storage option, any login, settings, or other persistable information will only be retained in memory, and will be gone when the @AppTypeReference is either closed or refreshed.</BUIParagraph>
+				<BUIParagraph>Use this option when:</BUIParagraph>
+				<MudList Dense="true">
+					<MudListItem>You are on a public computer, or some other device that is not yours.</MudListItem>
+					@if (IsWebsite)
+					{
+						<MudListItem>You do not want any personal data stored in any storage that will persist beyond a page refresh.</MudListItem>
+					}
+					<MudListItem>You want to make sure you are required to login everytime you access this @AppTypeReference, even when you simply reload the page.</MudListItem>
+				</MudList>
+				@if (HasStorageConsent)
+				{
+					<MudAlert Severity="Severity.Warning">
+						You have opted-in to storing your data on this computer. Selecting this option now will result in clearing any data saved from storage.
+					</MudAlert>
+				}
+			</MudCardContent>
+			<MudCardActions>
+				@if (CurrentPermission == StoragePermissions.None)
+				{
+					<MudButton Variant="Variant.Filled" StartIcon="@Icons.Material.TwoTone.PersonOff" Disabled="true">
+						@ButtonContentNoStorage
+					</MudButton>
+				}
+				else
+				{
+					<MudButton Variant="Variant.Filled" StartIcon="@Icons.Material.TwoTone.PersonOff" Color="Color.Warning" OnClick="SetToNone">
+						@ButtonContentNoStorage
+					</MudButton>
+				}
+			</MudCardActions>
+		</MudCard>
+
+		@if (IsWebsite)
+		{
+			<MudCard Outlined="true" Style="@CardStyles">
+				<MudCardHeader Class="@CardHeaderClasses">Single Session/Tab Storage (Medium Security)</MudCardHeader>
+				<MudCardContent>
+					<BUIParagraph>With this storage option, any time you open a new tab and visit this website, you will need to consent to storage and login in order to access your account features.</BUIParagraph>
+					<BUIParagraph>Use this option when:</BUIParagraph>
+					<MudList Dense="true">
+						<MudListItem>You are on your personal device.</MudListItem>
+						<MudListItem>You will logout before leaving your device accessible to others.</MudListItem>
+						<MudListItem>You want to stay logged in if you refresh the page, but prefer to login everytime you visit this @AppTypeReference in a new tab or window.</MudListItem>
+					</MudList>
+				</MudCardContent>
+				<MudCardActions>
+					@if (CurrentPermission == StoragePermissions.CurrentInstance)
+					{
+						<MudButton Variant="Variant.Filled" StartIcon="@Icons.Material.TwoTone.Tab" Disabled="true">
+							@ButtonContentShortTermStorage
+						</MudButton>
+					}
+					else
+					{
+						<MudButton Variant="Variant.Filled" StartIcon="@Icons.Material.TwoTone.Tab" Color="Color.Warning" OnClick="SetToCurrentInstance">
+							@ButtonContentShortTermStorage
+						</MudButton>
+					}
+				</MudCardActions>
+			</MudCard>
+		}
+
+		<MudCard Outlined="true" Style="@CardStyles">
+			<MudCardHeader Class="@CardHeaderClasses">Long-term Storage (Lowest Security)</MudCardHeader>
+			<MudCardContent>
+				<BUIParagraph>With this storage option, you only need to consent and login once. Your login will persist even after closing and reopening this @AppTypeReference.</BUIParagraph>
+				<BUIParagraph>Use this option when:</BUIParagraph>
+				<MudList Dense="true">
+					<MudListItem>You are on your personal device.</MudListItem>
+					<MudListItem>Your device is secure from other people accessing it.</MudListItem>
+					<MudListItem>You want to remain logged in until you explicitely logout.</MudListItem>
+				</MudList>
+			</MudCardContent>
+			<MudCardActions>
+				@if (CurrentPermission == StoragePermissions.LongTerm)
+				{
+					<MudButton Variant="Variant.Filled" StartIcon="@Icons.Material.TwoTone.Person" Disabled="true">
+						@ButtonContentLongTermStorage
+					</MudButton>
+				}
+				else
+				{
+					<MudButton Variant="Variant.Filled" StartIcon="@Icons.Material.TwoTone.Person" Color="Color.Warning" OnClick="SetToLongTerm">
+						@ButtonContentLongTermStorage
+					</MudButton>
+				}
+			</MudCardActions>
+		</MudCard>
+		<MudSpacer />
+	</BUIPaper>
+</BUIStandardSection>
+
+@code {
+	private bool IsWebsite => AppOptions.AppType == AppTypes.Website;
+	private bool HasStorageConsent => CurrentPermission != StoragePermissions.None;
+	private StoragePermissions CurrentPermission { get; set; }
+	private string CardStyles = "max-width:500px;";
+	private string CardHeaderClasses = "mud-theme-primary";
+
+	private string AppTypeReference => IsWebsite ? "website" : "application";
+	private string ConsentLabelForTracking => $"I confirm that I understand the above statements and I would like my usage tracked to help make this site better.";
+	private string RemoveConsentLabelForTracking => $"I would like to revoke my consent to track my usage for this {AppTypeReference}.";
+
+	private string ButtonContentNoStorage => $"I confirm this is not my personal device or I simply want to assure a login is required everytime I access this {AppTypeReference}.";
+	private string ButtonContentShortTermStorage => $"I confirm that I am using my personal device and that I understand the above statements and I accept the use of storing my data in the browser so my login and other data will be remembered when the website is reloaded.";
+	private string ButtonContentLongTermStorage => $"I confirm that I am using my personal device and that I understand the above statements and I accept the use of storing my data in the browser so my login and other data will be remembered any time I access this {AppTypeReference}.";
+
+	protected override async Task OnInitializedAsync()
+	{
+		CurrentPermission = await Storage.GetValue<StoragePermissions>(AppStateDataTags.StoragePermission.AsName());
+		await base.OnInitializedAsync();
+	}
+
+	private async Task SetToNone()
+	{
+		await Storage.SetValue(AppStateDataTags.StoragePermission.AsName(), StoragePermissions.None);
+		CurrentPermission = StoragePermissions.None;
+	}
+
+	private async Task SetToCurrentInstance()
+	{
+		await Storage.SetValue(AppStateDataTags.StoragePermission.AsName(), StoragePermissions.CurrentInstance);
+		CurrentPermission = StoragePermissions.CurrentInstance;
+	}
+
+	private async Task SetToLongTerm()
+	{
+		await Storage.SetValue(AppStateDataTags.StoragePermission.AsName(), StoragePermissions.LongTerm);
+		CurrentPermission = StoragePermissions.LongTerm;
+	}
+
+}

@@ -7,6 +7,7 @@ public abstract class BUICore : ComponentBase, IDisposable
 	[Inject] protected IAppState AppState { get; private set; } = null!;
 	[Inject] protected ISessionState SessionState { get; private set; } = null!;
 	[Inject] internal IPageState PageState { get; private set; } = null!;
+	[Inject] protected IStorage Storage { get; private set; } = null!;
 
 	protected AppOptions HiddenOptions => (AppOptions)AppOptions;
 

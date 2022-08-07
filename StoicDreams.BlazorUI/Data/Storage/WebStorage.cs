@@ -28,7 +28,19 @@ public class WebStorage : IWebStorage
 		return result;
 	}
 
-	public ValueTask<TValue?> GetValue<TValue>(string name) => Memory.GetValue<TValue>(name);
+	public async ValueTask<TValue?> GetValue<TValue>(string name)
+	{
+		if (StorageCache.ContainsKey(name))
+		{
+			TValue? cached = await FromJson<TValue>(StorageCache[name]);
+			if (cached != null)
+			{
+				await Memory.SetValue(name, cached);
+				StorageCache.Remove(name);
+			}
+		}
+		return await Memory.GetValue<TValue>(name);
+	}
 
 	public async ValueTask CopyFrom(IStorage storage)
 	{
@@ -56,14 +68,23 @@ public class WebStorage : IWebStorage
 
 	private async ValueTask SyncMemoryFromStorage()
 	{
-		StoragePermissions permission = await GetStorageItem<StoragePermissions>("localStorage", nameof(AppStateDataTags.StoragePermission));
+		StoragePermissions permission = await GetStorageItem<StoragePermissions>("localStorage", AppStateDataTags.StoragePermission.AsName());
 		if (permission == StoragePermissions.None)
 		{
-			permission = await GetStorageItem<StoragePermissions>("sessionStorage", nameof(AppStateDataTags.StoragePermission));
+			permission = await GetStorageItem<StoragePermissions>("sessionStorage", AppStateDataTags.StoragePermission.AsName());
 		}
 		if (permission != StoragePermissions.None)
 		{
 			AppState.SetData(AppStateDataTags.StoragePermission, permission);
+			string container = permission == StoragePermissions.LongTerm ? "localStorage" : "sessionStorage";
+			//await Memory.SetValue(AppStateDataTags.StoragePermission.AsName(), permission);
+			string[] keys = await JsInterop.RunInlineScript<string[]>($"(()=>Object.keys({container}))()") ?? Array.Empty<string>();
+			foreach (string key in keys)
+			{
+				string? json = await GetStorageJson(container, key);
+				if (json == null) { continue; }
+				StorageCache[key] = json;
+			}
 		}
 	}
 
@@ -97,9 +118,14 @@ public class WebStorage : IWebStorage
 
 	private async ValueTask<TResult?> GetStorageItem<TResult>(string container, string key)
 	{
-		string? stored = await JsInterop.CallMethod<string>($"{container}.getItem", nameof(AppStateDataTags.StoragePermission));
-		if (string.IsNullOrWhiteSpace(stored)) { return default; }
-		return await FromJson<TResult>(stored);
+		string? json = await GetStorageJson(container, key);
+		if (string.IsNullOrWhiteSpace(json)) { return default; }
+		return await FromJson<TResult>(json);
+	}
+
+	private async ValueTask<string?> GetStorageJson(string container, string key)
+	{
+		return await JsInterop.CallMethod<string>($"{container}.getItem", nameof(AppStateDataTags.StoragePermission));
 	}
 
 	private ValueTask<string> ToJson(object input) => JsonConvert.Serialize(input);
@@ -111,6 +137,7 @@ public class WebStorage : IWebStorage
 
 	private StoragePermissions GetPermission => AppState.GetData<StoragePermissions>(AppStateDataTags.StoragePermission);
 	private IMemoryStorage Memory { get; }
+	private Dictionary<string, string> StorageCache { get; } = new();
 	private IAppState AppState { get; }
 	private IJsonConvert JsonConvert { get; }
 	private IJsInterop JsInterop { get; }

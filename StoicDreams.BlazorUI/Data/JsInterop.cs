@@ -2,7 +2,7 @@
 
 public class JsInterop : IJsInterop, IAsyncDisposable
 {
-	public const string InteropFilePath = "./sd-blazorui-interop.1.0.2.js";
+	public const string InteropFilePath = "./sd-blazorui-interop.1.0.3.js";
 	public JsInterop(IJSRuntime jsRuntime)
 	{
 		InteropModule = new(() => jsRuntime.InvokeAsync<IJSObjectReference>(
@@ -32,6 +32,33 @@ public class JsInterop : IJsInterop, IAsyncDisposable
 		catch (Exception ex)
 		{
 			await module.InvokeVoidAsync("CallMethod", "console.error", method, $"JsInterop exception: {ex.Message}", args);
+			return default;
+		}
+	}
+
+	public async ValueTask RunInlineScript(string script)
+	{
+		IJSObjectReference module = await InteropModule.Value;
+		try
+		{
+			await module.InvokeVoidAsync("RunInlineScript", script);
+		}
+		catch (Exception ex)
+		{
+			await module.InvokeVoidAsync("CallMethod", "console.error", script, $"JsInterop exception: {ex.Message}");
+		}
+	}
+
+	public async ValueTask<TResult?> RunInlineScript<TResult>(string script)
+	{
+		IJSObjectReference module = await InteropModule.Value;
+		try
+		{
+			return await module.InvokeAsync<TResult>("RunInlineScript", script);
+		}
+		catch (Exception ex)
+		{
+			await module.InvokeVoidAsync("CallMethod", "console.error", script, $"JsInterop exception: {ex.Message}");
 			return default;
 		}
 	}

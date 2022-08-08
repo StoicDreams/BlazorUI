@@ -46,7 +46,7 @@ stages:
         displayName: 'Run Build Tests'
         inputs:
           command: 'test'
-          projects: '**/**.BuildTests.csproj'
+          projects: '**/*.BuildTests.csproj'
           arguments: '--configuration $(buildConfiguration) --no-restore --collect: "XPlat Code Coverage"'
           publishTestResults: true,
           nobuild: true

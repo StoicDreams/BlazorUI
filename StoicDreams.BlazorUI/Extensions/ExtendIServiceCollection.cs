@@ -11,10 +11,10 @@ public static partial class ExtendIServiceCollection
 	{
 		IAppOptions appOptions = new AppOptions();
 		setupHandler?.Invoke(appOptions);
+		services.AddStoicDreamsCore();
 		services.AddSingleton<IAppOptions>(appOptions);
 		services.AddSingleton<IJsonConvert, JsonConvert>();
 		services.AddTransient<Data.IJsInterop, JsInterop>();
-		services.AddTransient<IApiRequest, ApiRequest>();
 		services.AddTransient<IMemoryStorage, MemoryStorage>();
 		services.AddSingleton<IAppStorage, AppStorage>();
 		services.AddSingleton<IWebStorage, WebStorage>();

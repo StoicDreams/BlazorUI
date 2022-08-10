@@ -17,8 +17,8 @@
 </MudAppBar>
 
 @code {
-	private Func<DrawerClickState, ValueTask>? LeftDrawerOnClick => GetAppState<Func<DrawerClickState, ValueTask>?>(AppStateDataTags.LeftDrawerOnClick);
-	private Func<DrawerClickState, ValueTask>? RightDrawerOnClick => GetAppState<Func<DrawerClickState, ValueTask>?>(AppStateDataTags.RightDrawerOnClick);
+	private Func<BUICore, DrawerClickState, ValueTask>? LeftDrawerOnClick => GetAppState<Func<BUICore, DrawerClickState, ValueTask>?>(AppStateDataTags.LeftDrawerOnClick);
+	private Func<BUICore, DrawerClickState, ValueTask>? RightDrawerOnClick => GetAppState<Func<BUICore, DrawerClickState, ValueTask>?>(AppStateDataTags.RightDrawerOnClick);
 	private bool LeftDrawerHasContent => GetAppState<Type?>(AppStateDataTags.LeftDrawerContent) != null;
 	private bool RightDrawerHasContent => GetAppState<Type?>(AppStateDataTags.RightDrawerContent) != null;
 	private bool LeftDrawerEnabled => LeftDrawerOnClick != null;
@@ -36,7 +36,7 @@
 		{
 			bool isOpen = !AppState.GetData<bool>(AppStateDataTags.TitleBarLeftDrawerOpen);
 			AppState.SetData(AppStateDataTags.TitleBarLeftDrawerOpen, isOpen);
-			LeftDrawerOnClick?.Invoke(GetState(isOpen));
+			LeftDrawerOnClick?.Invoke(this, GetState(isOpen));
 			return ValueTask.CompletedTask;
 		});
 	}
@@ -47,7 +47,7 @@
 		{
 			bool isOpen = !AppState.GetData<bool>(AppStateDataTags.TitleBarRightDrawerOpen);
 			AppState.SetData(AppStateDataTags.TitleBarRightDrawerOpen, isOpen);
-			RightDrawerOnClick?.Invoke(GetState(isOpen));
+			RightDrawerOnClick?.Invoke(this, GetState(isOpen));
 		});
 	}
 

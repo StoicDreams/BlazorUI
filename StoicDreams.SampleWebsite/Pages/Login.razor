@@ -1,0 +1,22 @@
+﻿@inherits BUIPage
+@page "/Login"
+@page "/signin"
+@page "/signup"
+@page "/createaccount"
+@page "/Admin"
+
+<BUILogin />
+
+@code {
+	protected override async Task OnInitializedAsync()
+	{
+		if (Auth.IsLoggedIn)
+		{
+			string redirectUrl = await GetSessionState<string>("LoginRedirect", () => "/home");
+			NavManager.NavigateTo(redirectUrl);
+			return;
+		}
+		Title = "Account Login";
+		await base.OnInitializedAsync();
+	}
+}

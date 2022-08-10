@@ -1,17 +1,26 @@
-﻿namespace StoicDreams.BlazorUI.Components.Base;
+﻿using System;
+
+namespace StoicDreams.BlazorUI.Components.Base;
 
 public abstract class BUICore : ComponentBase, IDisposable
 {
-	[Inject] protected IAppOptions AppOptions { get; private set; } = null!;
-	[Inject] protected ISnackbar Snackbar { get; private set; } = null!;
-	[Inject] protected IAppState AppState { get; private set; } = null!;
-	[Inject] protected ISessionState SessionState { get; private set; } = null!;
+	[Inject] public IAppOptions AppOptions { get; private set; } = null!;
+	[Inject] public ISnackbar Snackbar { get; private set; } = null!;
+	[Inject] public IAppState AppState { get; private set; } = null!;
+	[Inject] public ISessionState SessionState { get; private set; } = null!;
 	[Inject] internal IPageState PageState { get; private set; } = null!;
-	[Inject] protected IStorage Storage { get; private set; } = null!;
+	[Inject] public IStorage Storage { get; private set; } = null!;
+	[Inject] public NavigationManager NavManager { get; private set; } = null!;
+	[Inject] public IAuthenticate Auth { get; private set; } = null!;
 
 	protected AppOptions HiddenOptions => (AppOptions)AppOptions;
 
 	protected Guid ComponentId { get; } = Guid.NewGuid();
+
+	/// <summary>
+	/// Get the current page in a relative format (e.g. "/home").
+	/// </summary>
+	public string CurrentPage => NavManager.ToBaseRelativePath(NavManager.Uri).ToLower();
 
 	/// <summary>
 	/// Used in a workaround for a rendering issue when updating lists they don't redraw correctly.

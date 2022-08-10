@@ -32,7 +32,7 @@
 	private async Task LoadEmojis()
 	{
 		SetAppState(AppStateDataTags.IsLoadingPage, true);
-		TResult<string[]> result = await ApiRequest.Get<string[]>("https://cdn.stoicdreams.com/bui/emojis.json", true);
+		TResult<string[]> result = await ApiRequest.GetAsync<string[]>("https://cdn.stoicdreams.com/bui/emojis.json", true);
 		if (!result.IsOkay)
 		{
 			SetAppState(AppStateDataTags.IsLoadingPage, false);

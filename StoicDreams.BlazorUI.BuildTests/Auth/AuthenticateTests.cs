@@ -15,7 +15,7 @@ public class AuthenticateTests : TestFramework
 	[InlineData(true, TestRoles.Guest, 0)]
 	public void Verify_IsRole(bool expectedResult, TestRoles checkRole, int currentRoles)
 	{
-		IActions<Authenticate> actions = ArrangeUnitTest<Authenticate>(options =>
+		IActions<MockAuthenticate> actions = ArrangeUnitTest<MockAuthenticate>(options =>
 		{
 		});
 

@@ -1,4 +1,6 @@
-﻿<BUIDrawerHeader>
+﻿@inherits BUICore
+
+<BUIDrawerHeader>
 	Side Content Sample
 </BUIDrawerHeader>
 
@@ -6,6 +8,14 @@
 	<p>This is a sample for how you can manage side content loaded in a drawer.</p>
 </BUIDrawerPaper>
 
-@code {
+<MudButton Class="mt-2" Variant="Variant.Filled" EndIcon="@Icons.Material.TwoTone.Logout" OnClick="SignOut">Sign-Out</MudButton>
 
+@code {
+	private async Task SignOut()
+	{
+		TResult result = await Auth.LogOut();
+		Snackbar.Add(result.Message, result.IsOkay ? Severity.Success : Severity.Error);
+		SetAppStateWithTrigger(AppStateDataTags.TitleBarRightDrawerOpen, false);
+		NavManager.NavigateTo("/home");
+	}
 }

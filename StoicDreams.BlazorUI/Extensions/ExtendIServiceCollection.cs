@@ -13,13 +13,12 @@ public static partial class ExtendIServiceCollection
 		setupHandler?.Invoke(appOptions);
 		services.AddStoicDreamsCore();
 		services.AddSingleton<IAppOptions>(appOptions);
-		services.AddSingleton<IJsonConvert, JsonConvert>();
 		services.AddTransient<Data.IJsInterop, JsInterop>();
 		services.AddTransient<IMemoryStorage, MemoryStorage>();
 		services.AddSingleton<IAppStorage, AppStorage>();
 		services.AddSingleton<IWebStorage, WebStorage>();
 		services.AddTransient<IStateManager, StateManager>();
-		services.AddSingleton<IAuthenticate, Authenticate>();
+		services.AddSingleton<IAuthenticate, MockAuthenticate>();
 		services.AddSingleton<IStorage>(serviceProvider =>
 		{
 			return appOptions.AppType switch

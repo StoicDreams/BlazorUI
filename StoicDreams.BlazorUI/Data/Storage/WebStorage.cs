@@ -128,8 +128,8 @@ public class WebStorage : IWebStorage
 		return await JsInterop.CallMethod<string>($"{container}.getItem", nameof(AppStateDataTags.StoragePermission));
 	}
 
-	private ValueTask<string> ToJson(object input) => JsonConvert.Serialize(input);
-	private ValueTask<TInstance?> FromJson<TInstance>(string json) => JsonConvert.Deserialize<TInstance?>(json, () => default);
+	private ValueTask<string> ToJson(object input) => JsonConvert.SerializeAsync(input);
+	private ValueTask<TInstance?> FromJson<TInstance>(string json) => JsonConvert.DeserializeAsync<TInstance?>(json, () => default);
 
 	private ValueTask CallMethod(string method, params object[] args) => JsInterop.CallMethod(method, args);
 	private ValueTask<TResult?> CallMethod<TResult>(string method, params object[] args) => JsInterop.CallMethod<TResult>(method, args);

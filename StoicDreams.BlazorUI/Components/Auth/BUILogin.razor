@@ -1,0 +1,170 @@
+﻿@inherits BUICore
+@using System.Text.RegularExpressions
+
+@if (!Auth.IsLoggedIn)
+{
+	<BUIStoragePermissionsConsent />
+
+	<BUIStandardSection>
+		<MudTabs>
+			<MudTabPanel Text="Sign-In">
+				<MudTextField MaxLength="300" Label="Email" Clearable="true" Variant="Variant.Text" @bind-Value="@InputEmail" InputType="InputType.Email" />
+				<MudTextField MaxLength="300" Label="Password" Clearable="true" Variant="Variant.Text" @bind-Value="@InputPassword" InputType="InputType.Password" />
+
+				@if (!string.IsNullOrWhiteSpace(LoginMessage))
+				{
+					<MudAlert Class="mt-2" Severity="Severity.Error">@LoginMessage</MudAlert>
+				}
+
+				<BUIPaper PaperType="PaperTypes.JustifyEnd" Class="mt-2">
+					<MudButton OnClick="@ProcessSignIn">Sign-In</MudButton>
+				</BUIPaper>
+			</MudTabPanel>
+			<MudTabPanel Text="Create Account">
+				<MudAlert Severity="Severity.Info">
+					Please make sure you have read and agree to our <BUILink Href="/privacy">Privacy Policy</BUILink> and <BUILink Href="/terms">Terms of Service</BUILink> before creating your @AppOptions.CompanyName account with us.
+				</MudAlert>
+				<BUIParagraph>Provide your name and email to be used for your new @AppOptions.CompanyName account.</BUIParagraph>
+				<BUIParagraph>We will then send you a confirmation email containing a link for you to use to confirm your email belongs to you.</BUIParagraph>
+				<BUIParagraph>Once confirmed you will be able to set your password to finalize the creation of your account.</BUIParagraph>
+
+				<MudTextField MaxLength="100" Label="Display Name" Clearable="true" Variant="Variant.Text" @bind-Value="@InputDisplayName" />
+				<MudTextField MaxLength="300" Label="Email" Clearable="true" Variant="Variant.Text" @bind-Value="@InputEmail" InputType="InputType.Email" />
+				<MudTextField MaxLength="300" Label="Confirm Email" Clearable="true" Variant="Variant.Text" @bind-Value="@InputConfirmEmail" InputType="InputType.Email" />
+
+				<MudAlert Severity="Severity.Info">
+					Submitting will initialize your account creation and send an email to the email address your provided to confirm your email belongs to you. Click the email confirmation link in this email to confirm your account. The final step in this confirmation will allow you to set your password and finish creating your account.
+				</MudAlert>
+
+				@if (!string.IsNullOrWhiteSpace(LoginMessage))
+				{
+					<MudAlert Class="mt-2" Severity="Severity.Error">@LoginMessage</MudAlert>
+				}
+
+				<BUIPaper PaperType="PaperTypes.JustifyEnd" Class="mt-2">
+					<MudButton OnClick="@ProcessSignUp" Variant="Variant.Filled">Create Account</MudButton>
+				</BUIPaper>
+			</MudTabPanel>
+		</MudTabs>
+	</BUIStandardSection>
+}
+
+@code {
+	private bool RedirectLoggedInUsers { get; set; }
+	private string LoginMessage { get; set; } = string.Empty;
+	private string InputDisplayName { get; set; } = string.Empty;
+	private string InputEmail { get; set; } = string.Empty;
+	private string InputConfirmEmail { get; set; } = string.Empty;
+	private string InputPassword { get; set; } = string.Empty;
+
+	protected override async Task OnInitializedAsync()
+	{
+		await base.OnInitializedAsync();
+		await RedirectUserWhenLoggedIn();
+	}
+
+	private async Task ProcessSignIn()
+	{
+		LoginMessage = string.Empty;
+		if (!ValidateEmail() || InputEmail == null)
+		{
+			return;
+		}
+		InputPassword = InputPassword?.Trim() ?? "";
+		if (!Auth.PasswordIsValid(InputPassword, out string message))
+		{
+			LoginMessage = message;
+			return;
+		}
+		TResult result = await Auth.SignIn(InputEmail, InputPassword);
+		if (result.IsOkay)
+		{
+			Snackbar.Add(result.Message, Severity.Success);
+			NavManager.NavigateTo("/home");
+		}
+		else
+		{
+			LoginMessage = result.Message;
+		}
+	}
+
+	private async Task ProcessSignUp()
+	{
+		if (!ValidateEmail())
+		{
+			StateHasChanged();
+			return;
+		}
+		InputConfirmEmail = InputConfirmEmail?.Trim() ?? "";
+		if (InputConfirmEmail != InputEmail)
+		{
+			LoginMessage = "Confirmation email does not match email.";
+			StateHasChanged();
+			return;
+		}
+		if (!ValidateDisplayName() || string.IsNullOrEmpty(InputDisplayName))
+		{
+			StateHasChanged();
+			return;
+		}
+		TResult result = await Auth.SignUp(InputEmail, InputDisplayName);
+		if (!result.IsOkay)
+		{
+			LoginMessage = result.Message;
+			StateHasChanged();
+			return;
+		}
+		Snackbar.Add(result.Message, Severity.Success);
+		NavManager.NavigateTo("/home");
+		StateHasChanged();
+	}
+
+	private bool ValidateEmail()
+	{
+		LoginMessage = "";
+		InputEmail = InputEmail?.Trim() ?? "";
+		if (IsMissingInput(InputEmail, "Please enter your email."))
+		{
+			return false;
+		}
+		if (!Auth.EmailIsValid(InputEmail, out string message))
+		{
+			LoginMessage = message;
+			return false;
+		}
+		return true;
+	}
+
+	private Regex DisplayNameTrimPattern { get; } = new Regex("[^A-Za-z ]+", RegexOptions.Singleline | RegexOptions.Compiled);
+	private bool ValidateDisplayName()
+	{
+		InputDisplayName = InputDisplayName?.Trim() ?? "";
+		InputDisplayName = DisplayNameTrimPattern.Replace(InputDisplayName, "").Trim();
+		if (IsMissingInput(InputDisplayName, "Please enter your display name."))
+		{
+			return false;
+		}
+		return true;
+	}
+
+	private bool IsMissingInput(string input, string message)
+	{
+		if (string.IsNullOrWhiteSpace(input))
+		{
+			LoginMessage = message;
+			return true;
+		}
+		return false;
+	}
+
+	private Task RedirectUserWhenLoggedIn()
+	{
+		if (!RedirectLoggedInUsers || !Auth.IsLoggedIn)
+		{
+			return Task.CompletedTask;
+		}
+		Snackbar.Add("You are already logged in.", Severity.Info);
+		NavManager.NavigateTo("/home");
+		return Task.CompletedTask;
+	}
+}

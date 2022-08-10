@@ -1,4 +1,6 @@
-﻿namespace StoicDreams.SampleWebsite;
+﻿using StoicDreams.BlazorUI.Data;
+
+namespace StoicDreams.SampleWebsite;
 
 public static class AppSettings
 {
@@ -20,7 +22,9 @@ public static class AppSettings
 		{
 			appState.SetData(AppStateDataTags.TitleBarLogo, "<img src=\"BlazorUI.svg\" title=\"Blazor UI Logo\" aria-label=\"Blazor UI Logo\" />");
 			appState.SetData(AppStateDataTags.NavList, GetSiteNavigation());
-			appState.SetData(AppStateDataTags.RightDrawerOnClick, HandlerRightDrawerClickState(appState));
+			appState.SetData(AppStateDataTags.RightDrawerOnClick, HandlerRightDrawerClickState);
+			appState.SetData(AppStateDataTags.TitleBarRightDrawerIcon, Icons.Material.TwoTone.Login);
+			appState.SetData(AppStateDataTags.TitleBarRightDrawerTitle, "Sign-In");
 			appState.SetData(AppStateDataTags.TitleBarLeftDrawerTitle, "Toggle Navigation Menu");
 			appState.SetData(AppStateDataTags.TitleBarRightSideContent, typeof(TitleBarStrip));
 		});
@@ -42,15 +46,18 @@ public static class AppSettings
 		NavDetail.Create("Privacy", Icons.Material.TwoTone.PrivacyTip, "/privacy")
 	};
 
-	private static Func<DrawerClickState, ValueTask> HandlerRightDrawerClickState(IAppState appState)
+	private static ValueTask HandlerRightDrawerClickState(BUICore sender, DrawerClickState clickState)
 	{
-		return (DrawerClickState state) =>
+		if (!sender.Auth.IsLoggedIn)
 		{
-			if (state == DrawerClickState.Opening)
-			{
-				appState.SetData(AppStateDataTags.RightDrawerContent, typeof(SideContentSample));
-			}
+			sender.NavManager.NavigateTo("/signin");
+			sender.AppState.SetData(AppStateDataTags.TitleBarRightDrawerOpen, false);
 			return ValueTask.CompletedTask;
-		};
+		}
+		if (clickState == DrawerClickState.Opening)
+		{
+			sender.AppState.SetData(AppStateDataTags.RightDrawerContent, typeof(SideContentSample));
+		}
+		return ValueTask.CompletedTask;
 	}
 }

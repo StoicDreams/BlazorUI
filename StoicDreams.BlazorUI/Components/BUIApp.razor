@@ -16,36 +16,45 @@
 
 <BUITitleSync />
 
-<Router AppAssembly="@AppAssembly" AdditionalAssemblies="FrameworkAssemblies" OnNavigateAsync="HandleNavigationStart">
-	<Found Context="routeData">
-		<LayoutView Layout="@AppLayout">
-			<BlazorTransitionableRoute.TransitionableRoutePrimary RouteData="@routeData" ForgetStateOnTransition="true">
-				<BlazorTransitionableRoute.TransitionableRouteView DefaultLayout="@PageLayout" />
-			</BlazorTransitionableRoute.TransitionableRoutePrimary>
-			<BlazorTransitionableRoute.TransitionableRouteSecondary RouteData="@routeData" ForgetStateOnTransition="true">
-				<BlazorTransitionableRoute.TransitionableRouteView DefaultLayout="@PageLayout" />
-			</BlazorTransitionableRoute.TransitionableRouteSecondary>
-		</LayoutView>
-	</Found>
-	<NotFound>
-		@if (FlipState)
-		{
+@if (IsLoadingApp)
+{
+	<MudPaper Height="100%" Width="100%" Class="d-flex align-center justify-center">
+		<MudProgressCircular Color="Color.Primary" Indeterminate="true" Size="Size.Large" />
+	</MudPaper>
+}
+else
+{
+	<Router AppAssembly="@AppAssembly" AdditionalAssemblies="FrameworkAssemblies" OnNavigateAsync="HandleNavigationStart">
+		<Found Context="routeData">
 			<LayoutView Layout="@AppLayout">
-				<div class="page-transitional">
-					<DynamicComponent Type="PageNotFound" />
-				</div>
+				<BlazorTransitionableRoute.TransitionableRoutePrimary RouteData="@routeData" ForgetStateOnTransition="true">
+					<BlazorTransitionableRoute.TransitionableRouteView DefaultLayout="@PageLayout" />
+				</BlazorTransitionableRoute.TransitionableRoutePrimary>
+				<BlazorTransitionableRoute.TransitionableRouteSecondary RouteData="@routeData" ForgetStateOnTransition="true">
+					<BlazorTransitionableRoute.TransitionableRouteView DefaultLayout="@PageLayout" />
+				</BlazorTransitionableRoute.TransitionableRouteSecondary>
 			</LayoutView>
-		}
-		else
-		{
-			<LayoutView Layout="@AppLayout">
-				<div class="page-transitional">
-					<DynamicComponent Type="PageNotFound" />
-				</div>
-			</LayoutView>
-		}
-	</NotFound>
-</Router>
+		</Found>
+		<NotFound>
+			@if (FlipState)
+			{
+				<LayoutView Layout="@AppLayout">
+					<div class="page-transitional">
+						<DynamicComponent Type="PageNotFound" />
+					</div>
+				</LayoutView>
+			}
+			else
+			{
+				<LayoutView Layout="@AppLayout">
+					<div class="page-transitional">
+						<DynamicComponent Type="PageNotFound" />
+					</div>
+				</LayoutView>
+			}
+		</NotFound>
+	</Router>
+}
 
 @if (AppStartup != null) {
 	<DynamicComponent Type="AppStartup" />
@@ -61,6 +70,7 @@
 	private Type PageNotFound => HiddenOptions.PageNotFound;
 	private Type? AppStartup => HiddenOptions.AppStartupComponent;
 	private IEnumerable<Assembly> FrameworkAssemblies => new Assembly[] { typeof(BUIApp).Assembly };
+	private bool IsLoadingApp { get; set; } = true;
 
 	protected override async Task OnInitializedAsync()
 	{
@@ -68,12 +78,14 @@
 		await RunDefaultSetups();
 		// Trigger to clear any values from startup, not expecting anything to be expecting AppInitialized key.
 		await AppState.TriggerChangeAsync("AppInitialized");
+		IsLoadingApp = false;
 	}
 
 	private async Task RunDefaultSetups()
 	{
 		AppState.SetupDefaultAppStates();
 		await JSInterop.SetupDefaultJsInterop(AppOptions, AppState);
+		await Auth.CheckLoginFromCache();
 	}
 
 	private void HandleNavigationStart(NavigationContext navContext)

@@ -1,16 +1,14 @@
-﻿namespace StoicDreams.BlazorUI;
+﻿using Microsoft.AspNetCore.Components;
+
+namespace StoicDreams.BlazorUI;
 
 public class ExtendStringTests : TestFramework
 {
-	[Theory]
-	[InlineData("", "")]
-	[InlineData("This Is A Phrase", "ThisIsAPhrase")]
-	public void Verify_PascalToSpaced(string expectedResult, string input)
+	[Fact]
+	public void Verify_Conversion_To_RenderFragment()
 	{
-		IActions actions = ArrangeUnitTest(() => input);
+		RenderFragment renderFragment = "This is a test".ConvertToRenderFragment();
 
-		actions.Act((string value) => value.PascalToSpaced());
-
-		actions.Assert((string? result) => result.IsNotNull().Should().Be(expectedResult));
+		Assert.NotNull(renderFragment);
 	}
 }

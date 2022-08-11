@@ -13,13 +13,13 @@ public class WebStorage : IWebStorage
 		JsInterop = jsInterop;
 		AppState = appState;
 		Memory = memory;
-		_ = SyncMemoryFromStorage();
 	}
 
 	public IEnumerable<string> Keys => Memory.Keys;
 
 	public async ValueTask<bool> Remove(string key)
 	{
+		await SyncMemoryFromStorage();
 		bool result = await Memory.Remove(key);
 		if (result)
 		{
@@ -30,6 +30,7 @@ public class WebStorage : IWebStorage
 
 	public async ValueTask<TValue?> GetValue<TValue>(string name)
 	{
+		await SyncMemoryFromStorage();
 		if (StorageCache.ContainsKey(name))
 		{
 			TValue? cached = await FromJson<TValue>(StorageCache[name]);
@@ -44,6 +45,7 @@ public class WebStorage : IWebStorage
 
 	public async ValueTask CopyFrom(IStorage storage)
 	{
+		await SyncMemoryFromStorage();
 		foreach (string key in storage.Keys)
 		{
 			await Memory.SetValue(key, storage.GetValue<object?>(key));
@@ -58,6 +60,7 @@ public class WebStorage : IWebStorage
 
 	public async ValueTask SetValue(string key, object value)
 	{
+		await SyncMemoryFromStorage();
 		await Memory.SetValue(key, value);
 		if (key == nameof(AppStateDataTags.StoragePermission) && value is StoragePermissions permission)
 		{
@@ -68,6 +71,7 @@ public class WebStorage : IWebStorage
 
 	private async ValueTask SyncMemoryFromStorage()
 	{
+		if (InitiatedInitialSync) { return; }
 		StoragePermissions permission = await GetStorageItem<StoragePermissions>("localStorage", AppStateDataTags.StoragePermission.AsName());
 		if (permission == StoragePermissions.None)
 		{
@@ -86,7 +90,9 @@ public class WebStorage : IWebStorage
 				StorageCache[key] = json;
 			}
 		}
+		InitiatedInitialSync = true;
 	}
+	private bool InitiatedInitialSync = false;
 
 	private async ValueTask SyncMemoryToStorage()
 	{
@@ -125,7 +131,7 @@ public class WebStorage : IWebStorage
 
 	private async ValueTask<string?> GetStorageJson(string container, string key)
 	{
-		return await JsInterop.CallMethod<string>($"{container}.getItem", nameof(AppStateDataTags.StoragePermission));
+		return await JsInterop.CallMethod<string>($"{container}.getItem", key);
 	}
 
 	private ValueTask<string> ToJson(object input) => JsonConvert.SerializeAsync(input);

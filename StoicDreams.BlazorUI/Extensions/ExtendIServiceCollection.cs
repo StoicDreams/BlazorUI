@@ -18,7 +18,7 @@ public static partial class ExtendIServiceCollection
 		services.AddSingleton<IAppStorage, AppStorage>();
 		services.AddSingleton<IWebStorage, WebStorage>();
 		services.AddTransient<IStateManager, StateManager>();
-		services.AddSingleton<IAuthenticate, MockAuthenticate>();
+		services.AddSingleton<IClientAuth, MockAuthenticate>();
 		services.AddSingleton<IStorage>(serviceProvider =>
 		{
 			return appOptions.AppType switch

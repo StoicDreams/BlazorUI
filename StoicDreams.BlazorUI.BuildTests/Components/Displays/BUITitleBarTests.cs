@@ -14,6 +14,7 @@ public class BUITitleBarTests : TestFrameworkBlazor
 
 		actions.Act(a =>
 		{
+			a.Render.Render();
 		});
 
 		actions.Assert(a =>

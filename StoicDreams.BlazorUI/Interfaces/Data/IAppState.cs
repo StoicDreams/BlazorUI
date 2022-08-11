@@ -25,4 +25,11 @@ public interface IAppState : IStateManager
 	/// </summary>
 	/// <param name="changeHandler"></param>
 	void ApplyChanges(Action changeHandler);
+
+	/// <summary>
+	/// Trigger state change for 1 or more app state tags.
+	/// </summary>
+	/// <param name="tags"></param>
+	/// <returns></returns>
+	ValueTask TriggerChangeAsync(params AppStateDataTags[] tags);
 }

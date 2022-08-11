@@ -1,4 +1,6 @@
-﻿@using StoicDreams.BlazorUI.Components.Displays
+﻿@inherits BUICore
+
+@using StoicDreams.BlazorUI.Components.Displays
 
 <MudTooltip Text="Sponser to help support development">
 	<MudIconButton Size="Size.Small" Color="Color.Inherit" Icon="@Icons.Material.TwoTone.AttachMoney" Href="https://github.com/sponsors/StoicDreams" Target="_blank" />
@@ -11,6 +13,10 @@
 </MudTooltip>
 <BUITitleBarQuickLinks />
 
-@code {
+<MudPaper Class="ml-1 mud-theme-transparent" Elevation="0">
+	@UserName
+</MudPaper>
 
+@code {
+	private string UserName => Auth.User.Name;
 }

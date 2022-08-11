@@ -27,6 +27,15 @@ public class AppState : StateManager, IAppState
 		base.ApplyChanges(changeHandler);
 	}
 
+	public ValueTask TriggerChangeAsync(params AppStateDataTags[] tags)
+	{
+		ApplyChanges(() =>
+		{
+			foreach (AppStateDataTags tag in tags) { UpdatedKey(tag.ToString()); }
+		});
+		return ValueTask.CompletedTask;
+	}
+
 	private async ValueTask ApplyStartupOptionsToState(IAppOptions options)
 	{
 		await SetDataAsync(AppStateDataTags.AppLeftDrawerVariant.ToString(), options.LeftDrawerVariant);

@@ -3,12 +3,8 @@
 public class SessionState : StateManager, ISessionState
 {
 	public SessionState(
-		IMemoryStorage memory,
 		IStorage storage
-		) : base(memory)
+		) : base(storage)
 	{
-		Storage = storage;
 	}
-
-	private IStorage Storage { get; }
 }

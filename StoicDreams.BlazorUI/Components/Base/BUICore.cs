@@ -11,7 +11,7 @@ public abstract class BUICore : ComponentBase, IDisposable
 	[Inject] internal IPageState PageState { get; private set; } = null!;
 	[Inject] public IStorage Storage { get; private set; } = null!;
 	[Inject] public NavigationManager NavManager { get; private set; } = null!;
-	[Inject] public IAuthenticate Auth { get; private set; } = null!;
+	[Inject] public IClientAuth Auth { get; private set; } = null!;
 
 	protected AppOptions HiddenOptions => (AppOptions)AppOptions;
 
@@ -37,7 +37,7 @@ public abstract class BUICore : ComponentBase, IDisposable
 		AppStateWatcher.StateChangedHandler = () =>
 		{
 			OnAppStateUpdate();
-			_ = InvokeAsync(StateHasChanged);
+			InvokeAsync(StateHasChanged);
 		};
 		AppStateWatcher.DisposeHandler = () =>
 		{

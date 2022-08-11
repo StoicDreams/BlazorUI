@@ -1,5 +1,4 @@
-﻿using StoicDreams.BlazorUI.Data;
-using System.Text.RegularExpressions;
+﻿using System.Text.RegularExpressions;
 
 namespace StoicDreams.BlazorUI.Auth;
 
@@ -7,7 +6,7 @@ namespace StoicDreams.BlazorUI.Auth;
 /// Placeholder class for IAuthenticate to allow simulating signup/login during initial development.
 /// Websites are expected to create their own IAuthenticate instance to override this instance.
 /// </summary>
-public class MockAuthenticate : IAuthenticate
+public class MockAuthenticate : IClientAuth
 {
 	public MockAuthenticate(
 		ISessionState sessionState,
@@ -16,6 +15,15 @@ public class MockAuthenticate : IAuthenticate
 	{
 		SessionState = sessionState;
 		AppState = appState;
+	}
+
+	public async ValueTask CheckLoginFromCache()
+	{
+		string? data = await SessionState.GetDataAsync<string>("auth");
+		if (data == null) { return; }
+		User user = data.ConvertFromWebEncryptedString<User>();
+		if (user.SessionId == Guid.Empty) { return; }
+		SetupForLoggedInUser(user);
 	}
 
 	public IUser User { get; set; } = new User();
@@ -62,16 +70,31 @@ public class MockAuthenticate : IAuthenticate
 
 	public async ValueTask<TResult> SignIn(string email, string password)
 	{
-		User = new User()
+		User user = new User()
 		{
-			SessionId = User.SessionId,
+			SessionId = User.SessionId == Guid.Empty ? Guid.NewGuid() : User.SessionId,
 			Name = await SessionState.GetDataAsync<string>(email) ?? "User",
 			Role = 1
 		};
-		AppState.SetData(AppStateDataTags.TitleBarRightDrawerIcon, Icons.Material.TwoTone.AccountCircle);
-		AppState.SetData(AppStateDataTags.TitleBarRightDrawerTitle, "Toggle Right Drawer");
+		await SessionState.SetDataAsync("auth", user.ConvertToWebEncryptedString());
+		SetupForLoggedInUser(user);
 		return await ValueTask.FromResult(TResult.Success($"Welcome {User.Name}! Mock Sign-in succeeded."));
 	}
+
+	private void SetupForLoggedInUser(User user)
+	{
+		User = user;
+		AppState.ApplyChanges(() =>
+		{
+			AppState.SetData(AppStateDataTags.TitleBarRightDrawerIcon, DrawerIconWhenLoggedIn);
+			AppState.SetData(AppStateDataTags.TitleBarRightDrawerTitle, "Toggle Right Drawer");
+		});
+	}
+
+	private string DrawerIconWhenLoggedIn { get; } = Icons.Material.TwoTone.AccountCircle;
+	private string DrawerIconWhenLoggedOut { get; } = Icons.Material.TwoTone.Login;
+
+
 
 	public ValueTask<TResult> SignUp(string email, string displayName)
 	{
@@ -82,8 +105,11 @@ public class MockAuthenticate : IAuthenticate
 	public ValueTask<TResult> LogOut()
 	{
 		User = new User();
-		AppState.SetData(AppStateDataTags.TitleBarRightDrawerIcon, Icons.Material.TwoTone.Login);
-		AppState.SetData(AppStateDataTags.TitleBarRightDrawerTitle, "Sign-In");
+		AppState.ApplyChanges(() =>
+		{
+			AppState.SetData(AppStateDataTags.TitleBarRightDrawerIcon, DrawerIconWhenLoggedOut);
+			AppState.SetData(AppStateDataTags.TitleBarRightDrawerTitle, "Sign-In");
+		});
 		return ValueTask.FromResult(TResult.Success("You have successfully signed out."));
 	}
 

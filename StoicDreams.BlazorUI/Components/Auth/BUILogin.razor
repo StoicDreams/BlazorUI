@@ -28,9 +28,9 @@
 				<BUIParagraph>We will then send you a confirmation email containing a link for you to use to confirm your email belongs to you.</BUIParagraph>
 				<BUIParagraph>Once confirmed you will be able to set your password to finalize the creation of your account.</BUIParagraph>
 
-				<MudTextField MaxLength="100" Label="Display Name" Clearable="true" Variant="Variant.Text" @bind-Value="@InputDisplayName" />
-				<MudTextField MaxLength="300" Label="Email" Clearable="true" Variant="Variant.Text" @bind-Value="@InputEmail" InputType="InputType.Email" />
-				<MudTextField MaxLength="300" Label="Confirm Email" Clearable="true" Variant="Variant.Text" @bind-Value="@InputConfirmEmail" InputType="InputType.Email" />
+				<MudTextField MaxLength="50" Label="Display Name" Clearable="true" Variant="Variant.Text" @bind-Value="@InputDisplayName" HelperText="Your first name, or whatever name you want us to use when communicating with you." />
+				<MudTextField MaxLength="300" Label="Email" Clearable="true" Variant="Variant.Text" @bind-Value="@InputEmail" InputType="InputType.Email" HelperText="Your email address you want used for this account. We will send a confirmation to this email to confirm before creating your account." />
+				<MudTextField MaxLength="300" Label="Confirm Email" Clearable="true" Variant="Variant.Text" @bind-Value="@InputConfirmEmail" InputType="InputType.Email" HelperText="Please confirm your email to help assure accuracy." />
 
 				<MudAlert Severity="Severity.Info">
 					Submitting will initialize your account creation and send an email to the email address your provided to confirm your email belongs to you. Click the email confirmation link in this email to confirm your account. The final step in this confirmation will allow you to set your password and finish creating your account.

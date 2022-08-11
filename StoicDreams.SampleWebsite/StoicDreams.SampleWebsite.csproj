@@ -9,7 +9,7 @@
 	</PropertyGroup>
 
 	<ItemGroup>
-		<PackageReference Include="Microsoft.AspNetCore.Components.WebAssembly" Version="6.0.7" />
+		<PackageReference Include="Microsoft.AspNetCore.Components.WebAssembly" Version="6.0.8" />
 	</ItemGroup>
 
 	<ItemGroup>
@@ -24,12 +24,12 @@
 		<When Condition="'$(Configuration)' == 'Debug'">
 			<ItemGroup>
 				<ProjectReference Include="..\StoicDreams.BlazorUI\StoicDreams.BlazorUI.csproj" />
-				<PackageReference Include="Microsoft.AspNetCore.Components.WebAssembly.DevServer" Version="6.0.7" PrivateAssets="all" />
+				<PackageReference Include="Microsoft.AspNetCore.Components.WebAssembly.DevServer" Version="6.0.8" PrivateAssets="all" />
 			</ItemGroup>
 		</When>
 		<Otherwise>
 			<ItemGroup>
-				<PackageReference Include="StoicDreams.BlazorUI" Version="1.9.2" />
+				<PackageReference Include="StoicDreams.BlazorUI" Version="1.9.15" />
 			</ItemGroup>
 		</Otherwise>
 	</Choose>
@@ -39,7 +39,7 @@
 	</ItemGroup>
 
 	<!--Workaround to allow Intellisense to capture data during development builds to CSS intellisense can identify styles from Nuget packages that include CSS files-->
-	<Target Name="CollectMudBlazorStaticAssets" DependsOnTargets="ResolveStaticWebAssetsInputs" AfterTargets="Build" Condition="'$(Configuration)' == 'Debug' ">
+	<Target Name="CollectBlazorUIStaticAssets" DependsOnTargets="ResolveStaticWebAssetsInputs" AfterTargets="Build" Condition="'$(Configuration)' == 'Debug' ">
 		<Copy SourceFiles="%(StaticWebAsset.Identity)" DestinationFolder="wwwroot/temp" Condition="$([System.String]::Copy(%(StaticWebAsset.Identity)).Contains('blazorui'))" />
 	</Target>
 	<Target Name="CollectMudBlazorStaticAssets" DependsOnTargets="ResolveStaticWebAssetsInputs" AfterTargets="Build" Condition=" '$(Configuration)' == 'Debug' ">

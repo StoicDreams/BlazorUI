@@ -23,7 +23,7 @@ public class MockAuthenticate : IClientAuth
 		if (data == null) { return; }
 		User user = data.ConvertFromWebEncryptedString<User>();
 		if (user.SessionId == Guid.Empty) { return; }
-		SetupForLoggedInUser(user);
+		await SetupForLoggedInUser(user);
 	}
 
 	public IUser User { get; set; } = new User();
@@ -77,24 +77,20 @@ public class MockAuthenticate : IClientAuth
 			Role = 1
 		};
 		await SessionState.SetDataAsync("auth", user.ConvertToWebEncryptedString());
-		SetupForLoggedInUser(user);
+		await SetupForLoggedInUser(user);
 		return await ValueTask.FromResult(TResult.Success($"Welcome {User.Name}! Mock Sign-in succeeded."));
 	}
 
-	private void SetupForLoggedInUser(User user)
+	private async ValueTask SetupForLoggedInUser(User user)
 	{
 		User = user;
-		AppState.ApplyChanges(() =>
-		{
-			AppState.SetData(AppStateDataTags.TitleBarRightDrawerIcon, DrawerIconWhenLoggedIn);
-			AppState.SetData(AppStateDataTags.TitleBarRightDrawerTitle, "Toggle Right Drawer");
-		});
+		AppState.SetData(AppStateDataTags.TitleBarRightDrawerIcon, DrawerIconWhenLoggedIn);
+		AppState.SetData(AppStateDataTags.TitleBarRightDrawerTitle, "Toggle Right Drawer");
+		await AppState.TriggerChangeAsync(AppStateDataTags.UserAuthUpdate);
 	}
 
 	private string DrawerIconWhenLoggedIn { get; } = Icons.Material.TwoTone.AccountCircle;
 	private string DrawerIconWhenLoggedOut { get; } = Icons.Material.TwoTone.Login;
-
-
 
 	public ValueTask<TResult> SignUp(string email, string displayName)
 	{
@@ -102,15 +98,15 @@ public class MockAuthenticate : IClientAuth
 		return ValueTask.FromResult(TResult.Success("Mock Sign-up succeeded. You may now sign-in."));
 	}
 
-	public ValueTask<TResult> LogOut()
+	public async ValueTask<TResult> LogOut()
 	{
-		User = new User();
-		AppState.ApplyChanges(() =>
-		{
-			AppState.SetData(AppStateDataTags.TitleBarRightDrawerIcon, DrawerIconWhenLoggedOut);
-			AppState.SetData(AppStateDataTags.TitleBarRightDrawerTitle, "Sign-In");
-		});
-		return ValueTask.FromResult(TResult.Success("You have successfully signed out."));
+		User user = new User();
+		User = user;
+		await SessionState.SetDataAsync<User>("auth", user);
+		AppState.SetData(AppStateDataTags.TitleBarRightDrawerIcon, DrawerIconWhenLoggedOut);
+		AppState.SetData(AppStateDataTags.TitleBarRightDrawerTitle, "Sign-In");
+		await AppState.TriggerChangeAsync(AppStateDataTags.UserAuthUpdate);
+		return TResult.Success("You have successfully signed out.");
 	}
 
 	private ISessionState SessionState { get; }

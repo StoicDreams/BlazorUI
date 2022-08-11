@@ -19,4 +19,10 @@
 
 @code {
 	private string UserName => Auth.User.Name;
+
+	protected override async Task OnInitializedAsync()
+	{
+		bool setupWatcherForUserUpdate = GetAppState<bool>(AppStateDataTags.UserAuthUpdate);
+		await base.OnInitializedAsync();
+	}
 }

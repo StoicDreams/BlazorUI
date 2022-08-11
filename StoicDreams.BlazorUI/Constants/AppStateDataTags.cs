@@ -173,5 +173,8 @@ public enum AppStateDataTags
 	/// Defaults to BUITitleBarQuickLinks
 	/// </summary>
 	TitleBarRightSideContent,
-
+	/// <summary>
+	/// Trigger to use anytime User data or any other auth information is updated.
+	/// </summary>
+	UserAuthUpdate,
 }

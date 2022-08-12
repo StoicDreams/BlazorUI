@@ -8,7 +8,7 @@ public class NavDetailTests : TestFramework
 	{
 		IActions<NavDetail> actions = ArrangeUnitTest<NavDetail>();
 
-		actions.Act(a => NavDetail.Create(name, icon, href, navDetail =>
+		actions.Act(a => NavDetail.Create(name, icon, href, 0, navDetail =>
 		{
 			navDetail.Name = "Changed Name";
 			navDetail.Icon = "Changed Icon";

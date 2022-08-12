@@ -16,11 +16,11 @@ global using StoicDreams.BlazorUI.Interfaces.Pages;
 global using StoicDreams.BlazorUI.Pages;
 
 global using StoicDreams.Core;
+global using StoicDreams.Core.Auth;
 global using StoicDreams.Core.Data;
 global using StoicDreams.Core.Constants;
 global using StoicDreams.Core.DataTypes;
 global using StoicDreams.Core.Extensions;
-global using StoicDreams.Core.Interfaces;
 global using StoicDreams.Core.State;
 
 global using System.Diagnostics;

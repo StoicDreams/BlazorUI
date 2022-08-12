@@ -24,7 +24,11 @@ export function RunInlineScript(script) {
 }
 
 export function AddJSFile(filePath) {
-	AddElement('script', {}, document.body);
+	AddElement('script', { src: filePath, type: 'text/javascript' }, document.body);
+}
+
+export function RemoveJSFile(filePath) {
+	document.querySelectorAll(`script[rel="${filePath}"`).forEach(element => element.remove());
 }
 
 export function AddCSSFile(filePath) {

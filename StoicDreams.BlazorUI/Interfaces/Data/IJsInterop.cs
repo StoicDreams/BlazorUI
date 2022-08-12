@@ -36,7 +36,19 @@ public interface IJsInterop
 	/// <returns></returns>
 	ValueTask<TResult?> RunInlineScript<TResult>(string script);
 
+	/// <summary>
+	/// Add a script tag with filePath as the path
+	/// </summary>
+	/// <param name="filePath"></param>
+	/// <returns></returns>
 	ValueTask AddJSFile(string filePath);
+
+	/// <summary>
+	/// Remove a script element by path
+	/// </summary>
+	/// <param name="filePath"></param>
+	/// <returns></returns>
+	ValueTask RemoveJSFile(string filePath);
 
 	ValueTask AddCSSFile(string filePath);
 

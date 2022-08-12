@@ -2,7 +2,7 @@
 
 public class JsInterop : IJsInterop, IAsyncDisposable
 {
-	public const string InteropFilePath = "./sd-blazorui-interop.1.0.3.js";
+	public const string InteropFilePath = "./sd-blazorui-interop.1.0.4.js";
 	public JsInterop(IJSRuntime jsRuntime)
 	{
 		InteropModule = new(() => jsRuntime.InvokeAsync<IJSObjectReference>(
@@ -67,6 +67,12 @@ public class JsInterop : IJsInterop, IAsyncDisposable
 	{
 		IJSObjectReference module = await InteropModule.Value;
 		await module.InvokeVoidAsync("AddJSFile", filePath);
+	}
+
+	public async ValueTask RemoveJSFile(string filePath)
+	{
+		IJSObjectReference module = await InteropModule.Value;
+		await module.InvokeVoidAsync("RemoveJSFile", filePath);
 	}
 
 	public async ValueTask AddCSSFile(string filePath)

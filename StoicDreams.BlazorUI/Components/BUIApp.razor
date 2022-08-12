@@ -26,14 +26,16 @@ else
 {
 	<Router AppAssembly="@AppAssembly" AdditionalAssemblies="FrameworkAssemblies" OnNavigateAsync="HandleNavigationStart">
 		<Found Context="routeData">
-			<LayoutView Layout="@AppLayout">
-				<BlazorTransitionableRoute.TransitionableRoutePrimary RouteData="@routeData" ForgetStateOnTransition="true">
-					<BlazorTransitionableRoute.TransitionableRouteView DefaultLayout="@PageLayout" />
-				</BlazorTransitionableRoute.TransitionableRoutePrimary>
-				<BlazorTransitionableRoute.TransitionableRouteSecondary RouteData="@routeData" ForgetStateOnTransition="true">
-					<BlazorTransitionableRoute.TransitionableRouteView DefaultLayout="@PageLayout" />
-				</BlazorTransitionableRoute.TransitionableRouteSecondary>
-			</LayoutView>
+			<BUIAuthRouting>
+				<LayoutView Layout="@AppLayout">
+					<BlazorTransitionableRoute.TransitionableRoutePrimary RouteData="@routeData" ForgetStateOnTransition="true">
+						<BlazorTransitionableRoute.TransitionableRouteView DefaultLayout="@PageLayout" />
+					</BlazorTransitionableRoute.TransitionableRoutePrimary>
+					<BlazorTransitionableRoute.TransitionableRouteSecondary RouteData="@routeData" ForgetStateOnTransition="true">
+						<BlazorTransitionableRoute.TransitionableRouteView DefaultLayout="@PageLayout" />
+					</BlazorTransitionableRoute.TransitionableRouteSecondary>
+				</LayoutView>
+			</BUIAuthRouting>
 		</Found>
 		<NotFound>
 			@if (FlipState)

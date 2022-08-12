@@ -7,9 +7,13 @@ global using StoicDreams.BlazorUI.Constants;
 global using StoicDreams.BlazorUI.Data;
 global using StoicDreams.BlazorUI.DataTypes;
 global using StoicDreams.BlazorUI.Extensions;
+
 global using StoicDreams.Core.Data;
 global using StoicDreams.Core.DataTypes;
+global using StoicDreams.Core.Extensions;
 global using StoicDreams.Core.Interfaces;
+
 global using StoicDreams.SampleWebsite;
 global using StoicDreams.SampleWebsite.Components;
+global using StoicDreams.SampleWebsite.Constants;
 global using System.Text;

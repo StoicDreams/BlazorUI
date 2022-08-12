@@ -1,0 +1,33 @@
+﻿@inherits BUIPage
+@page "/account"
+@page "/account/myinfo"
+
+<BUISectionTitle>Your Account Info</BUISectionTitle>
+
+<BUIStandardSection>
+	<MudTextField MaxLength="50" Label="Display Name" @bind-Value="UserName" />
+
+	<BUIPaper Class="mt-2" PaperType="PaperTypes.JustifyEnd">
+		<MudButton Variant="Variant.Filled" OnClick="SaveInfo" StartIcon="@Icons.Material.TwoTone.Save">Save</MudButton>
+	</BUIPaper>
+</BUIStandardSection>
+
+@code {
+	private string UserName { get; set; } = "User";
+
+	protected override Task OnInitializedAsync()
+	{
+		UserName = Auth.User.Name;
+		return base.OnInitializedAsync();
+	}
+
+	private async Task SaveInfo()
+	{
+		string userName = UserName.Trim();
+		if (string.IsNullOrWhiteSpace(userName)) { return; }
+		User user = (User)Auth.User;
+		user.Name = userName;
+		await SessionState.SetDataAsync("auth", user.ConvertToWebEncryptedString());
+		await AppState.TriggerChangeAsync(AppStateDataTags.UserAuthUpdate);
+	}
+}

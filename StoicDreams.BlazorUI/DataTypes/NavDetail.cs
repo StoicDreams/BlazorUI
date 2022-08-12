@@ -8,6 +8,13 @@ public class NavDetail
 	public string Name { get; set; } = string.Empty;
 
 	/// <summary>
+	/// Roles required to access page.
+	/// 0 is guest / public
+	/// Other roles need to use Ids that are offset by bits (1, 2, 4, 8, 16, etc) which allows for users to be assigne multiple roles.
+	/// </summary>
+	public int Roles { get; set; } = 0;
+
+	/// <summary>
 	/// Icon value to use for icon display.
 	/// </summary>
 	public string Icon { get; set; } = string.Empty;
@@ -45,6 +52,7 @@ public class NavDetail
 		string name,
 		string icon,
 		string href,
+		int roles = 0,
 		Action<NavDetail>? onClick = null
 		)
 	{
@@ -53,6 +61,7 @@ public class NavDetail
 			Name = name,
 			Icon = icon,
 			Href = href,
+			Roles = roles,
 			OnClick = onClick
 		};
 	}
@@ -60,6 +69,7 @@ public class NavDetail
 	public static NavDetail CreateGroup(
 		string name,
 		string icon,
+		int roles,
 		IEnumerable<NavDetail> subNav
 		)
 	{
@@ -67,6 +77,7 @@ public class NavDetail
 		{
 			Name = name,
 			Icon = icon,
+			Roles = roles
 		};
 		instance.SubNav.AddRange(subNav);
 		return instance;

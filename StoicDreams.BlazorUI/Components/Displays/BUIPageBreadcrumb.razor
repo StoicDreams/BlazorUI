@@ -125,8 +125,7 @@
 		for (int index = 0; index < split.Length; ++index)
 		{
 			path += $"/{split[index]}".ToLower();
-			if (!map.ContainsKey(path)) { continue; }
-			NavDetail nav = map[path];
+			if (!map.TryGetValue(path, out NavDetail? nav) || !Auth.IsRole(nav.Roles)) { continue; }
 			BreadcrumbItem item = new(nav.Name, path, index == split.Length - 1, nav.Icon);
 			items.Add(item);
 		}

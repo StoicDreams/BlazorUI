@@ -1,0 +1,65 @@
+﻿@inherits BUICore
+
+@if (UserIsAuthorized)
+{
+	@ChildContent
+}
+else
+{
+	<LayoutView Layout="@AppLayout">
+		<div class="page-transitional">
+			<DynamicComponent Type="PageNotFound" />
+		</div>
+	</LayoutView>
+}
+
+@code {
+	[Parameter]
+	public RenderFragment? ChildContent { get; set; }
+
+	private Type AppLayout => HiddenOptions.MainLayout;
+	private Type PageNotFound => HiddenOptions.PageNotFound;
+
+	private bool UserIsAuthorized
+	{
+		get
+		{
+			string path = $"/{NavManager.ToBaseRelativePath(NavManager.Uri).ToLower().Split('#')[0].Split('?')[0]}";
+			Dictionary<string, NavDetail> map = GetNavIconMap;
+			while (path.Length > 1 && !map.ContainsKey(path))
+			{
+				path = path.GetParentFolder().Replace('\\', '/');
+			}
+			if (map.TryGetValue(path, out NavDetail? nav) && !Auth.IsRole(nav.Roles))
+			{
+				return false;
+			}
+			return true;
+		}
+	}
+
+	private Dictionary<string, NavDetail> GetNavIconMap
+	{
+		get
+		{
+			Dictionary<string, NavDetail> map = new();
+			List<NavDetail> nav = GetAppState<List<NavDetail>>(AppStateDataTags.NavList, () => new());
+			AddItemsToMap(map, nav);
+			return map;
+		}
+	}
+
+	private void AddItemsToMap(Dictionary<string, NavDetail> map, List<NavDetail> navList)
+	{
+		foreach (NavDetail item in navList)
+		{
+			if (item.IsNavGroup)
+			{
+				AddItemsToMap(map, item.SubNav);
+				continue;
+			}
+			if (string.IsNullOrWhiteSpace(item.Href)) { continue; }
+			map[item.Href.ToLower()] = item;
+		}
+	}
+}

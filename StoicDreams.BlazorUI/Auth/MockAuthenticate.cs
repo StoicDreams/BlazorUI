@@ -30,6 +30,7 @@ public class MockAuthenticate : IClientAuth
 	public bool IsLoggedIn => User.Role > 0;
 	public bool IsRole(int role)
 	{
+		if (role == 0) { return true; }
 		if (role == User.Role) { return true; }
 		if ((role & User.Role) != 0) { return true; }
 		return false;

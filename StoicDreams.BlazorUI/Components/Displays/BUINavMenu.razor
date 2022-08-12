@@ -1,9 +1,55 @@
 ﻿@inherits BUICore
 
 <MudNavMenu Color="NavActiveColor" Bordered="true" Dense="false">
-	<BUINavMenuSubMenu NavList="NavList" />
+	<BUINavMenuSubMenu NavList="GetAuthorizedNav" />
 </MudNavMenu>
+
 @code {
 	private List<NavDetail> NavList { get => GetAppState<List<NavDetail>>(AppStateDataTags.NavList) ?? new(); set => SetAppStateWithTrigger<List<NavDetail>>(AppStateDataTags.NavList, value); }
 	private Color NavActiveColor { get => GetAppState<Color>(AppStateDataTags.NavMenuActiveColor); }
+	private bool UserStateChanged => GetAppState<bool>(AppStateDataTags.UserAuthUpdate);
+
+	protected override void OnAppStateUpdate()
+	{
+		InvokeAsync(StateHasChanged);
+		base.OnAppStateUpdate();
+	}
+
+	private List<NavDetail> GetAuthorizedNav
+	{
+		get
+		{
+			// Simply here to assure state change trigger gets recognized in this component.
+			_ = GetAppState<bool>(AppStateDataTags.UserAuthUpdate);
+			int userRoles = Auth.User.Role;
+			List<NavDetail> nav = new();
+			AddChildren(NavList, nav, userRoles);
+			return nav;
+		}
+	}
+
+	private void AddChildren(List<NavDetail> sourceList, List<NavDetail> destinationList, int userRoles)
+	{
+		foreach(NavDetail item in sourceList)
+		{
+			if (!RoleMatches(userRoles, item.Roles)) { continue; }
+			if (item.IsNavGroup)
+			{
+				List<NavDetail> children = new();
+				AddChildren(item.SubNav, children, userRoles);
+				if (children.Count == 0) { continue; }
+				NavDetail nav = NavDetail.CreateGroup(item.Name, item.Icon, item.Roles, children);
+				destinationList.Add(nav);
+				continue;
+			}
+			destinationList.Add(item);
+		}
+	}
+
+	private bool RoleMatches(int userRoles, int requiredRoles)
+	{
+		if (requiredRoles == 0) { return true; }
+		if (userRoles == 0) { return false; }
+		return (requiredRoles & userRoles) != 0;
+	}
 }

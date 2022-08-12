@@ -50,6 +50,13 @@ public interface IJsInterop
 	/// <returns></returns>
 	ValueTask RemoveJSFile(string filePath);
 
+	/// <summary>
+	/// Remove elements based on the given query selector
+	/// </summary>
+	/// <param name="selector"></param>
+	/// <returns></returns>
+	ValueTask RemoveSelector(string selector);
+
 	ValueTask AddCSSFile(string filePath);
 
 	ValueTask AddElementToHead(string tag, IDictionary<string, string> attributes);

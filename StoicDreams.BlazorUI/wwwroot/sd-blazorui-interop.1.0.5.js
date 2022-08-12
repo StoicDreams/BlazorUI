@@ -28,7 +28,11 @@ export function AddJSFile(filePath) {
 }
 
 export function RemoveJSFile(filePath) {
-	document.querySelectorAll(`script[rel="${filePath}"`).forEach(element => element.remove());
+	document.querySelectorAll(`script[src="${filePath}"`).forEach(element => element.remove());
+}
+
+export function RemoveSelector(selector) {
+	document.querySelectorAll(selector).forEach(element => element.remove());
 }
 
 export function AddCSSFile(filePath) {

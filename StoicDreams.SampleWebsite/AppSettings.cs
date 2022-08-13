@@ -58,7 +58,7 @@ public static class AppSettings
 		}
 		if (clickState == DrawerClickState.Opening)
 		{
-			sender.AppState.SetData(AppStateDataTags.RightDrawerContent, typeof(SideContentSample));
+			sender.AppState.SetData(AppStateDataTags.RightDrawerContent, typeof(AccountPortal));
 		}
 		return ValueTask.CompletedTask;
 	}

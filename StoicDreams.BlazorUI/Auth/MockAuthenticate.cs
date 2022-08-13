@@ -101,13 +101,19 @@ public class MockAuthenticate : IClientAuth
 
 	public async ValueTask<TResult> LogOut()
 	{
-		User user = new User();
+		User user = new();
 		User = user;
 		await SessionState.SetDataAsync<User>("auth", user);
 		AppState.SetData(AppStateDataTags.TitleBarRightDrawerIcon, DrawerIconWhenLoggedOut);
 		AppState.SetData(AppStateDataTags.TitleBarRightDrawerTitle, "Sign-In");
 		await AppState.TriggerChangeAsync(AppStateDataTags.UserAuthUpdate);
 		return TResult.Success("You have successfully signed out.");
+	}
+
+	public async ValueTask<TResult> UpdatePassword(string password)
+	{
+		await Task.Delay(300);
+		return TResult.Success("Your have successfully mocked updating your password.");
 	}
 
 	private ISessionState SessionState { get; }

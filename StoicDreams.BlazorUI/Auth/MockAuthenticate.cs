@@ -110,7 +110,7 @@ public class MockAuthenticate : IClientAuth
 		return TResult.Success("You have successfully signed out.");
 	}
 
-	public async ValueTask<TResult> UpdatePassword(string password)
+	public async ValueTask<TResult> UpdatePassword(string password, Guid? accountToken = null)
 	{
 		await Task.Delay(300);
 		return TResult.Success("Your have successfully mocked updating your password.");

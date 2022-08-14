@@ -8,8 +8,8 @@
 	<BUIStandardSection>
 		<MudTabs>
 			<MudTabPanel Text="Sign-In">
-				<MudTextField MaxLength="300" Label="Email" Clearable="true" Variant="Variant.Text" @bind-Value="@InputEmail" InputType="InputType.Email" />
-				<MudTextField MaxLength="300" Label="Password" Clearable="true" Variant="Variant.Text" @bind-Value="@InputPassword" InputType="InputType.Password" />
+				<MudTextField MaxLength="300" Label="Username" HelperText="Your email address" Clearable="true" Variant="Variant.Text" @bind-Value="@InputEmail" InputType="InputType.Email" />
+				<MudTextField MaxLength="300" Label="Password" HelperText="Your password" Clearable="true" Variant="Variant.Text" @bind-Value="@InputPassword" InputType="InputType.Password" />
 
 				@if (!string.IsNullOrWhiteSpace(LoginMessage))
 				{

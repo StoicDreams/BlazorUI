@@ -70,12 +70,12 @@ html, body, #app, .router {
 
 	.mud-main-content > main {
 		position: sticky;
-		height: 100%;
+		height: calc(100% - (var(--mud-appbar-height) - var(--mud-appbar-height)/4));
 		top: 0;
 		bottom: 0;
-		max-height: 100%;
+		max-height: calc(100% - (var(--mud-appbar-height) - var(--mud-appbar-height)/4));
 		max-width: 100%;
-		overflow: auto;
+		overflow: hidden;
 		z-index: 0;
 		margin: 0;
 		padding: 0;
@@ -87,7 +87,8 @@ html, body, #app, .router {
 			top: 0;
 			left: 0;
 			width: 100%;
-			height: auto;
+			height: 100%;
+			overflow: auto;
 			padding: var(--main-padding-size);
 			margin: 0;
 			border: none;
@@ -126,8 +127,7 @@ ul.mud-breadcrumbs {
 }
 
 .mud-breadcrumbs + main > .page-transitional {
-	padding-top: 28px;
-	padding-top: calc(20px + var(--main-padding-size));
+	padding-top: 0;
 }
 
 .mud-navmenu.mud-navmenu-primary .mud-nav-item.active .mud-nav-link:not(.mud-nav-link-disabled):hover:not(.mud-nav-link-disabled),
@@ -273,4 +273,27 @@ ul.mud-breadcrumbs {
 }
 .framework-version {
 	font-size: 0.8rem;
+}
+.mud-card-header-avatar svg.mud-icon-root.mud-svg-icon {
+	font-size: 68px;
+}
+
+p + p.mud-typography {
+	margin-top: 0.8em;
+}
+
+@media (max-width: 960px) {
+	.mud-drawer-close-mini-md-left.mud-drawer-left-clipped-docked .mud-appbar {
+		margin-left: 0;
+		width: 100%;
+	}
+}
+.bui-section-title {
+	position: sticky;
+	top: 0;
+}
+.bui-theme-title {
+	color: var(--mud-palette-appbar-text);
+	background-color: var(--mud-palette-appbar-background);
+	z-index: 1;
 }

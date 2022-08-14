@@ -8,6 +8,8 @@
 bin
 obj
 temp
+*.exe
+*.dll
 
 # Ignore NCrunch files
 *ncrunch*

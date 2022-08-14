@@ -1,5 +1,5 @@
 ﻿
-<MudPaper Class="ma-2 pa-4" Elevation="Elevation">
+<MudPaper Class="@GetClass" Elevation="Elevation">
 	@ChildContent
 </MudPaper>
 
@@ -7,5 +7,9 @@
 	[Parameter]
 	public RenderFragment? ChildContent { get; set; }
 	[Parameter]
+	public string Class { get; set; } = string.Empty;
+	[Parameter]
 	public int Elevation { get; set; } = 10;
+
+	private string GetClass => $"ma-2 pa-4 {Class}".Trim();
 }

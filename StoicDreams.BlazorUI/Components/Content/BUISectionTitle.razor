@@ -1,6 +1,10 @@
-﻿<MudText Class="bui-section-title" Typo="Typo.h2">@ChildContent</MudText>
+﻿<MudText Class="@GetClass" Typo="Typo.h2">@ChildContent</MudText>
 
 @code {
 	[Parameter]
 	public RenderFragment? ChildContent { get; set; }
+	[Parameter]
+	public string Class { get; set; } = "bui-theme-title";
+
+	private string GetClass => $"bui-section-title pa-2 ml-n2 mr-n2 mt-n1 {Class}".Trim();
 }

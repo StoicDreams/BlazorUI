@@ -17,8 +17,51 @@ Get-ChildItem -Path .\ -Filter *BlazorUI.csproj -Recurse -File | ForEach-Object 
 	}
 }
 
+function CheckIfAnyFilesUpdated {
+	Param ()
+	$folder = "."
+	$file = "$folder\lastupdate.txt"
+	if (Test-Path $file) {
+		try {
+			$lastupdate = Get-Content -Path $file
+			$lastupdate = [DateTime]::ParseExact($lastupdate, 'M/dd/yyyy h:mm:ss tt', [cultureinfo]'en-US')
+			Write-Host "Extracted last update: $lastupdate"
+		} catch {
+			Write-Host "Last update failed to load from file, defaulting to past 24 hours"
+			$lastupdate=$(Get-Date).AddHours(-24)
+		}
+	} else {
+		Write-Host "Last update file not found, defaulting to past 24 hours"
+		$lastupdate=$(Get-Date).AddHours(-24)
+	}
+	$currentUpdate = $lastupdate;
+	Write-Host "Loaded Last Update: $lastupdate"
+	Get-Item "$folder\**\*.*" | where { $_.LastWriteTime -gt $lastupdate } | Foreach {
+		# Ignore VS build folders
+		if ($_.FullName.Contains("\bin\")) { return; }
+		if ($_.FullName.Contains("\obj\")) { return; }
+		$diff = $_.LastWriteTime - $lastupdate
+		# Need to account for small milliseconds discrepency not saved to file
+		if ($diff.TotalSeconds -lt 1) { return; }
+		Write-Host “File Name: ” + $_.FullName + "; Updated: " + $_.LastWriteTime
+		if ($_.LastWriteTime -gt $currentUpdate) {
+			$currentUpdate = $_.LastWriteTime
+		}
+	}
+
+	if ($currentUpdate -gt $lastupdate) {
+		Write-Host "Updating last update time to $currentUpdate"
+		$currentUpdate | Set-Content -Path "$folder\lastupdate.txt"
+		return $true
+	}
+	Write-Host "No updated files found."
+	return $false
+}
+
 Write-Host "Release Version: [$($alphaversion)]_[$($betaversion)]_[$($rcversion)]";
-$rcversion = $rcversion + 1;
+if (CheckIfAnyFilesUpdated) {
+	$rcversion = $rcversion + 1;
+}
 
 $version = "$alphaversion.$betaversion.$rcversion";
 Write-Host "New Version: $($version)";

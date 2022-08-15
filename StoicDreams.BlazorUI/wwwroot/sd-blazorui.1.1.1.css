@@ -285,9 +285,12 @@ p + p.mud-typography {
 .bui-section-title {
 	position: sticky;
 	top: 0;
+	overflow: hidden;
+	text-overflow: ellipsis;
+	white-space: nowrap;
+	z-index: 1;
 }
 .bui-theme-title {
 	color: var(--mud-palette-appbar-text);
 	background-color: var(--mud-palette-appbar-background);
-	z-index: 1;
 }

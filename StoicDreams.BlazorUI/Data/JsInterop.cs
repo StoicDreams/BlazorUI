@@ -2,7 +2,7 @@
 
 public class JsInterop : IJsInterop, IAsyncDisposable
 {
-	public const string InteropFilePath = "./sd-blazorui-interop.1.0.5.js";
+	public const string InteropFilePath = "./sd-blazorui-interop.1.0.6.js";
 	public JsInterop(IJSRuntime jsRuntime)
 	{
 		InteropModule = new(() => jsRuntime.InvokeAsync<IJSObjectReference>(

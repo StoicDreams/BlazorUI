@@ -36,7 +36,7 @@ export function RemoveSelector(selector) {
 }
 
 export function AddCSSFile(filePath) {
-	AddElement('link', { rel: 'stylesheet', href: filePath }, document.head);
+	AddElement('link', { rel: 'stylesheet', href: filePath }, document.body);
 }
 
 export function AddElementToHead(tag, attributes) {

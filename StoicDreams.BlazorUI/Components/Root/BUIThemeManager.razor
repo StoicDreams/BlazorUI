@@ -252,6 +252,38 @@
 	ul.mud-breadcrumbs {{
 		padding: 3px 3px 3px;
 	}}
+	@media (min-width: 600px) {{
+		.mud-toolbar-gutters {{
+			padding-left: 16px;
+			padding-right: 16px;
+		}}
+	}}
+	@media (max-width: 960px) {{
+		:root {{
+			--mud-appbar-height: 84px;
+		}}
+		.mud-drawer-close-mini-md-left.mud-drawer-left-clipped-docked .buiTitleBar.mud-appbar {{
+			margin-left: 0;
+			width: 100%;
+		}}
+
+		.buiTitleBar h1 {{position: absolute;
+			top: 44px;
+			left: 0px;
+			right: 0px;
+			z-index: 0;
+			font-size: 0.8em;
+			padding: 0 20px 0 60px;
+			white-space: nowrap;
+			text-overflow: ellipsis;
+		}}
+		.bui-section-title {{
+			font-size: 1em;
+		}}
+		.mud-typography-body1 {{
+			font-size: 0.95em;
+		}}
+	}}
 </style>");
 
 }

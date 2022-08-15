@@ -17,6 +17,7 @@
 
 	protected override Task OnInitializedAsync()
 	{
+		Title = "Account Information";
 		UserName = Auth.User.Name;
 		return base.OnInitializedAsync();
 	}

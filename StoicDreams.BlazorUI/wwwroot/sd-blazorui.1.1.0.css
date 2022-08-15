@@ -282,12 +282,6 @@ p + p.mud-typography {
 	margin-top: 0.8em;
 }
 
-@media (max-width: 960px) {
-	.mud-drawer-close-mini-md-left.mud-drawer-left-clipped-docked .mud-appbar {
-		margin-left: 0;
-		width: 100%;
-	}
-}
 .bui-section-title {
 	position: sticky;
 	top: 0;

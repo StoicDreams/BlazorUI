@@ -16,24 +16,30 @@
 	[Parameter]
 	public RenderFragment? ChildContent { get; set; }
 	[Parameter]
-	public Action? OnSave { get; set; }
+	public EventCallback OnSave { get; set; }
 	[Parameter]
-	public Action? OnCancel { get; set; }
+	public EventCallback OnCancel { get; set; }
 
 	protected virtual string CancelText { get; set; } = "Cancel";
 	protected virtual string ConfirmText { get; set; } = "Confirm";
 	protected virtual string CancelTitle { get; set; } = "Cancel";
 	protected virtual string ConfirmTitle { get; set; } = "Confirm";
 
-	private void Cancel()
+	private async Task Cancel()
 	{
-		OnCancel?.Invoke();
+		if (OnCancel.HasDelegate)
+		{
+			await OnCancel.InvokeAsync();
+		}
 		Dialog.Cancel();
 	}
 
-	private void Confirm()
+	private async Task Confirm()
 	{
-		OnSave?.Invoke();
+		if (OnSave.HasDelegate)
+		{
+			await OnSave.InvokeAsync();
+		}
 		Dialog.Close(DialogResult.Ok(true));
 	}
 }

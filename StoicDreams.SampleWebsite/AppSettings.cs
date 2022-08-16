@@ -18,6 +18,7 @@ public static class AppSettings
 		options.ApplyOnStartup<AppStartup>();
 		options.ApplyStateOnStartup(appState =>
 		{
+			appState.SetData(AppStateDataTags.FeedbackComponent, typeof(Feedback));
 			appState.SetData(AppStateDataTags.TitleBarLogo, "<img src=\"BlazorUI.svg\" title=\"Blazor UI Logo\" aria-label=\"Blazor UI Logo\" />");
 			appState.SetData(AppStateDataTags.NavList, GetSiteNavigation());
 			appState.SetData(AppStateDataTags.RightDrawerOnClick, HandlerRightDrawerClickState);

@@ -1,4 +1,12 @@
 ﻿@inherits BUICore
+@inject IDialogService DialogService
+
+@if (AppIsSetupForFeedback)
+{
+	<MudTooltip Text="Feedback" Placement="Placement.Left">
+		<MudIconButton Size="Size.Small" Icon="@Icons.Material.TwoTone.Feedback" Color="Color.Inherit" OnClick="OpenFeedback" />
+	</MudTooltip>
+}
 
 <MudTooltip Text="Open App Settings" Placement="Placement.Left">
 	<MudIconButton Size="Size.Small" Icon="@Icons.Material.Filled.Settings" Color="Color.Inherit" OnClick="ToggleNav" />
@@ -6,6 +14,8 @@
 
 @code {
 	private Type AppSettingComponent => GetAppState<Type>(AppStateDataTags.AppSettingsComponent) ?? typeof(BUIAppSettings);
+	private Type? FeedbackComponent => GetAppState<Type>(AppStateDataTags.FeedbackComponent);
+	private bool AppIsSetupForFeedback => FeedbackComponent != null;
 
 
 	private void ToggleNav()
@@ -15,5 +25,12 @@
 			AppState.SetData(AppStateDataTags.RightDrawerContent, AppSettingComponent);
 			AppState.SetData(AppStateDataTags.TitleBarRightDrawerOpen, true);
 		});
+	}
+
+	private void OpenFeedback()
+	{
+		DialogOptions options = new();
+		options.FullScreen = true;
+		DialogService.Show(FeedbackComponent, "Feedback", options);
 	}
 }

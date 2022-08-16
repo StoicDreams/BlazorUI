@@ -110,6 +110,18 @@ public abstract class BUICore : ComponentBase, IDisposable
 	protected virtual void OnSessionStateUpdate() { }
 	protected virtual void OnPageStateupdate() { }
 
+	#region Helper Methods
+	protected string FirstNotEmpty(params string?[] options)
+	{
+		foreach (string? option in options)
+		{
+			if (string.IsNullOrWhiteSpace(option)) { continue; }
+			return option;
+		}
+		return string.Empty;
+	}
+	#endregion
+
 	public virtual void Dispose()
 	{
 		AppStateWatcher?.Dispose();

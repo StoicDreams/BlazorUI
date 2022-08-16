@@ -36,6 +36,8 @@ public static partial class ExtendIServiceCollection
 			config.SnackbarConfiguration.HideTransitionDuration = 300;
 			config.SnackbarConfiguration.SnackbarVariant = Variant.Filled;
 			config.SnackbarConfiguration.MaxDisplayedSnackbars = 10;
+			config.SnackbarConfiguration.ShowCloseIcon = true;
+			config.SnackbarConfiguration.VisibleStateDuration = 360_000;
 			mudConfigHandler?.Invoke(config);
 		});
 		services.AddScoped<BlazorTransitionableRoute.IRouteTransitionInvoker, BlazorTransitionableRoute.DefaultRouteTransitionInvoker>();

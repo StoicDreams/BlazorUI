@@ -114,9 +114,8 @@
 			StateHasChanged();
 			return;
 		}
+		NavManager.NavigateTo("/");
 		Snackbar.Add(result.Message, Severity.Success);
-		NavManager.NavigateTo("/home");
-		StateHasChanged();
 	}
 
 	private bool ValidateEmail()

@@ -94,7 +94,7 @@
 					{
 						<BUIParagraph>With this storage option, any login, settings, or other persistable information will only be retained in memory, and will be gone when the @AppTypeReference is either closed or refreshed.</BUIParagraph>
 						<BUIParagraph>Use this option when:</BUIParagraph>
-						<BUIList Items="UseMemoryWhenOptions" />
+						<BUIList Items="UseMemoryWhenOptions">@context</BUIList>
 						@if (HasStorageConsent)
 						{
 							<BUIQuote Color="Color.Warning">
@@ -129,7 +129,7 @@
 					{
 						<BUIParagraph>With this storage option, any time you open a new tab and visit this website, you will need to consent to storage and login in order to access your account features.</BUIParagraph>
 						<BUIParagraph>Use this option when:</BUIParagraph>
-						<BUIList Items="UseSessionWhenOptions" />
+						<BUIList Items="UseSessionWhenOptions">@context</BUIList>
 					},
 					Actions = __builder =>
 					{
@@ -158,7 +158,7 @@
 					{
 						<BUIParagraph>With this storage option, you only need to consent and login once. Your login will persist even after closing and reopening this @AppTypeReference.</BUIParagraph>
 						<BUIParagraph>Use this option when:</BUIParagraph>
-						<BUIList Items="UseLongTermWhenOptions" />
+						<BUIList Items="UseLongTermWhenOptions">@context</BUIList>
 					},
 					Actions = __builder =>
 					{

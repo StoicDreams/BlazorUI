@@ -1,4 +1,5 @@
-﻿@typeparam TItem
+﻿@using System.Diagnostics.CodeAnalysis
+@typeparam TItem
 
 @if (ChildContent != null)
 {
@@ -23,8 +24,8 @@
 }
 
 @code {
-	[Parameter]
-	public RenderFragment<TItem> ChildContent { get; set; } = DefaultTemplate;
+	[Parameter, NotNull]
+	public RenderFragment<TItem>? ChildContent { get; set; }
 	[Parameter]
 	public ICollection<TItem> Items { get; set; } = new List<TItem>();
 	[Parameter]
@@ -63,6 +64,4 @@
 			return values;
 		}
 	}
-
-	private static RenderFragment<TItem> DefaultTemplate = (TItem item) => @<text>@item</text>;
 }

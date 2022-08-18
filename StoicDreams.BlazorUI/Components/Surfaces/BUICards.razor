@@ -29,7 +29,7 @@
 						<MudIconButton Href="@cardDetail.HeaderLink"
 							OnClick="cardDetail.HeaderAction"
 							Target="@(cardDetail.HeaderLink.StartsWith("http") ? "_blank" : "_self")"
-							Icon="@(cardDetail.HeaderLink.StartsWith("http") ? Icons.Material.TwoTone.Link : cardDetail.HeaderIcon)" />
+							   Icon="@(cardDetail.HeaderLink.StartsWith("http") ? Icons.Material.TwoTone.OpenInNew : cardDetail.HeaderIcon)" />
 					}
 					else if (cardDetail.HeaderAction.HasDelegate)
 					{

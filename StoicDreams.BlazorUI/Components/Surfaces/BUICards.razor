@@ -11,13 +11,24 @@
 		<MudCard Elevation="25" Style="@CardStyles">
 			<MudCardHeader Class="@GetThemeFromColor(cardDetail.HeaderTheme)">
 				<CardHeaderAvatar>
-					@if (AvatarIsIcon(cardDetail.Avatar))
+					@if (!string.IsNullOrWhiteSpace(cardDetail.HeaderLink))
 					{
-						<MudIcon Icon="@cardDetail.Avatar" Size="Size.Large" Color="cardDetail.AvatarColor" Title="@cardDetail.AvatarAltText" />
+						<MudIconButton Href="@cardDetail.HeaderLink" 
+							OnClick="cardDetail.HeaderAction"
+							Target="@(cardDetail.HeaderLink.StartsWith("http") ? "_blank" : "_self")"
+							Icon="@(cardDetail.HeaderLink.StartsWith("http") ? Icons.Material.TwoTone.Link : cardDetail.HeaderIcon)"
+							/>
 					}
-					else if (AvatarIsPath(cardDetail.Avatar))
+					else
 					{
-						<MudImage Src="@cardDetail.Avatar" Alt="@cardDetail.AvatarAltText" Elevation="0" Class="rounded-ts-lg justify-end" Height="64" />
+						@if (AvatarIsIcon(cardDetail.Avatar))
+						{
+							<MudIcon Icon="@cardDetail.Avatar" Size="Size.Large" Color="cardDetail.AvatarColor" Title="@cardDetail.AvatarAltText" />
+						}
+						else if (AvatarIsPath(cardDetail.Avatar))
+						{
+							<MudImage Src="@cardDetail.Avatar" Alt="@cardDetail.AvatarAltText" Elevation="0" Class="rounded-ts-lg justify-end" Height="64" />
+						}
 					}
 				</CardHeaderAvatar>
 				<CardHeaderContent>

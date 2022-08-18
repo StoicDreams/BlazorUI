@@ -29,13 +29,18 @@ public class CardDetail : ICardDetail
 
 	/// <summary>
 	/// Set with action to use for header action button.
-	/// Header action button will not display if null.
 	/// </summary>
 	public EventCallback HeaderAction { get; set; }
 
 	/// <summary>
+	/// Set with URL to use header action icon as a link.
+	/// </summary>
+	public string HeaderLink { get; set; } = string.Empty;
+
+	/// <summary>
 	/// Set icon to use for header action button.
-	/// Will not display if HeaderAction is not set.
+	/// Will not display if HeaderAction and HeaderLink is not set.
+	/// If HeaderLink is an external url (starts with http) then a Link icon will be used instead of this.
 	/// </summary>
 	public string HeaderIcon { get; set; } = Icons.Material.TwoTone.Menu;
 

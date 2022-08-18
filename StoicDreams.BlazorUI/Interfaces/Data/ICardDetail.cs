@@ -29,13 +29,18 @@ public interface ICardDetail
 
 	/// <summary>
 	/// Set with action to use for header action button.
-	/// Header action button will not display if delegate is not set.
 	/// </summary>
 	EventCallback HeaderAction { get; set; }
 
 	/// <summary>
+	/// Set with URL to use header action icon as a link.
+	/// </summary>
+	string HeaderLink { get; set; }
+
+	/// <summary>
 	/// Set icon to use for header action button.
-	/// Will not display if HeaderAction is not set.
+	/// Will not display if HeaderAction and HeaderLink is not set.
+	/// If HeaderLink is an external url (starts with http) then a Link icon will be used instead of this.
 	/// </summary>
 	string HeaderIcon { get; set; }
 

@@ -19,6 +19,8 @@ Get-ChildItem -Path .\ -Filter *BlazorUI.csproj -Recurse -File | ForEach-Object 
 
 function CheckIfAnyFilesUpdated {
 	Param ()
+	# Stopped working for some reason so disabling check for now until I get a chance to look into why.
+	return $true
 	$folder = "."
 	$file = "$folder\lastupdate.txt"
 	if (Test-Path $file) {

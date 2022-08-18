@@ -1,0 +1,68 @@
+﻿@typeparam TItem
+
+@if (ChildContent != null)
+{
+	@if (IsOrderedList)
+	{
+		<ol class="@GetClasses" @attributes="GetListAttributes">
+			@foreach (TItem item in Items)
+			{
+				<li @attributes="GetItemAttributes">@ChildContent(item)</li>
+			}
+		</ol>
+	}
+	else
+	{
+		<ul class="@GetClasses" @attributes="GetListAttributes">
+			@foreach (TItem item in Items)
+			{
+				<li @attributes="GetItemAttributes">@ChildContent(item)</li>
+			}
+		</ul>
+	}
+}
+
+@code {
+	[Parameter]
+	public RenderFragment<TItem> ChildContent { get; set; } = DefaultTemplate;
+	[Parameter]
+	public ICollection<TItem> Items { get; set; } = new List<TItem>();
+	[Parameter]
+	public string Class { get; set; } = string.Empty;
+	[Parameter]
+	public string Styles { get; set; } = string.Empty;
+	[Parameter]
+	public string ItemStyles { get; set; } = string.Empty;
+	[Parameter]
+	public bool IsOrderedList { get; set; }
+
+	private string GetClasses => $"list {Class}".Trim();
+
+	private Dictionary<string, object> GetListAttributes
+	{
+		get
+		{
+			Dictionary<string, object> values = new();
+			if (!string.IsNullOrWhiteSpace(Styles))
+			{
+				values.Add("style", Styles);
+			}
+			return values;
+		}
+	}
+
+	private Dictionary<string, object> GetItemAttributes
+	{
+		get
+		{
+			Dictionary<string, object> values = new();
+			if (!string.IsNullOrWhiteSpace(ItemStyles))
+			{
+				values.Add("style", ItemStyles);
+			}
+			return values;
+		}
+	}
+
+	private static RenderFragment<TItem> DefaultTemplate = (TItem item) => @<text>@item</text>;
+}

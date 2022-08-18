@@ -62,9 +62,6 @@ else
 	<DynamicComponent Type="AppStartup" />
 }
 
-<LinkerReferenceLoader />
-
-
 @code {
 	private Assembly AppAssembly => Assembly.GetEntryAssembly() ?? Assembly.GetCallingAssembly();
 	private Type AppLayout => HiddenOptions.MainLayout;

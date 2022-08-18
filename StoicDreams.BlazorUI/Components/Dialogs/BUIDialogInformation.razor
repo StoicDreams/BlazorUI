@@ -1,0 +1,31 @@
+﻿
+<MudDialog>
+	<DialogContent>
+		@ChildContent
+	</DialogContent>
+	<DialogActions>
+		<MudSpacer />
+		<MudButton Icon="@Icons.Material.Filled.Save" Color="Color.Success" OnClick="Confirm" Title="@CloseTitle">@CloseText</MudButton>
+	</DialogActions>
+</MudDialog>
+
+@code {
+	[CascadingParameter]
+	private MudDialogInstance Dialog { get; set; } = new();
+	[Parameter]
+	public RenderFragment? ChildContent { get; set; }
+	[Parameter]
+	public EventCallback OnClose { get; set; }
+
+	protected virtual string CloseText { get; set; } = "Close";
+	protected virtual string CloseTitle { get; set; } = "Close";
+
+	private async Task Confirm()
+	{
+		if (OnClose.HasDelegate)
+		{
+			await OnClose.InvokeAsync();
+		}
+		Dialog.Close(DialogResult.Ok(true));
+	}
+}

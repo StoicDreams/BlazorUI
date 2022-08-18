@@ -294,3 +294,103 @@ p + p.mud-typography {
 	color: var(--mud-palette-appbar-text);
 	background-color: var(--mud-palette-appbar-background);
 }
+
+blockquote {
+	padding-left: var(--main-padding-size);
+	padding-right: var(--main-padding-size);
+	border-left: 10px solid var(--mud-palette-primary);
+}
+	blockquote:not(:first-child) {
+		margin-top: var(--main-padding-size);
+	}
+	blockquote:not(:last-child) {
+		margin-bottom: var(--main-padding-size);
+	}
+	blockquote > cite {
+		display: block;
+		text-align: right;
+		color: var(--mud-palette-primary);
+		font-weight: 800;
+	}
+		blockquote > cite:before {
+			content: "— ";
+			color: var(--mud-palette-primary);
+		}
+	blockquote.theme-primary {
+		border-left-color: var(--mud-palette-primary);
+	}
+
+		blockquote.theme-primary > cite:before {
+			color: var(--mud-palette-primary);
+		}
+	blockquote.theme-primary {
+		border-left-color: var(--mud-palette-primary);
+	}
+
+		blockquote.theme-primary > cite:before {
+			color: var(--mud-palette-primary);
+		}
+	blockquote.theme-secondary {
+		border-left-color: var(--mud-palette-secondary);
+	}
+
+		blockquote.theme-secondary > cite:before {
+			color: var(--mud-palette-secondary);
+		}
+	blockquote.theme-tertiary {
+		border-left-color: var(--mud-palette-tertiary);
+	}
+
+		blockquote.theme-tertiary > cite:before {
+			color: var(--mud-palette-tertiary);
+		}
+	blockquote.theme-info {
+		border-left-color: var(--mud-palette-info);
+	}
+
+		blockquote.theme-info > cite:before {
+			color: var(--mud-palette-info);
+		}
+	blockquote.theme-success {
+		border-left-color: var(--mud-palette-success);
+	}
+
+		blockquote.theme-success > cite:before {
+			color: var(--mud-palette-success);
+		}
+	blockquote.theme-warning {
+		border-left-color: var(--mud-palette-warning);
+	}
+
+		blockquote.theme-warning > cite:before {
+			color: var(--mud-palette-warning);
+		}
+	blockquote.theme-primary {
+		border-left-color: var(--mud-palette-primary);
+	}
+
+		blockquote.theme-primary > cite:before {
+			color: var(--mud-palette-primary);
+		}
+	blockquote.theme-error {
+		border-left-color: var(--mud-palette-error);
+	}
+
+		blockquote.theme-error > cite:before {
+			color: var(--mud-palette-error);
+		}
+
+ul.list {
+	list-style: disc;
+	padding-inline-start: calc(2 * var(--main-padding-size));
+}
+ul ul.list {
+	list-style: circle;
+}
+ul ul ul.list {
+	list-style: square;
+}
+.mud-card-header-avatar:empty,
+.mud-card-header-actions:empty {
+	display: none;
+}

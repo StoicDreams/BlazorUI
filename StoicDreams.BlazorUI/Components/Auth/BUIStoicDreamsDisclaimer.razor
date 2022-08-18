@@ -1,0 +1,16 @@
+﻿@inject IDialogService Dialog
+
+<BUIQuote Color="Color.Info">
+	<BUIParagraph>This website uses <BUIClickableText OnClick="OpenMoreDetails">Stoic Dreams Accounts</BUIClickableText> for user management.</BUIParagraph>
+	<BUIParagraph>
+		Stoic Dreams Accounts allow the same login to be used across any websites that use Stoic Dreams Accounts. <BUIClickableText OnClick="OpenMoreDetails">Click here for more information</BUIClickableText>.
+	</BUIParagraph>
+</BUIQuote>
+
+@code {
+	private void OpenMoreDetails()
+	{
+		var options = new DialogOptions { CloseOnEscapeKey = true, FullWidth = true };
+		Dialog.Show<BUIStoicDreamsAccountInformation>("Stoic Dreams Account Services", options);
+	}
+}

@@ -4,103 +4,7 @@
 
 <BUIStandardSection>
 	<BUIParagraph>This @AppTypeReference has multiple levels of data storage available for you to choose from, which will determine how data is stored on your device for this @AppTypeReference.</BUIParagraph>
-	<BUIPaper PaperType="PaperTypes.Wrap" Class="justify-center gap-4">
-		<MudCard Outlined="true" Style="@CardStyles">
-			<MudCardHeader Class="@CardHeaderClasses">Memory-only Storage (default behavior - Maximum Security)</MudCardHeader>
-			<MudCardContent>
-				<BUIParagraph>With this storage option, any login, settings, or other persistable information will only be retained in memory, and will be gone when the @AppTypeReference is either closed or refreshed.</BUIParagraph>
-				<BUIParagraph>Use this option when:</BUIParagraph>
-				<MudList Dense="true">
-					<MudListItem>You are on a public computer, or some other device that is not yours.</MudListItem>
-					@if (IsWebsite)
-					{
-						<MudListItem>You do not want any personal data stored in any storage that will persist beyond a page refresh.</MudListItem>
-					}
-					<MudListItem>You want to make sure you are required to login everytime you access this @AppTypeReference, even when you simply reload the page.</MudListItem>
-				</MudList>
-				@if (HasStorageConsent)
-				{
-					<MudAlert Severity="Severity.Warning">
-						You have opted-in to storing your data on this computer. Selecting this option now will result in clearing any data saved from storage.
-					</MudAlert>
-				}
-			</MudCardContent>
-			<MudCardActions>
-				@if (CurrentPermission == StoragePermissions.None)
-				{
-					<MudPaper Class="mud-theme-primary pa-2 d-flex align-center" Elevation="5">
-						<MudIcon Icon="@Icons.Material.TwoTone.PersonOff" Class="mr-2" />
-						@ButtonContentNoStorage
-					</MudPaper>
-				}
-				else
-				{
-					<MudButton Style="@ButtonStyles" Variant="Variant.Filled" StartIcon="@Icons.Material.TwoTone.PersonOff" Color="Color.Warning" OnClick="SetToNone">
-						@ButtonContentNoStorage
-					</MudButton>
-				}
-			</MudCardActions>
-		</MudCard>
-
-		@if (IsWebsite)
-		{
-			<MudCard Outlined="true" Style="@CardStyles">
-				<MudCardHeader Class="@CardHeaderClasses">Single Session/Tab Storage (Medium Security)</MudCardHeader>
-				<MudCardContent>
-					<BUIParagraph>With this storage option, any time you open a new tab and visit this website, you will need to consent to storage and login in order to access your account features.</BUIParagraph>
-					<BUIParagraph>Use this option when:</BUIParagraph>
-					<MudList Dense="true">
-						<MudListItem>You are on your personal device.</MudListItem>
-						<MudListItem>You will logout before leaving your device accessible to others.</MudListItem>
-						<MudListItem>You want to stay logged in if you refresh the page, but prefer to login everytime you visit this @AppTypeReference in a new tab or window.</MudListItem>
-					</MudList>
-				</MudCardContent>
-				<MudCardActions>
-					@if (CurrentPermission == StoragePermissions.CurrentInstance)
-					{
-						<MudPaper Class="mud-theme-primary pa-2 d-flex align-center" Elevation="5">
-							<MudIcon Icon="@Icons.Material.TwoTone.Tab" Class="mr-2" />
-							@ButtonContentShortTermStorage
-						</MudPaper>
-					}
-					else
-					{
-						<MudButton Style="@ButtonStyles" Variant="Variant.Filled" Class="justify-start" StartIcon="@Icons.Material.TwoTone.Tab" Color="Color.Warning" OnClick="SetToCurrentInstance">
-							@ButtonContentShortTermStorage
-						</MudButton>
-					}
-				</MudCardActions>
-			</MudCard>
-		}
-
-		<MudCard Outlined="true" Style="@CardStyles">
-			<MudCardHeader Class="@CardHeaderClasses">Long-term Storage (Lowest Security)</MudCardHeader>
-			<MudCardContent>
-				<BUIParagraph>With this storage option, you only need to consent and login once. Your login will persist even after closing and reopening this @AppTypeReference.</BUIParagraph>
-				<BUIParagraph>Use this option when:</BUIParagraph>
-				<MudList Dense="true">
-					<MudListItem>You are on your personal device.</MudListItem>
-					<MudListItem>Your device is secure from other people accessing it.</MudListItem>
-					<MudListItem>You want to remain logged in until you explicitely logout.</MudListItem>
-				</MudList>
-			</MudCardContent>
-			<MudCardActions>
-				@if (CurrentPermission == StoragePermissions.LongTerm)
-				{
-					<MudPaper Class="mud-theme-primary pa-2 d-flex align-center" Elevation="5">
-						<MudIcon Icon="@Icons.Material.TwoTone.Person" Class="mr-2" />
-						@ButtonContentLongTermStorage
-					</MudPaper>
-				}
-				else
-				{
-					<MudButton Style="@ButtonStyles" Variant="Variant.Filled" StartIcon="@Icons.Material.TwoTone.Person" Color="Color.Warning" OnClick="SetToLongTerm">
-						@ButtonContentLongTermStorage
-					</MudButton>
-				}
-			</MudCardActions>
-		</MudCard>
-	</BUIPaper>
+	<BUICards Items="ConsentCards" CardMaxWidth="500" FillLeftSpacer="true" FillRightSpacer="true" />
 </BUIStandardSection>
 
 @code {
@@ -118,6 +22,37 @@
 	private string ButtonContentNoStorage => $"I confirm this is not my personal device or I simply want to assure a login is required everytime I access this {AppTypeReference}.";
 	private string ButtonContentShortTermStorage => $"I confirm that I am using my personal device and that I understand the above statements and I accept the use of storing my data in the browser so my login and other data will be remembered when the website is reloaded.";
 	private string ButtonContentLongTermStorage => $"I confirm that I am using my personal device and that I understand the above statements and I accept the use of storing my data in the browser so my login and other data will be remembered any time I access this {AppTypeReference}.";
+
+	private List<string> UseMemoryWhenOptions
+	{
+		get
+		{
+			List<string> list = new()
+			{
+				"You are on a public computer, or some other device that is not yours."
+			};
+			if (IsWebsite)
+			{
+				list.Add("You do not want any personal data stored in any storage that will persist beyond a page refresh.");
+			}
+			list.Add("You want to make sure you are required to login everytime you access this @AppTypeReference, even when you simply reload the page.");
+			return list;
+		}
+	}
+
+	private List<string> UseSessionWhenOptions = new()
+	{
+		"You are on your personal device.",
+		"You will logout before leaving your device accessible to others.",
+		"You want to stay logged in if you refresh the page, but prefer to login everytime you visit this @AppTypeReference in a new tab or window."
+	};
+
+	private List<string> UseLongTermWhenOptions = new()
+	{
+		"You are on your personal device.",
+		"Your device is secure from other people accessing it.",
+		"You want to remain logged in until you explicitely logout."
+	};
 
 	protected override async Task OnInitializedAsync()
 	{
@@ -143,4 +78,111 @@
 		CurrentPermission = StoragePermissions.LongTerm;
 	}
 
+	private List<CardDetail> ConsentCards 
+	{
+		get
+		{
+			List<CardDetail> list = new()
+			{
+				new()
+				{
+					Header = __builder =>
+					{
+						<text>Memory-only Storage (default behavior - Maximum Security)</text>
+					},
+					Content = __builder =>
+					{
+						<BUIParagraph>With this storage option, any login, settings, or other persistable information will only be retained in memory, and will be gone when the @AppTypeReference is either closed or refreshed.</BUIParagraph>
+						<BUIParagraph>Use this option when:</BUIParagraph>
+						<BUIList Items="UseMemoryWhenOptions" />
+						@if (HasStorageConsent)
+						{
+							<BUIQuote Color="Color.Warning">
+								You have opted-in to storing your data on this computer. Selecting this option now will result in clearing any data saved from storage.
+							</BUIQuote>
+						}
+					},
+					Actions = __builder =>
+					{
+						@if (CurrentPermission == StoragePermissions.CurrentInstance)
+						{
+							<MudPaper Class="mud-theme-primary pa-2 d-flex align-center" Elevation="5">
+								<MudIcon Icon="@Icons.Material.TwoTone.Tab" Class="mr-2" />
+								@ButtonContentShortTermStorage
+							</MudPaper>
+						}
+						else
+						{
+							<MudButton Style="@ButtonStyles" Variant="Variant.Filled" Class="justify-start" StartIcon="@Icons.Material.TwoTone.Tab" Color="Color.Warning" OnClick="SetToCurrentInstance">
+								@ButtonContentShortTermStorage
+							</MudButton>
+						}
+					}
+				},
+				new()
+				{
+					Header = __builder =>
+					{
+						<text>Single Session/Tab Storage (Medium Security)</text>
+					},
+					Content = __builder =>
+					{
+						<BUIParagraph>With this storage option, any time you open a new tab and visit this website, you will need to consent to storage and login in order to access your account features.</BUIParagraph>
+						<BUIParagraph>Use this option when:</BUIParagraph>
+						<BUIList Items="UseSessionWhenOptions" />
+					},
+					Actions = __builder =>
+					{
+						@if (CurrentPermission == StoragePermissions.CurrentInstance)
+						{
+							<MudPaper Class="mud-theme-primary pa-2 d-flex align-center" Elevation="5">
+								<MudIcon Icon="@Icons.Material.TwoTone.Tab" Class="mr-2" />
+								@ButtonContentShortTermStorage
+							</MudPaper>
+						}
+						else
+						{
+							<MudButton Style="@ButtonStyles" Variant="Variant.Filled" Class="justify-start" StartIcon="@Icons.Material.TwoTone.Tab" Color="Color.Warning" OnClick="SetToCurrentInstance">
+								@ButtonContentShortTermStorage
+							</MudButton>
+						}
+					}
+				},
+				new()
+				{
+					Header = __builder =>
+					{
+						<text>Long-term Storage (Lowest Security)</text>
+					},
+					Content = __builder =>
+					{
+						<BUIParagraph>With this storage option, you only need to consent and login once. Your login will persist even after closing and reopening this @AppTypeReference.</BUIParagraph>
+						<BUIParagraph>Use this option when:</BUIParagraph>
+						<BUIList Items="UseLongTermWhenOptions" />
+					},
+					Actions = __builder =>
+					{
+						@if (CurrentPermission == StoragePermissions.LongTerm)
+						{
+							<MudPaper Class="mud-theme-primary pa-2 d-flex align-center" Elevation="5">
+								<MudIcon Icon="@Icons.Material.TwoTone.Person" Class="mr-2" />
+								@ButtonContentLongTermStorage
+							</MudPaper>
+						}
+						else
+						{
+							<MudButton Style="@ButtonStyles" Variant="Variant.Filled" StartIcon="@Icons.Material.TwoTone.Person" Color="Color.Warning" OnClick="SetToLongTerm">
+								@ButtonContentLongTermStorage
+							</MudButton>
+						}
+					}
+				}
+			};
+			if (!IsWebsite)
+			{
+				list.RemoveAt(1);
+			}
+			return list;
+		}
+	}
 }

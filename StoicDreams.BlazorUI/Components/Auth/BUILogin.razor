@@ -5,6 +5,11 @@
 {
 	<BUIStoragePermissionsConsent />
 
+	@if (IsStoicDreams)
+	{
+		<BUIStoicDreamsDisclaimer />
+	}
+
 	<BUIStandardSection>
 		<MudTabs>
 			<MudTabPanel Text="Sign-In">
@@ -56,6 +61,7 @@
 	private string InputEmail { get; set; } = string.Empty;
 	private string InputConfirmEmail { get; set; } = string.Empty;
 	private string InputPassword { get; set; } = string.Empty;
+	private bool IsStoicDreams => GetAppState<bool>(AppStateDataTags.UsesStoicDreamsAuth);
 
 	protected override async Task OnInitializedAsync()
 	{

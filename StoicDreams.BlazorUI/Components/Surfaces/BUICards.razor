@@ -1,0 +1,83 @@
+﻿@using System.Text
+@typeparam TCardDetail where TCardDetail : ICardDetail
+
+<BUIPaper Class="@Class" PaperType="PaperTypes.Wrap">
+	@if (FillLeftSpacer)
+	{
+		<MudSpacer />
+	}
+	@foreach (ICardDetail cardDetail in Items)
+	{
+		<MudCard Elevation="25" Style="@CardStyles">
+			<MudCardHeader Class="@GetThemeFromColor(cardDetail.HeaderTheme)">
+				<CardHeaderAvatar>
+					@if (AvatarIsIcon(cardDetail.Avatar))
+					{
+						<MudIcon Icon="@cardDetail.Avatar" Size="Size.Large" Color="cardDetail.AvatarColor" Title="@cardDetail.AvatarAltText" />
+					}
+					else if (AvatarIsPath(cardDetail.Avatar))
+					{
+						<MudImage Src="https://blazorui.stoicdreams.com/ms-icon-310x310.png" Alt="@cardDetail.AvatarAltText" Elevation="25" Class="rounded-ts-lg justify-end" Height="64" />
+					}
+				</CardHeaderAvatar>
+				<CardHeaderContent>
+					@cardDetail.Header
+				</CardHeaderContent>
+				<CardHeaderActions>
+					@if (cardDetail.HeaderAction.HasDelegate)
+					{
+						<MudIconButton Icon="@cardDetail.HeaderIcon" OnClick="cardDetail.HeaderAction" />
+					}
+				</CardHeaderActions>
+			</MudCardHeader>
+			<MudCardContent>
+				@cardDetail.Content
+			</MudCardContent>
+			<MudCardActions>
+				@cardDetail.Actions
+			</MudCardActions>
+		</MudCard>
+	}
+	@if (FillRightSpacer)
+	{
+		<MudSpacer />
+	}
+</BUIPaper>
+
+@code {
+	[Parameter]
+	public RenderFragment<TCardDetail> ChildContent { get; set; } = DefaultTemplate;
+	[Parameter]
+	public ICollection<TCardDetail> Items { get; set; } = new List<TCardDetail>();
+	[Parameter]
+	public string Class { get; set; } = string.Empty;
+	[Parameter]
+	public int CardMaxWidth { get; set; } = 400;
+	[Parameter]
+	public bool FillLeftSpacer { get; set; }
+	[Parameter]
+	public bool FillRightSpacer { get; set; }
+
+	private string CardStyles => $"max-width: {CardMaxWidth}px";
+	private string GetThemeFromColor(Color color) => $"mud-theme-{color.AsName().ToLower()}";
+
+	private bool AvatarIsPath(string avatar)
+	{
+		if (string.IsNullOrWhiteSpace(avatar)) { return false; }
+		if (avatar.Length < 6) { return false; }
+		if (avatar[0..4] == "http") { return true; }
+		if (avatar[0] == '/') { return true; }
+		return false;
+	}
+
+	private bool AvatarIsIcon(string avatar)
+	{
+		if (string.IsNullOrWhiteSpace(avatar)) { return false; }
+		if (avatar.Length < 6) { return false; }
+		if (avatar[0..2] == "fa") { return true; }
+		if (avatar[0..4] == "<svg") { return true; }
+		return false;
+	}
+
+	private static RenderFragment<TCardDetail> DefaultTemplate = (TCardDetail item) => @<text>@item</text>;
+}

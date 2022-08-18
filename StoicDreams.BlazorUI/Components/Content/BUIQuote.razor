@@ -1,0 +1,55 @@
+﻿
+<blockquote class="@GetClasses" @attributes="GetAttributes">
+	@if (QuoteContent != null)
+	{
+		@QuoteContent
+	}
+	else
+	{
+		@ChildContent
+	}
+	@if (CiteContent != null)
+	{
+		<cite>@CiteContent</cite>
+	}
+	else if (!string.IsNullOrWhiteSpace(Cite))
+	{
+		<cite>@Cite</cite>
+	}
+</blockquote>
+
+
+@code {
+	[Parameter]
+	public RenderFragment? ChildContent { get; set; }
+	[Parameter]
+	public RenderFragment? QuoteContent { get; set; }
+	[Parameter]
+	public RenderFragment? CiteContent { get; set; }
+	[Parameter]
+	public Color Color { get; set; } = Color.Default;
+	[Parameter]
+	public string Class { get; set; } = string.Empty;
+	[Parameter]
+	public string Cite { get; set; } = string.Empty;
+	[Parameter]
+	public string Styles { get; set; } = string.Empty;
+	[Parameter]
+	public byte Elevation { get; set; } = 24;
+
+	private string GetColorTheme => $"mud-elevation-{Elevation} mud-theme-dark theme-{Color.ToString().ToLower()}";
+	private string GetClasses => $"{GetColorTheme} {Class}".Trim();
+
+	private Dictionary<string, object> GetAttributes
+	{
+		get
+		{
+			Dictionary<string, object> values = new();
+			if (!string.IsNullOrWhiteSpace(Styles))
+			{
+				values.Add("style", Styles);
+			}
+			return values;
+		}
+	}
+}

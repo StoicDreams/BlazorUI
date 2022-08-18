@@ -1,14 +1,9 @@
 ﻿@inherits BUICore
 
-<BUIStandardSection Class="mud-theme-primary">
+<BUIQuote Color="Color.Primary">
 	<BUIParagraph>This privacy notice discloses the privacy practices for @AppOptions.AppName, and all of it's platforms, including software products, services, and websites. This notice includes the following:</BUIParagraph>
-	<MudList Dense="true">
-		<MudListItem Icon="@ListIcon" IconColor="ListIcondColor">What personally identifiable information is collected from you through our websites or applications, how it is used, and with whom it may be shared.</MudListItem>
-		<MudListItem Icon="@ListIcon" IconColor="ListIcondColor">What choices are available to you regarding the use of your data.</MudListItem>
-		<MudListItem Icon="@ListIcon" IconColor="ListIcondColor">The security procedures in place to protect the misuse of your information.</MudListItem>
-		<MudListItem Icon="@ListIcon" IconColor="ListIcondColor">How you can correct any inaccuracies in the information.</MudListItem>
-	</MudList>
-</BUIStandardSection>
+	<BUIList Items="NoticeIncludes" />
+</BUIQuote>
 
 <BUIStoragePermissionsConsent />
 
@@ -26,13 +21,7 @@
 	<BUIParagraph><strong>Personal Data:</strong> Personal data is any data you submit through forms or other input methods through our websites or applications. This may include your email, password, name, etc.</BUIParagraph>
 	<BUIParagraph><strong>Browser Data:</strong> Browser data is data your browser gives us about it and the connection it has with our services. This may include your IP address, browser name, browser capabilities, etc.</BUIParagraph>
 	<BUIParagraph><strong>Log Data:</strong> Log data is any data collected and stored in our logs. This may include browser data, as well as metrics such as time spent on a page or website. We do not log personal data.</BUIParagraph>
-	<MudList Dense="true">
-		<MudListItem Icon="@ListIcon" IconColor="ListIcondColor">See what personal data we have collected from you, if any.</MudListItem>
-		<MudListItem Icon="@ListIcon" IconColor="ListIcondColor">Change/correct any personal data we have collected from you.</MudListItem>
-		<MudListItem Icon="@ListIcon" IconColor="ListIcondColor">Have us delete any personal data we have collected from you.</MudListItem>
-		<MudListItem Icon="@ListIcon" IconColor="ListIcondColor">Browser and log data we have collected from you cannot be viewed or deleted, as we only use this data for aggregate reporting and do not link this data to accounts.</MudListItem>
-		<MudListItem Icon="@ListIcon" IconColor="ListIcondColor">Express any concern you have about our use of your data.</MudListItem>
-	</MudList>
+	<BUIList Items="InformationAccess" />
 </BUIStandardSection>
 
 <BUISectionTitle>Security</BUISectionTitle>
@@ -79,4 +68,21 @@
 	private const Typo HeadingTypo = Typo.h2;
 	private const string ListIcon = Icons.Material.Filled.ArrowRight;
 	private Color ListIcondColor = Color.Info;
+
+	private static List<string> NoticeIncludes = new()
+	{
+		"What personally identifiable information is collected from you through our websites or applications, how it is used, and with whom it may be shared.",
+		"What choices are available to you regarding the use of your data.",
+		"The security procedures in place to protect the misuse of your information.",
+		"How you can correct any inaccuracies in the information."
+	};
+
+	private static List<string> InformationAccess = new()
+	{
+		"See what personal data we have collected from you, if any.",
+		"Change/correct any personal data we have collected from you.",
+		"Have us delete any personal data we have collected from you.",
+		"Browser and log data we have collected from you cannot be viewed or deleted, as we only use this data for aggregate reporting and do not link this data to accounts.",
+		"Express any concern you have about our use of your data."
+	};
 }

@@ -11,31 +11,27 @@
 		<MudCard Elevation="25" Style="@CardStyles">
 			<MudCardHeader Class="@GetThemeFromColor(cardDetail.HeaderTheme)">
 				<CardHeaderAvatar>
-					@if (!string.IsNullOrWhiteSpace(cardDetail.HeaderLink))
+					@if (AvatarIsIcon(cardDetail.Avatar))
 					{
-						<MudIconButton Href="@cardDetail.HeaderLink" 
-							OnClick="cardDetail.HeaderAction"
-							Target="@(cardDetail.HeaderLink.StartsWith("http") ? "_blank" : "_self")"
-							Icon="@(cardDetail.HeaderLink.StartsWith("http") ? Icons.Material.TwoTone.Link : cardDetail.HeaderIcon)"
-							/>
+						<MudIcon Icon="@cardDetail.Avatar" Size="Size.Large" Color="cardDetail.AvatarColor" Title="@cardDetail.AvatarAltText" />
 					}
-					else
+					else if (AvatarIsPath(cardDetail.Avatar))
 					{
-						@if (AvatarIsIcon(cardDetail.Avatar))
-						{
-							<MudIcon Icon="@cardDetail.Avatar" Size="Size.Large" Color="cardDetail.AvatarColor" Title="@cardDetail.AvatarAltText" />
-						}
-						else if (AvatarIsPath(cardDetail.Avatar))
-						{
-							<MudImage Src="@cardDetail.Avatar" Alt="@cardDetail.AvatarAltText" Elevation="0" Class="rounded-ts-lg justify-end" Height="64" />
-						}
+						<MudImage Src="@cardDetail.Avatar" Alt="@cardDetail.AvatarAltText" Elevation="0" Class="rounded-ts-lg justify-end" Height="64" />
 					}
 				</CardHeaderAvatar>
 				<CardHeaderContent>
 					@cardDetail.Header
 				</CardHeaderContent>
 				<CardHeaderActions>
-					@if (cardDetail.HeaderAction.HasDelegate)
+					@if (!string.IsNullOrWhiteSpace(cardDetail.HeaderLink))
+					{
+						<MudIconButton Href="@cardDetail.HeaderLink"
+							OnClick="cardDetail.HeaderAction"
+							Target="@(cardDetail.HeaderLink.StartsWith("http") ? "_blank" : "_self")"
+							Icon="@(cardDetail.HeaderLink.StartsWith("http") ? Icons.Material.TwoTone.Link : cardDetail.HeaderIcon)" />
+					}
+					else if (cardDetail.HeaderAction.HasDelegate)
 					{
 						<MudIconButton Icon="@cardDetail.HeaderIcon" OnClick="cardDetail.HeaderAction" />
 					}

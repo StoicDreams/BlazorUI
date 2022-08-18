@@ -83,6 +83,7 @@
 		if (avatar.Length < 6) { return false; }
 		if (avatar[0..2] == "fa") { return true; }
 		if (avatar[0..4] == "<svg") { return true; }
+		if (avatar[0..5] == "<path") { return true; }
 		return false;
 	}
 

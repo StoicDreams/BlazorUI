@@ -9,6 +9,9 @@ public interface IStorage : IDisposable
 {
 	IEnumerable<string> Keys { get; }
 
+	ValueTask<bool> ContainsKey(string key);
+	ValueTask<TResult<TValue>> TryGetValue<TValue>(string key);
+
 	ValueTask<bool> Remove(string key);
 	ValueTask SetValue(string key, object value);
 	ValueTask<TValue?> GetValue<TValue>(string name);

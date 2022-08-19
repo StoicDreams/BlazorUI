@@ -1,6 +1,4 @@
-﻿using System;
-
-namespace StoicDreams.BlazorUI.Components.Base;
+﻿namespace StoicDreams.BlazorUI.Components.Base;
 
 public abstract class BUICore : ComponentBase, IDisposable
 {
@@ -86,6 +84,19 @@ public abstract class BUICore : ComponentBase, IDisposable
 		{
 			await SessionState.SetDataAsync(key, value);
 		});
+	}
+	protected async ValueTask LoadStateFromSession<TValue>(AppStateDataTags tag)
+	{
+		TResult<TValue> session = await SessionState.TryGetState<TValue>(tag.AsName());
+		if (session.IsOkay)
+		{
+			await AppState.SetDataAsync(tag.AsName(), session.Result);
+		}
+	}
+	protected void SetAppSessionWithTrigger<TValue>(AppStateDataTags tag, TValue value)
+	{
+		_ = SessionState.SetDataAsync(tag.AsName(), value);
+		SetAppStateWithTrigger(tag, value);
 	}
 	#endregion
 

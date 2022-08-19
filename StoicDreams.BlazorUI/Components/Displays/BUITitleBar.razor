@@ -30,6 +30,12 @@
 	private bool IsDense => GetAppState<bool>(AppStateDataTags.TitleBarIsDense);
 	private int Elevation => GetAppState<int>(AppStateDataTags.TitleBarElevation);
 
+	protected override async Task OnInitializedAsync()
+	{
+		await LoadStateFromSession<bool>(AppStateDataTags.TitleBarIsDense);
+		await base.OnInitializedAsync();
+	}
+
 	private async Task ToggleLeftDrawer()
 	{
 		await AppState.ApplyChangesAsync(() =>

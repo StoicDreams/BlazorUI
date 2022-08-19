@@ -17,6 +17,24 @@ public class WebStorage : IWebStorage
 
 	public IEnumerable<string> Keys => Memory.Keys;
 
+	public async ValueTask<bool> ContainsKey(string key)
+	{
+		await SyncMemoryFromStorage();
+		return Keys.Contains(key) || StorageCache.ContainsKey(key);
+	}
+
+	public async ValueTask<TResult<TValue>> TryGetValue<TValue>(string key)
+	{
+		TResult<TValue> result = new();
+		bool hasKey = await ContainsKey(key);
+		if (hasKey)
+		{
+			result.Result = await GetValue<TValue>(key);
+			result.Status = result.Result != null ? TResultStatus.Success : TResultStatus.Exception;
+		}
+		return result;
+	}
+
 	public async ValueTask<bool> Remove(string key)
 	{
 		await SyncMemoryFromStorage();
@@ -71,31 +89,51 @@ public class WebStorage : IWebStorage
 
 	private async ValueTask SyncMemoryFromStorage()
 	{
-		if (InitiatedInitialSync) { return; }
-		StoragePermissions permission = await GetStorageItem<StoragePermissions>("localStorage", AppStateDataTags.StoragePermission.AsName());
-		if (permission == StoragePermissions.None)
+		if (InitiatedInitialSync)
 		{
-			permission = await GetStorageItem<StoragePermissions>("sessionStorage", AppStateDataTags.StoragePermission.AsName());
+			await WaitWhenSyncing();
+			return;
 		}
-		if (permission != StoragePermissions.None)
+		IsSyncing = true;
+		InitiatedInitialSync = true;
+		try
 		{
-			AppState.SetData(AppStateDataTags.StoragePermission, permission);
-			string container = permission == StoragePermissions.LongTerm ? "localStorage" : "sessionStorage";
-			//await Memory.SetValue(AppStateDataTags.StoragePermission.AsName(), permission);
-			string[] keys = await JsInterop.RunInlineScript<string[]>($"(()=>Object.keys({container}))()") ?? Array.Empty<string>();
-			foreach (string key in keys)
+			StoragePermissions permission = await GetStorageItem<StoragePermissions>("localStorage", AppStateDataTags.StoragePermission.AsName());
+			if (permission == StoragePermissions.None)
 			{
-				string? json = await GetStorageJson(container, key);
-				if (json == null) { continue; }
-				StorageCache[key] = json;
+				permission = await GetStorageItem<StoragePermissions>("sessionStorage", AppStateDataTags.StoragePermission.AsName());
+			}
+			if (permission != StoragePermissions.None)
+			{
+				AppState.SetData(AppStateDataTags.StoragePermission, permission);
+				string container = permission == StoragePermissions.LongTerm ? "localStorage" : "sessionStorage";
+				//await Memory.SetValue(AppStateDataTags.StoragePermission.AsName(), permission);
+				string[] keys = await JsInterop.RunInlineScript<string[]>($"(()=>Object.keys({container}))()") ?? Array.Empty<string>();
+				foreach (string key in keys)
+				{
+					string? json = await GetStorageJson(container, key);
+					if (json == null) { continue; }
+					StorageCache[key] = json;
+				}
 			}
 		}
-		InitiatedInitialSync = true;
+		catch { }
+		IsSyncing = false;
 	}
 	private bool InitiatedInitialSync = false;
+	private bool IsSyncing = false;
+
+	private async ValueTask WaitWhenSyncing()
+	{
+		while (IsSyncing)
+		{
+			await Task.Delay(10);
+		}
+	}
 
 	private async ValueTask SyncMemoryToStorage()
 	{
+		await WaitWhenSyncing();
 		await CallMethod("localStorage.clear");
 		await CallMethod("sessionStorage.clear");
 		StoragePermissions permissions = GetPermission;
@@ -103,8 +141,11 @@ public class WebStorage : IWebStorage
 		{
 			return;
 		}
-
 		string storageContainer = permissions == StoragePermissions.LongTerm ? "localStorage" : "sessionStorage";
+		foreach(string key in StorageCache.Keys)
+		{
+			await SetStorageJson(storageContainer, key, StorageCache[key]);
+		}
 		foreach(string key in Memory.Keys)
 		{
 			await SaveStorageItem(storageContainer, key, await Memory.GetValue<object>(key));
@@ -132,6 +173,11 @@ public class WebStorage : IWebStorage
 	private async ValueTask<string?> GetStorageJson(string container, string key)
 	{
 		return await JsInterop.CallMethod<string>($"{container}.getItem", key);
+	}
+
+	private async ValueTask SetStorageJson(string container, string key, string value)
+	{
+		await JsInterop.CallMethod($"{container}.setItem", key, value);
 	}
 
 	private ValueTask<string> ToJson(object input) => JsonConvert.SerializeAsync(input);

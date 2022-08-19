@@ -16,6 +16,23 @@ public class AppStorage : IAppStorage
 
 	public IEnumerable<string> Keys => Memory.Keys;
 
+	public ValueTask<bool> ContainsKey(string key)
+	{
+		return ValueTask.FromResult(Keys.Contains(key));
+	}
+
+	public async ValueTask<TResult<TValue>> TryGetValue<TValue>(string key)
+	{
+		TResult<TValue> result = new();
+		bool hasKey = await ContainsKey(key);
+		if (hasKey)
+		{
+			result.Result = await GetValue<TValue>(key);
+			result.Status = result.Result != null ? TResultStatus.Success : TResultStatus.Exception;
+		}
+		return result;
+	}
+
 	public async ValueTask<bool> Remove(string key)
 	{
 		bool result = await Memory.Remove(key);

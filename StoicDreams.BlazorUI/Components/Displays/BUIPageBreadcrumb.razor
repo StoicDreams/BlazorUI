@@ -38,11 +38,13 @@
 	private Color ActiveColor => GetAppState<Color>(AppStateDataTags.NavMenuActiveColor, () => Color.Inherit);
 	private int MinTransitionProgressTiming => GetAppState<int>(AppStateDataTags.MinNavTransitionProgressDisplay, () => 600);
 
-	protected override Task OnInitializedAsync()
+	protected override async Task OnInitializedAsync()
 	{
+		await LoadStateFromSession<bool>(AppStateDataTags.BreadcrumbEnabled);
+		await LoadStateFromSession<Color>(AppStateDataTags.NavMenuActiveColor);
 		SetBreadcrumbItems(NavManager.ToBaseRelativePath(NavManager.Uri));
 		NavManager.LocationChanged += HandleLocationChange;
-		return base.OnInitializedAsync();
+		await base.OnInitializedAsync();
 	}
 
 	public override void Dispose()

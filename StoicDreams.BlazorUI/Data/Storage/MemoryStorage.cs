@@ -4,6 +4,23 @@ public class MemoryStorage : Dictionary<string, object>, IMemoryStorage
 {
 	public new IEnumerable<string> Keys => base.Keys.ToArray();
 
+	public new ValueTask<bool> ContainsKey(string key)
+	{
+		return ValueTask.FromResult(base.ContainsKey(key));
+	}
+
+	public async ValueTask<TResult<TValue>> TryGetValue<TValue>(string key)
+	{
+		TResult<TValue> result = new();
+		bool hasKey = await ContainsKey(key);
+		if (hasKey)
+		{
+			result.Result = await GetValue<TValue>(key);
+			result.Status = result.Result != null ? TResultStatus.Success : TResultStatus.Exception;
+		}
+		return result;
+	}
+
 	public new ValueTask<bool> Remove(string key)
 	{
 		return ValueTask.FromResult(base.Remove(key));

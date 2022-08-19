@@ -2,50 +2,141 @@
 
 public abstract class BUICoreLayout : LayoutComponentBase, IDisposable
 {
-	[Inject] protected IAppOptions AppOptions { get; private set; } = null!;
-	[Inject] protected IAppState AppState { get; private set; } = null!;
+	[Inject] public IAppOptions AppOptions { get; private set; } = null!;
+	[Inject] public ISnackbar Snackbar { get; private set; } = null!;
+	[Inject] public IAppState AppState { get; private set; } = null!;
+	[Inject] public ISessionState SessionState { get; private set; } = null!;
+	[Inject] internal IPageState PageState { get; private set; } = null!;
+	[Inject] public IStorage Storage { get; private set; } = null!;
+	[Inject] public NavigationManager NavManager { get; private set; } = null!;
+	[Inject] public IClientAuth Auth { get; private set; } = null!;
+
 	protected AppOptions HiddenOptions => (AppOptions)AppOptions;
 
 	protected Guid ComponentId { get; } = Guid.NewGuid();
 
+	/// <summary>
+	/// Get the current page in a relative format (e.g. "/home").
+	/// </summary>
+	public string CurrentPage => NavManager.ToBaseRelativePath(NavManager.Uri).ToLower();
+
+	/// <summary>
+	/// Used in a workaround for a rendering issue when updating lists they don't redraw correctly.
+	/// </summary>
+	protected bool FlipState { get; set; }
+
+	/// <summary>
+	/// Get the current page path (excluding any extra query data).
+	/// </summary>
+	protected string GetCurrentPage => GetAppState<string>(AppStateDataTags.CurrentPage, () => string.Empty);
+
 	protected override async Task OnInitializedAsync()
 	{
-		AppState.SubscribeToDataChanges(ComponentId, HandleStateChanges);
+		AppStateWatcher.StateChangedHandler = () =>
+		{
+			OnAppStateUpdate();
+			InvokeAsync(StateHasChanged);
+		};
+		AppStateWatcher.DisposeHandler = () =>
+		{
+			AppState.UnsubscribeToDataChanges(ComponentId);
+		};
+		SessionStateWatcher.StateChangedHandler = () =>
+		{
+			OnSessionStateUpdate();
+		};
+		SessionStateWatcher.DisposeHandler = () =>
+		{
+			SessionState.UnsubscribeToDataChanges(ComponentId);
+		};
+		string currentPage = GetCurrentPage;
+		PageStateWatcher.StateChangedHandler = () =>
+		{
+			OnPageStateupdate();
+		};
+		PageStateWatcher.DisposeHandler = () =>
+		{
+			PageState.UnsubscribeToDataChanges(currentPage, ComponentId);
+		};
+		AppState.SubscribeToDataChanges(ComponentId, AppStateWatcher.HandleStateChanges);
+		SessionState.SubscribeToDataChanges(ComponentId, SessionStateWatcher.HandleStateChanges);
+		PageState.SubscribeToDataChanges(currentPage, ComponentId, PageStateWatcher.HandleStateChanges);
 		await base.OnInitializedAsync();
 	}
 
-	protected TValue? GetAppState<TValue>(AppStateDataTags key) => WatchState(key, AppState.GetData<TValue>(key));
-	protected TValue GetAppState<TValue>(AppStateDataTags key, TValue defaultValue) => WatchState(key, AppState.GetData<TValue>(key) ?? defaultValue);
+	#region App State Helpers
+	protected TValue? GetAppState<TValue>(AppStateDataTags key) => AppStateWatcher.WatchState(key, AppState.GetData<TValue>(key));
+	protected TValue GetAppState<TValue>(AppStateDataTags key, Func<TValue> getDefaultValue) => AppStateWatcher.WatchState(key, AppState.GetData<TValue>(key) ?? getDefaultValue.Invoke());
 	protected void SetAppState<TValue>(AppStateDataTags key, TValue? value) => AppState.SetData(key, value);
 	protected void SetAppStateWithTrigger<TValue>(AppStateDataTags key, TValue? value)
 	{
-		AppState.ApplyChanges(() =>
+		AppState.SetData(key, value);
+		_ = AppState.TriggerChangeAsync(key.AsName());
+	}
+	#endregion
+
+	#region Session State Helpers
+	protected async ValueTask<TValue> GetSessionState<TValue>(string key, Func<TValue> getDefaultValue) => SessionStateWatcher.WatchState(key, await SessionState.GetDataAsync<TValue>(key) ?? getDefaultValue.Invoke());
+	protected ValueTask SetSessionState<TValue>(string key, TValue? value) => SessionState.SetDataAsync(key, value);
+	protected ValueTask SetSessionStateWithTrigger<TValue>(string key, TValue? value)
+	{
+		return SessionState.ApplyChangesAsync(async () =>
 		{
-			AppState.SetData(key, value);
+			await SessionState.SetDataAsync(key, value);
 		});
 	}
-
-	private TValue WatchState<TValue>(AppStateDataTags key, TValue value) => WatchState(key.ToString(), value);
-	private TValue WatchState<TValue>(string key, TValue value)
+	protected async ValueTask LoadStateFromSession<TValue>(AppStateDataTags tag)
 	{
-		if (!WatchStateKeys.ContainsKey(key))
+		TResult<TValue> session = await SessionState.TryGetState<TValue>(tag.AsName());
+		if (session.IsOkay)
 		{
-			WatchStateKeys.Add(key, true);
+			await AppState.SetDataAsync(tag.AsName(), session.Result);
 		}
-		return value;
 	}
-
-	private Dictionary<string, bool> WatchStateKeys { get; } = new();
-	private void HandleStateChanges(IDictionary<string, bool> keys)
+	protected void SetAppSessionWithTrigger<TValue>(AppStateDataTags tag, TValue value)
 	{
-		if (WatchStateKeys.Keys.Count == 0) { return; }
-		if (!WatchStateKeys.Keys.Where(key => keys.ContainsKey(key)).Any()) { return; }
-		InvokeAsync(StateHasChanged);
+		_ = SessionState.SetDataAsync(tag.AsName(), value);
+		SetAppSessionWithTrigger(tag, value);
 	}
+	#endregion
 
-	public void Dispose()
+	#region Page State Helpers
+	protected async ValueTask<TValue> GetPageState<TValue>(string key, Func<TValue> getDefaultValue) => PageStateWatcher.WatchState(key, await PageState.GetData<TValue>(GetCurrentPage, key) ?? getDefaultValue.Invoke());
+	protected ValueTask SetPageState<TValue>(string key, TValue? value) => SessionState.SetDataAsync(key, value);
+	protected async ValueTask SetPageStateWithTrigger<TValue>(string key, TValue? value)
 	{
-		WatchStateKeys.Clear();
-		AppState.UnsubscribeToDataChanges(ComponentId);
+		string page = GetCurrentPage;
+		await PageState.ApplyChangesAsync(page, async () =>
+		{
+			await PageState.SetData(page, key, value);
+		});
+	}
+	#endregion
+
+	private StateWatcher AppStateWatcher { get; } = new();
+	private StateWatcher SessionStateWatcher { get; } = new();
+	private StateWatcher PageStateWatcher { get; } = new();
+
+	protected virtual void OnAppStateUpdate() { }
+	protected virtual void OnSessionStateUpdate() { }
+	protected virtual void OnPageStateupdate() { }
+
+	#region Helper Methods
+	protected string FirstNotEmpty(params string?[] options)
+	{
+		foreach (string? option in options)
+		{
+			if (string.IsNullOrWhiteSpace(option)) { continue; }
+			return option;
+		}
+		return string.Empty;
+	}
+	#endregion
+
+	public virtual void Dispose()
+	{
+		AppStateWatcher?.Dispose();
+		SessionStateWatcher?.Dispose();
+		PageStateWatcher?.Dispose();
 	}
 }

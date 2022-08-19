@@ -33,6 +33,7 @@
 	protected override async Task OnInitializedAsync()
 	{
 		await LoadStateFromSession<bool>(AppStateDataTags.TitleBarIsDense);
+		await LoadStateFromSession<bool>(AppStateDataTags.TitleBarLeftDrawerOpen);
 		await base.OnInitializedAsync();
 	}
 
@@ -41,7 +42,7 @@
 		await AppState.ApplyChangesAsync(() =>
 		{
 			bool isOpen = !AppState.GetData<bool>(AppStateDataTags.TitleBarLeftDrawerOpen);
-			AppState.SetData(AppStateDataTags.TitleBarLeftDrawerOpen, isOpen);
+			SetAppSession(AppStateDataTags.TitleBarLeftDrawerOpen, isOpen);
 			LeftDrawerOnClick?.Invoke(this, GetState(isOpen));
 			return ValueTask.CompletedTask;
 		});

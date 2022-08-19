@@ -98,6 +98,11 @@ public abstract class BUICoreLayout : LayoutComponentBase, IDisposable
 		_ = SessionState.SetDataAsync(tag.AsName(), value);
 		SetAppSessionWithTrigger(tag, value);
 	}
+	protected void SetAppSession<TValue>(AppStateDataTags tag, TValue value)
+	{
+		_ = SessionState.SetDataAsync(tag.AsName(), value);
+		SetAppState(tag, value);
+	}
 	#endregion
 
 	#region Page State Helpers

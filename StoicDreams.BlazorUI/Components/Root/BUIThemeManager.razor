@@ -38,7 +38,7 @@
 		{
 			foreach(ThemeConfig theme in cachedThemes.Result)
 			{
-				if (list.Select(i => i.Id == theme.Id).Count() > 0)
+				if (list.Select(i => i.Name == theme.Name).Count() > 0)
 				{
 					continue;
 				}

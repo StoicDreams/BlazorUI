@@ -52,6 +52,15 @@ public record ThemeConfig
 	[Display("Dark")]
 	public ColorData Dark { get; set; } = "#424242";
 
+	private Guid GuidFromName(string name) => IntToGuid(name.GetStaticHashCode());
+
+	private Guid IntToGuid(int value)
+	{
+		byte[] bytes = new byte[16];
+		BitConverter.GetBytes(value).CopyTo(bytes, 0);
+		return new Guid(bytes);
+	}
+
 	/// <summary>
 	/// Return a new instance of this theme config with values copied
 	/// </summary>

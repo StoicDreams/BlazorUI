@@ -29,6 +29,8 @@ public class ThemeState : StateManager, IThemeState
 
 	}
 
-
 	private ThemeConfig CurrentConfig { get; set; } = new();
+
+	public const string SessionKeySelectedThemeName = "BUISelectedTheme";
+	public const string SessionKeyThemes = "BUIThemes";
 }

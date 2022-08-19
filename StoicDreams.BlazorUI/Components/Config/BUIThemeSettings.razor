@@ -105,18 +105,19 @@
 		ColorSettings = colorSettings;
 	}
 
-	private void OnSave()
+	private async Task OnSave()
 	{
 		if (LoadedConfig.Name != StartingConfig.Name)
 		{
-			SaveNew();
+			await SaveNew();
 			return;
 		}
 		StartingConfig.CopyValues(LoadedConfig);
+		await SessionState.SetDataAsync(Data.ThemeState.SessionKeyThemes, LoadedConfig);
 		Snackbar.Add("Current theme updated!", Severity.Info);
 	}
 
-	private void SaveNew()
+	private async Task SaveNew()
 	{
 		List<ThemeConfig> list = ThemeState.Themes;
 		foreach (ThemeConfig config in list)
@@ -134,6 +135,7 @@
 		newConfig.CopyValues(LoadedConfig);
 		LoadedConfig.CopyValues(StartingConfig);
 		ThemeState.Themes.Add(newConfig);
+		await SessionState.SetDataAsync(Data.ThemeState.SessionKeyThemes, LoadedConfig);
 		ThemeState.Current = newConfig;
 		Snackbar.Add($"Added theme {newConfig.Name}!", Severity.Info);
 	}

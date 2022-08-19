@@ -1,4 +1,5 @@
-﻿@inherits BUICore
+﻿@using System.Diagnostics.CodeAnalysis
+@inherits BUICore
 
 @inject IThemeState ThemeState
 
@@ -8,13 +9,12 @@
 	private ThemeConfig Config => ThemeState.Current;
 	private List<ThemeConfig> ConfigList => ThemeState.Themes;
 
-
-	protected override Task OnInitializedAsync()
+	protected override async Task OnInitializedAsync()
 	{
 		ThemeState.SetupDefaultThemes();
-		ApplyDefaultTheme();
+		await ApplyDefaultTheme();
 		ThemeState.SubscribeToDataChanges(ComponentId, HandleChange);
-		return base.OnInitializedAsync();
+		await base.OnInitializedAsync();
 	}
 
 	public override void Dispose()
@@ -29,14 +29,38 @@
 		InvokeAsync(StateHasChanged);
 	}
 
-	private void ApplyDefaultTheme()
+	private async ValueTask ApplyDefaultTheme()
 	{
 		IsFirstChange = false;
+		TResult<List<ThemeConfig>> cachedThemes = await SessionState.TryGetState<List<ThemeConfig>>(Data.ThemeState.SessionKeyThemes);
 		List<ThemeConfig> list = ConfigList;
-		if (list.Count > 0)
+		if (cachedThemes.IsOkay)
+		{
+			foreach(ThemeConfig theme in cachedThemes.Result)
+			{
+				if (list.Select(i => i.Id == theme.Id).Count() > 0)
+				{
+					continue;
+				}
+				list.Add(theme);
+			}
+		}
+
+		TResult<string> cachedTheme = await SessionState.TryGetState<string>(Data.ThemeState.SessionKeySelectedThemeName);
+		if (cachedTheme.IsOkay && TryGetTheme(cachedTheme.Result, out ThemeConfig? selectedTheme))
+		{
+			ThemeState.Current = selectedTheme;
+		}
+		else if (list.Count > 0)
 		{
 			ThemeState.Current = list[0];
 		}
+	}
+
+	private bool TryGetTheme(string name, [NotNullWhen(true)] out ThemeConfig? theme)
+	{
+		theme = ConfigList.FirstOrDefault(i => i.Name == name);
+		return theme != null;
 	}
 
 	private MarkupString GetStyles => new($@"

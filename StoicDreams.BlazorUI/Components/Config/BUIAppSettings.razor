@@ -104,12 +104,13 @@
 		});
 	}
 
-	private void HandleThemeChange(Guid id)
+	private async Task HandleThemeChange(Guid id)
 	{
 		foreach (ThemeConfig config in LoadedThemes)
 		{
 			if (config.Id != id) { continue; }
 			ThemeState.Current = config;
+			await SessionState.SetDataAsync(Data.ThemeState.SessionKeySelectedThemeName, config.Name);
 			return;
 		}
 	}

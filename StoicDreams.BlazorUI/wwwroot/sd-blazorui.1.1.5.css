@@ -20,6 +20,7 @@ html, body, #app, .router {
 	font-size: var(--mud-typography-body1-size);
 	line-height: var(--mud-typography-body1-lineheight);
 	letter-spacing: var(--mud-typography-body1-letterspacing);
+	tab-size: 4;
 }
 
 	#app > .page-loader {
@@ -413,6 +414,8 @@ pre > code {
 	padding: var(--main-padding-size);
 	background-color: black;
 	color: white;
+	tab-size: 4;
+	white-space: pre-wrap;
 }
 
 .token.block-comment, .token.cdata, .token.comment, .token.doctype, .token.prolog {

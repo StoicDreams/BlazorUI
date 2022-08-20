@@ -1,6 +1,8 @@
 ﻿@inherits BUIPage
 @page "/"
 @page "/home"
+@using Microsoft.AspNetCore.Components.Rendering
+@using System.Linq.Expressions
 
 
 <BUISectionTitle>You have reached the Demo and Documentation website for Blazor UI from Stoic Dreams!</BUISectionTitle>
@@ -50,16 +52,24 @@
 		return base.OnInitializedAsync();
 	}
 
-	private static ImplicitRenderFragment[] IntroQuote =
+	private static RenderFragment Build(Expression<RenderFragment> builder)
 	{
-		"This website is being developed in conjuction with our new Blazor UI framework.",
-		"We want to emphasize that this project is what we consider a true framework and not just a component library. The difference being that Blazor UI isn't just providing a suite of small components that you can use in your project, but instead is providing pre-defined larger components that will define much of the look and feel of your project."
+		return builder.Compile();
+	}
+
+	private static RenderFragment[] IntroQuote =
+	{
+		__builder =>
+		{
+			<text>This website is being developed in conjuction with our new Blazor UI framework.</text>
+		},
+		(ImplicitRenderFragment)"We want to emphasize that this project is what we consider a true framework and not just a component library. The difference being that Blazor UI isn't just providing a suite of small components that you can use in your project, but instead is providing pre-defined larger components that will define much of the look and feel of your project."
 	};
 
-	private static ImplicitRenderFragment[] ProjectGoals =
+	private static RenderFragment[] ProjectGoals =
 	{
-		"The primary goal of Blazor UI is to provide a starting point that allows developers to save weeks if not months of work writing out tedious boilerplate to setup basic project features like layout, styles, navigation, etc., and just jump right in to building and adding content on day one.",
-		"Blazor UI will be usable for both websites when used in Blazor Client projects, as well as dedicated mobile and desktop apps when used in Maui Blazor projects.",
+		"The primary goal of Blazor UI is to provide a starting point that allows developers to save weeks if not months of work writing out tedious boilerplate to setup basic project features like layout, styles, navigation, etc., and just jump right in to building and adding content on day one.".ConvertToRenderFragment(),
+		"Blazor UI will be usable for both websites when used in Blazor Client projects, as well as dedicated mobile and desktop apps when used in Maui Blazor projects.".ConvertToRenderFragment(),
 	};
 
 	private static ImplicitRenderFragment[] WhoIsFor =

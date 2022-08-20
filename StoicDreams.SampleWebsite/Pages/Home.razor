@@ -5,22 +5,42 @@
 
 <BUISectionTitle>You have reached the Demo and Documentation website for Blazor UI from Stoic Dreams!</BUISectionTitle>
 <BUIQuote>
-	<BUIParagraph>This website is being developed in conjuction with our new Blazor UI framework.</BUIParagraph>
-	<BUIParagraph>We want to emphasize that this is a true framework and not a component library. The goal of Blazor UI is to provide a pre-defined structure as a starting point so developers can focus on just adding site content.</BUIParagraph>
+	@foreach (RenderFragment renderFragment in IntroQuote)
+	{
+		<BUIParagraph>@renderFragment</BUIParagraph>
+	}
 </BUIQuote>
 
 <BUISectionTitle>Project Goals</BUISectionTitle>
-
 <BUIStandardSection>
-	<BUIParagraph>This Blazor UI framework is targeting a developer experience that will allow developers get started developing their websites and Maui Blazor apps (Desktop & Mobile) without needing to worry about building out all the initial boilerplate. The html, styles, layouts, navigation, and other systems are already integrated and ready-to-go. The developer can get started right away adding their own pages and content.</BUIParagraph>
+	@foreach (RenderFragment renderFragment in ProjectGoals)
+	{
+		<BUIParagraph>@renderFragment</BUIParagraph>		
+	}
+</BUIStandardSection>
+
+<BUISectionTitle>Who is Blazor UI for?</BUISectionTitle>
+<BUIStandardSection>
+	@foreach (RenderFragment renderFragment in WhoIsFor)
+	{
+		<BUIParagraph>@renderFragment</BUIParagraph>
+	}
+</BUIStandardSection>
+
+<BUISectionTitle>Who is Blazor UI not for?</BUISectionTitle>
+<BUIStandardSection>
+	@foreach (RenderFragment renderFragment in WhoIsNotFor)
+	{
+		<BUIParagraph>@renderFragment</BUIParagraph>
+	}
 </BUIStandardSection>
 
 <BUISectionTitle>Current State of Development</BUISectionTitle>
-
 <BUIStandardSection>
-	<BUIParagraph>This framework is very early in development, with a lot of experimental work being done to flesh out ideas and concepts that may or may not make it into the final product.</BUIParagraph>
-	<BUIParagraph>Because of this experimental stage in development, it can be expected that breaking changes will occur in any update, even within patch version updates. This will continue throughout the lifespan of 1.X versions of Blazor UI.</BUIParagraph>
-	<BUIParagraph>When we have reached a point of being satisfied that Blazor UI is ready for production use we will bump the version up to 2.0 and follow stricture versioning regimens going forward.</BUIParagraph>
+	@foreach (RenderFragment renderFragment in CurrentDevelopment)
+	{
+		<BUIParagraph>@renderFragment</BUIParagraph>
+	}
 </BUIStandardSection>
 
 @code {
@@ -29,4 +49,35 @@
 		Title = "Welcome";
 		return base.OnInitializedAsync();
 	}
+
+	private static ImplicitRenderFragment[] IntroQuote =
+	{
+		"This website is being developed in conjuction with our new Blazor UI framework.",
+		"We want to emphasize that this project is what we consider a true framework and not just a component library. The difference being that Blazor UI isn't just providing a suite of small components that you can use in your project, but instead is providing pre-defined larger components that will define much of the look and feel of your project."
+	};
+
+	private static ImplicitRenderFragment[] ProjectGoals =
+	{
+		"The primary goal of Blazor UI is to provide a starting point that allows developers to save weeks if not months of work writing out tedious boilerplate to setup basic project features like layout, styles, navigation, etc., and just jump right in to building and adding content on day one.",
+		"Blazor UI will be usable for both websites when used in Blazor Client projects, as well as dedicated mobile and desktop apps when used in Maui Blazor projects.",
+	};
+
+	private static ImplicitRenderFragment[] WhoIsFor =
+	{
+		"Blazor UI is for developers who need to develop a website or application that adheres to Material UI standards for its look and feel.",
+		"Or developers that aren't explicity targeting any specific UI framework but are wanting to build a product that provides an exceptional user experience that will feel intuitive and easy to use to people using their product.",
+	};
+
+	private static ImplicitRenderFragment[] WhoIsNotFor =
+	{
+		"Blazor UI might not be well suited for developers that are wanting to build a website or application that is very artistic or stylized, and breaks away from commonly used industry standards and trends of UI and UX.",
+		"Blazor UI might not be well suited for developers that don't want to build a website or application that adheres to Material UI standards.",
+	};
+
+	private static ImplicitRenderFragment[] CurrentDevelopment =
+	{
+		"This framework is very early in development, with a lot of experimental work being done to flesh out ideas and concepts that may or may not make it into the final product.",
+		"Because of this experimental stage in development, it can be expected that breaking changes will occur in any update, even within patch version updates. This will continue throughout the lifespan of 1.X versions of Blazor UI.",
+		"When we have reached a point of being satisfied that Blazor UI is ready for production use we will bump the version up to 2.0 and start following much stricter versioning standards going forward.",
+	};
 }

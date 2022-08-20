@@ -1,0 +1,77 @@
+﻿@inherits BUICore
+@inject IApiRequest ApiRequest
+@inject IMarkdown Markdown
+
+<MudExpansionPanels Elevation="20">
+	<MudExpansionPanel IsExpandedChanged="ExpandedChanged">
+		<TitleContent>
+			<h2 class="mud-typography mud-typography-h2">Page Code</h2>
+		</TitleContent>
+		<ChildContent>
+			@if (IsLoading)
+			{
+				<MudProgressLinear Indeterminate="true" Size="Size.Large" Color="Color.Primary" />
+			}
+			else if (IsError)
+			{
+				<MudAlert Severity="Severity.Error">@FileContent</MudAlert>
+			}
+			else
+			{
+				@GetDisplay
+			}
+		</ChildContent>
+	</MudExpansionPanel>
+</MudExpansionPanels>
+
+@code {
+	[Parameter]
+	public string BaseUrl { get; set; } = "https://raw.githubusercontent.com/StoicDreams/BlazorUI/main/StoicDreams.SampleWebsite/Pages/";
+	[Parameter]
+	public string File { get; set; } = string.Empty;
+	[Parameter]
+	public string FileType { get; set; } = "razor";
+
+	private bool IsLoading => string.IsNullOrEmpty(FileContent);
+	private string FileContent { get; set; } = string.Empty;
+	private bool IsError { get; set; }
+
+	private MarkupString GetDisplay => Markdown.GetMarkup($@"
+```{FileType}
+{FileContent}
+```
+".Trim());
+
+	protected override async Task OnInitializedAsync()
+	{
+		await base.OnInitializedAsync();
+	}
+
+	private async Task ExpandedChanged(bool newVal)
+	{
+		if (IsLoading)
+		{
+			await LoadFile();
+		}
+	}
+
+	private async ValueTask LoadFile()
+	{
+		if (CachedFiles.TryGetValue(File, out string? cachedContent))
+		{
+			FileContent = cachedContent;
+			return;
+		}
+		TResult<string> fileContent = await ApiRequest.GetAsync<string>($"{BaseUrl}{File}");
+		if (!fileContent.IsOkay)
+		{
+			FileContent = FirstNotEmpty(fileContent.Result, fileContent.Message, "Unable to load file.");
+			IsError = true;
+			return;
+		}
+		FileContent = fileContent.Result;
+		CachedFiles[File] = FileContent;
+	}
+
+	private static Dictionary<string, string> CachedFiles { get; } = new();
+}

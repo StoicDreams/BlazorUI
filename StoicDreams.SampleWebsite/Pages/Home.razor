@@ -45,6 +45,8 @@
 	}
 </BUIStandardSection>
 
+<CodeView File="Home.razor" />
+
 @code {
 	protected override Task OnInitializedAsync()
 	{
@@ -62,7 +64,7 @@
 		__builder =>
 		{
 			<text>This website is being developed in conjuction with our new Blazor UI framework.</text>
-		},
+	},
 		(ImplicitRenderFragment)"We want to emphasize that this project is what we consider a true framework and not just a component library. The difference being that Blazor UI isn't just providing a suite of small components that you can use in your project, but instead is providing pre-defined larger components that will define much of the look and feel of your project."
 	};
 
@@ -72,11 +74,11 @@
 		"Blazor UI will be usable for both websites when used in Blazor Client projects, as well as dedicated mobile and desktop apps when used in Maui Blazor projects.".ConvertToRenderFragment(),
 	};
 
-	private static ImplicitRenderFragment[] WhoIsFor =
-	{
-		"Blazor UI is for developers who need to develop a website or application that adheres to Material UI standards for its look and feel.",
-		"Or developers that aren't explicity targeting any specific UI framework but are wanting to build a product that provides an exceptional user experience that will feel intuitive and easy to use to people using their product.",
-	};
+	private static RenderFragment[] WhoIsFor = @"
+		Blazor UI is for developers who need to develop a website or application that adheres to Material UI standards for its look and feel.
+
+		Or developers that aren't explicity targeting any specific UI framework but are wanting to build a product that provides an exceptional user experience that will feel intuitive and easy to use to people using their product.
+		".ToRenderFragmentArray();
 
 	private static ImplicitRenderFragment[] WhoIsNotFor =
 	{

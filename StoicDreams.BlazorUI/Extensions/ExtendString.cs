@@ -20,4 +20,14 @@ public static class ExtendString
 			__builder.AddContent(0, input);
 		}
 	};
+
+	public static RenderFragment[] ToRenderFragmentArray(this string input, char delimiter = '\n', StringSplitOptions options = StringSplitOptions.TrimEntries | StringSplitOptions.RemoveEmptyEntries)
+	{
+		List<RenderFragment> list = new();
+		foreach (string item in input.ToStringArray(delimiter, options))
+		{
+			list.Add(item.ConvertToRenderFragment());
+		}
+		return list.ToArray();
+	}
 }

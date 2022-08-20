@@ -25,7 +25,7 @@
 
 @code {
 	[Parameter, NotNull]
-	public RenderFragment<TItem>? ChildContent { get; set; }
+	public RenderFragment<TItem> ChildContent { get; set; } = DefaultItemRender;
 	[Parameter]
 	public ICollection<TItem> Items { get; set; } = new List<TItem>();
 	[Parameter]
@@ -62,6 +62,19 @@
 				values.Add("style", ItemStyles);
 			}
 			return values;
+		}
+	}
+
+	private static RenderFragment<TItem> DefaultItemRender
+	{
+		get
+		{
+			return (RenderFragment<TItem>)(_context =>
+				__builder => 
+				{
+					__builder.AddContent(1, _context);
+				}
+			);
 		}
 	}
 }

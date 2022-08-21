@@ -85,9 +85,8 @@
 		TResult result = await Auth.SignIn(InputEmail, InputPassword);
 		if (result.IsOkay)
 		{
-			Snackbar.Add(result.Message, Severity.Success);
-			await AppState.TriggerChangeAsync(AppStateDataTags.UserAuthUpdate);
 			NavManager.NavigateTo("/home");
+			Snackbar.Add(FirstNotEmpty(result.Message, "Signin Successfull"), Severity.Success);
 		}
 		else
 		{

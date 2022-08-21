@@ -34,11 +34,8 @@
 	public List<NavDetail> NavList { get; set; } = new();
 	private string CurrentPath { get; set; } = string.Empty;
 
-
 	protected override Task OnInitializedAsync()
 	{
-		// Simply here to assure state change trigger gets recognized in this component.
-		_ = GetAppState<bool>(AppStateDataTags.UserAuthUpdate);
 		CurrentPath = $"/{NavManager.ToBaseRelativePath(NavManager.Uri).ToLower()}";
 		NavManager.LocationChanged += HandleNavUpdate;
 		return base.OnInitializedAsync();

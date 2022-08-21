@@ -87,6 +87,7 @@ public class MockAuthenticate : IClientAuth
 		User = user;
 		AppState.SetData(AppStateDataTags.TitleBarRightDrawerIcon, DrawerIconWhenLoggedIn);
 		AppState.SetData(AppStateDataTags.TitleBarRightDrawerTitle, "Toggle Right Drawer");
+		AppState.SetData(AppStateDataTags.UserAuthUpdate, true);
 		await AppState.TriggerChangeAsync(AppStateDataTags.UserAuthUpdate);
 	}
 
@@ -106,6 +107,7 @@ public class MockAuthenticate : IClientAuth
 		await SessionState.SetDataAsync<User>("auth", user);
 		AppState.SetData(AppStateDataTags.TitleBarRightDrawerIcon, DrawerIconWhenLoggedOut);
 		AppState.SetData(AppStateDataTags.TitleBarRightDrawerTitle, "Sign-In");
+		AppState.SetData(AppStateDataTags.UserAuthUpdate, false);
 		await AppState.TriggerChangeAsync(AppStateDataTags.UserAuthUpdate);
 		return TResult.Success("You have successfully signed out.");
 	}

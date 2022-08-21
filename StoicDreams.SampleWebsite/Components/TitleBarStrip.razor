@@ -18,11 +18,10 @@
 </MudPaper>
 
 @code {
-	private string UserName => Auth.User.Name;
+	private string UserName => GetAppState<bool>(AppStateDataTags.UserAuthUpdate) ? Auth.User.Name : Auth.User.Name;
 
 	protected override async Task OnInitializedAsync()
 	{
-		bool setupWatcherForUserUpdate = GetAppState<bool>(AppStateDataTags.UserAuthUpdate);
 		await base.OnInitializedAsync();
 	}
 }

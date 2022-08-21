@@ -1,13 +1,22 @@
 ﻿@inherits BUICore
 
-<MudNavMenu Color="NavActiveColor" Bordered="true" Dense="false">
-	<BUINavMenuSubMenu NavList="GetAuthorizedNav" />
-</MudNavMenu>
+@if (UserAuthUpdate)
+{
+	<MudNavMenu Color="NavActiveColor" Bordered="true" Dense="false">
+		<BUINavMenuSubMenu NavList="GetAuthorizedNav" />
+	</MudNavMenu>
+}
+else
+{
+	<MudNavMenu Color="NavActiveColor" Bordered="true" Dense="false">
+		<BUINavMenuSubMenu NavList="GetAuthorizedNav" />
+	</MudNavMenu>
+}
 
 @code {
 	private List<NavDetail> NavList { get => GetAppState<List<NavDetail>>(AppStateDataTags.NavList) ?? new(); set => SetAppStateWithTrigger<List<NavDetail>>(AppStateDataTags.NavList, value); }
 	private Color NavActiveColor { get => GetAppState<Color>(AppStateDataTags.NavMenuActiveColor); }
-	private bool UserStateChanged => GetAppState<bool>(AppStateDataTags.UserAuthUpdate);
+	private bool UserAuthUpdate => GetAppState<bool>(AppStateDataTags.UserAuthUpdate);
 
 	protected override void OnAppStateUpdate()
 	{
@@ -19,8 +28,6 @@
 	{
 		get
 		{
-			// Simply here to assure state change trigger gets recognized in this component.
-			_ = GetAppState<bool>(AppStateDataTags.UserAuthUpdate);
 			int userRoles = Auth.User.Role;
 			List<NavDetail> nav = new();
 			AddChildren(NavList, nav, userRoles);

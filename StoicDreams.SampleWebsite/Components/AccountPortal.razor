@@ -15,7 +15,8 @@
 	{
 		TResult result = await Auth.LogOut();
 		Snackbar.Add(result.Message, result.IsOkay ? Severity.Success : Severity.Error);
-		SetAppStateWithTrigger(AppStateDataTags.TitleBarRightDrawerOpen, false);
+		SetAppState(AppStateDataTags.TitleBarRightDrawerOpen, false);
+		await AppState.TriggerChangeAsync(AppStateDataTags.UserAuthUpdate);
 		NavManager.NavigateTo("/home");
 	}
 }

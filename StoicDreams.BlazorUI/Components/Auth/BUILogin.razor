@@ -86,6 +86,7 @@
 		if (result.IsOkay)
 		{
 			Snackbar.Add(result.Message, Severity.Success);
+			await AppState.TriggerChangeAsync(AppStateDataTags.UserAuthUpdate);
 			NavManager.NavigateTo("/home");
 		}
 		else

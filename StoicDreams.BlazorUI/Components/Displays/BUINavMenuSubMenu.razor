@@ -1,4 +1,5 @@
-﻿@implements IDisposable
+﻿@inherits BUICore
+@implements IDisposable
 @using Microsoft.AspNetCore.Components.Routing
 @inject NavigationManager NavManager
 
@@ -36,14 +37,17 @@
 
 	protected override Task OnInitializedAsync()
 	{
+		// Simply here to assure state change trigger gets recognized in this component.
+		_ = GetAppState<bool>(AppStateDataTags.UserAuthUpdate);
 		CurrentPath = $"/{NavManager.ToBaseRelativePath(NavManager.Uri).ToLower()}";
 		NavManager.LocationChanged += HandleNavUpdate;
 		return base.OnInitializedAsync();
 	}
 
-	public void Dispose()
+	public override void Dispose()
 	{
 		NavManager.LocationChanged -= HandleNavUpdate;
+		base.Dispose();
 	}
 
 	private void HandleNavUpdate(object? sender, LocationChangedEventArgs args)

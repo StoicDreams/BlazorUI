@@ -469,3 +469,8 @@ pre > code {
 .token.inserted {
 	color: green
 }
+.mud-snackbar-content-message {
+	max-width: 100%;
+	overflow: hidden;
+	text-overflow: ellipsis;
+}

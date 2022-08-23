@@ -1,0 +1,56 @@
+﻿@inherits BUIPage
+@page "/getting-started"
+@page "/gettingstarted"
+@page "/start"
+
+<BUIStandardSection Title="Documentation - Getting Started" ParagraphContent="GetStarted">
+	<BUIList Items="GettingStartedSteps" IsOrderedList="true" />
+</BUIStandardSection>
+
+<BUIStandardSection Title="Setup Program.cs" ParagraphContent="SetupProgram">
+</BUIStandardSection>
+<CodeView File="Program.cs" FileType="csharp" IsExpanded="true" />
+
+<BUIStandardSection Title="Setup AppSettings.cs" ParagraphContent="SetupAppSettings">
+</BUIStandardSection>
+<CodeView File="AppSettings.cs" FileType="csharp" IsExpanded="true" />
+
+<BUIStandardSection Title="Setup AppStartup.cs" ParagraphContent="SetupAppStartup">
+</BUIStandardSection>
+<CodeView File="AppStartup.cs" FileType="csharp" IsExpanded="true" />
+
+<CodeView File="Pages/GettingStarted.razor" />
+
+@code {
+	protected override Task OnInitializedAsync()
+	{
+		Title = "Getting Started";
+		return base.OnInitializedAsync();
+	}
+
+	private RenderFragment[] GetStarted = """"
+		Welcome to the Stoic Dreams Blazor UI documentation.
+
+		To get started with Blazor UI you will want to create a new Blazor WebAssembly project in Visual Studio.
+
+		Once created perform the following steps to finish setting up your project.
+		"""".ToRenderFragmentArray();
+
+	private string[] GettingStartedSteps =
+	{
+		"Delete any template css/javascript files in the wwwroot folder.",
+		"Delete the wwwroot/index.html file.",
+	};
+
+	private RenderFragment[] SetupProgram = """"
+		You will need to update your Program.cs file to be similar to the example below.
+		"""".ToRenderFragmentArray();
+
+	private RenderFragment[] SetupAppSettings = """"
+		You will want to create an AppSettings.cs file and update it to be similar to the example below.
+		"""".ToRenderFragmentArray();
+
+	private RenderFragment[] SetupAppStartup = """"
+		You will want to create an AppStartup.cs file and update it to be similar to the example below.
+		"""".ToRenderFragmentArray();
+}

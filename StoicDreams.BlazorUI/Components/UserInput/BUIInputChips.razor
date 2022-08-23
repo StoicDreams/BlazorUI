@@ -1,0 +1,57 @@
+﻿
+<BUIPaper PaperType="PaperType" Elevation="0" Class="@Class">
+	<MudPaper MaxWidth="InputMaxWidth" Elevation="0">
+		<MudTextField Label="@Label" @bind-Value="NewValue" MaxLength="MaxLength" TextChanged="NewTagUpdated" HelperText="@HelperText" />
+	</MudPaper>
+	<MudChipSet AllClosable="true" OnClose="RemoveTag" SelectedChipChanged="RemoveTag">
+		@foreach (string tag in Items)
+		{
+			<MudChip Text="@tag" Color="GetColorFilter(tag)"></MudChip>
+		}
+	</MudChipSet>
+</BUIPaper>
+
+@code {
+	[Parameter]
+	public string Class { get; set; } = string.Empty;
+	[Parameter]
+	public PaperTypes PaperType { get; set; }
+	[Parameter]
+	public string Label { get; set; } = string.Empty;
+	[Parameter]
+	public ICollection<string> Items { get; set; } = new List<string>();
+	[Parameter]
+	public int MaxLength { get; set; } = 30;
+	[Parameter]
+	public int InputMaxWidth { get; set; } = 150;
+	[Parameter]
+	public string HelperText { get; set; } = string.Empty;
+	[Parameter]
+	public Func<string, string> ItemFilter { get; set; } = DefaultItemFilter;
+	[Parameter]
+	public Func<string, Color>? ColorFilter { get; set; }
+	[Parameter]
+	public Color ChipColor { get; set; } = Color.Primary;
+
+	private string NewValue { get; set; } = string.Empty;
+
+	private Func<string, Color> GetColorFilter => ColorFilter ?? DefaultColorFilter;
+
+	private void NewTagUpdated(string tag)
+	{
+		NewValue = string.Empty;
+		string cleanItem = ItemFilter.Invoke(tag);
+		if (string.IsNullOrWhiteSpace(cleanItem)) { return; }
+		if (Items.Contains(cleanItem)) { return; }
+		Items.Add(cleanItem);
+	}
+
+	private void RemoveTag(MudChip chip)
+	{
+		string item = chip.Text;
+		Items.Remove(item);
+	}
+
+	private static string DefaultItemFilter(string item) => item.Trim().ToLower();
+	private Color DefaultColorFilter(string item) => ChipColor;
+}

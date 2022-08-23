@@ -1,0 +1,28 @@
+﻿
+<BUIStandardSection Class="@GetWrapClass">
+	<MudInputLabel Class="@GetTitleClass">
+		@Title
+		@TitleContent
+	</MudInputLabel>
+	<BUIPaper PaperType="PaperTypes.Wrap" Class="@GetContentClass">
+		@ChildContent
+	</BUIPaper>
+</BUIStandardSection>
+
+@code {
+	[Parameter]
+	public Color TitleTheme { get; set; } = Color.Primary;
+	[Parameter]
+	public string Title { get; set; } = string.Empty;
+	[Parameter]
+	public RenderFragment? TitleContent { get; set; }
+	[Parameter]
+	public RenderFragment? ChildContent { get; set; }
+	[Parameter]
+	public string Class { get; set; } = "pa-0";
+
+	private string GetWrapClass => Class;
+	private string GetTitleClass => $"mud-theme-{TitleTheme.AsName().ToLower()} pa-2";
+	private string GetContentClass => "pa-2";
+
+}

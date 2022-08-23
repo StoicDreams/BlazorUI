@@ -1,0 +1,56 @@
+﻿@inherits BUIPage
+@page "/content/pagesections"
+
+<BUISectionTitle>@typeof(BUISectionTitle).FullName</BUISectionTitle>
+
+<BUIPaper PaperType="PaperTypes.Wrap" Class="ma-2 gap-2">
+
+	<BUIPaper PaperType="PaperTypes.Wrap" Class="ma-2 gap-2">
+		<BUITitledSection TitleTheme="Color.Success" Title="Simple Title" Class="">
+			Some sample content.
+		</BUITitledSection>
+
+		<CodeView Content="@TitleSectionA" Class="" />
+	</BUIPaper>
+
+	<BUIPaper PaperType="PaperTypes.Wrap" Class="ma-2 gap-2">
+		<BUITitledSection TitleTheme="Color.Info">
+			<TitleContent>
+				Simple Title
+			</TitleContent>
+			<ChildContent>
+				Some sample content.
+			</ChildContent>
+		</BUITitledSection>
+
+		<CodeView Content="@TitleSectionB" Class="" />
+	</BUIPaper>
+</BUIPaper>
+
+<CodeView File="Pages/Content/PageSections.razor" />
+
+@code {
+	protected override Task OnInitializedAsync()
+	{
+		Title = "Page Sections";
+		return base.OnInitializedAsync();
+	}
+
+	private const string TitleSectionA = """"
+		<BUITitledSection TitleTheme="Color.Success"
+			Title="Simple Title">
+			Some sample content.
+		</BUITitledSection>
+		"""";
+
+	private const string TitleSectionB = """"
+		<BUITitledSection TitleTheme="Color.Info">
+			<TitleContent>
+				Simple Title
+			</TitleContent>
+			<ChildContent>
+				Some sample content.
+			</ChildContent>
+		</BUITitledSection>
+		"""";
+}

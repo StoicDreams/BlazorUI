@@ -6,6 +6,7 @@
 		<ImplicitUsings>enable</ImplicitUsings>
 		<ServiceWorkerAssetsManifest>service-worker-assets.js</ServiceWorkerAssetsManifest>
 		<BlazorWebAssemblyEnableLinking>false</BlazorWebAssemblyEnableLinking>
+		<LangVersion>Preview</LangVersion>
 	</PropertyGroup>
 
 	<ItemGroup>
@@ -29,7 +30,7 @@
 		</When>
 		<Otherwise>
 			<ItemGroup>
-				<PackageReference Include="StoicDreams.BlazorUI" Version="1.9.206" />
+				<PackageReference Include="StoicDreams.BlazorUI" Version="1.9.234" />
 			</ItemGroup>
 		</Otherwise>
 	</Choose>

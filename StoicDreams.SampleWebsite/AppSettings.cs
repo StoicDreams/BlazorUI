@@ -32,18 +32,23 @@ public static class AppSettings
 	private static List<NavDetail> GetSiteNavigation() => new()
 	{
 		NavDetail.Create("Home", Icons.Material.TwoTone.Home, "/", UserRoles.Guest),
+		NavDetail.Create("Get Started", Icons.Material.TwoTone.LibraryBooks, "/getting-started", UserRoles.Guest),
+		NavDetail.CreateGroup("Content", Icons.Material.TwoTone.Feed, UserRoles.Guest, new NavDetail[]
+		{
+			NavDetail.Create("Page Sections", Icons.Material.TwoTone.HorizontalSplit, "/content/pagesections", UserRoles.Guest),
+		}),
+		NavDetail.CreateGroup("Markdown", Icons.Material.TwoTone.Code, UserRoles.Guest, new NavDetail[]
+		{
+			NavDetail.Create("Markdown", Icons.Material.TwoTone.Doorbell, "/markdown", UserRoles.Guest),
+			NavDetail.Create("Emojis", Icons.Material.TwoTone.EmojiEmotions, "/markdown/emojis", UserRoles.Guest),
+		}),
+		NavDetail.CreateGroup("User Input", Icons.Material.TwoTone.Input, UserRoles.Guest, new NavDetail[]
+		{
+			NavDetail.Create("Input Chips", Icons.Material.TwoTone.MoreHoriz, "/userinput/inputchips", UserRoles.Guest),
+		}),
 		NavDetail.CreateGroup("Account", Icons.Material.TwoTone.AccountCircle, UserRoles.User, new NavDetail[]
 		{
 			NavDetail.Create("My Info", Icons.Material.TwoTone.VerifiedUser, "/account/myinfo", UserRoles.User),
-		}),
-		NavDetail.CreateGroup("Docs", Icons.Material.TwoTone.Source, UserRoles.Guest, new NavDetail[]
-		{
-			NavDetail.Create("Start", Icons.Material.TwoTone.LibraryBooks, "/docs/getting-started", UserRoles.Guest),
-			NavDetail.CreateGroup("Markdown", Icons.Material.TwoTone.Code, UserRoles.Guest, new NavDetail[]
-			{
-				NavDetail.Create("Markdown", Icons.Material.TwoTone.Doorbell, "/docs/markdown", UserRoles.Guest),
-				NavDetail.Create("Emojis", Icons.Material.TwoTone.EmojiEmotions, "/docs/markdown/emojis", UserRoles.Guest),
-			})
 		}),
 		NavDetail.Create("Terms", Icons.Material.TwoTone.Handshake, "/terms", UserRoles.Guest),
 		NavDetail.Create("Privacy", Icons.Material.TwoTone.PrivacyTip, "/privacy", UserRoles.Guest)

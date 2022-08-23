@@ -1,5 +1,16 @@
-﻿
+﻿@if (TitleContent != null)
+{
+	<BUISectionTitle>@TitleContent</BUISectionTitle>
+}
+else if (!string.IsNullOrWhiteSpace(Title))
+{
+	<BUISectionTitle>@Title</BUISectionTitle>
+}
 <MudPaper Class="@GetClass" Elevation="Elevation">
+	@foreach (RenderFragment paragraph in ParagraphContent)
+	{
+		<BUIParagraph>@paragraph</BUIParagraph>
+	}
 	@ChildContent
 </MudPaper>
 
@@ -7,9 +18,15 @@
 	[Parameter]
 	public RenderFragment? ChildContent { get; set; }
 	[Parameter]
-	public string Class { get; set; } = string.Empty;
+	public RenderFragment[] ParagraphContent { get; set; } = Array.Empty<RenderFragment>();
+	[Parameter]
+	public string Class { get; set; } = "ma-2 pa-4";
 	[Parameter]
 	public int Elevation { get; set; } = 10;
+	[Parameter]
+	public string Title { get; set; } = string.Empty;
+	[Parameter]
+	public RenderFragment? TitleContent { get; set; }
 
-	private string GetClass => $"ma-2 pa-4 {Class}".Trim();
+	private string GetClass => Class;
 }

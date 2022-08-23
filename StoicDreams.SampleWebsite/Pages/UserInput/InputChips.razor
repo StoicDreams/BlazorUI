@@ -1,0 +1,37 @@
+﻿@inherits BUIPage
+@page "/userinput/inputchips"
+
+<BUIStandardSection Title="@(typeof(BUIInputChips).FullName)">
+	<BUIInputChips Label="Label" HelperText="Some helper text" Items="ItemsA" />
+</BUIStandardSection>
+<CodeView Content="@ExampleCodeA" Class="" IsExpanded="true" />
+
+<BUIStandardSection Title="Filter Example" Class="mt-2">
+	<BUITitledSection TitleTheme="Color.Info" Title="Filter Example">
+		<BUIInputChips Label="Tags" HelperText="Some helper text" Items="ItemsB" PaperType="PaperTypes.Wrap" Class="gap-2" />
+	</BUITitledSection>
+</BUIStandardSection>
+<CodeView Content="@ExampleCodeB" Class="" IsExpanded="true" />
+
+<CodeView File="Pages/UserInput/InputChips.razor" />
+
+@code {
+	protected override Task OnInitializedAsync()
+	{
+		Title = "Input Chips";
+		return base.OnInitializedAsync();
+	}
+
+	private List<string> ItemsA { get; set; } = new();
+	private List<string> ItemsB { get; set; } = new();
+
+	private string ExampleCodeA = """"
+		<BUIInputChips Label="Label" HelperText="Some helper text" Items="Items" />		
+		"""";
+
+	private string ExampleCodeB = """"
+		<BUITitledSection TitleTheme="Color.Info" Title="Filter Example">
+			<BUIInputChips Label="Tags" HelperText="Some helper text" Items="ItemsB" PaperType="PaperTypes.Wrap" Class="gap-2" />
+		</BUITitledSection>
+		"""";
+}

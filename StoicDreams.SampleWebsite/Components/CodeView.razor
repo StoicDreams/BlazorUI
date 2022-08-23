@@ -2,10 +2,10 @@
 @inject IApiRequest ApiRequest
 @inject IMarkdown Markdown
 
-<MudExpansionPanels Elevation="20">
-	<MudExpansionPanel IsExpandedChanged="ExpandedChanged">
+<MudExpansionPanels Elevation="Elevation" Class="@Class">
+	<MudExpansionPanel IsExpanded="IsExpanded" IsExpandedChanged="ExpandedChanged">
 		<TitleContent>
-			<h2 class="mud-typography mud-typography-h2">Page Code</h2>
+			<h2 class="mud-typography mud-typography-h2">@Title</h2>
 		</TitleContent>
 		<ChildContent>
 			@if (IsLoading)
@@ -14,7 +14,7 @@
 			}
 			else if (IsError)
 			{
-				<MudAlert Severity="Severity.Error">@FileContent</MudAlert>
+				<MudAlert Severity="Severity.Error">@Content</MudAlert>
 			}
 			else
 			{
@@ -26,29 +26,47 @@
 
 @code {
 	[Parameter]
-	public string BaseUrl { get; set; } = "https://raw.githubusercontent.com/StoicDreams/BlazorUI/main/StoicDreams.SampleWebsite/Pages/";
+	public string Title { get; set; } = string.Empty;
+	[Parameter]
+	public string BaseUrl { get; set; } = "https://raw.githubusercontent.com/StoicDreams/BlazorUI/main/StoicDreams.SampleWebsite/";
 	[Parameter]
 	public string File { get; set; } = string.Empty;
 	[Parameter]
 	public string FileType { get; set; } = "razor";
+	[Parameter]
+	public string Content { get; set; } = string.Empty;
+	[Parameter]
+	public string Class { get; set; } = "mt-2 pa-4";
+	[Parameter]
+	public int Elevation { get; set; } = 20;
+	[Parameter]
+	public bool IsExpanded { get; set; }
 
-	private bool IsLoading => string.IsNullOrEmpty(FileContent);
-	private string FileContent { get; set; } = string.Empty;
+	private bool IsLoading => string.IsNullOrEmpty(Content);
 	private bool IsError { get; set; }
 
 	private MarkupString GetDisplay => Markdown.GetMarkup($@"
 ```{FileType}
-{FileContent}
+{Content}
 ```
 ".Trim());
 
 	protected override async Task OnInitializedAsync()
 	{
+		if (string.IsNullOrWhiteSpace(Title))
+		{
+			Title = !string.IsNullOrWhiteSpace(File) ? "File Code" : "Code";
+		}
+		if (IsExpanded)
+		{
+			_ = LoadFile();
+		}
 		await base.OnInitializedAsync();
 	}
 
 	private async Task ExpandedChanged(bool newVal)
 	{
+		IsExpanded = newVal;
 		if (IsLoading)
 		{
 			await LoadFile();
@@ -57,20 +75,22 @@
 
 	private async ValueTask LoadFile()
 	{
+		if (string.IsNullOrWhiteSpace(File)) { return; }
 		if (CachedFiles.TryGetValue(File, out string? cachedContent))
 		{
-			FileContent = cachedContent;
+			Content = cachedContent;
 			return;
 		}
 		TResult<string> fileContent = await ApiRequest.GetAsync<string>($"{BaseUrl}{File}");
 		if (!fileContent.IsOkay)
 		{
-			FileContent = FirstNotEmpty(fileContent.Result, fileContent.Message, "Unable to load file.");
+			Content = FirstNotEmpty(fileContent.Result, fileContent.Message, "Unable to load file.");
 			IsError = true;
 			return;
 		}
-		FileContent = fileContent.Result;
-		CachedFiles[File] = FileContent;
+		Content = fileContent.Result;
+		CachedFiles[File] = Content;
+		StateHasChanged();
 	}
 
 	private static Dictionary<string, string> CachedFiles { get; } = new();

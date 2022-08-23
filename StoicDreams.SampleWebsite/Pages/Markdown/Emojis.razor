@@ -1,5 +1,5 @@
 ﻿@inherits BUIPage
-@page "/docs/markdown/emojis"
+@page "/markdown/emojis"
 @inject IApiRequest ApiRequest
 
 <BUIMarkdown Markup="@PageIntroduction" />
@@ -19,7 +19,7 @@
 	}
 </BUIPaper>
 
-<CodeView File="Docs/Markdown/Emojis.razor" />
+<CodeView File="Pages/Markdown/Emojis.razor" />
 
 @code {
 	private string PageIntroduction => "## Our Markdown supports Emojis :wink:!";

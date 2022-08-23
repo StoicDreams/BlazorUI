@@ -13,32 +13,18 @@
 	}
 </BUIQuote>
 
-<BUISectionTitle>Project Goals</BUISectionTitle>
-<BUIStandardSection>
-	@foreach (RenderFragment renderFragment in ProjectGoals)
-	{
-		<BUIParagraph>@renderFragment</BUIParagraph>		
-	}
-</BUIStandardSection>
+<BUIStandardSection Title="Project Goals" ParagraphContent="ProjectGoals" />
 
-<BUISectionTitle>Who is Blazor UI for?</BUISectionTitle>
-<BUIStandardSection>
-	@foreach (RenderFragment renderFragment in WhoIsFor)
-	{
-		<BUIParagraph>@renderFragment</BUIParagraph>
-	}
-</BUIStandardSection>
+<BUIStandardSection Title="Who is Blazor UI for?" ParagraphContent="WhoIsFor" />
 
-<BUISectionTitle>Who is Blazor UI not for?</BUISectionTitle>
-<BUIStandardSection>
+<BUIStandardSection Title="Who is Blazor UI not for?">
 	@foreach (RenderFragment renderFragment in WhoIsNotFor)
 	{
 		<BUIParagraph>@renderFragment</BUIParagraph>
 	}
 </BUIStandardSection>
 
-<BUISectionTitle>Current State of Development</BUISectionTitle>
-<BUIStandardSection>
+<BUIStandardSection Title="Current State of Development">
 	@foreach (RenderFragment renderFragment in CurrentDevelopment)
 	{
 		<BUIParagraph>@renderFragment</BUIParagraph>

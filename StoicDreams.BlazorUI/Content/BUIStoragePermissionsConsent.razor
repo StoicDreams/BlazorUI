@@ -102,17 +102,17 @@
 					},
 					Actions = __builder =>
 					{
-						@if (CurrentPermission == StoragePermissions.CurrentInstance)
+						@if (CurrentPermission == StoragePermissions.None)
 						{
 							<MudPaper Class="mud-theme-primary pa-2 d-flex align-center" Elevation="5">
 								<MudIcon Icon="@Icons.Material.TwoTone.Tab" Class="mr-2" />
-								@ButtonContentShortTermStorage
+								@ButtonContentNoStorage
 							</MudPaper>
 						}
 						else
 						{
-							<MudButton Style="@ButtonStyles" Variant="Variant.Filled" Class="justify-start" StartIcon="@Icons.Material.TwoTone.Tab" Color="Color.Warning" OnClick="SetToCurrentInstance">
-								@ButtonContentShortTermStorage
+							<MudButton Style="@ButtonStyles" Variant="Variant.Filled" Class="justify-start" StartIcon="@Icons.Material.TwoTone.Tab" Color="Color.Warning" OnClick="SetToNone">
+								@ButtonContentNoStorage
 							</MudButton>
 						}
 					}

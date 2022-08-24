@@ -474,3 +474,44 @@ pre > code {
 	overflow: hidden;
 	text-overflow: ellipsis;
 }
+
+.formatted-textarea {
+	display: block;
+	position: relative;
+	padding: 0;
+}
+	.formatted-textarea > pre,
+	.formatted-textarea > pre > code,
+	.formatted-textarea > pre + textarea {
+		width: 100%;
+		height: 100%;
+		font-family: inherit;
+		font-size: inherit;
+		line-height: inherit;
+		font: inherit;
+		text-rendering: auto;
+		word-spacing: normal;
+		word-break: break-word;
+		word-wrap: break-word;
+		white-space: pre-wrap;
+		letter-spacing: inherit;
+		top: 0;
+		left: 0;
+	}
+	.formatted-textarea > pre {
+		margin: 0;
+	}
+		.formatted-textarea > pre > code {
+			margin: 0;
+			background: transparent;
+			color: inherit;
+			font: inherit;
+		}
+		.formatted-textarea > pre + textarea {
+			position: absolute;
+			color: transparent;
+			background: transparent;
+			caret-color: var(--mud-palette-text-primary);
+			padding: var(--main-padding-size);
+			resize: none;
+		}

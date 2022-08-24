@@ -3,7 +3,7 @@
 @inject IApiRequest ApiRequest
 
 <BUIDialogConfirm OnSave="OnSave" OnCancel="OnCancel">
-	<MudTextField Label="Message" Lines="MessageLines" @bind-Value="@MessageUpdate" HelperText="Enter your feedback here" />
+	<BUIInputTextAutoFormat Label="Message" @bind-Value="@Message" MinHeight="300" HelperText="Enter your feedback here" />
 	<MudOverlay Visible="ShowOverlay" DarkBackground="true" Absolute="true">
 		<MudProgressCircular Color="Color.Secondary" Indeterminate="true" />
 	</MudOverlay>
@@ -11,22 +11,7 @@
 
 
 @code {
-	private string MessageUpdate
-	{
-		get
-		{
-			return Message;
-		}
-		set
-		{
-			Message = value;
-			MessageLines = Math.Max(MinMessageLines, Message.Split('\n').Length + 1);
-			StateHasChanged();
-		}
-	}
-	private const int MinMessageLines = 10;
 	private string Message { get; set; } = string.Empty;
-	private int MessageLines { get; set; } = MinMessageLines;
 	private bool ShowOverlay { get; set; }
 
 	private async Task OnSave()
@@ -44,8 +29,6 @@
 		ShowOverlay = false;
 		Snackbar.Add(FirstNotEmpty(response.Result, response.Message, "Feedback successfully sent"), Severity.Success);
 	}
-
-
 
 	private void OnCancel()
 	{

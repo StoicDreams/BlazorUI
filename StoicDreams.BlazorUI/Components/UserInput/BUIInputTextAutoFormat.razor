@@ -1,0 +1,61 @@
+﻿@inject IMarkdown Markdown
+
+<MudField @ref="MudFieldRef" Label="@Label" HelperText="@HelperText" Class="@Class">
+	<div class="formatted-textarea" style="@GetStyles">
+		@Markdown.GetMarkup(GetMarkdown)
+		<textarea id="@FieldId" @oninput="ValueInput">@Value</textarea>
+	</div>
+</MudField>
+
+@code {
+	[Parameter]
+	public string Class { get; set; } = string.Empty;
+	[Parameter]
+	public int MinHeight { get; set; } = 100;
+	[Parameter]
+	public string HelperText { get; set; } = string.Empty;
+	[Parameter]
+	public string Label { get; set; } = string.Empty;
+	[Parameter]
+	public string Value { get; set; } = string.Empty;
+	[Parameter]
+	public EventCallback<string> ValueChanged { get; set; }
+	[Parameter]
+	public string CodeFormat { get; set; } = string.Empty;
+
+	private MudField? MudFieldRef { get; set; }
+	private string FieldId => MudFieldRef?.FieldId ?? string.Empty;
+	private string GetStyles => $"min-height: {MinHeight}px";
+
+	private int MessageLines { get; set; } = 1;
+	private string GetMarkdown => $@"
+```{CodeFormat}
+{Value}
+```
+".Trim();
+
+	protected override Task OnInitializedAsync()
+	{
+		return base.OnInitializedAsync();
+	}
+
+	private async Task ValueInput(ChangeEventArgs args)
+	{
+		Value = args.Value?.ToString() ?? string.Empty;
+		await ValueChanged.InvokeAsync(Value);
+	}
+
+	private string MessageUpdate
+	{
+		get
+		{
+			return Value;
+		}
+		set
+		{
+			Value = value;
+			_ = ValueChanged.InvokeAsync(Value);
+			StateHasChanged();
+		}
+	}
+}

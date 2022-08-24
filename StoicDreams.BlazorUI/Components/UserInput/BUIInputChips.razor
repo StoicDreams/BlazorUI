@@ -32,6 +32,8 @@
 	public Func<string, Color>? ColorFilter { get; set; }
 	[Parameter]
 	public Color ChipColor { get; set; } = Color.Primary;
+	[Parameter]
+	public EventCallback<ICollection<string>> OnChange { get; set; }
 
 	private string GetMaxWidth => $"{InputMaxWidth}px";
 
@@ -39,19 +41,21 @@
 
 	private Func<string, Color> GetColorFilter => ColorFilter ?? DefaultColorFilter;
 
-	private void NewTagUpdated(string tag)
+	private async Task NewTagUpdated(string tag)
 	{
 		NewValue = string.Empty;
 		string cleanItem = ItemFilter.Invoke(tag);
 		if (string.IsNullOrWhiteSpace(cleanItem)) { return; }
 		if (Items.Contains(cleanItem)) { return; }
 		Items.Add(cleanItem);
+		await OnChange.InvokeAsync(Items);
 	}
 
-	private void RemoveTag(MudChip chip)
+	private async Task RemoveTag(MudChip chip)
 	{
 		string item = chip.Text;
 		Items.Remove(item);
+		await OnChange.InvokeAsync(Items);
 	}
 
 	private static string DefaultItemFilter(string item) => item.Trim().ToLower();

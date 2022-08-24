@@ -507,6 +507,14 @@ pre > code {
 			color: inherit;
 			font: inherit;
 		}
+		.formatted-textarea > pre[languagetag]:before {
+			display: none;
+		}
+		.formatted-textarea > pre > code .token.italic { font-style: inherit; }
+		.formatted-textarea > pre > code .token.bold,
+		.formatted-textarea > pre > code .token.important {
+			font-weight: inherit;
+		}
 		.formatted-textarea > pre + textarea {
 			position: absolute;
 			color: transparent;
@@ -515,3 +523,10 @@ pre > code {
 			padding: var(--main-padding-size);
 			resize: none;
 		}
+			.formatted-textarea > pre + textarea,
+			.formatted-textarea > pre + textarea:focus,
+			.formatted-textarea > pre + textarea:focus-visible,
+			.formatted-textarea > pre + textarea:focus-within {
+				border: none;
+				outline: none;
+			}

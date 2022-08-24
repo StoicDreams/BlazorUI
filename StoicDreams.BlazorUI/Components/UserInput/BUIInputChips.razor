@@ -1,6 +1,6 @@
 ﻿
 <BUIPaper PaperType="PaperType" Elevation="0" Class="@Class">
-	<MudPaper MaxWidth="InputMaxWidth" Elevation="0">
+	<MudPaper MaxWidth="@GetMaxWidth" Elevation="0">
 		<MudTextField Label="@Label" @bind-Value="NewValue" MaxLength="MaxLength" TextChanged="NewTagUpdated" HelperText="@HelperText" />
 	</MudPaper>
 	<MudChipSet AllClosable="true" OnClose="RemoveTag" SelectedChipChanged="RemoveTag">
@@ -32,6 +32,8 @@
 	public Func<string, Color>? ColorFilter { get; set; }
 	[Parameter]
 	public Color ChipColor { get; set; } = Color.Primary;
+
+	private string GetMaxWidth => $"{InputMaxWidth}px";
 
 	private string NewValue { get; set; } = string.Empty;
 

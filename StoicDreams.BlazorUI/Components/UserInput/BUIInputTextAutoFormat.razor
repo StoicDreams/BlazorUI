@@ -1,9 +1,16 @@
 ﻿@inject IMarkdown Markdown
 
-<MudField @ref="MudFieldRef" Label="@Label" HelperText="@HelperText" Class="@Class">
+<MudField @ref="MudFieldRef" Label="@Label" HelperText="@HelperText" Class="@Class" Variant="Variant">
 	<div class="formatted-textarea" style="@GetStyles">
 		@Markdown.GetMarkup(GetMarkdown)
-		<textarea id="@FieldId" @oninput="ValueInput">@Value</textarea>
+		@if (FlipState)
+		{
+			<textarea @ref="TextareaRef" id="@FieldId" @oninput="ValueInput">@InternalValue</textarea>
+		}
+		else
+		{
+			<textarea @ref="TextareaRef" id="@FieldId" @oninput="ValueInput">@InternalValue</textarea>
+		}
 	</div>
 </MudField>
 
@@ -17,20 +24,37 @@
 	[Parameter]
 	public string Label { get; set; } = string.Empty;
 	[Parameter]
-	public string Value { get; set; } = string.Empty;
+	public string Value
+	{
+		get
+		{
+			return InternalValue;
+		}
+		set
+		{
+			if (value == InternalValue) { return; }
+			InternalValue = value;
+			FlipState = !FlipState;
+		}
+	}
 	[Parameter]
 	public EventCallback<string> ValueChanged { get; set; }
 	[Parameter]
 	public string CodeFormat { get; set; } = string.Empty;
+	[Parameter]
+	public Variant Variant { get; set; } = Variant.Outlined;
 
+	private bool FlipState { get; set; }
+	private string InternalValue { get; set; } = string.Empty;
 	private MudField? MudFieldRef { get; set; }
+	private ElementReference? TextareaRef { get; set; }
 	private string FieldId => MudFieldRef?.FieldId ?? string.Empty;
 	private string GetStyles => $"min-height: {MinHeight}px";
 
 	private int MessageLines { get; set; } = 1;
 	private string GetMarkdown => $@"
 ```{CodeFormat}
-{Value}
+{InternalValue}
 ```
 ".Trim();
 
@@ -41,21 +65,7 @@
 
 	private async Task ValueInput(ChangeEventArgs args)
 	{
-		Value = args.Value?.ToString() ?? string.Empty;
-		await ValueChanged.InvokeAsync(Value);
-	}
-
-	private string MessageUpdate
-	{
-		get
-		{
-			return Value;
-		}
-		set
-		{
-			Value = value;
-			_ = ValueChanged.InvokeAsync(Value);
-			StateHasChanged();
-		}
+		InternalValue = args.Value?.ToString() ?? string.Empty;
+		await ValueChanged.InvokeAsync(InternalValue);
 	}
 }

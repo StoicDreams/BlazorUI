@@ -381,14 +381,17 @@ blockquote {
 			color: var(--mud-palette-error);
 		}
 
-ul.list {
+ul.list,
+ul:not([class]){
 	list-style: disc;
 	padding-inline-start: calc(2 * var(--main-padding-size));
 }
-ul ul.list {
+ul ul.list,
+ul ul:not([class]) {
 	list-style: circle;
 }
-ul ul ul.list {
+ul ul ul.list,
+ul ul ul:not([class]) {
 	list-style: square;
 }
 .mud-card-header-avatar:empty,

@@ -1,0 +1,14 @@
+﻿{
+	"commands": {
+		"BuildSitemap": {
+			"fileName": "PowerShell.exe",
+			"workingDirectory": ".",
+			"arguments": ".\\PowerShell\\BuildSitemap.ps1"
+		}
+	},
+	"-vs-binding": {
+		"BeforeBuild": [
+			"BuildSitemap"
+		]
+	}
+}

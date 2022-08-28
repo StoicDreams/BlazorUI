@@ -1,0 +1,4 @@
+﻿User-agent: *
+Allow: /
+
+Sitemap: https://blazorui.stoicdreams.com/sitemap.xml

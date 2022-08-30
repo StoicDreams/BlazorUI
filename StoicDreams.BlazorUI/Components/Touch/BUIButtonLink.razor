@@ -1,5 +1,5 @@
 ﻿
-<MudTooltip Text="@Tooltip">
+<MudTooltip Text="@Tooltip" Class="@Class">
 	<MudButton Variant="Variant.Filled" Href="@Href" Size="Size.Small" Color="Color.Info" Target="_blank" EndIcon="@Icons.Material.TwoTone.OpenInNew" StartIcon="@StartIcon">
 		@ChildContent
 	</MudButton>
@@ -8,6 +8,8 @@
 @code {
 	[Parameter]
 	public RenderFragment? ChildContent { get; set; }
+	[Parameter]
+	public string Class { get; set; } = string.Empty;
 	[Parameter]
 	public string Href { get; set; } = string.Empty;
 	[Parameter]

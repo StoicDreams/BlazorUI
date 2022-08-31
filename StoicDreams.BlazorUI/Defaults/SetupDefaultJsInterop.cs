@@ -5,7 +5,6 @@ public static partial class Setup
 	public static async Task SetupDefaultJsInterop(this Data.IJsInterop interop, IAppOptions options, IAppState appState)
 	{
 		await interop.AddCSSFile("css/routetransition.4.0.0.min.css");
-		await interop.AddJSFile("jsInterop.js");
 
 		foreach (string file in options.CssFiles)
 		{

@@ -2,27 +2,25 @@
 @inject IApiRequest ApiRequest
 @inject IMarkdown Markdown
 
-<MudExpansionPanels Elevation="Elevation" Class="@Class">
-	<MudExpansionPanel IsExpanded="IsExpanded" IsExpandedChanged="ExpandedChanged">
-		<TitleContent>
-			<h2 class="mud-typography mud-typography-h2">@Title</h2>
-		</TitleContent>
-		<ChildContent>
-			@if (IsLoading)
-			{
-				<MudProgressLinear Indeterminate="true" Size="Size.Large" Color="Color.Primary" />
-			}
-			else if (IsError)
-			{
-				<MudAlert Severity="Severity.Error">@Content</MudAlert>
-			}
-			else
-			{
-				@GetDisplay
-			}
-		</ChildContent>
-	</MudExpansionPanel>
-</MudExpansionPanels>
+<BUITitledSection Class="@Class" Elevation="Elevation" IsInitiallyExpanded="IsExpanded" IsExpandedChanged="ExpandedChanged">
+	<TitleContent>
+		<div class="mud-typography">@Title</div>
+	</TitleContent>
+	<ChildContent>
+		@if (IsLoading)
+		{
+			<MudProgressLinear Indeterminate="true" Size="Size.Large" Color="Color.Primary" />
+		}
+		else if (IsError)
+		{
+			<MudAlert Severity="Severity.Error">@Content</MudAlert>
+		}
+		else
+		{
+			@GetDisplay
+		}
+	</ChildContent>
+</BUITitledSection>
 
 @code {
 	[Parameter]
@@ -36,7 +34,7 @@
 	[Parameter]
 	public string Content { get; set; } = string.Empty;
 	[Parameter]
-	public string Class { get; set; } = "mt-2 pa-4";
+	public string Class { get; set; } = "";
 	[Parameter]
 	public int Elevation { get; set; } = 20;
 	[Parameter]

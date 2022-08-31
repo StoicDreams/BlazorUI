@@ -403,8 +403,8 @@ pre[languagetag]:before {
 	display: inline-block;
 	background-color: var(--mud-palette-primary);
 	margin-top: calc(-1 * var(--main-padding-size));
-	margin-left: calc(-1.5 * var(--main-padding-size));
-	margin-right: calc(-1.5 * var(--main-padding-size));
+	margin-left: calc(-0.5 * var(--main-padding-size));
+	margin-right: 0;
 	margin-bottom: var(--main-padding-size);
 	padding: calc(0.5 * var(--main-padding-size));
 	font-size: 0.7em;
@@ -412,8 +412,8 @@ pre[languagetag]:before {
 pre > code {
 	display: block;
 	margin-top: calc(-1 * var(--main-padding-size));
-	margin-left: calc(-1.5 * var(--main-padding-size));
-	margin-right: calc(-1.5 * var(--main-padding-size));
+	margin-left: 0;
+	margin-right: 0;
 	padding: var(--main-padding-size);
 	background-color: black;
 	color: white;
@@ -533,3 +533,7 @@ pre > code {
 				border: none;
 				outline: none;
 			}
+.bui-titled-section > .mud-expand-panel > .mud-expand-panel-header,
+.bui-titled-section > .mud-expand-panel > * > * > * > .mud-expand-panel-content {
+	padding: 0;
+}

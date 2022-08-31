@@ -53,10 +53,10 @@
 		base.Dispose();
 	}
 
-	protected override void OnAppStateUpdate()
+	protected override ValueTask OnAppStateUpdate()
 	{
 		SetBreadcrumbItems(NavManager.ToBaseRelativePath(NavManager.Uri));
-		base.OnAppStateUpdate();
+		return base.OnAppStateUpdate();
 	}
 
 	private Stopwatch NavTimer = Stopwatch.StartNew();

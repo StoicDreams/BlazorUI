@@ -13,14 +13,17 @@ internal class StateWatcher : IDisposable
 	}
 
 	public Dictionary<string, bool> WatchStateKeys { get; } = new();
-	public void HandleStateChanges(IDictionary<string, bool> keys)
+	public async ValueTask HandleStateChanges(IDictionary<string, bool> keys)
 	{
 		if (WatchStateKeys.Keys.Count == 0) { return; }
 		if (!WatchStateKeys.Keys.Where(key => keys.ContainsKey(key)).Any()) { return; }
-		StateChangedHandler?.Invoke();
+		if (StateChangedHandler != null)
+		{
+			await StateChangedHandler.Invoke();
+		}
 	}
 
-	public Action? StateChangedHandler { get; set; }
+	public Func<ValueTask>? StateChangedHandler { get; set; }
 	public Action? DisposeHandler { get; set; }
 
 	public void Dispose()

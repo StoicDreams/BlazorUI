@@ -19,7 +19,7 @@ public class PageState : IPageState
 		return await state.GetDataAsync<TData>(name);
 	}
 
-	public void SubscribeToDataChanges(string page, Guid subscriberId, Action<IDictionary<string, bool>> changeHandler)
+	public void SubscribeToDataChanges(string page, Guid subscriberId, Func<IDictionary<string, bool>, ValueTask> changeHandler)
 	{
 		IStateManager state = GetState(page);
 		state.SubscribeToDataChanges(subscriberId, changeHandler);

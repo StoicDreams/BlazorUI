@@ -42,6 +42,7 @@ public class AppStateTests : TestFramework
 		actions.Act(a => a.Service.SubscribeToDataChanges(subscriberId, keys =>
 		{
 			++changeCounter;
+			return ValueTask.CompletedTask;
 		}));
 
 		actions.Assert(a =>

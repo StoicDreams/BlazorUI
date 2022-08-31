@@ -30,7 +30,7 @@ internal interface IPageState
 	/// <param name="page"></param>
 	/// <param name="subscriberId"></param>
 	/// <param name="changeHandler"></param>
-	void SubscribeToDataChanges(string page, Guid subscriberId, Action<IDictionary<string, bool>> changeHandler);
+	void SubscribeToDataChanges(string page, Guid subscriberId, Func<IDictionary<string, bool>, ValueTask> changeHandler);
 
 	/// <summary>
 	/// Unsubscribe from page data changes

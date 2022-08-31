@@ -11,8 +11,8 @@
 			.Replace("{PageTitle}", Title)
 			;
 
-	protected override void OnAppStateUpdate()
+	protected override async ValueTask OnAppStateUpdate()
 	{
-		InvokeAsync(StateHasChanged);
+		await InvokeAsync(StateHasChanged);
 	}
 }

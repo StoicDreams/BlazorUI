@@ -30,30 +30,36 @@ public abstract class BUICoreLayout : LayoutComponentBase, IDisposable
 	/// </summary>
 	protected string GetCurrentPage => GetAppState<string>(AppStateDataTags.CurrentPage, () => string.Empty);
 
+	public async ValueTask AppStateCallback()
+	{
+		await OnAppStateUpdate();
+		await InvokeAsync(StateHasChanged);
+	}
+
+	private async ValueTask SessionStateCallback()
+	{
+		await OnSessionStateUpdate();
+	}
+
+	private async ValueTask PageStateCallback()
+	{
+		await OnPageStateupdate();
+	}
+
 	protected override async Task OnInitializedAsync()
 	{
-		AppStateWatcher.StateChangedHandler = () =>
-		{
-			OnAppStateUpdate();
-			InvokeAsync(StateHasChanged);
-		};
+		AppStateWatcher.StateChangedHandler = AppStateCallback;
 		AppStateWatcher.DisposeHandler = () =>
 		{
 			AppState.UnsubscribeToDataChanges(ComponentId);
 		};
-		SessionStateWatcher.StateChangedHandler = () =>
-		{
-			OnSessionStateUpdate();
-		};
+		SessionStateWatcher.StateChangedHandler = SessionStateCallback;
 		SessionStateWatcher.DisposeHandler = () =>
 		{
 			SessionState.UnsubscribeToDataChanges(ComponentId);
 		};
 		string currentPage = GetCurrentPage;
-		PageStateWatcher.StateChangedHandler = () =>
-		{
-			OnPageStateupdate();
-		};
+		PageStateWatcher.StateChangedHandler = PageStateCallback;
 		PageStateWatcher.DisposeHandler = () =>
 		{
 			PageState.UnsubscribeToDataChanges(currentPage, ComponentId);
@@ -122,9 +128,9 @@ public abstract class BUICoreLayout : LayoutComponentBase, IDisposable
 	private StateWatcher SessionStateWatcher { get; } = new();
 	private StateWatcher PageStateWatcher { get; } = new();
 
-	protected virtual void OnAppStateUpdate() { }
-	protected virtual void OnSessionStateUpdate() { }
-	protected virtual void OnPageStateupdate() { }
+	protected virtual ValueTask OnAppStateUpdate() => ValueTask.CompletedTask;
+	protected virtual ValueTask OnSessionStateUpdate() => ValueTask.CompletedTask;
+	protected virtual ValueTask OnPageStateupdate() => ValueTask.CompletedTask;
 
 	#region Helper Methods
 	protected string FirstNotEmpty(params string?[] options)

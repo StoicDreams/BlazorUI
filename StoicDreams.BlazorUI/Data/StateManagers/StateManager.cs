@@ -15,7 +15,7 @@ public class StateManager : IStateManager
 		}
 	}
 
-	public virtual void SubscribeToDataChanges(Guid subscriberId, Action<IDictionary<string, bool>> changeHandler)
+	public virtual void SubscribeToDataChanges(Guid subscriberId, Func<IDictionary<string, bool>, ValueTask> changeHandler)
 	{
 		lock (ChangeHandlerLock)
 		{
@@ -52,7 +52,7 @@ public class StateManager : IStateManager
 		return Memory.GetValue<TData>(name);
 	}
 
-	public virtual ValueTask TriggerChangeAsync(string? key = null)
+	public virtual async ValueTask TriggerChangeAsync(string? key = null)
 	{
 		Dictionary<string, bool> currentState;
 		lock (ChangeLogLock)
@@ -60,16 +60,16 @@ public class StateManager : IStateManager
 			if (key != null) { Changelog[key] = true; }
 			currentState = Changelog.ToDictionary(k => k.Key, v => v.Value);
 		}
-		Action<IDictionary<string, bool>>[] handlers;
+		Func<IDictionary<string, bool>, ValueTask>[] handlers;
 		Action[] simpleHandlers;
 		lock (ChangeHandlerLock)
 		{
 			handlers = ChangeHandlers.Values.ToArray();
 			simpleHandlers = SimpleChangeHandlers.Values.ToArray();
 		}
-		foreach (Action<IDictionary<string, bool>> handler in handlers)
+		foreach (Func<IDictionary<string, bool>, ValueTask> handler in handlers)
 		{
-			handler?.Invoke(currentState);
+			await handler.Invoke(currentState);
 		}
 		foreach (Action handler in simpleHandlers)
 		{
@@ -79,8 +79,8 @@ public class StateManager : IStateManager
 		{
 			Changelog.Clear();
 		}
-		return ValueTask.CompletedTask;
 	}
+
 	public virtual async ValueTask ApplyChangesAsync(Func<ValueTask> changeHandler)
 	{
 		await changeHandler.Invoke();
@@ -102,7 +102,7 @@ public class StateManager : IStateManager
 
 	protected IStorage Memory { get; }
 	protected Dictionary<string, bool> Changelog { get; } = new();
-	protected Dictionary<Guid, Action<IDictionary<string, bool>>> ChangeHandlers { get; } = new();
+	protected Dictionary<Guid, Func<IDictionary<string, bool>, ValueTask>> ChangeHandlers { get; } = new();
 	protected Dictionary<Guid, Action> SimpleChangeHandlers { get; } = new();
 
 	private readonly object DataLock = new();

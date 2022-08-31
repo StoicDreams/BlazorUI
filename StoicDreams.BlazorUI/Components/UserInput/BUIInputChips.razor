@@ -1,8 +1,11 @@
 ﻿
 <BUIPaper PaperType="PaperType" Elevation="0" Class="@Class">
-	<MudPaper MaxWidth="@GetMaxWidth" Elevation="0">
-		<MudTextField Label="@Label" @bind-Value="NewValue" MaxLength="MaxLength" TextChanged="NewTagUpdated" HelperText="@HelperText" />
-	</MudPaper>
+	@if (NewTagInput == null)
+	{
+		<MudPaper MaxWidth="@GetMaxWidth" Elevation="0">
+			<MudTextField Label="@Label" @bind-Value="NewValue" MaxLength="MaxLength" TextChanged="NewTagUpdated" HelperText="@HelperText" />
+		</MudPaper>
+	}
 	<MudChipSet AllClosable="true" OnClose="RemoveTag" SelectedChipChanged="RemoveTag">
 		@foreach (string tag in Items)
 		{
@@ -34,12 +37,23 @@
 	public Color ChipColor { get; set; } = Color.Primary;
 	[Parameter]
 	public EventCallback<ICollection<string>> OnChange { get; set; }
+	[Parameter]
+	public Action<Func<string, Task>>? NewTagInput { get; set; }
 
 	private string GetMaxWidth => $"{InputMaxWidth}px";
 
 	private string NewValue { get; set; } = string.Empty;
 
 	private Func<string, Color> GetColorFilter => ColorFilter ?? DefaultColorFilter;
+
+	protected override Task OnInitializedAsync()
+	{
+		if (NewTagInput != null)
+		{
+			NewTagInput.Invoke(NewTagUpdated);
+		}
+		return base.OnInitializedAsync();
+	}
 
 	private async Task NewTagUpdated(string tag)
 	{

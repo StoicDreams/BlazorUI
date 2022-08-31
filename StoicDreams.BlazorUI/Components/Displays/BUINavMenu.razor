@@ -18,10 +18,10 @@ else
 	private Color NavActiveColor { get => GetAppState<Color>(AppStateDataTags.NavMenuActiveColor); }
 	private bool UserAuthUpdate => GetAppState<bool>(AppStateDataTags.UserAuthUpdate);
 
-	protected override void OnAppStateUpdate()
+	protected override async ValueTask OnAppStateUpdate()
 	{
-		InvokeAsync(StateHasChanged);
-		base.OnAppStateUpdate();
+		await InvokeAsync(StateHasChanged);
+		await base.OnAppStateUpdate();
 	}
 
 	private List<NavDetail> GetAuthorizedNav

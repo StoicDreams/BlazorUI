@@ -20,9 +20,13 @@
 	public RenderFragment? ChildContent { get; set; }
 	[Parameter]
 	public string Class { get; set; } = "pa-0";
+	[Parameter]
+	public string TitleClass { get; set; } = string.Empty;
+	[Parameter]
+	public string ContentClass { get; set; } = string.Empty;
 
 	private string GetWrapClass => Class;
-	private string GetTitleClass => $"mud-theme-{TitleTheme.AsName().ToLower()} pa-2";
-	private string GetContentClass => "pa-2";
+	private string GetTitleClass => $"mud-theme-{TitleTheme.AsName().ToLower()} pa-2 {TitleClass}".Trim();
+	private string GetContentClass => $"pa-2 {ContentClass}".Trim();
 
 }

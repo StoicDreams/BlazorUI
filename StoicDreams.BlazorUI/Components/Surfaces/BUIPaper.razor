@@ -1,4 +1,4 @@
-﻿<MudPaper Class="@GetClass" Elevation="Elevation" MaxWidth="100%">
+﻿<MudPaper Class="@GetClass" Elevation="Elevation" MaxWidth="@MaxWidth">
 	@ChildContent
 </MudPaper>
 
@@ -11,6 +11,8 @@
 	public string Class { get; set; } = string.Empty;
 	[Parameter]
 	public int Elevation { get; set; } = 0;
+	[Parameter]
+	public string MaxWidth { get; set; } = "100%";
 
 	private string GetClass => $"{PaperType.GetClasses()} {Class}".Trim();
 }

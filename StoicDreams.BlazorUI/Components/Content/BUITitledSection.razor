@@ -2,14 +2,14 @@
 <MudExpansionPanels Class="@GetWrapClass" Elevation="Elevation">
 	<MudExpansionPanel IsInitiallyExpanded="IsInitiallyExpanded" HideIcon="true" IsExpanded="IsExpanded" IsExpandedChanged="HandleExpandedChange">
 		<TitleContent>
-			<BUIPaper Class="@GetTitleClass">
+			<BUIPaper Class="@GetTitleClass" MaxWidth="">
 				@Title
 				@TitleContent
 				<MudIcon Class="ml-auto" Icon="@GetIcon" Color="IconColor" />
 			</BUIPaper>
 		</TitleContent>
 		<ChildContent>
-			<BUIPaper PaperType="PaperTypes.Wrap" Class="@GetContentClass">
+			<BUIPaper PaperType="PaperTypes.Wrap" Class="@GetContentClass" MaxWidth="">
 				@ChildContent
 			</BUIPaper>
 		</ChildContent>

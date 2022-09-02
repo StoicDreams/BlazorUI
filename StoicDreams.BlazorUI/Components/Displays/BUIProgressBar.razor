@@ -18,10 +18,18 @@
 	[Parameter]
 	public double Max { get; set; } = 100;
 
-	private Color GetColor => Color != null ? (Color)Color : GetAppState<Color>(AppStateDefaultProgressBar.Color, () => MudBlazor.Color.Primary);
-	private bool GetStriped => Striped != null ? (bool)Striped : GetAppState<bool>(AppStateDefaultProgressBar.Striped, () => true);
-	private Size GetSize => Size != null ? (Size)Size : GetAppState<Size>(AppStateDefaultProgressBar.Size, () => MudBlazor.Size.Large);
-	private bool GetRounded => Rounded != null ? (bool)Rounded : GetAppState<bool>(AppStateDefaultProgressBar.Rounded, () => false);
+	private Color GetColor => GetDefaultOverride(Color, AppStateDefaultProgressBar.Color, MudBlazor.Color.Primary);
+	private bool GetStriped => GetDefaultOverride(Striped, AppStateDefaultProgressBar.Striped, true);
+	private Size GetSize => GetDefaultOverride(Size, AppStateDefaultProgressBar.Size, MudBlazor.Size.Large);
+	private bool GetRounded => GetDefaultOverride(Rounded , AppStateDefaultProgressBar.Rounded, false);
+
+	private T GetDefaultOverride<T>(T? item, string key, T defaultValue) where T : struct
+	{
+		if (item != null) return (T)item;
+		T cached = GetAppState<T>(key, () => default(T));
+		if (cached.ToString() == default(T).ToString()) return defaultValue;
+		return cached;
+	}
 
 	private bool Indeterminate => Value < 0;
 	private double GetValue => Indeterminate ? 0 : Value;

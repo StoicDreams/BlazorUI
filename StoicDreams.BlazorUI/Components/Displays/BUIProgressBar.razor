@@ -1,0 +1,20 @@
+﻿
+<MudProgressLinear Color="Color" Striped="Striped" Indeterminate="Indeterminate" Value="GetValue" Min="Min" Max="Max" Size="Size" />
+
+@code {
+	[Parameter]
+	public Color Color { get; set; } = Color.Primary;
+	[Parameter]
+	public bool Striped { get; set; } = true;
+	[Parameter]
+	public double Value { get; set; } = -1;
+	[Parameter]
+	public double Min { get; set; } = 0;
+	[Parameter]
+	public double Max { get; set; } = 100;
+	[Parameter]
+	public Size Size { get; set; } = Size.Large;
+
+	private bool Indeterminate => Value < 0;
+	private double GetValue => Indeterminate ? 0 : Value;
+}

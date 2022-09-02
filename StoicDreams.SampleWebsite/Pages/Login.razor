@@ -14,7 +14,7 @@
 	{
 		if (Auth.IsLoggedIn)
 		{
-			string redirectUrl = await GetSessionState<string>("LoginRedirect", () => "/home");
+			string redirectUrl = await GetSessionState<string>("LoginRedirect", () => "/");
 			NavManager.NavigateTo(redirectUrl);
 			return;
 		}

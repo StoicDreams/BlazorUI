@@ -87,7 +87,7 @@
 		TResult result = await Auth.SignIn(InputEmail, InputPassword);
 		if (result.IsOkay)
 		{
-			NavManager.NavigateTo("/home");
+			NavManager.NavigateTo("/");
 			Snackbar.Add(FirstNotEmpty(result.Message, "Signin Successfull"), Severity.Success);
 		}
 		else
@@ -171,7 +171,7 @@
 			return Task.CompletedTask;
 		}
 		Snackbar.Add("You are already logged in.", Severity.Info);
-		NavManager.NavigateTo("/home");
+		NavManager.NavigateTo("/");
 		return Task.CompletedTask;
 	}
 }

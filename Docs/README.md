@@ -79,10 +79,10 @@ A Maui Blazor sample project will be added later after that framework and toolch
 
 ## Author
 
-**[Erik Gassler](https://www.erikgassler.com/home) - [Stoic Dreams](https://www.stoicdreams.com/home)** - Just a simpleton who likes making stuff with bits and bytes.
+**[Erik Gassler](https://www.erikgassler.com) - [Stoic Dreams](https://www.stoicdreams.com)** - Just a simpleton who likes making stuff with bits and bytes.
 
 **Support** - Visit [Stoic Dreams' GitHub Sponsor page](https://github.com/sponsors/StoicDreams) if you would like to provide support to Stoic Dreams.
 Also make sure to share your support to the team at [MudBlazor](https://github.com/sponsors/MudBlazor) for the awesome work they're doing.
 
 
-**Software Development Standards** - Check out my [Simple-Holistic-Agile Software Engineering Standards](https://www.softwarestandards.dev/home) website to see my standards for developing software.
+**Software Development Standards** - Check out my [Simple-Holistic-Agile Software Engineering Standards](https://www.softwarestandards.dev) website to see my standards for developing software.

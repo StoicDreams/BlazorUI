@@ -1,19 +1,27 @@
-﻿
-<MudProgressLinear Color="Color" Striped="Striped" Indeterminate="Indeterminate" Value="GetValue" Min="Min" Max="Max" Size="Size" />
+﻿@inherits BUICore
+
+<MudProgressLinear Color="GetColor" Striped="GetStriped" Indeterminate="Indeterminate" Value="GetValue" Min="Min" Max="Max" Size="GetSize" Rounded="GetRounded" />
 
 @code {
 	[Parameter]
-	public Color Color { get; set; } = Color.Primary;
+	public Color? Color { get; set; }
 	[Parameter]
-	public bool Striped { get; set; } = true;
+	public bool? Striped { get; set; }
+	[Parameter]
+	public Size? Size { get; set; }
+	[Parameter]
+	public bool? Rounded { get; set; }
 	[Parameter]
 	public double Value { get; set; } = -1;
 	[Parameter]
 	public double Min { get; set; } = 0;
 	[Parameter]
 	public double Max { get; set; } = 100;
-	[Parameter]
-	public Size Size { get; set; } = Size.Large;
+
+	private Color GetColor => Color != null ? (Color)Color : GetAppState<Color>(AppStateDefaultProgressBar.Color, () => MudBlazor.Color.Primary);
+	private bool GetStriped => Striped != null ? (bool)Striped : GetAppState<bool>(AppStateDefaultProgressBar.Striped, () => true);
+	private Size GetSize => Size != null ? (Size)Size : GetAppState<Size>(AppStateDefaultProgressBar.Size, () => MudBlazor.Size.Large);
+	private bool GetRounded => Rounded != null ? (bool)Rounded : GetAppState<bool>(AppStateDefaultProgressBar.Rounded, () => false);
 
 	private bool Indeterminate => Value < 0;
 	private double GetValue => Indeterminate ? 0 : Value;

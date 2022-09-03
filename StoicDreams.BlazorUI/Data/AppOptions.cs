@@ -8,12 +8,17 @@ public class AppOptions : IAppOptions
 	public AppTypes AppType { get; set; }
 
 	#region Startup Options
+	public Func<AppInitData, ValueTask>? OnAppInitialize { get; set; }
 	public string TitleFormat { get; set; } = "{PageTitle} - {AppName}";
 	public IList<string> CssFiles { get; } = new List<string>();
 	public IList<string> JavascriptFiles { get; } = new List<string>();
 	public IList<ElementDetail> HeadElements { get; } = new List<ElementDetail>();
 	public IList<ElementDetail> BodyElements { get; } = new List<ElementDetail>();
 	public Type? AppStartupComponent { get; set; }
+	public void ApplyOnInit(Func<AppInitData, ValueTask> action)
+	{
+		OnAppInitialize = action;
+	}
 	public void ApplyOnStartup<TStartupComponent>()
 		where TStartupComponent : ComponentBase
 	{

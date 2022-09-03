@@ -4,6 +4,7 @@
 @inject IJSRuntime JSRuntime
 @inject IJsInterop JSInterop
 @inject IThemeState ThemeState
+@inject IApiRequest ApiRequest
 
 <MudBlazor.MudThemeProvider />
 <MudBlazor.MudDialogProvider
@@ -68,6 +69,7 @@ else
 	private Type PageLayout => typeof(BUIPageLayout);
 	private Type PageNotFound => HiddenOptions.PageNotFound;
 	private Type? AppStartup => HiddenOptions.AppStartupComponent;
+	private Func<AppInitData, ValueTask>? AppInit => HiddenOptions.OnAppInitialize;
 	private IEnumerable<Assembly> FrameworkAssemblies => new Assembly[] { typeof(BUIApp).Assembly };
 	private bool IsLoadingApp { get; set; } = true;
 
@@ -75,6 +77,17 @@ else
 	{
 		await base.OnInitializedAsync();
 		await RunDefaultSetups();
+		if (AppInit != null)
+		{
+			await AppInit.Invoke(new AppInitData()
+			{
+				NavManager = NavManager,
+				ApiRequest = ApiRequest,
+				JsInterop = JSInterop,
+				Auth = Auth,
+				Options = HiddenOptions
+			});
+		}
 		// Trigger to clear any values from startup, not expecting anything to be expecting AppInitialized key.
 		await AppState.TriggerChangeAsync("AppInitialized");
 		IsLoadingApp = false;

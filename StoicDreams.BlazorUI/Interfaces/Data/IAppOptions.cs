@@ -57,6 +57,13 @@ public interface IAppOptions
 	IList<ElementDetail> BodyElements { get; }
 
 	/// <summary>
+	/// Run processing when the App is initializing.
+	/// This is good for running Api checks or loading final configurations from an endpoint before allowing the app to start rendering operations.
+	/// </summary>
+	/// <param name="action"></param>
+	void ApplyOnInit(Func<AppInitData, ValueTask> action);
+
+	/// <summary>
 	/// Apply a razor component to the app on startup.
 	/// This should be a component that you want persisted for as long as the app is open.
 	/// This is a good place to have app startup initializers such as auth/login checking, initial nav loading, etc.

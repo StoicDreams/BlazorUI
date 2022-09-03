@@ -537,3 +537,19 @@ pre > code {
 .bui-titled-section > .mud-expand-panel > * > * > * > .mud-expand-panel-content {
 	padding: 0;
 }
+
+.text-center {
+	text-align: center;
+}
+.text-right {
+	text-align: right;
+}
+.text-left {
+	text-align: left;
+}
+.text-justify {
+	text-align: justify;
+}
+.text-justify-all {
+	text-align: justify-all;
+}

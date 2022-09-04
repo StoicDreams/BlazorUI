@@ -48,38 +48,14 @@ else
 
 	protected override async Task OnInitializedAsync()
 	{
-		if (IsUsingSession)
-		{
-			bool value = Value;
-			Value = await GetSessionState<bool>(SessionKey, () => false);
-			if (value != Value)
-			{
-				await ValueChanged.InvokeAsync(Value);
-			}
-		}
+		ToggleChangeHandler = await SetupSessionKey<bool>(SessionKey, value => Value = value, ValueChanged.InvokeAsync, () => Value, () => false);
 		await base.OnInitializedAsync();
 	}
-
-	protected override async ValueTask OnSessionStateUpdate()
-	{
-		bool value = Value;
-		Value = await GetSessionState<bool>(SessionKey, () => false);
-		if (value != Value)
-		{
-			await ValueChanged.InvokeAsync(Value);
-		}
-		await base.OnSessionStateUpdate();
-	}
+	private Func<bool, Task>? ToggleChangeHandler { get; set; }
 
 	private async Task HandleClick()
 	{
-		Value = !Value;
-		if (IsUsingSession)
-		{
-			bool value = await GetSessionState<bool>(SessionKey, () => false);
-			if (value == Value) return;
-			await SetSessionState(SessionKey, Value);
-		}
-		await ValueChanged.InvokeAsync(Value);
+		if (ToggleChangeHandler == null) return;
+		await ToggleChangeHandler.Invoke(!Value);
 	}
 }

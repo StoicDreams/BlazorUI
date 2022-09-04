@@ -1,4 +1,6 @@
-﻿namespace StoicDreams.BlazorUI.Components.Base;
+﻿using static MudBlazor.Colors;
+
+namespace StoicDreams.BlazorUI.Components.Base;
 
 public abstract class BUICore : ComponentBase, IDisposable
 {
@@ -38,6 +40,10 @@ public abstract class BUICore : ComponentBase, IDisposable
 
 	private async ValueTask SessionStateCallback()
 	{
+		foreach (Func<ValueTask> handler in SessionStateUpdateHandlers)
+		{
+			await handler.Invoke();
+		}
 		await OnSessionStateUpdate();
 	}
 
@@ -69,6 +75,64 @@ public abstract class BUICore : ComponentBase, IDisposable
 		PageState.SubscribeToDataChanges(currentPage, ComponentId, PageStateWatcher.HandleStateChanges);
 		await base.OnInitializedAsync();
 	}
+
+	#region Auto Session State Helper
+	protected async ValueTask<Func<TValue, Task>> SetupSessionKey<TValue>(string sessionKey,
+		Action<TValue> valueSetter,
+		Func<TValue, Task> onChange,
+		Func<TValue> currentGetter,
+		Func<TValue> defaultGetter
+		)
+		where TValue : struct
+	{
+		bool isUsingSessionStorage = !string.IsNullOrWhiteSpace(sessionKey);
+		bool isFirstRun = true;
+		async Task ChangeTrigger(TValue value)
+		{
+			valueSetter.Invoke(value);
+			if (!isUsingSessionStorage)
+			{
+				await changeHandler();
+				return;
+			}
+			TValue cached = await GetSessionState(sessionKey, defaultGetter);
+			if (value.ToString() != cached.ToString())
+			{
+				await SetSessionState(sessionKey, value);
+				await onChange.Invoke(value);
+			}
+		}
+		async ValueTask changeHandler()
+		{
+			if (!isUsingSessionStorage)
+			{
+				if (isFirstRun)
+				{
+					isFirstRun = false;
+					TValue defaultValue = defaultGetter();
+					valueSetter.Invoke(defaultValue);
+					await onChange.Invoke(defaultValue);
+					return;
+				}
+				await onChange.Invoke(currentGetter());
+				return;
+			}
+			TValue value = currentGetter();
+			TValue cached = await GetSessionState(sessionKey, defaultGetter);
+			if (value.ToString() == cached.ToString()) return;
+			valueSetter.Invoke(cached);
+			await onChange.Invoke(cached);
+		}
+		if (isUsingSessionStorage)
+		{
+			SessionStateUpdateHandlers.Add(changeHandler);
+		}
+		await changeHandler();
+		return ChangeTrigger;
+	}
+
+	private List<Func<ValueTask>> SessionStateUpdateHandlers { get; } = new();
+	#endregion
 
 	#region App State Helpers
 	protected TValue? GetAppState<TValue>(AppStateDataTags key) => AppStateWatcher.WatchState(key, AppState.GetData<TValue>(key));
@@ -147,6 +211,7 @@ public abstract class BUICore : ComponentBase, IDisposable
 
 	public virtual void Dispose()
 	{
+		SessionStateUpdateHandlers.Clear();
 		AppStateWatcher?.Dispose();
 		SessionStateWatcher?.Dispose();
 		PageStateWatcher?.Dispose();

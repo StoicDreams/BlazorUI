@@ -1,11 +1,15 @@
-﻿
+﻿@inherits BUICore
+
 <MudExpansionPanels Class="@GetWrapClass" Elevation="Elevation">
 	<MudExpansionPanel IsInitiallyExpanded="IsInitiallyExpanded" HideIcon="true" IsExpanded="IsExpanded" IsExpandedChanged="HandleExpandedChange">
 		<TitleContent>
 			<BUIPaper Class="@GetTitleClass" MaxWidth="">
 				@Title
 				@TitleContent
-				<MudIcon Class="ml-auto" Icon="@GetIcon" Color="IconColor" />
+				@if (ExpansionEnabled)
+				{
+					<MudIcon Class="ml-auto" Icon="@GetIcon" Color="IconColor" />
+				}
 			</BUIPaper>
 		</TitleContent>
 		<ChildContent>
@@ -41,6 +45,8 @@
 	public EventCallback<bool> IsExpandedChanged { get; set; }
 	[Parameter]
 	public bool ExpansionEnabled { get; set; } = true;
+	[Parameter]
+	public string SessionKey { get; set; } = string.Empty;
 
 	private bool IsExpanded { get; set; }
 	private string GetIcon => IsExpanded ? Icons.Material.TwoTone.KeyboardArrowUp : Icons.Material.TwoTone.KeyboardArrowDown;
@@ -48,16 +54,25 @@
 	private string GetTitleClass => $"mud-theme-{TitleTheme.AsName().ToLower()} d-flex rounded-0 align-center pa-2 {TitleClass}".Trim();
 	private string GetContentClass => $"pa-2 {ContentClass}".Trim();
 
-	protected override Task OnInitializedAsync()
+	protected override async Task OnInitializedAsync()
 	{
-		IsExpanded = IsInitiallyExpanded;
-		return base.OnInitializedAsync();
+		if (ExpansionEnabled)
+		{
+			ToggleChangeHandler = await SetupSessionKey<bool>(SessionKey, value => IsExpanded = value, IsExpandedChanged.InvokeAsync, () => IsExpanded, () => IsInitiallyExpanded);
+		}
+		else
+		{
+			IsExpanded = true;
+		}
+		await base.OnInitializedAsync();
 	}
+
+	private Func<bool, Task>? ToggleChangeHandler { get; set; }
 
 	private async Task HandleExpandedChange(bool value)
 	{
 		if (!ExpansionEnabled) { return; }
-		IsExpanded = value;
-		await IsExpandedChanged.InvokeAsync(value);
+		if (ToggleChangeHandler == null) return;
+		await ToggleChangeHandler.Invoke(value);
 	}
 }

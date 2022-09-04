@@ -553,3 +553,7 @@ pre > code {
 .text-justify-all {
 	text-align: justify-all;
 }
+
+.bui-paper {
+	width: calc((var(--main-padding-size) * 2) + max-content);
+}

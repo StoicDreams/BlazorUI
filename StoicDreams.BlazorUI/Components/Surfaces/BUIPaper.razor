@@ -14,5 +14,5 @@
 	[Parameter]
 	public string MaxWidth { get; set; } = "100%";
 
-	private string GetClass => $"{PaperType.GetClasses()} {Class}".Trim();
+	private string GetClass => $"bui-paper {PaperType.GetClasses()} {Class}".Trim();
 }

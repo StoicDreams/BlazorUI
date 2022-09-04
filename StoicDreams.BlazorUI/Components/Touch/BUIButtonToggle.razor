@@ -1,0 +1,85 @@
+﻿@inherits BUICore
+
+@if (string.IsNullOrWhiteSpace(Text))
+{
+	<MudIconButton Icon="@GetIcon" Variant="Variant" Class="@GetClass" Color="GetColor" OnClick="HandleClick" Size="GetSize" />
+}
+else
+{
+	<MudButton EndIcon="@GetIcon" Variant="Variant" Class="@GetClass" Color="GetColor" OnClick="HandleClick" Size="GetSize">@Text</MudButton>
+}
+
+@code {
+	[Parameter]
+	public string Text { get; set; } = string.Empty;
+	[Parameter]
+	public Color ColorOn { get; set; } = Color.Success;
+	[Parameter]
+	public Color ColorOff { get; set; } = Color.Default;
+	[Parameter]
+	public bool Value { get; set; }
+	[Parameter]
+	public EventCallback<bool> ValueChanged { get; set; }
+	[Parameter]
+	public string Class { get; set; } = string.Empty;
+	[Parameter]
+	public string ClassOn { get; set; } = string.Empty;
+	[Parameter]
+	public string ClassOff { get; set; } = string.Empty;
+	[Parameter]
+	public string IconOn { get; set; } = Icons.Material.TwoTone.ToggleOn;
+	[Parameter]
+	public string IconOff { get; set; } = Icons.Material.TwoTone.ToggleOff;
+	[Parameter]
+	public Variant Variant { get; set; } = Variant.Filled;
+	[Parameter]
+	public Size SizeOn { get; set; } = Size.Large;
+	[Parameter]
+	public Size SizeOff { get; set; } = Size.Medium;
+	[Parameter]
+	public string SessionKey { get; set; } = string.Empty;
+
+	private string GetIcon => Value ? IconOn : IconOff;
+	private Color GetColor => Value ? ColorOn : ColorOff;
+	private string GetClass => $"{Class} {(Value ? ClassOn : ClassOff)}".Trim();
+	private Size GetSize => Value ? SizeOn : SizeOff;
+
+	private bool IsUsingSession => !string.IsNullOrWhiteSpace(SessionKey);
+
+	protected override async Task OnInitializedAsync()
+	{
+		if (IsUsingSession)
+		{
+			bool value = Value;
+			Value = await GetSessionState<bool>(SessionKey, () => false);
+			if (value != Value)
+			{
+				await ValueChanged.InvokeAsync(Value);
+			}
+		}
+		await base.OnInitializedAsync();
+	}
+
+	protected override async ValueTask OnSessionStateUpdate()
+	{
+		bool value = Value;
+		Value = await GetSessionState<bool>(SessionKey, () => false);
+		if (value != Value)
+		{
+			await ValueChanged.InvokeAsync(Value);
+		}
+		await base.OnSessionStateUpdate();
+	}
+
+	private async Task HandleClick()
+	{
+		Value = !Value;
+		if (IsUsingSession)
+		{
+			bool value = await GetSessionState<bool>(SessionKey, () => false);
+			if (value == Value) return;
+			await SetSessionState(SessionKey, Value);
+		}
+		await ValueChanged.InvokeAsync(Value);
+	}
+}

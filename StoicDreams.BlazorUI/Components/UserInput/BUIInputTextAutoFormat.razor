@@ -5,11 +5,11 @@
 		@Markdown.GetMarkup(GetMarkdown)
 		@if (FlipState)
 		{
-			<textarea @ref="TextareaRef" id="@FieldId" @oninput="ValueInput">@InternalValue</textarea>
+			<textarea @ref="TextareaRef" id="@FieldId" @oninput="ValueInput" placeholder="@Placeholder">@InternalValue</textarea>
 		}
 		else
 		{
-			<textarea @ref="TextareaRef" id="@FieldId" @oninput="ValueInput">@InternalValue</textarea>
+			<textarea @ref="TextareaRef" id="@FieldId" @oninput="ValueInput" placeholder="@Placeholder">@InternalValue</textarea>
 		}
 	</div>
 </MudField>
@@ -21,6 +21,8 @@
 	public int MinHeight { get; set; } = 100;
 	[Parameter]
 	public string HelperText { get; set; } = string.Empty;
+	[Parameter]
+	public string Placeholder { get; set; } = string.Empty;
 	[Parameter]
 	public string Label { get; set; } = string.Empty;
 	[Parameter]

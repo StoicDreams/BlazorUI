@@ -4,9 +4,9 @@
 		@ChildContent
 	</DialogContent>
 	<DialogActions>
-		<MudButton Icon="@Icons.Material.Filled.Cancel" Color="Color.Warning" OnClick="Cancel" Title="@CancelTitle">@CancelText</MudButton>
+		<MudButton Icon="@CancelIcon" Color="CancelColor" OnClick="Cancel" Title="@CancelTitle">@CancelDisplay</MudButton>
 		<MudSpacer />
-		<MudButton Icon="@Icons.Material.Filled.Save" Color="Color.Success" OnClick="Confirm" Title="@ConfirmTitle">@ConfirmText</MudButton>
+		<MudButton Icon="@ConfirmIcon" Color="ConfirmColor" OnClick="Confirm" Title="@ConfirmTitle">@ConfirmDisplay</MudButton>
 	</DialogActions>
 </MudDialog>
 
@@ -19,11 +19,44 @@
 	public EventCallback OnSave { get; set; }
 	[Parameter]
 	public EventCallback OnCancel { get; set; }
+	[Parameter]
+	public string CancelText { get; set; } = "Cancel";
+	[Parameter]
+	public string ConfirmText { get; set; } = "Confirm";
+	[Parameter]
+	public string CancelIcon { get; set; } = Icons.Material.Filled.Cancel;
+	[Parameter]
+	public string ConfirmIcon { get; set; } = Icons.Material.Filled.Save;
+	[Parameter]
+	public Color CancelColor { get; set; } = Color.Warning;
+	[Parameter]
+	public Color ConfirmColor { get; set; } = Color.Success;
 
-	protected virtual string CancelText { get; set; } = "Cancel";
-	protected virtual string ConfirmText { get; set; } = "Confirm";
-	protected virtual string CancelTitle { get; set; } = "Cancel";
-	protected virtual string ConfirmTitle { get; set; } = "Confirm";
+	protected virtual string CancelDisplay { get; set; } = string.Empty;
+	protected virtual string ConfirmDisplay { get; set; } = string.Empty;
+	protected virtual string CancelTitle { get; set; } = string.Empty;
+	protected virtual string ConfirmTitle { get; set; } = string.Empty;
+
+	protected override Task OnInitializedAsync()
+	{
+		if (string.IsNullOrWhiteSpace(CancelDisplay))
+		{
+			CancelDisplay = CancelText;
+		}
+		if (string.IsNullOrWhiteSpace(ConfirmDisplay))
+		{
+			ConfirmDisplay = ConfirmText;
+		}
+		if (string.IsNullOrWhiteSpace(CancelTitle))
+		{
+			CancelTitle = CancelDisplay;
+		}
+		if (string.IsNullOrWhiteSpace(ConfirmTitle))
+		{
+			ConfirmTitle = ConfirmDisplay;
+		}
+		return base.OnInitializedAsync();
+	}
 
 	private async Task Cancel()
 	{

@@ -310,7 +310,7 @@ blockquote {
 	blockquote > cite {
 		display: block;
 		text-align: right;
-		color: var(--mud-palette-primary);
+		color: inherit;
 		font-weight: 800;
 	}
 		blockquote > cite:before {

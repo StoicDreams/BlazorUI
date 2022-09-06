@@ -554,6 +554,19 @@ pre > code {
 	text-align: justify-all;
 }
 
+.float-left {
+	float: left;
+}
+.float-right {
+	float: right;
+}
+.float-inline-end {
+	float: inline-end;
+}
+.float-inline-start {
+	float: inline-start;
+}
+
 .bui-paper {
 	width: calc((var(--main-padding-size) * 2) + max-content);
 }

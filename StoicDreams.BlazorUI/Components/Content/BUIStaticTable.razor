@@ -1,0 +1,42 @@
+﻿@using System.Diagnostics.CodeAnalysis
+@typeparam TItem
+
+<MudTable T="TItem" Items="Items" Bordered="Border" Dense="Dense" Elevation="Elevation" HeaderClass="@HeaderClass" Class="@Class" Striped="Striped" Outlined="Outlined">
+	<HeaderContent>
+		@foreach (TableColumn<TItem> item in Columns)
+		{
+			<MudTh>@item.Title</MudTh>
+		}
+	</HeaderContent>
+	<RowTemplate>
+		@foreach (TableColumn<TItem> item in Columns)
+		{
+			<MudTd>
+				@item.Cell(context)
+			</MudTd>
+		}
+	</RowTemplate>
+</MudTable>
+
+@code {
+	[Parameter]
+	public ICollection<TableColumn<TItem>> Columns { get; set; } = null!;
+	[Parameter]
+	public ICollection<TItem> Items { get; set; } = null!;
+	[Parameter]
+	public bool Outlined { get; set; } = true;
+	[Parameter]
+	public bool Border { get; set; } = true;
+	[Parameter]
+	public bool Dense { get; set; } = true;
+	[Parameter]
+	public bool Striped { get; set; } = true;
+	[Parameter]
+	public int Elevation { get; set; } = 0;
+	[Parameter]
+	public string HeaderClass { get; set; } = string.Empty;
+	[Parameter]
+	public string Class { get; set; } = string.Empty;
+
+	private TResult<TItem> GetItem(string title, TItem item) => new() { Message = title, Result = item, Status = TResultStatus.Success };
+}

@@ -2,6 +2,6 @@
 
 public class TableColumn<TItem>
 {
-	public ImplicitRenderFragment Title { get; set; } = string.Empty;
+	public RenderFragment Title { get; set; } = null!;
 	public RenderFragment<TItem> Cell { get; set; } = null!;
 }

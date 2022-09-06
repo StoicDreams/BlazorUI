@@ -12,7 +12,7 @@
 
 	<BUIStandardSection>
 		<MudForm>
-			<MudTabs>
+			<MudTabs @bind-ActivePanelIndex="PanelIndex">
 				<MudTabPanel Text="Sign-In">
 					<MudTextField MaxLength="300" Label="Email" HelperText="Your email address" Clearable="true" Variant="Variant.Text" @bind-Value="@InputEmail" InputType="InputType.Email" />
 					<MudTextField MaxLength="300" Label="Password" HelperText="Your password" Clearable="true" Variant="Variant.Text" @bind-Value="@InputPassword" InputType="InputType.Password" />
@@ -57,6 +57,8 @@
 }
 
 @code {
+	[Parameter]
+	public bool ShowSignupFirst { get; set; }
 	private bool RedirectLoggedInUsers { get; set; }
 	private string LoginMessage { get; set; } = string.Empty;
 	private string InputDisplayName { get; set; } = string.Empty;
@@ -64,9 +66,11 @@
 	private string InputConfirmEmail { get; set; } = string.Empty;
 	private string InputPassword { get; set; } = string.Empty;
 	private bool IsStoicDreams => GetAppState<bool>(AppStateDataTags.UsesStoicDreamsAuth);
+	private int PanelIndex { get; set; }
 
 	protected override async Task OnInitializedAsync()
 	{
+		PanelIndex = ShowSignupFirst ? 1 : 0;
 		await base.OnInitializedAsync();
 		await RedirectUserWhenLoggedIn();
 	}

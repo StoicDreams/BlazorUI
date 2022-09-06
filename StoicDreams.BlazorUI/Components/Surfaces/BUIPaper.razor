@@ -1,4 +1,4 @@
-﻿<MudPaper Class="@GetClass" Elevation="Elevation" MaxWidth="@MaxWidth">
+﻿<MudPaper Class="@GetClass" Elevation="Elevation" Style="@Style" Width="@Width" Height="@Height" MinWidth="@MinWidth" MinHeight="@MinHeight" MaxWidth="@MaxWidth" MaxHeight="@MaxHeight" Outlined="Outlined" Square="Squared">
 	@ChildContent
 </MudPaper>
 
@@ -12,7 +12,23 @@
 	[Parameter]
 	public int Elevation { get; set; } = 0;
 	[Parameter]
+	public string Width { get; set; } = string.Empty;
+	[Parameter]
+	public string MinWidth { get; set; } = string.Empty;
+	[Parameter]
 	public string MaxWidth { get; set; } = "100%";
+	[Parameter]
+	public string Height { get; set; } = string.Empty;
+	[Parameter]
+	public string MinHeight { get; set; } = string.Empty;
+	[Parameter]
+	public string MaxHeight { get; set; } = string.Empty;
+	[Parameter]
+	public string Style { get; set; } = string.Empty;
+	[Parameter]
+	public bool Outlined { get; set; } = false;
+	[Parameter]
+	public bool Squared { get; set; } = false;
 
 	private string GetClass => $"bui-paper {PaperType.GetClasses()} {Class}".Trim();
 }

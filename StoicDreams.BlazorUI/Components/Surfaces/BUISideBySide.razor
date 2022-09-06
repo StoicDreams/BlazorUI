@@ -1,0 +1,39 @@
+﻿
+<BUIPaper Class="@GetClass" Elevation="Elevation">
+	<BUIPaper Class="@LeftClass" Elevation="LeftElevation">
+		@LeftContent
+	</BUIPaper>
+	<BUIPaper Class="@RightClass" Elevation="RightElevation">
+		@RightContent
+	</BUIPaper>
+</BUIPaper>
+
+@code {
+	[Parameter]
+	public RenderFragment? LeftContent { get; set; }
+	[Parameter]
+	public RenderFragment? RightContent { get; set; }
+	[Parameter]
+	public SideBySideTypes Type { get; set; }
+	[Parameter]
+	public string Class { get; set; } = string.Empty;
+	[Parameter]
+	public string LeftClass { get; set; } = string.Empty;
+	[Parameter]
+	public string RightClass { get; set; } = string.Empty;
+	[Parameter]
+	public int Elevation { get; set; }
+	[Parameter]
+	public int LeftElevation { get; set; }
+	[Parameter]
+	public int RightElevation { get; set; }
+
+	private string GetClass => $"{GetBaseClass} {Class}";
+
+	private string GetBaseClass => Type switch
+	{
+		SideBySideTypes.AutoMaxContent => "bui-automaxcontent",
+		SideBySideTypes.MaxContentAuto => "bui-maxcontentauto",
+		_ => "bui-side-by-side"
+	};
+}

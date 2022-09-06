@@ -1,0 +1,32 @@
+﻿
+<BUIPaper Elevation="0" Class="@GetPaperClass" Width="@Width" Height="@Height" MinWidth="@MinWidth" MinHeight="@MinHeight" MaxHeight="@MaxHeight" MaxWidth="@MaxWidth" Style="@Style">
+	<img src="@Src" alt="@Alt" class="@GetImageClass" />
+</BUIPaper>
+
+@code {
+	[Parameter]
+	public string PaperClass { get; set; } = string.Empty;
+	[Parameter]
+	public string ImageClass { get; set; } = string.Empty;
+	[Parameter]
+	public string Src { get; set; } = string.Empty;
+	[Parameter]
+	public string Alt { get; set; } = string.Empty;
+	[Parameter]
+	public string Width { get; set; } = string.Empty;
+	[Parameter]
+	public string MinWidth { get; set; } = string.Empty;
+	[Parameter]
+	public string MaxWidth { get; set; } = "100%";
+	[Parameter]
+	public string Height { get; set; } = string.Empty;
+	[Parameter]
+	public string MinHeight { get; set; } = string.Empty;
+	[Parameter]
+	public string MaxHeight { get; set; } = string.Empty;
+	[Parameter]
+	public string Style { get; set; } = string.Empty;
+
+	private string GetPaperClass => $"bui-image {PaperClass}".Trim();
+	private string GetImageClass => ImageClass;
+}

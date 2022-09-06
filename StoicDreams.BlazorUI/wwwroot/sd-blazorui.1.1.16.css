@@ -570,9 +570,57 @@ pre > code {
 .bui-paper {
 	width: calc((var(--main-padding-size) * 2) + max-content);
 }
-.mud-paper:after,
-.bui-paper:after {
+.clear-after {
 	content: " ";
 	display: block;
 	clear: both;
+}
+
+.bui-image {
+
+}
+.bui-image > img {
+	max-width: 100%;
+	height: auto;
+	object-fit: cover;
+}
+
+.bui-side-by-side {
+	display: grid !important;
+	grid-template-columns: 1fr 1fr;
+	grid-gap: var(--main-padding-size);
+}
+
+	.bui-side-by-side > :only-child {
+		grid-column: span 2;
+	}
+
+.bui-maxcontentauto {
+	display: grid !important;
+	grid-template-columns: max-content auto;
+}
+
+	.bui-maxcontentauto > *:first-child {
+		width: max-content;
+	}
+.bui-automaxcontent {
+	display: grid !important;
+	grid-template-columns: auto max-content;
+}
+
+	.bui-automaxcontent > *:last-child {
+		width: max-content;
+	}
+
+@media (max-width: 1200px) {
+	.bui-side-by-side,
+	.bui-maxcontentauto,
+	.bui-automaxcontent {
+		grid-template-columns: 1fr;
+	}
+
+		.bui-maxcontentauto > *:first-child,
+		.bui-maxcontentauto > *:last-child {
+			width: 100%;
+		}
 }

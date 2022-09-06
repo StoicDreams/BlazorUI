@@ -570,3 +570,9 @@ pre > code {
 .bui-paper {
 	width: calc((var(--main-padding-size) * 2) + max-content);
 }
+.mud-paper:after,
+.bui-paper:after {
+	content: " ";
+	display: block;
+	clear: both;
+}

@@ -30,9 +30,9 @@
 	<MudPaper Class="d-flex flex-column flex-wrap ma-4 gap-4">
 		@foreach (Color color in ThemeColors)
 		{
-			<MudPaper Class="d-flex flex-row">
+			<MudPaper Class="d-flex flex-row align-center">
 				<MudText Typo="Typo.caption" Class="ma-2">@color</MudText>
-				<MudProgressLinear Class="ma-3" Indeterminate="true" Color="color" Size="Size.Large" Striped="true" />
+				<BUIProgressBar Color="color" />
 			</MudPaper>
 		}
 	</MudPaper>
@@ -41,7 +41,7 @@
 		{
 			<MudPaper Class="d-flex flex-column">
 				<MudText Typo="Typo.caption">@color</MudText>
-				<BUIProgressBar />
+				<MudProgressCircular Color="color" Size="Size.Medium" Indeterminate="true" />
 			</MudPaper>
 		}
 	</MudPaper>
@@ -83,7 +83,7 @@
 		if (info == null) { return; }
 		ColorData newValue = hexValue;
 		info.SetValue(config, newValue);
-		State.TriggerChangeAsync();
+		_ = State.TriggerChangeAsync();
 	}
 
 	private void BuildColorSetting()

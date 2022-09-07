@@ -624,3 +624,22 @@ pre > code {
 			width: 100%;
 		}
 }
+.bui-paper.bui-footer {
+	position: absolute;
+	left: 0;
+	width: 100%;
+	z-index: 9999;
+}
+
+	.bui-paper.bui-footer * {
+		font-size: 0.9em!important;
+	}
+	.bui-paper.bui-footer:first-child {
+		top: 0;
+	}
+
+	.bui-paper.bui-footer:last-child {
+		top: auto;
+		bottom: 0;
+	}
+

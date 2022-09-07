@@ -42,9 +42,17 @@
 	</MudDrawer>
 	<MudMainContent>
 		<BUIPageBreadcrumb />
+		@if (AppOptions.TitleBarPosition != TitleBarPosition.Top)
+		{
+			<DynamicComponent Type="Footer" />
+		}
 		<main>
 			@Body
 		</main>
+		@if (AppOptions.TitleBarPosition == TitleBarPosition.Top)
+		{
+			<DynamicComponent Type="Footer" />
+		}
 	</MudMainContent>
 	@if (AppOptions.TitleBarPosition == TitleBarPosition.Bottom)
 	{
@@ -59,6 +67,7 @@
 	private DrawerVariant RightDrawerVariant { get => GetAppState<DrawerVariant>(AppStateDataTags.AppRightDrawerVariant); set => SetAppStateWithTrigger<DrawerVariant>(AppStateDataTags.AppRightDrawerVariant, value); }
 	private Type? LeftDrawerContent => GetAppState<Type?>(AppStateDataTags.LeftDrawerContent);
 	private Type? RightDrawerContent => GetAppState<Type?>(AppStateDataTags.RightDrawerContent);
+	private Type Footer => HiddenOptions.Footer;
 
 	protected override async Task OnInitializedAsync()
 	{

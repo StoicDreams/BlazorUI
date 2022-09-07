@@ -4,6 +4,7 @@ public class AppOptions : IAppOptions
 {
 	public string AppName { get; set; } = string.Empty;
 	public string CompanyName { get; set; } = string.Empty;
+	public string CompanyHomeUrl { get; set; } = string.Empty;
 	public string Domain { get; set; } = string.Empty;
 	public AppTypes AppType { get; set; }
 
@@ -59,6 +60,15 @@ public class AppOptions : IAppOptions
 	{
 		TitleBarContent = typeof(TTitleBar);
 	}
+
+
+	public Type Footer { get; set; } = typeof(BUIFooter);
+	public void SetFooter<TFooter>()
+		where TFooter : ComponentBase
+	{
+		Footer = typeof(TFooter);
+	}
+
 	public TitleBarPosition TitleBarPosition { get; set; }
 	public DrawerVariant LeftDrawerVariant { get; set; } = DrawerVariant.Temporary;
 	public DrawerVariant RightDrawerVariant { get; set; } = DrawerVariant.Temporary;

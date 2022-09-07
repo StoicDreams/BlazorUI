@@ -12,7 +12,7 @@
 		<Description>
 			UI Framework and component library for Blazor based Websites and Maui projects.
 		</Description>
-		<Version>1.10.82</Version>
+		<Version>1.10.87</Version>
 		<Copyright>2022 Stoic Dreams</Copyright>
 		<PackageProjectUrl>https://www.stoicdreams.com</PackageProjectUrl>
 		<PackageLicenseExpression></PackageLicenseExpression>
@@ -37,7 +37,7 @@
 	</PropertyGroup>
 
 	<ItemGroup>
-	  <Content Remove="commands.json" />
+		<Content Remove="commands.json" />
 	</ItemGroup>
 
 	<ItemGroup>
@@ -71,7 +71,7 @@
 			<PackagePath>\</PackagePath>
 		</None>
 		<None Include="commands.json">
-		  <CopyToOutputDirectory>Never</CopyToOutputDirectory>
+			<CopyToOutputDirectory>Never</CopyToOutputDirectory>
 		</None>
 	</ItemGroup>
 </Project>

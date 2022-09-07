@@ -6,6 +6,7 @@ public static class AppSettings
 	{
 		options.AppName = "Blazor UI";
 		options.CompanyName = "Stoic Dreams";
+		options.CompanyHomeUrl = "https://www.stoicdreams.com";
 		options.Domain = "StoicDreams.com";
 		options.AppType = AppTypes.Website;
 		options.CssFiles.Add("css/app.css");

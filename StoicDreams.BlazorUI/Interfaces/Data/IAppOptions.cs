@@ -17,6 +17,12 @@ public interface IAppOptions
 	string CompanyName { get; set; }
 
 	/// <summary>
+	/// Set the url for the company website.
+	/// This is used to create a link for the company name whenever it's displayed, such as in the default footer.
+	/// </summary>
+	string CompanyHomeUrl { get; set; }
+
+	/// <summary>
 	/// Root domains of your website (e.g. StoicDreams.com).
 	/// Exclude use of www or other subdomains here.
 	/// </summary>
@@ -92,6 +98,12 @@ public interface IAppOptions
 	/// </summary>
 	/// <typeparam name="TTitleBar"></typeparam>
 	void SetTitleBarContent<TTitleBar>() where TTitleBar : ComponentBase;
+
+	/// <summary>
+	/// Use this to override the default BUIFooter component to use your own component for the sites footer.
+	/// </summary>
+	/// <typeparam name="TFooter"></typeparam>
+	void SetFooter<TFooter>() where TFooter : ComponentBase;
 
 	/// <summary>
 	/// Change the component displayed when a user visits a page that doesn't match a mapped path.

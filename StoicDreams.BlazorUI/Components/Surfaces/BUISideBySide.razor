@@ -1,4 +1,11 @@
-﻿
+﻿@if (TitleContent != null)
+{
+	<BUISectionTitle Class="@TitleClass">@TitleContent</BUISectionTitle>
+}
+else if (!string.IsNullOrWhiteSpace(Title))
+{
+	<BUISectionTitle Class="@TitleClass">@Title</BUISectionTitle>
+}
 <BUIPaper Class="@GetClass" Elevation="Elevation">
 	<BUIPaper Class="@LeftClass" Elevation="LeftElevation">
 		@LeftContent
@@ -13,6 +20,12 @@
 	public RenderFragment? LeftContent { get; set; }
 	[Parameter]
 	public RenderFragment? RightContent { get; set; }
+	[Parameter]
+	public RenderFragment? TitleContent { get; set; }
+	[Parameter]
+	public string Title { get; set; } = string.Empty;
+	[Parameter]
+	public string TitleClass { get; set; } = "bui-theme-title";
 	[Parameter]
 	public SideBySideTypes Type { get; set; }
 	[Parameter]

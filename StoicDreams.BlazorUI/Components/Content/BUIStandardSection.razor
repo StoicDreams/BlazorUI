@@ -1,10 +1,10 @@
 ﻿@if (TitleContent != null)
 {
-	<BUISectionTitle>@TitleContent</BUISectionTitle>
+	<BUISectionTitle Class="@TitleClass">@TitleContent</BUISectionTitle>
 }
 else if (!string.IsNullOrWhiteSpace(Title))
 {
-	<BUISectionTitle>@Title</BUISectionTitle>
+	<BUISectionTitle Class="@TitleClass">@Title</BUISectionTitle>
 }
 <MudPaper Class="@GetClass" Elevation="Elevation">
 	@foreach (RenderFragment paragraph in ParagraphContent)
@@ -25,6 +25,8 @@ else if (!string.IsNullOrWhiteSpace(Title))
 	public int Elevation { get; set; } = 10;
 	[Parameter]
 	public string Title { get; set; } = string.Empty;
+	[Parameter]
+	public string TitleClass { get; set; } = "bui-theme-title";
 	[Parameter]
 	public RenderFragment? TitleContent { get; set; }
 

@@ -585,8 +585,13 @@ pre > code {
 	object-fit: cover;
 }
 
-.bui-side-by-side {
+.bui-side-by-side,
+.bui-maxcontentauto,
+.bui-automaxcontent {
 	display: grid !important;
+	grid-gap: var(--main-padding-size);
+}
+.bui-side-by-side {
 	grid-template-columns: 1fr 1fr;
 	grid-gap: var(--main-padding-size);
 }
@@ -596,7 +601,6 @@ pre > code {
 	}
 
 .bui-maxcontentauto {
-	display: grid !important;
 	grid-template-columns: max-content auto;
 }
 
@@ -604,7 +608,6 @@ pre > code {
 		width: max-content;
 	}
 .bui-automaxcontent {
-	display: grid !important;
 	grid-template-columns: auto max-content;
 }
 

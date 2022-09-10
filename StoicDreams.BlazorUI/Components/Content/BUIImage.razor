@@ -1,6 +1,6 @@
 ﻿
 <BUIPaper Elevation="0" Class="@GetPaperClass" Width="@Width" Height="@Height" MinWidth="@MinWidth" MinHeight="@MinHeight" MaxHeight="@MaxHeight" MaxWidth="@MaxWidth" Style="@Style">
-	<img src="@Src" alt="@Alt" class="@GetImageClass" />
+	<img src="@Src" alt="@Alt" class="@GetImageClass" height="@ImageHeight" width="@ImageWidth" />
 </BUIPaper>
 
 @code {
@@ -26,6 +26,10 @@
 	public string MaxHeight { get; set; } = string.Empty;
 	[Parameter]
 	public string Style { get; set; } = string.Empty;
+	[Parameter]
+	public string ImageWidth { get; set; } = string.Empty;
+	[Parameter]
+	public string ImageHeight { get; set; } = string.Empty;
 
 	private string GetPaperClass => $"bui-image {PaperClass}".Trim();
 	private string GetImageClass => ImageClass;

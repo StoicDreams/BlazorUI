@@ -10,6 +10,7 @@ public static class AppSettings
 		options.Domain = "StoicDreams.com";
 		options.AppType = AppTypes.Website;
 		options.CssFiles.Add("css/app.css");
+		options.HeadElements.Add(ElementDetail.Create("link", ("rel", "icon"), ("href", "Logo.svg"), ("sizes", "any"), ("type","image/svg+xml")));
 		options.HeadElements.Add(ElementDetail.Create("link", ("rel", "manifest"), ("href", "app.webmanifest")));
 		options.HeadElements.Add(ElementDetail.Create("link", ("rel", "apple-touch-icon"), ("sizes", "512x512"), ("href", "icon-512.png")));
 		options.HeadElements.Add(ElementDetail.Create("link", ("rel", "apple-touch-icon"), ("sizes", "192x192"), ("href", "icon-192.png")));

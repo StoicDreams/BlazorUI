@@ -570,6 +570,14 @@ pre > code {
 .bui-paper {
 	width: calc((var(--main-padding-size) * 2) + max-content);
 }
+
+.bui-paper,
+.mud-paper,
+.bui-paper.mud-paper {
+	color: inherit;
+	background-color: inherit;
+}
+
 .clear-after {
 	content: " ";
 	display: block;

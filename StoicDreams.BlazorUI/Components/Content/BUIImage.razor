@@ -1,6 +1,13 @@
 ﻿
 <BUIPaper Elevation="0" Class="@GetPaperClass" Width="@Width" Height="@Height" MinWidth="@MinWidth" MinHeight="@MinHeight" MaxHeight="@MaxHeight" MaxWidth="@MaxWidth" Style="@Style">
-	<img src="@Src" alt="@Alt" class="@GetImageClass" height="@ImageHeight" width="@ImageWidth" />
+	@if (Src.StartsWith("<svg"))
+	{
+		@GetImageAsMarkup
+	}
+	else
+	{
+		<img src="@Src" alt="@Alt" class="@GetImageClass" height="@ImageHeight" width="@ImageWidth" />
+	}
 </BUIPaper>
 
 @code {
@@ -30,6 +37,8 @@
 	public string ImageWidth { get; set; } = string.Empty;
 	[Parameter]
 	public string ImageHeight { get; set; } = string.Empty;
+
+	private MarkupString GetImageAsMarkup => new MarkupString(Src);
 
 	private string GetPaperClass => $"bui-image {PaperClass}".Trim();
 	private string GetImageClass => ImageClass;

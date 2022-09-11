@@ -31,12 +31,13 @@
 	}
 </BUIStandardSection>
 
-<CodeView File="Pages/Home.razor" />
+<PageCodeView File="Pages/Home.razor" />
 
 @code {
 	protected override Task OnInitializedAsync()
 	{
 		Title = "Welcome";
+		ContinueButton = ("/getting-started", "Getting Started with Blazor UI");
 		return base.OnInitializedAsync();
 	}
 

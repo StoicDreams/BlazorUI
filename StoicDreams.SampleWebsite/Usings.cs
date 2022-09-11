@@ -1,6 +1,7 @@
 ﻿global using Microsoft.AspNetCore.Components;
 global using MudBlazor;
 global using StoicDreams.BlazorUI.Auth;
+global using StoicDreams.BlazorUI.Classes;
 global using StoicDreams.BlazorUI.Components;
 global using StoicDreams.BlazorUI.Components.Base;
 global using StoicDreams.BlazorUI.Constants;

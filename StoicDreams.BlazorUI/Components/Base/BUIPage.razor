@@ -3,10 +3,12 @@
 @code {
 	protected string Title { set => SetAppState(AppStateDataTags.PageTitle, value); }
 	protected string PageKey { get; set; } = string.Empty;
+	protected LinkInfo ContinueButton { get; set; } = new();
 
 	protected override async Task OnInitializedAsync()
 	{
 		PageKey = GetAppState<string>(AppStateDataTags.CurrentPage, () => string.Empty);
+		SetAppState(AppStateDataTags.ContinueButton, ContinueButton);
 		SetAppStateWithTrigger(AppStateDataTags.IsLoadingPage, false);
 		await base.OnInitializedAsync();
 	}

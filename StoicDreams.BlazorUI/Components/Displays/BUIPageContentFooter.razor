@@ -1,0 +1,11 @@
+﻿@inherits BUICore
+
+@if (ShowContinueButton)
+{
+	<BUIContinueButton Href="@ContinueLinkInfo.Href" To="@ContinueLinkInfo.Detail" />
+}
+
+@code {
+	private LinkInfo ContinueLinkInfo => GetAppState<LinkInfo>(AppStateDataTags.ContinueButton, () => new());
+	private bool ShowContinueButton => !string.IsNullOrWhiteSpace(ContinueLinkInfo.Href);
+}

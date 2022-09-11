@@ -6,6 +6,7 @@
 	<ErrorBoundary @ref="ErrorFragment" Context="error">
 		<ChildContent>
 			@Body
+			<BUIPageContentFooter />
 		</ChildContent>
 		<ErrorContent>
 			<DynamicComponent Type="ErrorPage" Parameters="GetErrorPageParameters(error)" />

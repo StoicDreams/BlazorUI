@@ -1,0 +1,18 @@
+﻿
+<BUIStandardSection Class="@PaperClass" Elevation="0">
+	<MudButton Variant="@Variant" Color="@Color" Size="@Size" EndIcon="@Icon" Href="@Href">@Prefix @To</MudButton>
+</BUIStandardSection>
+
+@code {
+	[Parameter]
+	public string Href { get; set; } = string.Empty;
+	[Parameter]
+	public string To { get; set; } = string.Empty;
+
+	public static Variant Variant { get; set; } = Variant.Filled;
+	public static Color Color { get; set; } = Color.Info;
+	public static Size Size { get; set; } = Size.Large;
+	public static string Icon { get; set; } = Icons.Material.TwoTone.Forward;
+	public static string Prefix { get; set; } = "Continue to";
+	public static string PaperClass { get; set; } = $"{Flex.RowCenterCenter} mt-3 pa-4";
+}

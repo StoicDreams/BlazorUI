@@ -1,6 +1,6 @@
 ﻿namespace StoicDreams.BlazorUI.Data;
 
-public class WebStorage : IWebStorage
+public sealed class WebStorage : IWebStorage
 {
 	public WebStorage(
 		IJsonConvert jsonConvert,

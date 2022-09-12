@@ -1,6 +1,6 @@
 ﻿namespace StoicDreams.BlazorUI.Data;
 
-public class AppOptions : IAppOptions
+public sealed class AppOptions : IAppOptions
 {
 	public string AppName { get; set; } = string.Empty;
 	public string CompanyName { get; set; } = string.Empty;

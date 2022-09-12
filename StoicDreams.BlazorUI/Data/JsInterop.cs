@@ -1,6 +1,6 @@
 ﻿namespace StoicDreams.BlazorUI;
 
-public class JsInterop : IJsInterop, IAsyncDisposable
+public sealed class JsInterop : IJsInterop, IAsyncDisposable
 {
 	public const string InteropFilePath = "./sd-blazorui-interop.1.0.6.js";
 	public JsInterop(IJSRuntime jsRuntime)

@@ -1,0 +1,45 @@
+﻿@if (ImagePosition == PositionLR.Left)
+{
+	<BUISideBySide Elevation="@BUIStyles.ElevationStandard" Class="@Class" LeftClass="@ImageContentClass" RightClass="@ContentClass"
+				   Title="@Title">
+		<LeftContent>
+			<BUIImagePadded Image="@Image" Alt="@Alt" />
+		</LeftContent>
+		<RightContent>
+			@ChildContent
+		</RightContent>
+	</BUISideBySide>
+}
+else
+{
+	<BUISideBySide Elevation="@BUIStyles.ElevationStandard" Class="@Class" LeftClass="@ContentClass" RightClass="@ImageContentClass"
+				   Title="@Title">
+		<LeftContent>
+			@ChildContent
+		</LeftContent>
+		<RightContent>
+			<BUIImagePadded Image="@Image" Alt="@Alt" />
+		</RightContent>
+	</BUISideBySide>
+}
+
+@code {
+	[Parameter]
+	public string Image { get; set; } = null!;
+	[Parameter]
+	public string Alt { get; set; } = string.Empty;
+	[Parameter]
+	public string Title { get; set; } = string.Empty;
+	[Parameter]
+	public int Elevation { get; set; } = BUIStyles.ElevationStandard;
+	[Parameter]
+	public PositionLR ImagePosition { get; set; } = PositionLR.Left;
+	[Parameter]
+	public RenderFragment? ChildContent { get; set; }
+	[Parameter]
+	public string Class { get; set; } = BUIStyles.ClassStandardSection;
+	[Parameter]
+	public string ImageContentClass { get; set; } = Flex.ColumnCenterCenter;
+	[Parameter]
+	public string ContentClass { get; set; } = Flex.ColumnLeftCenter;
+}

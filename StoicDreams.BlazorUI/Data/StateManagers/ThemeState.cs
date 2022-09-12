@@ -1,6 +1,6 @@
 ﻿namespace StoicDreams.BlazorUI.Data;
 
-public class ThemeState : StateManager, IThemeState
+public sealed class ThemeState : StateManager, IThemeState
 {
 	public ThemeState(IMemoryStorage memory) : base(memory)
 	{

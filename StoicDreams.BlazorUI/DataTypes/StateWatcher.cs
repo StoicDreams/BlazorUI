@@ -1,6 +1,6 @@
 ﻿namespace StoicDreams.BlazorUI.DataTypes;
 
-internal class StateWatcher : IDisposable
+internal sealed class StateWatcher : IDisposable
 {
 	public TValue WatchState<TValue>(AppStateDataTags key, TValue value) => WatchState(key.ToString(), value);
 	public TValue WatchState<TValue>(string key, TValue value)

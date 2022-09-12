@@ -1,6 +1,6 @@
 ﻿namespace StoicDreams.BlazorUI.Data;
 
-public class PageState : IPageState
+public sealed class PageState : IPageState
 {
 	public PageState(IServiceProvider serviceProvider)
 	{

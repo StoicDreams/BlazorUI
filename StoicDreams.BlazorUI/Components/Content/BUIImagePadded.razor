@@ -1,0 +1,21 @@
+﻿
+<BUIPaper Elevation="0" MinHeight="@PaperMinHeight" Height="@PaperHeight" Class="@Flex.ColumnCenterCenter">
+	<BUIPaper Elevation="0" MinHeight="@ImageHeight" Class="@Flex.ColumnCenterCenter">
+		<BUIImage Src="@Image" Alt="@GetAlt" Height="@ImageHeight" />
+	</BUIPaper>
+</BUIPaper>
+
+@code {
+	[Parameter]
+	public string Image { get; set; } = string.Empty;
+	[Parameter]
+	public string Alt { get; set; } = string.Empty;
+	[Parameter]
+	public string PaperMinHeight { get; set; } = "900px";
+	[Parameter]
+	public string PaperHeight { get; set; } = "100%";
+	[Parameter]
+	public string ImageHeight { get; set; } = "500px";
+
+	private string GetAlt => Alt.PascalToSpaced();
+}

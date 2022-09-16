@@ -30,11 +30,15 @@ else
 			{
 				path = path.GetParentFolder().Replace('\\', '/');
 			}
-			if (map.TryGetValue(path, out NavDetail? nav) && !Auth.IsRole(nav.Roles))
+			if (!map.TryGetValue(path, out NavDetail? nav))
 			{
-				return false;
+				return true;
 			}
-			return true;
+			if (Auth.IsRole(nav.Roles))
+			{
+				return true;
+			}
+			return false;
 		}
 	}
 

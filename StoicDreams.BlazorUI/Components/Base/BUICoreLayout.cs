@@ -10,6 +10,7 @@ public abstract class BUICoreLayout : LayoutComponentBase, IDisposable
 	[Inject] public IStorage Storage { get; private set; } = null!;
 	[Inject] public NavigationManager NavManager { get; private set; } = null!;
 	[Inject] public IClientAuth Auth { get; private set; } = null!;
+	[Inject] public IDialogService DialogService { get; private set; } = null!;
 
 	protected AppOptions HiddenOptions => (AppOptions)AppOptions;
 
@@ -29,6 +30,21 @@ public abstract class BUICoreLayout : LayoutComponentBase, IDisposable
 	/// Get the current page path (excluding any extra query data).
 	/// </summary>
 	protected string GetCurrentPage => GetAppState<string>(AppStateDataTags.CurrentPage, () => string.Empty);
+
+	protected void OpenFeedback(string title = "Feedback")
+	{
+		Type? feedbackComponent = GetAppState<Type>(AppStateDataTags.FeedbackComponent);
+		if (feedbackComponent == null)
+		{
+			Snackbar.Add("Unable to load feedback dialog.", Severity.Error);
+			return;
+		}
+		DialogOptions options = new()
+		{
+			FullWidth = true
+		};
+		DialogService.Show(feedbackComponent, title, options);
+	}
 
 	public async ValueTask AppStateCallback()
 	{

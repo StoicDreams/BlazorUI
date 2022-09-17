@@ -1,0 +1,33 @@
+﻿@inject IDialogService Dialog
+@inject ISnackbar Snackbar
+@inject IAppState AppState
+
+<BUIClickableText Class="@Class" OnClick="OpenFeedback" Title="@GetTitle">
+	@ChildContent
+</BUIClickableText>
+
+@code {
+	[Parameter]
+	public RenderFragment? ChildContent { get; set; }
+	[Parameter]
+	public string Title { get; set; } = "Feedback";
+	[Parameter]
+	public string Class { get; set; } = string.Empty;
+
+	private string GetTitle => $"Open {Title} Dialog";
+
+	protected void OpenFeedback()
+	{
+		Type? feedbackComponent = AppState.GetData<Type>(AppStateDataTags.FeedbackComponent);
+		if (feedbackComponent == null)
+		{
+			Snackbar.Add($"Unable to load service for {Title} dialog.", Severity.Error);
+			return;
+		}
+		DialogOptions options = new()
+		{
+			FullWidth = true
+		};
+		Dialog.Show(feedbackComponent, Title, options);
+	}
+}

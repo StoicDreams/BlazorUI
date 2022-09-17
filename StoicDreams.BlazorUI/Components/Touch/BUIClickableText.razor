@@ -1,11 +1,13 @@
 ﻿
-<a @onclick="OnClick" @attributes="GetAttributes">@ChildContent</a>
+<a class="@Class" @onclick="OnClick" @attributes="GetAttributes">@ChildContent</a>
 
 @code {
 	[Parameter]
 	public RenderFragment? ChildContent { get; set; }
 	[Parameter]
 	public EventCallback OnClick { get; set; }
+	[Parameter]
+	public string Class { get; set; } = string.Empty;
 	[Parameter]
 	public string Title { get; set; } = string.Empty;
 

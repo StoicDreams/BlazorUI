@@ -46,8 +46,11 @@
 	[Parameter]
 	public Variant Variant { get; set; } = Variant.Outlined;
 
+	private char EmptyFiller = '\0';
+
 	private bool FlipState { get; set; }
 	private string InternalValue { get; set; } = string.Empty;
+	private string GetInternValueForPreview => InternalValue.Replace("````", $"`..`");
 	private MudField? MudFieldRef { get; set; }
 	private ElementReference? TextareaRef { get; set; }
 	private string FieldId => MudFieldRef?.FieldId ?? string.Empty;
@@ -55,9 +58,9 @@
 
 	private int MessageLines { get; set; } = 1;
 	private string GetMarkdown => $@"
-```{CodeFormat}
-{InternalValue}
-```
+````{CodeFormat}
+{GetInternValueForPreview}
+````
 ".Trim();
 
 	protected override Task OnInitializedAsync()

@@ -657,3 +657,14 @@ pre > code {
 		bottom: 0;
 	}
 
+.char-count {
+	position: absolute;
+	z-index: 10;
+	top: auto;
+	right: 15px;
+	bottom: -9px;
+	left: auto;
+	font-size: 0.75rem;
+	background: var(--mud-palette-background);
+	padding: 0 4px;
+}

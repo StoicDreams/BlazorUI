@@ -1,17 +1,21 @@
 ﻿@inject IMarkdown Markdown
 
-<MudField @ref="MudFieldRef" Label="@Label" HelperText="@HelperText" Class="@Class" Variant="Variant">
+<MudField @ref="MudFieldRef" Label="@Label" HelperText="@HelperText" Class="@Class" Variant="Variant" Error="InErrorState" ErrorText="@ErrorMessage">
 	<div class="formatted-textarea" style="@GetStyles">
 		@Markdown.GetMarkup(GetMarkdown)
 		@if (FlipState)
 		{
-			<textarea @ref="TextareaRef" id="@FieldId" @oninput="ValueInput" placeholder="@Placeholder">@InternalValue</textarea>
+			<textarea @ref="TextareaRef" id="@FieldId" @oninput="ValueInput" @onblur="ValidateInput" placeholder="@Placeholder">@InternalValue</textarea>
 		}
 		else
 		{
-			<textarea @ref="TextareaRef" id="@FieldId" @oninput="ValueInput" placeholder="@Placeholder">@InternalValue</textarea>
+			<textarea @ref="TextareaRef" id="@FieldId" @oninput="ValueInput" @onblur="ValidateInput" placeholder="@Placeholder">@InternalValue</textarea>
 		}
 	</div>
+	@if (ShowCharacterCount)
+	{
+		<div class="char-count">@CharacterCountDisplay</div>
+	}
 </MudField>
 
 @code {
@@ -25,6 +29,8 @@
 	public string Placeholder { get; set; } = string.Empty;
 	[Parameter]
 	public string Label { get; set; } = string.Empty;
+	[Parameter]
+	public bool ShowCharacterCount { get; set; } = true;
 	[Parameter]
 	public string Value
 	{
@@ -45,6 +51,8 @@
 	public string CodeFormat { get; set; } = string.Empty;
 	[Parameter]
 	public Variant Variant { get; set; } = Variant.Outlined;
+	[Parameter]
+	public Func<string, TResult>? Validation { get; set; }
 
 	private bool FlipState { get; set; }
 	private string InternalValue { get; set; } = string.Empty;
@@ -53,6 +61,9 @@
 	private ElementReference? TextareaRef { get; set; }
 	private string FieldId => MudFieldRef?.FieldId ?? string.Empty;
 	private string GetStyles => $"min-height: {MinHeight}px";
+	private string CharacterCountDisplay => $"Character Count: {InternalValue.Count():N0}";
+	private bool InErrorState { get; set; } = false;
+	private string ErrorMessage { get; set; } = string.Empty;
 
 	private int MessageLines { get; set; } = 1;
 	private string GetMarkdown => $@"
@@ -69,6 +80,15 @@
 	private async Task ValueInput(ChangeEventArgs args)
 	{
 		InternalValue = args.Value?.ToString() ?? string.Empty;
+		ValidateInput();
 		await ValueChanged.InvokeAsync(InternalValue);
+	}
+
+	private void ValidateInput()
+	{
+		if (Validation == null) return;
+		TResult tResult = Validation(InternalValue);
+		InErrorState = !tResult.IsOkay;
+		ErrorMessage = tResult.Message;
 	}
 }

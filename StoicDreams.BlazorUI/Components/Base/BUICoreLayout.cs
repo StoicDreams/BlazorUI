@@ -88,8 +88,8 @@ public abstract class BUICoreLayout : LayoutComponentBase, IDisposable
 
 	#region App State Helpers
 	protected TValue? GetAppState<TValue>(AppStateDataTags key) => AppStateWatcher.WatchState(key, AppState.GetData<TValue>(key));
-	protected TValue GetAppState<TValue>(AppStateDataTags key, Func<TValue> getDefaultValue) => AppStateWatcher.WatchState(key, AppState.GetData<TValue>(key) ?? getDefaultValue.Invoke());
-	protected TValue GetAppState<TValue>(string key, Func<TValue> getDefaultValue) => AppStateWatcher.WatchState(key, AppState.GetDataAsync<TValue>(key).GetAwaiter().GetResult() ?? getDefaultValue.Invoke());
+	protected TValue GetAppState<TValue>(AppStateDataTags key, Func<TValue> getDefaultValue) => GetAppState(key.AsName(), getDefaultValue);
+	protected TValue GetAppState<TValue>(string key, Func<TValue> getDefaultValue) => AppStateWatcher.WatchState(key, AppState.ContainsState(key).GetAwaiter().GetResult() ? AppState.GetDataAsync<TValue>(key).GetAwaiter().GetResult() ?? getDefaultValue.Invoke() : getDefaultValue.Invoke());
 	protected void SetAppState<TValue>(AppStateDataTags key, TValue? value) => AppState.SetData(key, value);
 	protected void SetAppStateWithTrigger<TValue>(AppStateDataTags key, TValue? value)
 	{

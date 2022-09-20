@@ -61,16 +61,24 @@
 </MudLayout>
 
 @code {
-	private bool LeftDrawerOpen { get => GetAppState<bool>(AppStateDataTags.TitleBarLeftDrawerOpen); set => SetAppStateWithTrigger<bool>(AppStateDataTags.TitleBarLeftDrawerOpen, value); }
-	private bool RightDrawerOpen { get => GetAppState<bool>(AppStateDataTags.TitleBarRightDrawerOpen); set => SetAppStateWithTrigger<bool>(AppStateDataTags.TitleBarRightDrawerOpen, value); }
-	private DrawerVariant LeftDrawerVariant { get => GetAppState<DrawerVariant>(AppStateDataTags.AppLeftDrawerVariant); set => SetAppStateWithTrigger<DrawerVariant>(AppStateDataTags.AppLeftDrawerVariant, value); }
-	private DrawerVariant RightDrawerVariant { get => GetAppState<DrawerVariant>(AppStateDataTags.AppRightDrawerVariant); set => SetAppStateWithTrigger<DrawerVariant>(AppStateDataTags.AppRightDrawerVariant, value); }
+	private bool LeftDrawerOpen { get => GetAppState<bool>(AppStateDataTags.TitleBarLeftDrawerOpen); set => SetDrawerState(AppStateDataTags.TitleBarLeftDrawerOpen, value); }
+	private bool RightDrawerOpen { get => GetAppState<bool>(AppStateDataTags.TitleBarRightDrawerOpen); set => SetDrawerState(AppStateDataTags.TitleBarRightDrawerOpen, value); }
+	private DrawerVariant LeftDrawerVariant { get => GetAppState<DrawerVariant>(AppStateDataTags.AppLeftDrawerVariant, () => HiddenOptions.LeftDrawerVariant); set => SetAppStateWithTrigger<DrawerVariant>(AppStateDataTags.AppLeftDrawerVariant, value); }
+	private DrawerVariant RightDrawerVariant { get => GetAppState<DrawerVariant>(AppStateDataTags.AppRightDrawerVariant, () => HiddenOptions.RightDrawerVariant); set => SetAppStateWithTrigger<DrawerVariant>(AppStateDataTags.AppRightDrawerVariant, value); }
 	private Type? LeftDrawerContent => GetAppState<Type?>(AppStateDataTags.LeftDrawerContent);
 	private Type? RightDrawerContent => GetAppState<Type?>(AppStateDataTags.RightDrawerContent);
 	private Type Footer => HiddenOptions.Footer;
 
+	private void SetDrawerState(AppStateDataTags tag, bool value)
+	{
+		SetSessionState(tag.AsName(), value);
+		SetAppStateWithTrigger(tag, value);
+	}
+
 	protected override async Task OnInitializedAsync()
 	{
+		await LoadStateFromSession<DrawerVariant>(AppStateDataTags.AppLeftDrawerVariant);
+		await LoadStateFromSession<DrawerVariant>(AppStateDataTags.AppRightDrawerVariant);
 		await base.OnInitializedAsync();
 	}
 }

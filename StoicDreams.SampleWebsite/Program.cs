@@ -5,6 +5,6 @@ WebAssemblyHostBuilder builder = WebAssemblyHostBuilder.CreateDefault(args);
 builder.RootComponents.Add<BUIApp>("#app");
 builder.RootComponents.Add<HeadOutlet>("head::after");
 
-builder.Services.AddStoicDreamsBlazorUI(AppSettings.ApplyAppSettings);
+builder.Services.WebStartup();
 
 await builder.Build().RunAsync();

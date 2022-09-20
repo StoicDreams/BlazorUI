@@ -4,7 +4,6 @@ public class AppState : StateManager, IAppState
 {
 	public AppState(IMemoryStorage memory, IAppOptions options) : base(memory)
 	{
-		_ = ApplyStartupOptionsToState(options);
 	}
 
 	public ValueTask SetDataAsync<TData>(AppStateDataTags tag, TData? data) => SetDataAsync(tag.ToString(), data);
@@ -34,11 +33,5 @@ public class AppState : StateManager, IAppState
 			foreach (AppStateDataTags tag in tags) { UpdatedKey(tag.ToString()); }
 		});
 		return ValueTask.CompletedTask;
-	}
-
-	private async ValueTask ApplyStartupOptionsToState(IAppOptions options)
-	{
-		await SetDataAsync(AppStateDataTags.AppLeftDrawerVariant.ToString(), options.LeftDrawerVariant);
-		await SetDataAsync(AppStateDataTags.AppRightDrawerVariant.ToString(), options.RightDrawerVariant);
 	}
 }

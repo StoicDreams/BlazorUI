@@ -2,6 +2,12 @@
 
 public static class AppSettings
 {
+	public static IServiceCollection WebStartup(this IServiceCollection services)
+	{
+		services.AddStoicDreamsBlazorUI(ApplyAppSettings);
+		return services;
+	}
+
 	public static void ApplyAppSettings(IAppOptions options)
 	{
 		options.AppName = "Blazor UI";

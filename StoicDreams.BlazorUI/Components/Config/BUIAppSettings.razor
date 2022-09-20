@@ -47,6 +47,15 @@
 	</MudSelect>
 </BUIDrawerPaper>
 
+<BUIDrawerPaper>
+	<MudSelect Label="Nav Menu Display" @bind-Value="@NavMenuDisplay">
+		<MudSelectItem Value="@DrawerVariant.Temporary">Hidden</MudSelectItem>
+		<MudSelectItem Value="@DrawerVariant.Mini">Mini</MudSelectItem>
+		<MudSelectItem Value="@DrawerVariant.Responsive">Responsive</MudSelectItem>
+		<MudSelectItem Value="@DrawerVariant.Persistent">Persistent</MudSelectItem>
+	</MudSelect>
+</BUIDrawerPaper>
+
 @if (TryGetSubContent(out Type? subComponent))
 {
 	<DynamicComponent Type="subComponent" />
@@ -63,6 +72,7 @@
 	private bool DenseTitlebar { get => GetAppState<bool>(AppStateDataTags.TitleBarIsDense, () => false); set => SetAppSessionWithTrigger(AppStateDataTags.TitleBarIsDense, value); }
 	private bool ShowBreadcrumb { get => GetAppState<bool>(AppStateDataTags.BreadcrumbEnabled, () => false); set => SetAppSessionWithTrigger(AppStateDataTags.BreadcrumbEnabled, value); }
 	private Color NavActiveColor { get => GetAppState<Color>(AppStateDataTags.NavMenuActiveColor, () => Color.Default); set => SetAppSessionWithTrigger(AppStateDataTags.NavMenuActiveColor, value); }
+	private DrawerVariant NavMenuDisplay { get => GetAppState<DrawerVariant>(AppStateDataTags.AppLeftDrawerVariant, () => HiddenOptions.LeftDrawerVariant); set => SetAppSessionWithTrigger(AppStateDataTags.AppLeftDrawerVariant, value); }
 	private static readonly string FrameworkVersion = TrimVersion(typeof(BUIApp).Assembly.GetName()?.Version?.ToString() ?? "");
 
 	private static string TrimVersion(string version)
@@ -78,6 +88,7 @@
 	{
 		ThemeState.SubscribeToDataChanges(ComponentId, HandleThemesUpdate);
 		LoadedThemes = ThemeState.Themes;
+		DrawerVariant test = GetAppState<DrawerVariant>(AppStateDataTags.AppLeftDrawerVariant, () => HiddenOptions.LeftDrawerVariant);
 		await base.OnInitializedAsync();
 	}
 

@@ -8,6 +8,7 @@
 		<IsPackable>false</IsPackable>
 
 		<RootNamespace>StoicDreams.BlazorUI</RootNamespace>
+		<LangVersion>Preview</LangVersion>
 	</PropertyGroup>
 
 	<ItemGroup>

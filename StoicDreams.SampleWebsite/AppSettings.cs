@@ -15,12 +15,6 @@ public static class AppSettings
 		options.CompanyHomeUrl = "https://www.stoicdreams.com";
 		options.Domain = "StoicDreams.com";
 		options.AppType = AppTypes.Website;
-		options.CssFiles.Add("css/app.css");
-		options.HeadElements.Add(ElementDetail.Create("link", ("rel", "icon"), ("href", "Logo.svg"), ("sizes", "any"), ("type","image/svg+xml")));
-		options.HeadElements.Add(ElementDetail.Create("link", ("rel", "manifest"), ("href", "app.webmanifest")));
-		options.HeadElements.Add(ElementDetail.Create("link", ("rel", "apple-touch-icon"), ("sizes", "512x512"), ("href", "icon-512.png")));
-		options.HeadElements.Add(ElementDetail.Create("link", ("rel", "apple-touch-icon"), ("sizes", "192x192"), ("href", "icon-192.png")));
-		options.BodyElements.Add(ElementDetail.Create("script", ("body", "navigator.serviceWorker.register('service-worker.js');"), ("type", "text/javascript")));
 		options.TitleBarPosition = TitleBarPosition.Top;
 		options.LeftDrawerVariant = DrawerVariant.Mini;
 		options.ApplyOnStartup<AppStartup>();

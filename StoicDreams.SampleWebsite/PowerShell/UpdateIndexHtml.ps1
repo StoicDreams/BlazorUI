@@ -12,6 +12,8 @@ $tags = @(
 		Content = @"
 	<title>$title</title>
 
+	<meta name="robots" content="index, follow" />
+
 	<meta name="author" content="$author" />
 	<meta name="company" content="Stoic Dreams" />
 	<meta name="description" content="$description" />

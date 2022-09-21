@@ -110,13 +110,14 @@ stages:
           command: 'build'
           arguments: '--configuration $(buildConfiguration)'
           projects: '**/*SampleWebsite.csproj'
-      - task: PowerShell@2
-        inputs:
-          filePath: 'PowerShell\UpdateIndexHtml.ps1'
       - task: CmdLine@2
         displayName: 'Publish Sample Website'
         inputs:
           script: 'C:\hostedtoolcache\windows\dotnet\dotnet.exe publish $(System.DefaultWorkingDirectory)/StoicDreams.SampleWebsite/StoicDreams.SampleWebsite.csproj --configuration $(buildConfiguration) --no-restore --no-build --self-contained true /p:LinkDuringPublish=false'
+      - task: PowerShell@2
+        displayName: 'Update Index.html file'
+        inputs:
+          filePath: 'StoicDreams.SampleWebsite\PowerShell\UpdateIndexHtml.ps1'
       - task: PublishBuildArtifacts@1
         displayName: 'Transfer published files to Artifact container'
         inputs:

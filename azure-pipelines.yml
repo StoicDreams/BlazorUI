@@ -110,6 +110,9 @@ stages:
           command: 'build'
           arguments: '--configuration $(buildConfiguration)'
           projects: '**/*SampleWebsite.csproj'
+      - task: PowerShell@2
+        inputs:
+          filePath: 'PowerShell\UpdateIndexHtml.ps1'
       - task: CmdLine@2
         displayName: 'Publish Sample Website'
         inputs:

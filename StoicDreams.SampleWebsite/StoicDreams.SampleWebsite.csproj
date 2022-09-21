@@ -1,11 +1,11 @@
-<Project Sdk="Microsoft.NET.Sdk.BlazorWebAssembly">
+﻿<Project Sdk="Microsoft.NET.Sdk.BlazorWebAssembly">
 
 	<PropertyGroup>
 		<TargetFramework>net6.0</TargetFramework>
 		<Nullable>enable</Nullable>
 		<ImplicitUsings>enable</ImplicitUsings>
 		<ServiceWorkerAssetsManifest>service-worker-assets.js</ServiceWorkerAssetsManifest>
-		<BlazorWebAssemblyEnableLinking>false</BlazorWebAssemblyEnableLinking>
+		<BlazorWebAssemblyEnableLinking>true</BlazorWebAssemblyEnableLinking>
 		<LangVersion>Preview</LangVersion>
 	</PropertyGroup>
 
@@ -20,7 +20,7 @@
 		<BlazorWebAssemblyLazyLoad Include="Microsoft.CodeAnalysis.resources.dll" />
 		<BlazorWebAssemblyLazyLoad Include="Microsoft.CodeAnalysis.Razor.dll" />
 	</ItemGroup>
-
+	
 	<Choose>
 		<When Condition="'$(Configuration)' == 'Debug'">
 			<ItemGroup>
@@ -30,13 +30,19 @@
 		</When>
 		<Otherwise>
 			<ItemGroup>
-				<PackageReference Include="StoicDreams.BlazorUI" Version="1.10.176" />
+				<PackageReference Include="StoicDreams.BlazorUI" Version="1.10.199" />
 			</ItemGroup>
 		</Otherwise>
 	</Choose>
 
 	<ItemGroup>
 		<ServiceWorker Include="wwwroot\service-worker.js" PublishedContent="wwwroot\service-worker.published.js" />
+	</ItemGroup>
+
+	<ItemGroup>
+		<None Update="PowerShell\UpdateIndexHtml.ps1">
+			<CopyToOutputDirectory>Always</CopyToOutputDirectory>
+		</None>
 	</ItemGroup>
 
 	<!--Workaround to allow Intellisense to capture data during development builds to CSS intellisense can identify styles from Nuget packages that include CSS files-->

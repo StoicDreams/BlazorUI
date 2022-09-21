@@ -4,11 +4,19 @@
 			"fileName": "PowerShell.exe",
 			"workingDirectory": ".",
 			"arguments": ".\\PowerShell\\BuildSitemap.ps1"
+		},
+		"PrepLocalDebug": {
+			"fileName": "PowerShell.exe",
+			"workingDirectory": ".",
+			"arguments": ".\\PowerShell\\PrepLocalDebug.ps1"
 		}
 	},
 	"-vs-binding": {
 		"BeforeBuild": [
 			"BuildSitemap"
+		],
+		"AfterBuild": [
+			"PrepLocalDebug"
 		]
 	}
 }

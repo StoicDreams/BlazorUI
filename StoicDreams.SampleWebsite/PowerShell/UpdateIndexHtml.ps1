@@ -1,3 +1,6 @@
+Param (
+	[string] $SearchRoot = ""
+)
 
 $title = "Blazor UI - .Net Blazor Material UI Framework"
 $siteurl = "https://blazorui.stoicdreams.com"
@@ -49,13 +52,13 @@ $tags = @(
 				enableAutoRouteTracking: true,
 				enableAjaxPerfTracking: true,
 				disableFetchTracking: false,
-				enableCorsCorrelation: true,
+				enableCorsCorrelation: false,
 				enableRequestHeaderTracking: true,
 				enableResponseHeaderTracking: true
 			}
 		});
 	</script>
-	
+
 	<script type="text/javascript">
 		navigator.serviceWorker.register('service-worker.js');
 	</script>
@@ -83,9 +86,15 @@ $tags = @(
 	}
 )
 
-Write-Host "Updating index.html - $(Get-Location)"
+Write-Host "Update Index.html:SearchRoot: $SearchRoot"
 
-cd\
+cd $SearchRoot
+
+if ($SearchRoot.Contains('PowerShell')) {
+	cd..
+}
+
+Write-Host "Update Index.html:Searching: $(Get-Location)"
 
 Get-ChildItem -Path .\ -Filter *index.html -Recurse -File | ForEach-Object {
 	$filepath = $_.FullName

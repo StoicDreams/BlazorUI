@@ -1,4 +1,6 @@
-﻿namespace StoicDreams.BlazorUI.DataTypes;
+﻿using System.Text.Json.Serialization;
+
+namespace StoicDreams.BlazorUI.DataTypes;
 
 public record ThemeConfig
 {
@@ -61,6 +63,7 @@ public record ThemeConfig
 		return new Guid(bytes);
 	}
 
+	[JsonIgnore]
 	/// <summary>
 	/// Return a new instance of this theme config with values copied
 	/// </summary>

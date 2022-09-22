@@ -118,6 +118,10 @@ stages:
         displayName: 'Update Index.html file'
         inputs:
           filePath: 'StoicDreams.SampleWebsite\PowerShell\UpdateIndexHtml.ps1'
+      - task: PowerShell@2
+        displayName: 'Fix Service Worker Assets'
+        inputs:
+          filePath: 'StoicDreams.SampleWebsite\PowerShell\FixServiceWorkerAssets.ps1'
       - task: PublishBuildArtifacts@1
         displayName: 'Transfer published files to Artifact container'
         inputs:

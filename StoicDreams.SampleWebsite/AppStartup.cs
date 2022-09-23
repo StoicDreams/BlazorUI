@@ -36,7 +36,8 @@ public class AppStartup : BUICore
 				DrawerBackground = "#ebe6daff",
 				Black = "#282828ff",
 				Warning = "#e86202ff",
-				Secondary = "#bf0f49ff"
+				Secondary = "#bf0f49ff",
+				Tertiary = "#1b8d76ff"
 			}
 		}); ;
 

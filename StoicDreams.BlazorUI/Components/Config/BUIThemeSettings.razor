@@ -17,29 +17,29 @@
 			</MudItem>
 		}
 	</MudGrid>
-	<MudPaper Class="d-flex justify-center flex-wrap ma-4 gap-4">
+	<MudPaper Class="d-flex justify-center flex-wrap ma-4 gap-4" Elevation="0">
 		@foreach (Color color in ThemeColors)
 		{
-			<MudPaper Class="d-flex flex-column">
+			<MudPaper Class="d-flex flex-column" Elevation="0">
 				<MudButton Color="color" Variant="Variant.Filled">@color Filled</MudButton>
 				<MudButton Color="color" Variant="Variant.Text">@color Text</MudButton>
 				<MudButton Color="color" Variant="Variant.Outlined">@color Outline</MudButton>
 			</MudPaper>
 		}
 	</MudPaper>
-	<MudPaper Class="d-flex flex-column flex-wrap ma-4 gap-4">
+	<MudPaper Class="d-flex flex-column flex-wrap ma-4 gap-4" Elevation="0">
 		@foreach (Color color in ThemeColors)
 		{
-			<MudPaper Class="d-flex flex-row align-center">
+			<MudPaper Class="d-flex flex-row align-center" Elevation="0">
 				<MudText Typo="Typo.caption" Class="ma-2">@color</MudText>
 				<BUIProgressBar Color="color" />
 			</MudPaper>
 		}
 	</MudPaper>
-	<MudPaper Class="d-flex justify-center flex-wrap ma-4 gap-4">
+	<MudPaper Class="d-flex justify-center flex-wrap ma-4 gap-4" Elevation="0">
 		@foreach (Color color in ThemeColors)
 		{
-			<MudPaper Class="d-flex flex-column">
+			<MudPaper Class="d-flex flex-column justify-center align-center" Elevation="0">
 				<MudText Typo="Typo.caption">@color</MudText>
 				<MudProgressCircular Color="color" Size="Size.Medium" Indeterminate="true" />
 			</MudPaper>

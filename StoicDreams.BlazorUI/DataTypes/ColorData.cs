@@ -82,7 +82,7 @@ public class ColorData
 		}
 	}
 
-	private int ShiftAmount = 10;
+	private int ShiftAmount = 50;
 
 	private bool IsDarkColor { get; set; }
 	private void SetIsDarkColor()

@@ -1,7 +1,9 @@
 ﻿@inherits BUICore
 
-<BUIPaper PaperType="PaperTypes.FlexRow" Class="bui-footer justify-center align-center mud-theme-dark" Elevation="0" Squared="true">
+<BUIPaper PaperType="PaperTypes.FlexRow" Class="bui-footer justify-center align-center mud-theme-dark gap-1 pr-5" Elevation="0" Squared="true">
+	<MudSpacer />
 	<MudIcon Icon="@Icons.Material.Rounded.Copyright" Color="Color.Inherit" Class="mr-1" />
+	<span> @(DateTime.UtcNow.Year) by </span>
 	@if (string.IsNullOrWhiteSpace(AppOptions.CompanyHomeUrl))
 	{
 		@AppOptions.CompanyName
@@ -12,7 +14,9 @@
 			@AppOptions.CompanyName
 		</BUILink>
 	}
-	<BUIPaper PaperType="PaperTypes.None" Elevation="0" Class="ml-1 mr-1 mud-theme-transparent"> - Powered by </BUIPaper>
+	<span> All rights reserved</span>
+	<MudSpacer />
+	<BUIPaper PaperType="PaperTypes.None" Elevation="0" Class="mud-theme-transparent">Powered by</BUIPaper>
 	<BUILink Href="https://blazorui.stoicdreams.com">Blazor UI</BUILink>
 </BUIPaper>
 

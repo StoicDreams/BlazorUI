@@ -8,9 +8,10 @@
 @code {
 	private ThemeConfig Config => ThemeState.Current;
 	private List<ThemeConfig> ConfigList => ThemeState.Themes;
-
+	private AppDimensionInfo AppDimInfo { get; set; } = new();
 	protected override async Task OnInitializedAsync()
 	{
+		ApplyWindowDimensions = ApplyWindowDimensionsHandler;
 		ThemeState.SetupDefaultThemes();
 		await ApplyDefaultTheme();
 		ThemeState.SubscribeToDataChanges(ComponentId, HandleChange);
@@ -20,7 +21,23 @@
 	public override void Dispose()
 	{
 		ThemeState.UnsubscribeToDataChanges(ComponentId);
+		ApplyWindowDimensions = null;
 		base.Dispose();
+	}
+
+	private static Func<AppDimensionInfo, ValueTask>? ApplyWindowDimensions { get; set; }
+
+	private async ValueTask ApplyWindowDimensionsHandler(AppDimensionInfo dimInfo)
+	{
+		AppDimInfo = dimInfo;
+		await InvokeAsync(StateHasChanged);
+	}
+
+	[JSInvokable]
+	public static async Task UpdateWindowDimensions(AppDimensionInfo dimInfo)
+	{
+		if (ApplyWindowDimensions == null) return;
+		await ApplyWindowDimensions(dimInfo);
 	}
 
 	private bool IsFirstChange { get; set; } = true;
@@ -63,12 +80,23 @@
 		return theme != null;
 	}
 
+	private string GetDimFromValue(int value)
+	{
+		if (value <= 0) return "100%";
+		return $"{value}px";
+	}
+
 	private MarkupString GetStyles => new($@"
 <style type=""text/css"">
 	:root {{
 		--htag-font-size: 1.5rem;
 		--nav-transition-in: 300ms;
 		--nav-transition-out: 300ms;
+		--window-width: {GetDimFromValue(AppDimInfo.WindowWidth)};
+		--window-height: {GetDimFromValue(AppDimInfo.WindowHeight)};
+		--main-width: {GetDimFromValue(AppDimInfo.MainWidth)};
+		--main-height: {GetDimFromValue(AppDimInfo.MainHeight)};
+
 		--mud-palette-black: {Config.Black};
 		--mud-palette-white: {Config.White};
 		--mud-palette-primary: {Config.Primary};
@@ -148,7 +176,6 @@
 		--mud-palette-grey-darker: #616161;
 		--mud-palette-overlay-dark: rgba(33,33,33,0.4980392156862745);
 		--mud-palette-overlay-light: rgba(255,255,255,0.4980392156862745);
-
 
 		--mud-elevation-0: none;
 		--mud-elevation-1: 0px 2px 1px -1px rgba(0,0,0,0.2),0px 1px 1px 0px rgba(0,0,0,0.14),0px 1px 3px 0px rgba(0,0,0,0.12);

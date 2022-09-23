@@ -44,4 +44,14 @@
 		}
 		InitializeMermaid();
 	})();
+	function ApplyWindowDimensionInformation() {
+		let main = document.querySelector('main');
+		if (!main) {
+			setTimeout(ApplyWindowDimensionInformation, 100);
+			return;
+		}
+		DotNet.invokeMethodAsync('StoicDreams.BlazorUI', 'UpdateWindowDimensions', { WindowHeight: document.body.clientHeight, WindowWidth: document.body.clientWidth, MainHeight: main.clientHeight, MainWidth: main.clientWidth });
+	}
+	window.onresize = ApplyWindowDimensionInformation;
+	window.addEventListener('resize', ApplyWindowDimensionInformation);
 })();

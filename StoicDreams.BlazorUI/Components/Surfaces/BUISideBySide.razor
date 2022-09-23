@@ -6,7 +6,7 @@ else if (!string.IsNullOrWhiteSpace(Title))
 {
 	<BUISectionTitle Class="@TitleClass">@Title</BUISectionTitle>
 }
-<BUIPaper Class="@GetClass" Elevation="Elevation">
+<BUIPaper Class="@GetClass" Elevation="Elevation" Style="@Style">
 	<BUIPaper Class="@LeftClass" Elevation="LeftElevation">
 		@LeftContent
 	</BUIPaper>
@@ -30,6 +30,8 @@ else if (!string.IsNullOrWhiteSpace(Title))
 	public SideBySideTypes Type { get; set; }
 	[Parameter]
 	public string Class { get; set; } = string.Empty;
+	[Parameter]
+	public string Style { get; set; } = string.Empty;
 	[Parameter]
 	public string LeftClass { get; set; } = string.Empty;
 	[Parameter]

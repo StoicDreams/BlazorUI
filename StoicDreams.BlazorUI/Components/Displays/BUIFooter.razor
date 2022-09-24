@@ -2,22 +2,26 @@
 
 <BUIPaper PaperType="PaperTypes.FlexRow" Class="bui-footer justify-center align-center mud-theme-dark gap-1 pr-5" Elevation="0" Squared="true">
 	<MudSpacer />
-	<MudIcon Icon="@Icons.Material.Rounded.Copyright" Color="Color.Inherit" Class="mr-1" />
-	<span> @(DateTime.UtcNow.Year) by </span>
-	@if (string.IsNullOrWhiteSpace(AppOptions.CompanyHomeUrl))
-	{
-		@AppOptions.CompanyName
-	}
-	else
-	{
-		<BUILink Href="@AppOptions.CompanyHomeUrl">
+	<span>
+		<MudIcon Icon="@Icons.Material.Rounded.Copyright" Color="Color.Inherit" Class="mr-1" />
+		<span> @(DateTime.UtcNow.Year) by </span>
+		@if (string.IsNullOrWhiteSpace(AppOptions.CompanyHomeUrl))
+		{
 			@AppOptions.CompanyName
-		</BUILink>
-	}
-	<span> All rights reserved</span>
+		}
+		else
+		{
+			<BUILink Href="@AppOptions.CompanyHomeUrl">
+				@AppOptions.CompanyName
+			</BUILink>
+		}
+		<span> All rights reserved</span>
+	</span>
 	<MudSpacer />
-	<BUIPaper PaperType="PaperTypes.None" Elevation="0" Class="mud-theme-transparent">Powered by</BUIPaper>
-	<BUILink Href="https://blazorui.stoicdreams.com">Blazor UI</BUILink>
+	<span>
+		<span>Powered by</span>
+		<BUILink Href="https://blazorui.stoicdreams.com">Blazor UI</BUILink>
+	</span>
 </BUIPaper>
 
 @code {

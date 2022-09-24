@@ -651,7 +651,10 @@ pre > code {
 }
 
 	.bui-paper.bui-footer * {
-		font-size: 0.9em!important;
+		font-size: 0.85em!important;
+	}
+	.bui-paper.bui-footer > span:last-child * {
+		font-size: 0.75em !important;
 	}
 	.bui-paper.bui-footer:first-child {
 		top: 0;

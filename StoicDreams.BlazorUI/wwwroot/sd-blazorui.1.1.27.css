@@ -651,10 +651,15 @@ pre > code {
 }
 
 	.bui-paper.bui-footer * {
-		font-size: 0.85em!important;
+		font-size: 9pt!important;
+		vertical-align: middle;
 	}
-	.bui-paper.bui-footer > span:last-child * {
-		font-size: 0.75em !important;
+	.bui-paper.bui-footer a {
+		font-size: 1.1em!important;
+	}
+	.bui-paper.bui-footer > span:last-child *:not(a) {
+		font-size: 7pt!important;
+		vertical-align: text-top;
 	}
 	.bui-paper.bui-footer:first-child {
 		top: 0;

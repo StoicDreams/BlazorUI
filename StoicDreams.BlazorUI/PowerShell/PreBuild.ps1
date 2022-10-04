@@ -45,7 +45,7 @@ function CheckIfAnyFilesUpdated {
 		$diff = $_.LastWriteTime - $lastupdate
 		# Need to account for small milliseconds discrepency not saved to file
 		if ($diff.TotalSeconds -lt 1) { return; }
-		Write-Host “File Name: ” + $_.FullName + "; Updated: " + $_.LastWriteTime
+		Write-Host 'File Name: ' + $_.FullName + "; Updated: " + $_.LastWriteTime
 		if ($_.LastWriteTime -gt $currentUpdate) {
 			$currentUpdate = $_.LastWriteTime
 		}

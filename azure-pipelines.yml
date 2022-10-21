@@ -6,6 +6,9 @@
 trigger:
 - main
 
+variables:
+  webAppName: 'StoicDreams.SampleWebsite'
+
 stages:
 - stage: Alpha
   jobs:
@@ -113,18 +116,51 @@ stages:
       - task: CmdLine@2
         displayName: 'Publish Sample Website'
         inputs:
-          script: 'C:\hostedtoolcache\windows\dotnet\dotnet.exe publish $(System.DefaultWorkingDirectory)/StoicDreams.SampleWebsite/StoicDreams.SampleWebsite.csproj --configuration $(buildConfiguration) --no-restore --no-build --self-contained true /p:LinkDuringPublish=false'
+          script: 'C:\hostedtoolcache\windows\dotnet\dotnet.exe publish $(System.DefaultWorkingDirectory)/$(webAppName)/$(webAppName).csproj --configuration $(buildConfiguration) --no-restore --no-build --self-contained true /p:LinkDuringPublish=false'
       - task: PowerShell@2
         displayName: 'Update Index.html file'
         inputs:
-          filePath: 'StoicDreams.SampleWebsite\PowerShell\UpdateIndexHtml.ps1'
+          filePath: '$(webAppName)\PowerShell\UpdateIndexHtml.ps1'
       - task: PowerShell@2
         displayName: 'Fix Service Worker Assets'
         inputs:
-          filePath: 'StoicDreams.SampleWebsite\PowerShell\FixServiceWorkerAssets.ps1'
-      - task: PublishBuildArtifacts@1
-        displayName: 'Transfer published files to Artifact container'
+          filePath: '$(webAppName)\PowerShell\FixServiceWorkerAssets.ps1'
+      - task: AzureCLI@2
+        displayName: 'Remove Old Files'
         inputs:
-          PathtoPublish: 'StoicDreams.SampleWebsite'
-          ArtifactName: 'drop'
-          publishLocation: 'Container'
+          azureSubscription: '$(azureSubscription)'
+          scriptType: pscore
+          scriptLocation: inlineScript
+          inlineScript: 'az storage blob delete-batch -s ''$web'' --account-name $(accountName)'
+      - task: AzureFileCopy@2
+        displayName: 'Copy Files to Azure Blob Storage'
+        inputs:
+          SourcePath: '$(System.DefaultWorkingDirectory)/$(webAppName)/bin/Release/net6.0/publish/wwwroot'
+          azureSubscription: $(azureConnection)
+          Destination: AzureBlob
+          storage: $(accountName)
+          ContainerName: '$web'
+      - task: AzureCLI@2
+        displayName: 'Set Correct Content-Type Attributes'
+        inputs:
+          azureSubscription: '$(azureSubscription)'
+          scriptType: pscore
+          scriptLocation: inlineScript
+          inlineScript: |
+            $myloc = "$((Get-Location).ProviderPath)\$(webAppName)\bin\Release\net6.0\publish\wwwroot"
+            Get-ChildItem "$(webAppName)\bin\Release\net6.0\publish\wwwroot" -Filter "*.wasm" -Recurse -Force | ForEach-Object {
+                $rel_Path = $_.FullName.Replace($myloc, "").Replace("\","/")
+                if ($rel_Path[0] -eq '/') {
+                    $rel_Path = $rel_Path.Substring(1)
+                }
+                Write-Host "Updating Blob File: $($rel_Path)"
+                az storage blob update -c '$web' -n $rel_Path --account-name $(accountName) --content-type application/wasm
+            }
+      - task: AzureCLI@2
+        displayName: 'Purge Storage Cache'
+        inputs:
+          azureSubscription: $(azureConnection)
+          scriptType: pscore
+          scriptLocation: inlineScript
+          inlineScript: 'az cdn endpoint purge -g $(resourceGroup) -n $(accountName) --profile-name $(profileName) --content-paths ''/*'''
+

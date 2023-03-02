@@ -10,13 +10,5 @@
 			"workingDirectory": ".",
 			"arguments": ".\\PowerShell\\PostBuild.ps1"
 		}
-	},
-	"-vs-binding": {
-		"BeforeBuild": [
-			"PreBuildPS1"
-		],
-		"AfterBuild": [
-			"PostBuildPS1"
-		]
 	}
 }

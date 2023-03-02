@@ -1,7 +1,7 @@
 <Project Sdk="Microsoft.NET.Sdk.Razor">
 
 	<PropertyGroup>
-		<TargetFramework>net6.0</TargetFramework>
+		<TargetFramework>net7.0</TargetFramework>
 		<ImplicitUsings>enable</ImplicitUsings>
 		<Nullable>enable</Nullable>
 
@@ -12,7 +12,7 @@
 		<Description>
 			UI Framework and component library for Blazor based Websites and Maui projects.
 		</Description>
-		<Version>1.11.19</Version>
+		<Version>1.12.2</Version>
 		<Copyright>2022 Stoic Dreams</Copyright>
 		<PackageProjectUrl>https://www.stoicdreams.com</PackageProjectUrl>
 		<PackageLicenseExpression></PackageLicenseExpression>
@@ -46,12 +46,12 @@
 	</ItemGroup>
 
 	<ItemGroup>
-		<PackageReference Include="StoicDreams.Core" Version="1.1.9" />
+		<PackageReference Include="StoicDreams.Core" Version="1.1.15" />
 		<PackageReference Include="BlazorTransitionableRoute" Version="4.0.0" />
-		<PackageReference Include="Markdig" Version="0.30.3" />
-		<PackageReference Include="Microsoft.AspNetCore.Components.Web" Version="6.0.9" />
-		<PackageReference Include="MudBlazor" Version="6.0.15" />
-		<PackageReference Include="Microsoft.CodeAnalysis.Razor" Version="6.0.9" />
+		<PackageReference Include="Markdig" Version="0.31.0" />
+		<PackageReference Include="Microsoft.AspNetCore.Components.Web" Version="7.0.3" />
+		<PackageReference Include="MudBlazor" Version="6.1.9" />
+		<PackageReference Include="Microsoft.CodeAnalysis.Razor" Version="6.0.14" />
 	</ItemGroup>
 	
 	<ItemGroup>

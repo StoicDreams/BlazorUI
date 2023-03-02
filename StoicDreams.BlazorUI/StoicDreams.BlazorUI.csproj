@@ -12,7 +12,7 @@
 		<Description>
 			UI Framework and component library for Blazor based Websites and Maui projects.
 		</Description>
-		<Version>1.12.2</Version>
+		<Version>1.12.3</Version>
 		<Copyright>2022 Stoic Dreams</Copyright>
 		<PackageProjectUrl>https://www.stoicdreams.com</PackageProjectUrl>
 		<PackageLicenseExpression></PackageLicenseExpression>
@@ -21,7 +21,7 @@
 		<OutputPath>bin</OutputPath>
 		<OutputType>Library</OutputType>
 		<PackageReleaseNotes>Development Release</PackageReleaseNotes>
-		<PackageOutputPath>..\..\NugetPackages</PackageOutputPath>
+		<PackageOutputPath>..\..\..\NuGet</PackageOutputPath>
 		<PackOnBuild>true</PackOnBuild>
 		<Platform>AnyCPU</Platform>
 		<PublishReadyToRun>True</PublishReadyToRun>
@@ -53,7 +53,7 @@
 		<PackageReference Include="MudBlazor" Version="6.1.9" />
 		<PackageReference Include="Microsoft.CodeAnalysis.Razor" Version="6.0.14" />
 	</ItemGroup>
-	
+
 	<ItemGroup>
 		<Folder Include="PowerShell\" />
 	</ItemGroup>

@@ -15,7 +15,7 @@ stages:
   - job: BlazorUI
     displayName: 'Build and Publish Blazor UI Framework'
     pool:
-      vmImage: 'windows-latest'
+      vmImage: 'ubuntu-latest'
     variables:
       buildConfiguration: 'Release'
     steps:
@@ -91,7 +91,7 @@ stages:
     - DelayToAllowNugetTimeToPublish
     condition: succeeded()
     pool:
-      vmImage: 'windows-latest'
+      vmImage: 'ubuntu-latest'
     variables:
       buildConfiguration: 'Release'
     steps:

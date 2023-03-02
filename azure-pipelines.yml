@@ -135,7 +135,7 @@ stages:
       - task: AzureFileCopy@2
         displayName: 'Copy Files to Azure Blob Storage'
         inputs:
-          SourcePath: '$(System.DefaultWorkingDirectory)/$(webAppName)/bin/Release/net6.0/publish/wwwroot'
+          SourcePath: '$(System.DefaultWorkingDirectory)/$(webAppName)/bin/Release/net7.0/publish/wwwroot'
           azureSubscription: $(azureConnection)
           Destination: AzureBlob
           storage: $(accountName)
@@ -147,8 +147,8 @@ stages:
           scriptType: pscore
           scriptLocation: inlineScript
           inlineScript: |
-            $myloc = "$((Get-Location).ProviderPath)\$(webAppName)\bin\Release\net6.0\publish\wwwroot"
-            Get-ChildItem "$(webAppName)\bin\Release\net6.0\publish\wwwroot" -Filter "*.wasm" -Recurse -Force | ForEach-Object {
+            $myloc = "$((Get-Location).ProviderPath)\$(webAppName)\bin\Release\net7.0\publish\wwwroot"
+            Get-ChildItem "$(webAppName)\bin\Release\net7.0\publish\wwwroot" -Filter "*.wasm" -Recurse -Force | ForEach-Object {
                 $rel_Path = $_.FullName.Replace($myloc, "").Replace("\","/")
                 if ($rel_Path[0] -eq '/') {
                     $rel_Path = $rel_Path.Substring(1)

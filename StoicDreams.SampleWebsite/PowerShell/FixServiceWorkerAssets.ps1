@@ -1,5 +1,5 @@
 ﻿
-cd StoicDreams.SampleWebsite\bin\Release\net6.0\publish\wwwroot
+cd StoicDreams.SampleWebsite\bin\Release\net7.0\publish\wwwroot
 
 # make sure you're in the wwwroot folder of the published application
 $JsFileContent = Get-Content -Path service-worker-assets.js -Raw

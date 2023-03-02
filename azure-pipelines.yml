@@ -27,7 +27,7 @@ stages:
         displayName: 'Load the SDK'
         inputs:
           packageType: 'sdk'
-          version: '6.x'
+          version: '7.x'
           includePreviewVersions: true
       - task: DotNetCoreCLI@2
         displayName: 'Restore nuget packages'
@@ -99,7 +99,7 @@ stages:
         displayName: 'Set .NET SDK Version'
         inputs:
           packageType: 'sdk'
-          version: '6.x'
+          version: '7.x'
           includePreviewVersions: true
       - task: DotNetCoreCLI@2
         displayName: 'Restore Nuget Dependencies'

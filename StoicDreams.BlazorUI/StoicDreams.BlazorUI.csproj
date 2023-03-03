@@ -21,7 +21,7 @@
 		<OutputPath>bin</OutputPath>
 		<OutputType>Library</OutputType>
 		<PackageReleaseNotes>Development Release</PackageReleaseNotes>
-		<PackageOutputPath>..\..\..\NuGet</PackageOutputPath>
+		<PackageOutputPath>..\..\NugetPackages</PackageOutputPath>
 		<PackOnBuild>true</PackOnBuild>
 		<Platform>AnyCPU</Platform>
 		<PublishReadyToRun>True</PublishReadyToRun>

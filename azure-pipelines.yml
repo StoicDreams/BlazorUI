@@ -138,7 +138,7 @@ stages:
           azureSubscription: $(azureConnection)
           Destination: AzureBlob
           storage: $(accountName)
-          ContainerName: 'web'
+          ContainerName: '$web'
       - task: AzureCLI@2
         displayName: 'Set Correct Content-Type Attributes'
         inputs:

@@ -65,7 +65,7 @@ stages:
         displayName: 'Push package to nuget store'
         inputs:
           targetType: inline
-          script: dotnet nuget push --api-key ${env:NUGETAPIKEY} --skip-duplicate --source $(env:NUGETSOURCE) '$(Agent.BuildDirectory)\NugetPackages\StoicDreams.BlazorUI.*.nupkg' > nugetpush.txt; echo $(cat nugetpush.txt)
+          script: dotnet nuget push --api-key $(NUGETAPIKEY) --skip-duplicate --source $(NUGETSOURCE) '$(Agent.BuildDirectory)\NugetPackages\StoicDreams.BlazorUI.*.nupkg' > nugetpush.txt; echo $(cat nugetpush.txt)
       - task: PowerShell@2
         displayName: 'Echo version number.'
         inputs:

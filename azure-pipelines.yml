@@ -81,7 +81,7 @@ stages:
     steps:
     - task: Delay@1
       inputs:
-        delayForMinutes: '5'
+        delayForMinutes: $(NUGETDELAY)
 
 
   - job: BlazorUIWebsite

@@ -61,12 +61,12 @@ stages:
         inputs:
           codeCoverageTool: "Cobertura"
           summaryFileLocation: "$(Build.SourcesDirectory)/coverlet/reports/Cobertura.xml"
-      - task: Bash@3
+      - task: PowerShell@2
         displayName: 'Push package to nuget store'
         inputs:
           targetType: inline
           script: dotnet nuget push --api-key $(NugetApiKey) --skip-duplicate --source $(NugetSource) '$(Agent.BuildDirectory)\NugetPackages\StoicDreams.BlazorUI.*.nupkg' > nugetpush.txt; echo $(cat nugetpush.txt)
-      - task: Bash@3
+      - task: PowerShell@2
         displayName: 'Echo version number.'
         inputs:
           targetType: inline

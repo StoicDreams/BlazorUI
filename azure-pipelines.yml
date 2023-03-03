@@ -111,7 +111,7 @@ stages:
           command: 'build'
           arguments: '--configuration $(buildConfiguration)'
           projects: '**/*SampleWebsite.csproj'
-      - task: CmdLine@2
+      - task: PowerShell@2
         displayName: 'Publish Sample Website'
         inputs:
           script: 'C:\hostedtoolcache\windows\dotnet\dotnet.exe publish $(System.DefaultWorkingDirectory)/$(webAppName)/$(webAppName).csproj --configuration $(buildConfiguration) --no-restore --no-build --self-contained true /p:LinkDuringPublish=false'

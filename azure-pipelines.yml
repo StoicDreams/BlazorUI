@@ -114,7 +114,8 @@ stages:
       - task: PowerShell@2
         displayName: 'Publish Sample Website'
         inputs:
-          script: 'C:\hostedtoolcache\windows\dotnet\dotnet.exe publish $(System.DefaultWorkingDirectory)/$(webAppName)/$(webAppName).csproj --configuration $(buildConfiguration) --no-restore --no-build --self-contained true /p:LinkDuringPublish=false'
+          targetType: inline
+          script: 'dotnet publish $(System.DefaultWorkingDirectory)/$(webAppName)/$(webAppName).csproj --configuration $(buildConfiguration) --no-restore --no-build --self-contained true /p:LinkDuringPublish=false'
       - task: PowerShell@2
         displayName: 'Update Index.html file'
         inputs:

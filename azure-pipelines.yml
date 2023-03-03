@@ -131,15 +131,15 @@ stages:
           scriptType: pscore
           scriptLocation: inlineScript
           inlineScript: 'az storage blob delete-batch -s ''$web'' --account-name $(accountName)'
-      - task: AzureFileCopy@4
+      task: AzureCLI@2
         displayName: 'Copy Files to Azure Blob Storage'
         inputs:
-          SourcePath: '$(System.DefaultWorkingDirectory)/$(webAppName)/bin/Release/net7.0/publish/wwwroot'
-          azureSubscription: $(azureConnection)
-          Destination: AzureBlob
-          storage: $(accountName)
-          ContainerName: 'web'
-          BlobPrefix: '$'
+          azureSubscription: {azureConnection}
+          scriptType: ps
+          scriptLocation: inlineScript
+          inlineScript: |
+            $Container = '$web'
+            az storage copy -s '$(System.DefaultWorkingDirectory)/$(webAppName)/bin/Release/net7.0/publish/wwwroot' --destination-account-name {accountName} --destination-container $Container --recursive
       - task: AzureCLI@2
         displayName: 'Set Correct Content-Type Attributes'
         inputs:

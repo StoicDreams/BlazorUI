@@ -70,7 +70,7 @@ stages:
         displayName: 'Echo version number.'
         inputs:
           targetType: inline
-          script: pushResult=$(cat nugetpush.txt); re=".*StoicDreams\.BlazorUI\.([0-9\.]+)\.nupkg.*";if [[ $pushResult =~ $re ]]; then echo ${BASH_REMATCH[1]}; fi
+          script: (cat nugetpush.txt | Out-String) -match ".*StoicDreams\.BlazorUI\.(?<version>[0-9\.]+)\.nupkg.*" | Out-Null ; Write-Host $Matches.version;
 
   - job: DelayToAllowNugetTimeToPublish
     displayName: 'Give Nuget.org time to process publishing'

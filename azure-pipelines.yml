@@ -134,7 +134,7 @@ stages:
       - task: AzureCLI@2
         displayName: 'Copy Files to Azure Blob Storage'
         inputs:
-          azureSubscription: {azureConnection}
+          azureSubscription: {azureSubscription}
           scriptType: ps
           scriptLocation: inlineScript
           inlineScript: |

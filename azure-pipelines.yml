@@ -52,7 +52,7 @@ stages:
           arguments: '--configuration $(buildConfiguration) --no-restore --collect: "XPlat Code Coverage"'
           publishTestResults: true,
           nobuild: true
-      - script: "dotnet tool install --global dotnet-reportgenerator-globaltool"
+      - script: "dotnet tool update --global dotnet-reportgenerator-globaltool"
         displayName: "Install ReportGenerator tool"
       - script: 'reportgenerator -reports:**/coverage.cobertura.xml -targetdir:$(Build.SourcesDirectory)/coverlet/reports -reporttypes:"Cobertura"'
         displayName: "Create reports"

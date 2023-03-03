@@ -131,7 +131,7 @@ stages:
           scriptType: pscore
           scriptLocation: inlineScript
           inlineScript: 'az storage blob delete-batch -s ''$web'' --account-name $(accountName)'
-      task: AzureCLI@2
+      - task: AzureCLI@2
         displayName: 'Copy Files to Azure Blob Storage'
         inputs:
           azureSubscription: {azureConnection}

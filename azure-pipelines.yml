@@ -139,7 +139,7 @@ stages:
           scriptLocation: inlineScript
           inlineScript: |
             $Container = '$web'
-            az storage copy -s '$(System.DefaultWorkingDirectory)/$(webAppName)/bin/Release/net7.0/publish/wwwroot' --destination-account-name {accountName} --destination-container $Container --recursive
+            az storage copy -s '$(System.DefaultWorkingDirectory)/$(webAppName)/bin/Release/net7.0/publish/wwwroot' --destination-account-name $(accountName) --destination-container $Container --recursive
       - task: AzureCLI@2
         displayName: 'Set Correct Content-Type Attributes'
         inputs:

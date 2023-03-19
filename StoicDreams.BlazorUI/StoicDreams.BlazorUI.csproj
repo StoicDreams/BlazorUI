@@ -12,7 +12,7 @@
 		<Description>
 			UI Framework and component library for Blazor based Websites and Maui projects.
 		</Description>
-		<Version>1.12.6</Version>
+		<Version>1.12.7</Version>
 		<Copyright>2022-2023 Stoic Dreams</Copyright>
 		<PackageProjectUrl>https://www.stoicdreams.com</PackageProjectUrl>
 		<PackageLicenseExpression></PackageLicenseExpression>
@@ -49,9 +49,9 @@
 		<PackageReference Include="StoicDreams.Core" Version="1.2.2" />
 		<PackageReference Include="BlazorTransitionableRoute" Version="4.0.0" />
 		<PackageReference Include="Markdig" Version="0.31.0" />
-		<PackageReference Include="Microsoft.AspNetCore.Components.Web" Version="7.0.3" />
-		<PackageReference Include="MudBlazor" Version="6.1.9" />
-		<PackageReference Include="Microsoft.CodeAnalysis.Razor" Version="6.0.14" />
+		<PackageReference Include="Microsoft.AspNetCore.Components.Web" Version="7.0.4" />
+		<PackageReference Include="MudBlazor" Version="6.2.0" />
+		<PackageReference Include="Microsoft.CodeAnalysis.Razor" Version="6.0.15" />
 	</ItemGroup>
 
 	<ItemGroup>

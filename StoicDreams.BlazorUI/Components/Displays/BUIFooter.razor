@@ -4,7 +4,7 @@
 	<MudSpacer />
 	<span>
 		<MudIcon Icon="@Icons.Material.Rounded.Copyright" Color="Color.Inherit" Class="" />
-		<span> @(DateTime.UtcNow.Year) by </span>
+		<span> @CopyrightYears by </span>
 		@if (string.IsNullOrWhiteSpace(AppOptions.CompanyHomeUrl))
 		{
 			@AppOptions.CompanyName
@@ -25,5 +25,6 @@
 </BUIPaper>
 
 @code {
-
+	private short CurrentYear => Convert.ToInt16(DateTime.UtcNow.Year);
+	private MarkupString CopyrightYears => new MarkupString($"{(AppOptions.CopyrightStart < CurrentYear ? $"{AppOptions.CopyrightStart}-{CurrentYear}" : AppOptions.CopyrightStart.ToString())}");
 }

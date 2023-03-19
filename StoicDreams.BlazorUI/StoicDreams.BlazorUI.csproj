@@ -12,8 +12,8 @@
 		<Description>
 			UI Framework and component library for Blazor based Websites and Maui projects.
 		</Description>
-		<Version>1.12.5</Version>
-		<Copyright>2022 Stoic Dreams</Copyright>
+		<Version>1.12.6</Version>
+		<Copyright>2022-2023 Stoic Dreams</Copyright>
 		<PackageProjectUrl>https://www.stoicdreams.com</PackageProjectUrl>
 		<PackageLicenseExpression></PackageLicenseExpression>
 		<PackageLicenseFile>LICENSE.txt</PackageLicenseFile>

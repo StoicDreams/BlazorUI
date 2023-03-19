@@ -29,6 +29,11 @@ public interface IAppOptions
 	string Domain { get; set; }
 
 	/// <summary>
+	/// Start of copyright year for user displays.
+	/// </summary>
+	short CopyrightStart { get; set; }
+
+	/// <summary>
 	/// Set if this app is a website or application (mobile, desktop, etc).
 	/// </summary>
 	AppTypes AppType { get; set; }

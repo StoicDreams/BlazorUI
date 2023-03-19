@@ -5,6 +5,9 @@
 
 UI Framework and component library for Blazor based Websites and Maui projects.
 
+> ## **Notice:** This project is on hold indefinitely!
+> I do not expect much continuing work, if any, to be done on Blazor UI at this point, as we have switched our interests to Rust-language projects, including our new [WebUI](https://webui.stoicdreams.com) framework built in Rust that we are using to convert our Blazor-built websites to Rust-built websites.
+
 > ## **Notice:** This project is very early in development!
 > This project should technically have all the functionality to build a complete website, but at this stage there is a lot of experimental work being done and breaking changes could be introduced with each update.
 

@@ -6,6 +6,7 @@ public sealed class AppOptions : IAppOptions
 	public string CompanyName { get; set; } = string.Empty;
 	public string CompanyHomeUrl { get; set; } = string.Empty;
 	public string Domain { get; set; } = string.Empty;
+	public short CopyrightStart { get; set; } = Convert.ToInt16(DateTime.UtcNow.Year);
 	public AppTypes AppType { get; set; }
 
 	#region Startup Options

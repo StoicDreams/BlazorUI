@@ -15,6 +15,7 @@ public static class AppSettings
 		options.CompanyHomeUrl = "https://www.stoicdreams.com";
 		options.Domain = "StoicDreams.com";
 		options.AppType = AppTypes.Website;
+		options.CopyrightStart = 2022;
 		options.TitleBarPosition = TitleBarPosition.Top;
 		options.LeftDrawerVariant = DrawerVariant.Mini;
 		options.ApplyOnStartup<AppStartup>();

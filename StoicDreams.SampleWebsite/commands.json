@@ -9,6 +9,11 @@
 			"fileName": "PowerShell.exe",
 			"workingDirectory": ".",
 			"arguments": ".\\PowerShell\\PrepLocalDebug.ps1"
+		},
+		"CleanLocalDebug": {
+			"fileName": "PowerShell.exe",
+			"workingDirectory": ".",
+			"arguments": ".\\PowerShell\\CleanLocalDebug.ps1"
 		}
 	},
 	"-vs-binding": {

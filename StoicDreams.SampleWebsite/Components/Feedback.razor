@@ -20,7 +20,7 @@
 		if (string.IsNullOrWhiteSpace(sending)) { return; }
 		ShowOverlay = true;
 		InputFeedback feedback = new() { Message = sending };
-		TResult<string> response = await ApiRequest.PostJsonAsync<string, InputFeedback>("https://api.myfi.ws/Feedback", feedback);
+		TResult<string> response = await ApiRequest.PostJsonAsync<string, InputFeedback>("feedback.myfi.ws/api/new", feedback);
 		if (!response.IsOkay)
 		{
 			Snackbar.Add(FirstNotEmpty(response.Result, response.Message, "An unknown error happened sending your feedback."), Severity.Error);
@@ -32,6 +32,6 @@
 
 	private void OnCancel()
 	{
-		
+
 	}
 }

@@ -20,14 +20,14 @@
 		if (string.IsNullOrWhiteSpace(sending)) { return; }
 		ShowOverlay = true;
 		InputFeedback feedback = new() { Message = sending };
-		TResult<string> response = await ApiRequest.PostJsonAsync<string, InputFeedback>("feedback.myfi.ws/api/new", feedback);
+		TResult<string> response = await ApiRequest.PostJsonAsync<string, InputFeedback>("https://feedback.myfi.ws/api/new", feedback);
 		if (!response.IsOkay)
 		{
-			Snackbar.Add(FirstNotEmpty(response.Result, response.Message, "An unknown error happened sending your feedback."), Severity.Error);
+			Snackbar.Add(FirstNotEmpty(response.Result?.CleanMessage(), response.Message.CleanMessage(), "An unknown error happened sending your feedback."), Severity.Error);
 			return;
 		}
 		ShowOverlay = false;
-		Snackbar.Add(FirstNotEmpty(response.Result, response.Message, "Feedback successfully sent"), Severity.Success);
+		Snackbar.Add(FirstNotEmpty(response.Result?.CleanMessage(), response.Message.CleanMessage(), "Feedback successfully sent"), Severity.Success);
 	}
 
 	private void OnCancel()

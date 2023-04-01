@@ -1,11 +1,4 @@
-﻿using StoicDreams.BlazorUI.Components.Layouts;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace StoicDreams.BlazorUI.Components.Surfaces;
+﻿namespace StoicDreams.BlazorUI.Components.Surfaces;
 
 public class BUIDrawerPaperTests : TestFrameworkBlazor
 {

@@ -62,6 +62,6 @@ public interface IJsInterop
 	ValueTask AddElementToHead(string tag, IDictionary<string, string> attributes);
 
 	ValueTask AddElementToBody(string tag, IDictionary<string, string> attributes);
-	
+
 	ValueTask UpdateTitle(string title);
 }

@@ -73,7 +73,7 @@ public class NavDetail
 		IEnumerable<NavDetail> subNav
 		)
 	{
-		NavDetail instance =  new()
+		NavDetail instance = new()
 		{
 			Name = name,
 			Icon = icon,

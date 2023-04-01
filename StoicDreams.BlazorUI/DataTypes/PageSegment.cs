@@ -1,6 +1,6 @@
 ﻿namespace StoicDreams.BlazorUI.DataTypes;
 
-public class PageSegment 
+public class PageSegment
 {
 	/// <summary>
 	/// Content type of this segment

@@ -78,7 +78,7 @@ public class ColorData
 			red = Math.Max(0, red - ShiftAmount);
 			green = Math.Max(0, green - ShiftAmount);
 			blue = Math.Max(0, blue - ShiftAmount);
-			return $"#{red.ToBaseEncode(16, 1)}{green.ToBaseEncode(16,1)}{blue.ToBaseEncode(16,1)}ff";
+			return $"#{red.ToBaseEncode(16, 1)}{green.ToBaseEncode(16, 1)}{blue.ToBaseEncode(16, 1)}ff";
 		}
 	}
 
@@ -110,7 +110,7 @@ public class ColorData
 			int red = Convert.ToInt32(HexR, 16);
 			int green = Convert.ToInt32(HexG, 16);
 			int blue = Convert.ToInt32(HexB, 16);
-			RGB = (red,green,blue);
+			RGB = (red, green, blue);
 		}
 		catch (Exception ex)
 		{

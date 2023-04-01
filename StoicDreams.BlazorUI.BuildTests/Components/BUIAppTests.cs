@@ -1,5 +1,4 @@
 ﻿using StoicDreams.BlazorUI;
-using StoicDreams.BlazorUI.Components.Root;
 
 namespace StoicDreams.BlazorUI.Components;
 

@@ -13,7 +13,7 @@ public abstract partial class BUIDynamicContent
 	{
 		PageSegment paragraph = PageSegment.Create<BUIParagraph>();
 		int count = 0;
-		foreach(object item in children)
+		foreach (object item in children)
 		{
 			switch (item)
 			{

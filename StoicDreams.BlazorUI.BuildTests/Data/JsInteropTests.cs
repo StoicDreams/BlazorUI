@@ -76,7 +76,7 @@ public class JsInteropTests : TestFramework
 
 	private (IActions<IJsInterop> actions, Mock<IJSObjectReference> mockJsObjectReference) ArrangeJsInteropTest(Action<Mock<IJSObjectReference>> setupHandler)
 	{
-		Mock<IJSObjectReference> mockJsObjectReference= Mock(setupHandler);
+		Mock<IJSObjectReference> mockJsObjectReference = Mock(setupHandler);
 		IActions<IJsInterop> actions = ArrangeUnitTest<IJsInterop, JsInterop>(options =>
 		{
 			options.GetMock<IJSRuntime>(mock => mock.Setup(m => m.InvokeAsync<IJSObjectReference>("import", new object?[] { JsInterop.InteropFilePath }))

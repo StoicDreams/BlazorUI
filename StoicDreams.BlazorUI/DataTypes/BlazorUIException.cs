@@ -10,6 +10,6 @@ public static class BlazorUIException
 	public static void Throw<TType>(string message) => throw new BlazorUIException<TType>(message);
 
 	public static void ReThrow<TException>(string message, TException innerException)
-		 where TException : Exception 
+		 where TException : Exception
 		=> throw new BlazorUIException<TException>($"{message} {innerException.Message}".Trim(), innerException);
 }

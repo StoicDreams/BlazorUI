@@ -37,7 +37,7 @@ public sealed class PageState : IPageState
 		await state.TriggerChangeAsync(key);
 	}
 
-	
+
 	public async ValueTask ApplyChangesAsync(string page, Func<ValueTask> changeHandler)
 	{
 		IStateManager state = GetState(page);

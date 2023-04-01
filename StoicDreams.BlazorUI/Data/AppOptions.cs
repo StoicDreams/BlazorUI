@@ -56,7 +56,7 @@ public sealed class AppOptions : IAppOptions
 	}
 
 	public Type TitleBarContent { get; set; } = typeof(BUITitleContent);
-	public void SetTitleBarContent<TTitleBar>() 
+	public void SetTitleBarContent<TTitleBar>()
 		where TTitleBar : ComponentBase
 	{
 		TitleBarContent = typeof(TTitleBar);

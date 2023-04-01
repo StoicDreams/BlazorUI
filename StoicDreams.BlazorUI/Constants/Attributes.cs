@@ -1,6 +1,4 @@
-﻿using System.Formats.Asn1;
-
-namespace StoicDreams.BlazorUI.Constants;
+﻿namespace StoicDreams.BlazorUI.Constants;
 
 public static class Attributes
 {
@@ -81,7 +79,7 @@ public static class Attributes
 		where TAttribute : Attribute
 	{
 		MemberInfo[] members = typeof(TClass).GetMembers();
-		foreach(MemberInfo info in members)
+		foreach (MemberInfo info in members)
 		{
 			if (info.Name != fieldName) { continue; }
 			List<TAttribute> results = new();

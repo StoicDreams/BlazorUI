@@ -1,5 +1,4 @@
-﻿using Microsoft.AspNetCore.Components;
-using StoicDreams.BlazorUI;
+﻿using StoicDreams.BlazorUI;
 
 namespace StoicDreams.BlazorUI.Components.Displays;
 

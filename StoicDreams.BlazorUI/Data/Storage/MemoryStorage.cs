@@ -34,7 +34,7 @@ public class MemoryStorage : Dictionary<string, object>, IMemoryStorage
 
 	public ValueTask<TValue?> GetValue<TValue>(string name)
 	{
-		if(base.TryGetValue(name, out object? stored) && stored is TValue result)
+		if (base.TryGetValue(name, out object? stored) && stored is TValue result)
 		{
 			return ValueTask.FromResult<TValue?>(result);
 		}

@@ -1,6 +1,4 @@
-﻿using System.Runtime.InteropServices;
-
-namespace StoicDreams.BlazorUI.DataTypes;
+﻿namespace StoicDreams.BlazorUI.DataTypes;
 
 public class LinkInfo
 {

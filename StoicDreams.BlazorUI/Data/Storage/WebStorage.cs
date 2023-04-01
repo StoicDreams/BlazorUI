@@ -142,11 +142,11 @@ public sealed class WebStorage : IWebStorage
 			return;
 		}
 		string storageContainer = permissions == StoragePermissions.LongTerm ? "localStorage" : "sessionStorage";
-		foreach(string key in StorageCache.Keys)
+		foreach (string key in StorageCache.Keys)
 		{
 			await SetStorageJson(storageContainer, key, StorageCache[key]);
 		}
-		foreach(string key in Memory.Keys)
+		foreach (string key in Memory.Keys)
 		{
 			await SaveStorageItem(storageContainer, key, await Memory.GetValue<object>(key));
 		}

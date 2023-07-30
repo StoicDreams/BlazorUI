@@ -20,11 +20,19 @@
 	<MudSpacer />
 	<span>
 		<span>Powered by</span>
-		<BUILink Href="https://blazorui.stoicdreams.com">Blazor UI</BUILink>
+        <BUILink Href="https://blazorui.stoicdreams.com" Title="@LinkTitle">Blazor UI</BUILink>
 	</span>
 </BUIPaper>
 
 @code {
-	private short CurrentYear => Convert.ToInt16(DateTime.UtcNow.Year);
-	private MarkupString CopyrightYears => new MarkupString($"{(AppOptions.CopyrightStart < CurrentYear ? $"{AppOptions.CopyrightStart}-{CurrentYear}" : AppOptions.CopyrightStart.ToString())}");
+    private short CurrentYear => Convert.ToInt16(DateTime.UtcNow.Year);
+    private MarkupString CopyrightYears => new MarkupString($"{(AppOptions.CopyrightStart < CurrentYear ? $"{AppOptions.CopyrightStart}-{CurrentYear}" : AppOptions.CopyrightStart.ToString())}");
+    private string LinkTitle => $"Blazor UI version {FrameworkVersion}";
+    private static readonly string FrameworkVersion = TrimVersion(typeof(BUIApp).Assembly.GetName()?.Version?.ToString() ?? "");
+    private static string TrimVersion(string version)
+    {
+        string[] segments = version.Split('.');
+        if (segments.Length <= 3) { return version; }
+        return string.Join('.', segments[0..3]);
+    }
 }

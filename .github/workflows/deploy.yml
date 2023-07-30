@@ -26,7 +26,7 @@ jobs:
     - name: Build
       run: dotnet build --no-restore --configuration ${{ env.BUILD_CONFIGURATION }}
     - name: Test
-      run: dotnet test --no-build --verbosity normal
+      run: dotnet test --no-build --verbosity normal --configuration ${{ env.BUILD_CONFIGURATION }}
     - name: Publish
       run: dotnet publish '${{ env.WEB_APP_NAME }}/${{ env.WEB_APP_NAME }}.csproj' --configuration ${{ env.BUILD_CONFIGURATION }} --no-restore --no-build --self-contained true /p:LinkDuringPublish=false
     - name: Azure Login

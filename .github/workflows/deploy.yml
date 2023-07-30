@@ -1,0 +1,54 @@
+name: Build and Publish Blazor UI Framework
+
+on:
+  push:
+    branches:
+    - main
+
+env:
+  AZURE_FUNCTIONAPP_PACKAGE_PATH: '.'
+  ACCOUNT_NAME: blazorui
+  PROFILE_NAME: stoicdreamsprofile
+  WEB_APP_NAME: 'StoicDreams.SampleWebsite'
+  BUILD_CONFIGURATION: 'Release'
+
+jobs:
+  build-and-deploy:
+    runs-on: windows-latest
+    steps:
+    - uses: actions/checkout@v3
+    - name: Setup .NET
+      uses: actions/setup-dotnet@v3
+      with:
+        dotnet-version: 6.0.x
+    - name: Restore dependencies
+      run: dotnet restore
+    - name: Build
+      run: dotnet build --no-restore
+    - name: Test
+      run: dotnet test --no-build --verbosity normal
+    - name: Publish
+      run: dotnet publish '${{ env.WEB_APP_NAME }}/${{ env.WEB_APP_NAME }}.csproj --configuration ${{ env.BUILD_CONFIGURATION }} --no-restore --no-build --self-contained true /p:LinkDuringPublish=false
+    - name: Azure Login
+      uses: azure/login@v1
+      with:
+        creds: ${{ secrets.AZURE_CREDENTIALS }}
+    - name: Remove Old Files
+      uses: azure/CLI@v1
+      with:
+        inlineScript: |
+          az storage blob delete-batch -s '$web' --account-name ${{ env.ACCOUNT_NAME }}
+    - name: Copy Files to Azure Blob Storage
+      uses: azure/CLI@v1
+      with:
+        inlineScript: |
+          az storage copy -s '${{ env.WEB_APP_NAME }}/bin/Release/net7.0/publish/wwwroot/*' --destination-account-name ${{ env.ACCOUNT_NAME }} --destination-container '$web' --recursive
+    - name: Purge Storage Cache
+      uses: azure/CLI@v1
+      with:
+        inlineScript: |
+          az cdn endpoint purge -g ${{ secrets.AZURE_RESOURCE_GROUP }} -n ${{ env.ACCOUNT_NAME }} --profile-name ${{ env.PROFILE_NAME }} --content-paths '/*'
+    - name: logout
+      run: |
+        az logout
+      if: always()

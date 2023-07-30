@@ -28,7 +28,7 @@ jobs:
     - name: Test
       run: dotnet test --no-build --verbosity normal
     - name: Publish
-      run: dotnet publish '${{ env.WEB_APP_NAME }}/${{ env.WEB_APP_NAME }}.csproj --configuration ${{ env.BUILD_CONFIGURATION }} --no-restore --no-build --self-contained true /p:LinkDuringPublish=false
+      run: dotnet publish '${{ env.WEB_APP_NAME }}/${{ env.WEB_APP_NAME }}.csproj' --configuration ${{ env.BUILD_CONFIGURATION }} --no-restore --no-build --self-contained true /p:LinkDuringPublish=false
     - name: Azure Login
       uses: azure/login@v1
       with:

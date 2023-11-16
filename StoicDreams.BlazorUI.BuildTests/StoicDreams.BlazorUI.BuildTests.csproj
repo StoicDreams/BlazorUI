@@ -1,7 +1,7 @@
-﻿<Project Sdk="Microsoft.NET.Sdk">
+<Project Sdk="Microsoft.NET.Sdk">
 
 	<PropertyGroup>
-		<TargetFramework>net7.0</TargetFramework>
+		<TargetFramework>net8.0</TargetFramework>
 		<ImplicitUsings>enable</ImplicitUsings>
 		<Nullable>enable</Nullable>
 
@@ -12,10 +12,10 @@
 	</PropertyGroup>
 
 	<ItemGroup>
-		<PackageReference Include="bunit" Version="1.24.10" />
-		<PackageReference Include="Microsoft.NET.Test.Sdk" Version="17.7.2" />
-		<PackageReference Include="StoicDreams.TestFramework.Blazor" Version="1.5.15" />
-		<PackageReference Include="xunit" Version="2.5.3" />
+		<PackageReference Include="bunit" Version="1.25.3" />
+		<PackageReference Include="Microsoft.NET.Test.Sdk" Version="17.8.0" />
+		<PackageReference Include="StoicDreams.TestFramework.Blazor" Version="1.6.1" />
+		<PackageReference Include="xunit" Version="2.6.1" />
 		<PackageReference Include="xunit.runner.visualstudio" Version="2.5.3">
 			<IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
 			<PrivateAssets>all</PrivateAssets>
@@ -29,7 +29,7 @@
 	<ItemGroup>
 		<ProjectReference Include="..\StoicDreams.BlazorUI\StoicDreams.BlazorUI.csproj" />
 	</ItemGroup>
-	
+
 	<ItemGroup>
 		<AssemblyAttribute Include="System.Diagnostics.CodeAnalysis.ExcludeFromCodeCoverageAttribute" />
 	</ItemGroup>

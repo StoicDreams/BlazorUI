@@ -3,6 +3,18 @@
 $rgxTargetGetVersion = '<Version>([0-9]+)\.([0-9]+)\.([0-9]+)</Version>'
 Clear-Host;
 
+while (Test-Path './StoicDreams.BlazorUI') {
+	Set-Location './StoicDreams.BlazorUI'
+}
+
+if (!(Test-Path './PowerShell')) {
+	Set-Location ..
+}
+
+if (!(Test-Path './StoicDreams.BlazorUI.csproj')) {
+	throw "This script is expected to be run from the root of the StoicDreams.BlazorUI project."
+}
+
 $alphaversion = 1
 $betaversion = 0
 $rcversion = 0
@@ -10,7 +22,7 @@ $rcversion = 0
 Get-ChildItem -Path .\ -Filter *BlazorUI.csproj -Recurse -File | ForEach-Object {
 	Write-Host $_
 	$result = Select-String -Path $_.FullName -Pattern $rgxTargetGetVersion
-	if($result.Matches.Count -gt 0) {
+	if ($result.Matches.Count -gt 0) {
 		$alphaversion = [int]$result.Matches[0].Groups[1].Value
 		$betaversion = [int]$result.Matches[0].Groups[2].Value
 		$rcversion = [int]$result.Matches[0].Groups[3].Value
@@ -28,13 +40,15 @@ function CheckIfAnyFilesUpdated {
 			$lastupdate = Get-Content -Path $file
 			$lastupdate = [DateTime]::ParseExact($lastupdate, 'M/dd/yyyy h:mm:ss tt', [cultureinfo]'en-US')
 			Write-Host "Extracted last update: $lastupdate"
-		} catch {
-			Write-Host "Last update failed to load from file, defaulting to past 24 hours"
-			$lastupdate=$(Get-Date).AddHours(-24)
 		}
-	} else {
+		catch {
+			Write-Host "Last update failed to load from file, defaulting to past 24 hours"
+			$lastupdate = $(Get-Date).AddHours(-24)
+		}
+	}
+ else {
 		Write-Host "Last update file not found, defaulting to past 24 hours"
-		$lastupdate=$(Get-Date).AddHours(-24)
+		$lastupdate = $(Get-Date).AddHours(-24)
 	}
 	$currentUpdate = $lastupdate;
 	Write-Host "Loaded Last Update: $lastupdate"
@@ -75,20 +89,20 @@ function UpdateProjectVersion {
 	)
 
 	$rgxTargetXML = '<Version>([0-9\.]+)</Version>'
-	$newXML = '<Version>'+$version+'</Version>'
+	$newXML = '<Version>' + $version + '</Version>'
 
-	if(!(Test-Path -Path $projectPath)) {
+	if (!(Test-Path -Path $projectPath)) {
 		Write-Host "Not found - $projectPath" -BackgroundColor Red -ForegroundColor White
 		return;
 	}
 	$content = Get-Content -Path $projectPath
 	$oldMatch = $content -match $rgxTargetXML
-	if($oldMatch.Length -eq 0) {
+	if ($oldMatch.Length -eq 0) {
 		#Write-Host "Doesn't use BlazorUI - $projectPath"
 		return;
 	}
 	$matches = $content -match $newXML
-	if($matches.Length -eq 1) {
+	if ($matches.Length -eq 1) {
 		Write-Host "Already up to date - $projectPath" -ForegroundColor Cyan
 		return;
 	}
@@ -97,11 +111,11 @@ function UpdateProjectVersion {
 	Write-Host "Updated   - $projectPath" -ForegroundColor Green
 }
 Write-Host Version: $version
-if($version -ne $null) {
+if ($version -ne $null) {
 	$rootpath = Get-Location
 	$rootpath = $rootpath.ToString().ToLower()
 
-	while($rootpath.Contains('BlazorUI')) {
+	while ($rootpath.Contains('BlazorUI')) {
 		cd ..
 		$rootpath = Get-Location
 		$rootpath = $rootpath.ToString().ToLower()

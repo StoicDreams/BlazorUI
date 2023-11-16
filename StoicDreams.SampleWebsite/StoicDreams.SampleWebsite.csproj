@@ -1,7 +1,7 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk.BlazorWebAssembly">
 
 	<PropertyGroup>
-		<TargetFramework>net7.0</TargetFramework>
+		<TargetFramework>net8.0</TargetFramework>
 		<Nullable>enable</Nullable>
 		<ImplicitUsings>enable</ImplicitUsings>
 		<ServiceWorkerAssetsManifest>service-worker-assets.js</ServiceWorkerAssetsManifest>
@@ -10,25 +10,17 @@
 	</PropertyGroup>
 
 	<ItemGroup>
-		<PackageReference Include="Microsoft.AspNetCore.Components.WebAssembly" Version="7.0.12" />
-	</ItemGroup>
-
-	<ItemGroup>
-		<BlazorWebAssemblyLazyLoad Include="Microsoft.CodeAnalysis.dll" />
-		<BlazorWebAssemblyLazyLoad Include="Microsoft.CodeAnalysis.CSharp.dll" />
-		<BlazorWebAssemblyLazyLoad Include="Microsoft.CodeAnalysis.CSharp.resources.dll" />
-		<BlazorWebAssemblyLazyLoad Include="Microsoft.CodeAnalysis.resources.dll" />
-		<BlazorWebAssemblyLazyLoad Include="Microsoft.CodeAnalysis.Razor.dll" />
+		<PackageReference Include="Microsoft.AspNetCore.Components.WebAssembly" Version="8.0.0" />
 	</ItemGroup>
 
     <ItemGroup>
         <ProjectReference Include="..\StoicDreams.BlazorUI\StoicDreams.BlazorUI.csproj" />
     </ItemGroup>
-    
+
 	<Choose>
 		<When Condition="'$(Configuration)' == 'Debug'">
 			<ItemGroup>
-				<PackageReference Include="Microsoft.AspNetCore.Components.WebAssembly.DevServer" Version="7.0.12" PrivateAssets="all" />
+				<PackageReference Include="Microsoft.AspNetCore.Components.WebAssembly.DevServer" Version="8.0.0" PrivateAssets="all" />
 			</ItemGroup>
 		</When>
 		<Otherwise>
